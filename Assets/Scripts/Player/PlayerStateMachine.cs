@@ -69,9 +69,11 @@ public class PlayerStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move(_appliedMovementX * Time.deltaTime);
         CheckForGround();
         CurrentState.UpdateStates();
+    }
+    private void FixedUpdate() {
+        Move(_appliedMovementX);
     }
 
     void OnMovementInput(InputAction.CallbackContext context)
