@@ -27,4 +27,12 @@ public class PlayerStateFactory
     {
         return new PlayerGroundedState(_context, this);
     }
+    public PlayerBaseState Crouch()
+    {
+        return new PlayerCrouchState(_context, this);
+    }
+    public PlayerBaseState Drag()
+    {
+        return new PlayerDragState(_context, this);
+    }
 }

@@ -46,7 +46,9 @@ public abstract class PlayerBaseState
         }
         else if(_currentSuperState != null)
         {
+            // switch hierarchical relations
             _currentSuperState.SetSubState(newState);
+            
         }
     }
     protected void SetSuperState(PlayerBaseState newSuperState)

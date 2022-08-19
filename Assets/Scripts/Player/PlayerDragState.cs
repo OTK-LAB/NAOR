@@ -1,8 +1,12 @@
 using UnityEngine;
 
-public class PlayerGroundedState : PlayerBaseState
+public class PlayerDragState : PlayerBaseState
 {
-    public PlayerGroundedState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    //Used a workaround solution to detach the object we drag
+    Transform groundcheck;
+    Transform frontcheck;
+
+    public PlayerDragState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory)
     {
         IsRootState = true;
@@ -10,7 +14,10 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void EnterState()
     {
-        Debug.Log("GROUNDED");
+        Debug.Log("DRAGGING");
+        Ctx.Ray.transform.SetParent(Ctx.Rigidbod.transform);
+        groundcheck = Ctx.GroundCheck;
+        frontcheck = Ctx.FrontCheck;
     }
     public override void UpdateState()
     {
@@ -18,21 +25,15 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void ExitState()
     {
-
+        Ctx.Rigidbod.transform.DetachChildren();
+        groundcheck.SetParent(Ctx.Rigidbod.transform);
+        frontcheck.SetParent(Ctx.Rigidbod.transform);
     }
     public override void CheckSwitchStates()
     {
-        if(Ctx.IsJumpPressed)
+        if(!Ctx.DragToggle)
         {
-            SwitchState(Factory.Jump());
-        }
-        if(Ctx.IsCrouching)
-        {
-            SwitchState(Factory.Crouch());
-        }
-        if(Ctx.DragToggle)
-        {
-            SwitchState(Factory.Drag());
+            SwitchState(Factory.Grounded());
         }
     }
     public override void InitializeSubstate()

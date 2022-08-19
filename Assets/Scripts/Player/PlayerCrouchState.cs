@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class PlayerJumpingState : PlayerBaseState
+public class PlayerCrouchState : PlayerBaseState
 {
-    public PlayerJumpingState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
-    :base (currentContext, playerStateFactory) {
+    public PlayerCrouchState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    :base (currentContext, playerStateFactory)
+    {
         IsRootState = true;
         InitializeSubstate();
     }
     public override void EnterState()
     {
-        Debug.Log("JUMP STATE");
-        Ctx.Rigidbod.velocity = new Vector2(Ctx.Rigidbod.velocity.x, Ctx.JumpForce);
+        Debug.Log("CROUCHING");
     }
     public override void UpdateState()
     {
@@ -22,7 +22,7 @@ public class PlayerJumpingState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(Ctx.IsOnGround)
+        if(!Ctx.IsCrouching && Ctx.IsOnGround)
         {
             SwitchState(Factory.Grounded());
         }

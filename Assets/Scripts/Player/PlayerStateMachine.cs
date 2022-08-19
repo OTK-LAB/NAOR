@@ -18,6 +18,14 @@ public class PlayerStateMachine : MonoBehaviour
     float _appliedMovementX;
     bool _isMovementPressed; 
     bool _isOnGround;
+    bool _isCrouching = false;
+    //Dragging
+    bool _toggleDrag = false;
+    public Transform frontCheck;
+    bool _thereIsSomething;
+    bool _canDrag;
+    RaycastHit2D hit2D;
+
 
     [SerializeField] private Rigidbody2D _rb;
 
@@ -40,10 +48,16 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsMovementPressed { get {return _isMovementPressed; } set { _isMovementPressed = value; }}
     public bool IsJumpPressed { get { return _isJumpPressed; } set { _isJumpPressed = value; }}
     public bool IsOnGround { get { return _isOnGround; }}
+    public bool IsCrouching { get { return _isCrouching; }}
+    public bool DragToggle { get { return _toggleDrag; }}
 
     public float JumpForce { get { return jumpForce; } set { jumpForce = value; }}
-    public float MovementSpeed { get { return movementSpeed; } }
+    public float MovementSpeed { get { return movementSpeed; }}
     public Rigidbody2D Rigidbod { get { return _rb; }}
+    public RaycastHit2D Ray { get {return hit2D; }}
+    //For workaround in Drag. Will be changed
+    public Transform GroundCheck { get {return groundCheck; }}
+    public Transform FrontCheck { get {return frontCheck; }}
     void Awake()
     {
         _states = new PlayerStateFactory(this);
@@ -58,6 +72,10 @@ public class PlayerStateMachine : MonoBehaviour
 
         _playerInputActions.Player.Jump.started += OnJump;
         _playerInputActions.Player.Jump.canceled += OnJump;
+
+        _playerInputActions.Player.Crouch.started += OnCrouch;
+
+        _playerInputActions.Player.Drag.started += OnDrag;
     }
 
     // Start is called before the first frame update
@@ -70,6 +88,7 @@ public class PlayerStateMachine : MonoBehaviour
     void Update()
     {
         CheckForGround();
+        CheckFront();
         CurrentState.UpdateStates();
     }
     private void FixedUpdate() {
@@ -85,12 +104,37 @@ public class PlayerStateMachine : MonoBehaviour
     {
         _isJumpPressed = context.ReadValueAsButton();
     }
+    void OnCrouch(InputAction.CallbackContext context)
+    {
+        _isCrouching = !_isCrouching;
+    }
+    void OnDrag(InputAction.CallbackContext context)
+    {
+        if(_toggleDrag)
+        {
+            _toggleDrag = false;
+        }
+        else if(_canDrag)
+        {
+            _toggleDrag = true;
+        }
 
+    }
     void CheckForGround()
     {
         _isOnGround = Physics2D.OverlapCircle(groundCheck.position, 0.25f, groundLayer);
     }
-
+    void CheckFront(){
+        _thereIsSomething = Physics2D.Raycast(frontCheck.position, transform.right, 50f, groundLayer);
+        hit2D = Physics2D.Raycast(frontCheck.position, transform.right, 50f, groundLayer);
+        if(_thereIsSomething && hit2D.collider.CompareTag("Movable")){
+            _canDrag = true;
+        }
+        else
+        {
+            _canDrag = false;
+        }
+    }
     void Move(float movementInput)
     {
         _rb.velocity = new Vector2(movementInput, _rb.velocity.y);

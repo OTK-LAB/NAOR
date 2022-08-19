@@ -6,7 +6,7 @@ public class PlayerRunningState : PlayerBaseState
     :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {
-
+        Debug.Log("RUNNING");
     }
     public override void UpdateState()
     {
