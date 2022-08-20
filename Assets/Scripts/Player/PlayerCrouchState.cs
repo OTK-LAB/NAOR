@@ -6,10 +6,10 @@ public class PlayerCrouchState : PlayerBaseState
     :base (currentContext, playerStateFactory)
     {
         IsRootState = true;
-        InitializeSubstate();
     }
     public override void EnterState()
     {
+        InitializeSubstate();
         Debug.Log("CROUCHING");
     }
     public override void UpdateState()
@@ -37,5 +37,10 @@ public class PlayerCrouchState : PlayerBaseState
         {
             SetSubState(Factory.Run());
         }
+    }
+
+    public override string StateName()
+    {
+        return "Crouch";
     }
 }

@@ -6,10 +6,10 @@ public class PlayerGroundedState : PlayerBaseState
     :base (currentContext, playerStateFactory)
     {
         IsRootState = true;
-        InitializeSubstate();
-    }
+}
     public override void EnterState()
     {
+        InitializeSubstate();
         Debug.Log("GROUNDED");
     }
     public override void UpdateState()
@@ -45,5 +45,10 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SetSubState(Factory.Run());
         }
+    }
+
+    public override string StateName()
+    {
+        return "Grounded";
     }
 }

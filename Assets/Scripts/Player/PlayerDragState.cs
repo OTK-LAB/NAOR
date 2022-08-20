@@ -10,10 +10,10 @@ public class PlayerDragState : PlayerBaseState
     :base (currentContext, playerStateFactory)
     {
         IsRootState = true;
-        InitializeSubstate();
     }
     public override void EnterState()
     {
+        InitializeSubstate();
         Debug.Log("DRAGGING");
         Ctx.Ray.transform.SetParent(Ctx.Rigidbod.transform);
         groundcheck = Ctx.GroundCheck;
@@ -46,5 +46,9 @@ public class PlayerDragState : PlayerBaseState
         {
             SetSubState(Factory.Run());
         }
+    }
+    public override string StateName()
+    {
+        return "Drag";
     }
 }

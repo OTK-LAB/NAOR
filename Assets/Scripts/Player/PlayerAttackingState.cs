@@ -25,4 +25,9 @@ public class PlayerAttackingState : PlayerBaseState
     {
 
     }
+
+    public override string StateName()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//TODO:
+//  Create and add animations for each state
+//  Add flip logic and modify raycast directions with it
+//  Add ledge detection and create PlayerVaultState
+//  Implement sliding physics
 public class PlayerStateMachine : MonoBehaviour
 {
     // state variables
     private PlayerBaseState _currentState;
-    PlayerStateFactory _states;
-
-    PlayerInputActions _playerInputActions;
+    private PlayerStateFactory _states;
+    private PlayerInputActions _playerInputActions;
+    private Animator _animator;
     
     //Movement
     [Header("Movement")]
@@ -17,6 +22,7 @@ public class PlayerStateMachine : MonoBehaviour
     Vector2 _currentMovementInput;
     float _appliedMovementX;
     bool _isMovementPressed; 
+    bool facingRight = true;
     bool _isOnGround;
     bool _isCrouching = false;
     //Dragging
@@ -38,10 +44,10 @@ public class PlayerStateMachine : MonoBehaviour
     public LayerMask groundLayer;
     public Transform groundCheck;
 
-
     // getters and setters
     public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; }}
     public PlayerInputActions PlayerInputActions { get { return _playerInputActions; } set { _playerInputActions = value; }}
+    public Animator PlayerAnimator { get { return _animator;}}
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; }}
     public float AppliedMovement { get { return _appliedMovementX; } set { _appliedMovementX = value; }}
     
@@ -63,6 +69,7 @@ public class PlayerStateMachine : MonoBehaviour
         _states = new PlayerStateFactory(this);
         _currentState = _states.Grounded();
         _currentState.EnterState();
+        _animator = GetComponent<Animator>();
 
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
@@ -89,6 +96,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         CheckForGround();
         CheckFront();
+        FlipPlayer();
         CurrentState.UpdateStates();
     }
     private void FixedUpdate() {
@@ -138,5 +146,13 @@ public class PlayerStateMachine : MonoBehaviour
     void Move(float movementInput)
     {
         _rb.velocity = new Vector2(movementInput, _rb.velocity.y);
+    }
+    void FlipPlayer()
+    {
+        if((_currentMovementInput.x < 0 && facingRight) || (_currentMovementInput.x > 0 && !facingRight))
+        {
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            facingRight = !facingRight;
+        }
     }
 }

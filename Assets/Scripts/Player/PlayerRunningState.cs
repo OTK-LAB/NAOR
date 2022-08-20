@@ -6,12 +6,24 @@ public class PlayerRunningState : PlayerBaseState
     :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {
-        Debug.Log("RUNNING");
+
     }
     public override void UpdateState()
     {
-        CheckSwitchStates();
+        if(SuperState == Factory.Grounded())
+        {
+            Ctx.PlayerAnimator.Play("PlayerRun");
+            
+        }
+        if(SuperState == Factory.Crouch()){
+            Ctx.PlayerAnimator.Play("PlayerCrawl");
+            Ctx.AppliedMovement = Ctx.CurrentMovementInput.x * (Ctx.MovementSpeed / 2);
+        }
+        else
+        {
         Ctx.AppliedMovement = Ctx.CurrentMovementInput.x * Ctx.MovementSpeed;
+        }
+        CheckSwitchStates();
     }
     public override void ExitState()
     {
@@ -27,5 +39,10 @@ public class PlayerRunningState : PlayerBaseState
     public override void InitializeSubstate()
     {
 
+    }
+
+    public override string StateName()
+    {
+        return "Run";
     }
 }

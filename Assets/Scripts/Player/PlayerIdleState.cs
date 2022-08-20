@@ -7,10 +7,19 @@ public class PlayerIdleState : PlayerBaseState
     public override void EnterState()
     {
         Ctx.AppliedMovement = 0;
-        Debug.Log("IDLE");
+
     }
     public override void UpdateState()
     {
+        if(SuperState == Factory.Grounded())
+        {
+            Ctx.PlayerAnimator.Play("PlayerIdle");
+        }
+        if(SuperState == Factory.Crouch())
+        {
+            Ctx.PlayerAnimator.Play("PlayerCrouch");
+        }
+
         CheckSwitchStates();
     }
     public override void ExitState()
@@ -27,5 +36,10 @@ public class PlayerIdleState : PlayerBaseState
     public override void InitializeSubstate()
     {
 
+    }
+
+    public override string StateName()
+    {
+        return "Idle";
     }
 }
