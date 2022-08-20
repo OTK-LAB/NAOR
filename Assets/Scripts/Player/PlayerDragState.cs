@@ -16,8 +16,12 @@ public class PlayerDragState : PlayerBaseState
         InitializeSubstate();
         Debug.Log("DRAGGING");
         Ctx.Ray.transform.SetParent(Ctx.Rigidbod.transform);
+        Ctx.CanFlip = false;
         groundcheck = Ctx.GroundCheck;
         frontcheck = Ctx.FrontCheck;
+        //FIXME:
+        //This is going to be controlled in idle and movement states once we have proper animations
+        Ctx.PlayerAnimator.Play("PlayerDrag");
     }
     public override void UpdateState()
     {
@@ -28,6 +32,7 @@ public class PlayerDragState : PlayerBaseState
         Ctx.Rigidbod.transform.DetachChildren();
         groundcheck.SetParent(Ctx.Rigidbod.transform);
         frontcheck.SetParent(Ctx.Rigidbod.transform);
+        Ctx.CanFlip = true;
     }
     public override void CheckSwitchStates()
     {

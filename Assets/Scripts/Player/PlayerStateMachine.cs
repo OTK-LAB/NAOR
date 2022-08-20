@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 //TODO:
-//  Create and add animations for each state
-//  Add flip logic and modify raycast directions with it
 //  Add ledge detection and create PlayerVaultState
 //  Implement sliding physics
+//  Move the toggle logic into grounded state
 public class PlayerStateMachine : MonoBehaviour
 {
     // state variables
@@ -22,7 +21,8 @@ public class PlayerStateMachine : MonoBehaviour
     Vector2 _currentMovementInput;
     float _appliedMovementX;
     bool _isMovementPressed; 
-    bool facingRight = true;
+    bool _facingRight = true;
+    bool _canFlip = true;
     bool _isOnGround;
     bool _isCrouching = false;
     //Dragging
@@ -56,6 +56,7 @@ public class PlayerStateMachine : MonoBehaviour
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
+    public bool CanFlip { get {return _canFlip; } set { _canFlip = value; }}
 
     public float JumpForce { get { return jumpForce; } set { jumpForce = value; }}
     public float MovementSpeed { get { return movementSpeed; }}
@@ -149,10 +150,13 @@ public class PlayerStateMachine : MonoBehaviour
     }
     void FlipPlayer()
     {
-        if((_currentMovementInput.x < 0 && facingRight) || (_currentMovementInput.x > 0 && !facingRight))
+        if(_canFlip)
         {
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-            facingRight = !facingRight;
+            if((_currentMovementInput.x < 0 && _facingRight) || (_currentMovementInput.x > 0 && !_facingRight))
+            {
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                _facingRight = !_facingRight;
+            }
         }
     }
 }
