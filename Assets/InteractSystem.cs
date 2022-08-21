@@ -12,7 +12,7 @@ public class InteractSystem : MonoBehaviour
     public GameObject related_object2;
     Animator anim;
     Animator anim2;
-    
+    bool active = false;
 
     void Start()
     {
@@ -20,10 +20,7 @@ public class InteractSystem : MonoBehaviour
     }
     void Update()
     {
-        if (isInRange)
-            tagControl(isInRange);
-        else
-            tagControl(isInRange);
+        tagControl(isInRange);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -45,16 +42,23 @@ public class InteractSystem : MonoBehaviour
     }
     void platformActive()
     {
+
+        active = true;
+        Debug.Log("aktif" + active);
         anim.SetBool("Trigger", true);
         anim2.SetBool("Trigger", true);
         StartCoroutine(backtoIdle());
     }
     IEnumerator backtoIdle()
     {
+        Debug.Log("bekliyorum");
+
         yield return new WaitForSeconds(4);
         anim.SetBool("Trigger", false);
         anim2.SetBool("Trigger", false);
+        active = false;
         isInRange = false;
+        Debug.Log("bitti" + active);
     }
 
 
@@ -74,7 +78,7 @@ public class InteractSystem : MonoBehaviour
             anim = related_object.GetComponent<Animator>();
             anim2 = related_object2.GetComponent<Animator>();
             
-            if (isInRange)
+            if (isInRange && !active)
                 platformActive();
         }
 
