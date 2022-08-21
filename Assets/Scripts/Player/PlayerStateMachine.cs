@@ -96,7 +96,6 @@ public class PlayerStateMachine : MonoBehaviour
     void Update()
     {
         CheckForGround();
-        CheckFront();
         FlipPlayer();
         CurrentState.UpdateStates();
     }
@@ -115,25 +114,31 @@ public class PlayerStateMachine : MonoBehaviour
     }
     void OnCrouch(InputAction.CallbackContext context)
     {
-        _isCrouching = !_isCrouching;
+        if(_currentState == _states.Grounded() && !_isCrouching)
+        {
+            _isCrouching = true;
+        }
+        else
+        {
+            _isCrouching = false;
+        }
     }
     void OnDrag(InputAction.CallbackContext context)
-    {
-        if(_toggleDrag)
-        {
-            _toggleDrag = false;
-        }
-        else if(_canDrag)
+    {   
+        if(_currentState == _states.Grounded() && !_toggleDrag && _canDrag)
         {
             _toggleDrag = true;
         }
-
+        else
+        {
+            _toggleDrag = false;
+        }
     }
     void CheckForGround()
     {
         _isOnGround = Physics2D.OverlapCircle(groundCheck.position, 0.25f, groundLayer);
     }
-    void CheckFront(){
+    public void CheckFront(){
         _thereIsSomething = Physics2D.Raycast(frontCheck.position, transform.right, 50f, groundLayer);
         hit2D = Physics2D.Raycast(frontCheck.position, transform.right, 50f, groundLayer);
         if(_thereIsSomething && hit2D.collider.CompareTag("Movable")){

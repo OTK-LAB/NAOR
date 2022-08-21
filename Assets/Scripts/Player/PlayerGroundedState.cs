@@ -14,6 +14,7 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void UpdateState()
     {
+        Ctx.CheckFront();
         CheckSwitchStates();
     }
     public override void ExitState()
