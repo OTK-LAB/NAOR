@@ -9,7 +9,10 @@ public class InteractSystem : MonoBehaviour
     public KeyCode interactKey;
     public UnityEvent interactAction;
     public GameObject related_object;
+    public GameObject related_object2;
     Animator anim;
+    Animator anim2;
+    
 
     void Start()
     {
@@ -40,6 +43,19 @@ public class InteractSystem : MonoBehaviour
     {
         anim.SetBool("Trigger", false);
     }
+    void platformActive()
+    {
+        anim.SetBool("Trigger", true);
+        anim2.SetBool("Trigger", true);
+    }
+    void platformCancel()
+    {
+        anim.SetBool("Trigger", false);
+        anim2.SetBool("Trigger", false);
+    }
+
+    
+
     void tagControl(bool isInRange)
     {
         if (this.tag == "stairs")
@@ -49,6 +65,18 @@ public class InteractSystem : MonoBehaviour
                 stairsActive();
             else
                 stairsCancel();
+        }
+        else if (this.tag == "platform")
+        {
+            anim = related_object.GetComponent<Animator>();
+            anim2 = related_object2.GetComponent<Animator>();
+            
+            if (isInRange)
+                platformActive();
+
+            else
+                platformCancel();
+
         }
 
     }
