@@ -47,14 +47,17 @@ public class InteractSystem : MonoBehaviour
     {
         anim.SetBool("Trigger", true);
         anim2.SetBool("Trigger", true);
+        StartCoroutine(backtoIdle());
     }
-    void platformCancel()
+    IEnumerator backtoIdle()
     {
+        yield return new WaitForSeconds(4);
         anim.SetBool("Trigger", false);
         anim2.SetBool("Trigger", false);
+        isInRange = false;
     }
 
-    
+
 
     void tagControl(bool isInRange)
     {
@@ -73,10 +76,6 @@ public class InteractSystem : MonoBehaviour
             
             if (isInRange)
                 platformActive();
-
-            else
-                platformCancel();
-
         }
 
     }
