@@ -1,0 +1,6 @@
+- uses: game-ci/unity-test-runner@v2
+  env:
+    UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  with:
+    projectPath: path/to/your/project
+    githubToken: ${{ secrets.GITHUB_TOKEN }}
