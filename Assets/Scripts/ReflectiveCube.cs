@@ -31,7 +31,7 @@ public class ReflectiveCube : MonoBehaviour
         if (hitWall)
         {
             winwin = true;
-           // Debug.Log("win: " + winwin);
+            Debug.Log("win: " + winwin);
         }
         if (hitMe)
         {
@@ -51,28 +51,23 @@ public class ReflectiveCube : MonoBehaviour
         {
             RaycastHit2D _hit = Physics2D.Raycast(laserFirePoint.position, transform.right, defDistanceRay);
             Draw2DRay(laserFirePoint.position, _hit.point);
-            //if (this.tag != "light")
-            //{
-                if (_hit.collider.tag == "Box")
-                {
-                    Debug.Log("carptim");
-                    boxhit = _hit.collider;
-                    _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
-                    _hit.collider.GetComponent<ReflectiveCube>().hitMe = true;
-                }
-                else if (_hit.collider.tag == "wall")
-                {
-                    _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
-                    _hit.collider.GetComponent<ReflectiveCube>().hitWall = true;
-                }
-                else
-                {
-                    Debug.Log("geri çektim");
-                    // boxhit.GetComponent<ReflectiveCube>().enabled = false;
-                    boxhit.GetComponent<ReflectiveCube>().hitMe = false;
-
-                }
-            //}
+            if (_hit.collider.tag == "Box")
+            {
+                Debug.Log("carptim");
+                boxhit = _hit.collider;
+                _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
+                _hit.collider.GetComponent<ReflectiveCube>().hitMe = true;
+            }
+            else if (_hit.collider.tag == "wall")
+            {
+                _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
+                _hit.collider.GetComponent<ReflectiveCube>().hitWall = true;
+            }
+            else
+            {
+                Debug.Log("geri çektim");
+                boxhit.GetComponent<ReflectiveCube>().hitMe = false;
+            }
         }
         else
         {
