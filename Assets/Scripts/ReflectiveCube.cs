@@ -14,10 +14,13 @@ public class ReflectiveCube : MonoBehaviour
     public bool hitWall = false;
     bool winwin = false;
 
+
+    public GameObject correct_box;
+    Collider2D boxhit=null;
     private void Start()
     {
-        if (this.tag != "wall")
-            this.GetComponent<BoxCollider2D>().enabled = false;
+        //if (this.tag != "wall")
+        //    this.GetComponent<BoxCollider2D>().enabled = false;
     }
     private void Awake()
     {
@@ -28,16 +31,17 @@ public class ReflectiveCube : MonoBehaviour
         if (hitWall)
         {
             winwin = true;
-            Debug.Log("win: " + winwin);
+           // Debug.Log("win: " + winwin);
         }
         if (hitMe)
         {
             ShootLaser();
         }   
-        else if (this.tag!="wall")
+        else if (this.tag!="wall" )
         {
             m_lineRenderer.SetPosition(0, m_transform.position);
             m_lineRenderer.SetPosition(1, m_transform.position);
+            correct_box.GetComponent<ReflectiveCube>().hitMe = false;
         }
         
     }
@@ -47,17 +51,28 @@ public class ReflectiveCube : MonoBehaviour
         {
             RaycastHit2D _hit = Physics2D.Raycast(laserFirePoint.position, transform.right, defDistanceRay);
             Draw2DRay(laserFirePoint.position, _hit.point);
-            if (_hit.collider.tag == "Box")
-            {
-                Debug.Log("carptim");
-                _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
-                _hit.collider.GetComponent<ReflectiveCube>().hitMe = true;
-            }
-            else if (_hit.collider.tag == "wall")
-            {
-                _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
-                _hit.collider.GetComponent<ReflectiveCube>().hitWall = true;
-            }
+            //if (this.tag != "light")
+            //{
+                if (_hit.collider.tag == "Box")
+                {
+                    Debug.Log("carptim");
+                    boxhit = _hit.collider;
+                    _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
+                    _hit.collider.GetComponent<ReflectiveCube>().hitMe = true;
+                }
+                else if (_hit.collider.tag == "wall")
+                {
+                    _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
+                    _hit.collider.GetComponent<ReflectiveCube>().hitWall = true;
+                }
+                else
+                {
+                    Debug.Log("geri çektim");
+                    // boxhit.GetComponent<ReflectiveCube>().enabled = false;
+                    boxhit.GetComponent<ReflectiveCube>().hitMe = false;
+
+                }
+            //}
         }
         else
         {
