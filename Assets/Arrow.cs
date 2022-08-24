@@ -13,7 +13,7 @@ public class Arrow : MonoBehaviour
     private Vector2 direction;
     public static float daggerDamage = 5f;
     public static Arrow instance;
-    float y;
+    float y, x;
 
     public bool left;
     public bool right;
@@ -26,14 +26,14 @@ public class Arrow : MonoBehaviour
     {
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
         rb = this.GetComponent<Rigidbody2D>();
-       
-
+        x = PlayerPosition.position.x + 20;
+        Debug.Log(x);
         if (this.gameObject.tag=="uparrow")
             y = PlayerPosition.position.y + 1;
         else if(this.gameObject.tag=="downarrow")
             y = PlayerPosition.position.y - 0.4f ;
 
-        this.gameObject.transform.position = new Vector2(this.gameObject.transform.position.x, y);
+        this.gameObject.transform.position = new Vector2(x, y);
 
         if (left) 
         { 
@@ -45,9 +45,9 @@ public class Arrow : MonoBehaviour
             direction = Vector2.right;
             this.gameObject.GetComponent<SpriteRenderer>().flipX = false;
         }
-        Debug.Log(direction);
-        
-       
+
+        Destroy(gameObject, 10f);
+
     }
 
     // Update is called once per frame
@@ -64,7 +64,7 @@ public class Arrow : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            this.gameObject.SetActive(false);
+            Destroy(gameObject);
             //collision.transform.SendMessage("DamagePlayer", 10);
         }
 
