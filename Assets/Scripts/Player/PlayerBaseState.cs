@@ -54,6 +54,7 @@ public abstract class PlayerBaseState
         //new state enters state
         newState.EnterState();
 
+        Ctx.CurrentState.PrintCurrentHierarchy();
     }
     protected void SetSuperState(PlayerBaseState newSuperState)
     {
@@ -63,5 +64,17 @@ public abstract class PlayerBaseState
     {
         _currentSubState = newSubState;
         newSubState.SetSuperState(this);
+    }
+    protected void PrintCurrentHierarchy()
+    {
+        Debug.Log(this);
+        if(_currentSubState != null)
+        {
+            _currentSubState.PrintCurrentHierarchy();
+        }
+        else
+        {
+            Debug.Log("-------------------------");
+        }
     }
 }

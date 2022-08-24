@@ -9,7 +9,7 @@ public class PlayerJumpingState : PlayerBaseState
     public override void EnterState()
     {
         InitializeSubstate();
-        Debug.Log("JUMP STATE");
+        //Debug.Log("JUMP STATE");
         Ctx.Rigidbod.velocity = new Vector2(Ctx.Rigidbod.velocity.x, Ctx.JumpForce);
         Ctx.PlayerAnimator.Play("PlayerJump");
     }

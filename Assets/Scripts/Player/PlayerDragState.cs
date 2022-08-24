@@ -14,7 +14,7 @@ public class PlayerDragState : PlayerBaseState
     public override void EnterState()
     {
         InitializeSubstate();
-        Debug.Log("DRAGGING");
+        //Debug.Log("DRAGGING");
         Ctx.Ray.transform.SetParent(Ctx.Rigidbod.transform);
         Ctx.CanFlip = false;
         groundcheck = Ctx.GroundCheck;

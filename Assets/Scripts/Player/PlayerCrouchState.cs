@@ -10,7 +10,7 @@ public class PlayerCrouchState : PlayerBaseState
     public override void EnterState()
     {
         InitializeSubstate();
-        Debug.Log("CROUCHING");
+        //Debug.Log("CROUCHING");
     }
     public override void UpdateState()
     {

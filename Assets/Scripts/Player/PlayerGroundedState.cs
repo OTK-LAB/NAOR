@@ -10,7 +10,7 @@ public class PlayerGroundedState : PlayerBaseState
     public override void EnterState()
     {
         InitializeSubstate();
-        Debug.Log("GROUNDED");
+        //Debug.Log("GROUNDED");
     }
     public override void UpdateState()
     {
@@ -23,15 +23,15 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(Ctx.IsJumpPressed)
+        if(!Ctx.IsOnSlope && Ctx.IsJumpPressed)
         {
             SwitchState(Factory.Jump());
         }
-        if(Ctx.IsCrouching)
+        if(!Ctx.IsOnSlope && Ctx.IsCrouching)
         {
             SwitchState(Factory.Crouch());
         }
-        if(Ctx.DragToggle)
+        if(!Ctx.IsOnSlope && Ctx.DragToggle)
         {
             SwitchState(Factory.Drag());
         }

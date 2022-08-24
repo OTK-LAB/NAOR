@@ -6,6 +6,13 @@ public class PlayerIdleState : PlayerBaseState
     :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {
+        if(SuperState == Factory.Jump()){
+            //Debug.Log("idle : Jump");
+        }
+        if(SuperState==Factory.Slide())
+        {
+            //Debug.Log("idle : slide");
+        }
         Ctx.AppliedMovement = 0;
 
     }
@@ -31,6 +38,10 @@ public class PlayerIdleState : PlayerBaseState
         if(Ctx.IsMovementPressed)
         {
             SwitchState(Factory.Run());
+        }
+        if(Ctx.IsOnSlope)
+        {   
+            SwitchState(Factory.Slide());
         }
     }
     public override void InitializeSubstate()

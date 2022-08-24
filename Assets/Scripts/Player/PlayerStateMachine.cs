@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 //TODO:
 //  Add ledge detection and create PlayerVaultState
 //  Implement sliding physics
-//  Move the toggle logic into grounded state
+//  Upgrade grounded detection with collider raycast
 public class PlayerStateMachine : MonoBehaviour
 {
     // state variables
@@ -30,8 +30,10 @@ public class PlayerStateMachine : MonoBehaviour
     public Transform frontCheck;
     bool _thereIsSomething;
     bool _canDrag;
-    RaycastHit2D hit2D;
-
+    RaycastHit2D frontRay;
+    //Sliding
+    Collider2D _groundCollider;
+    bool _isOnSlope;
 
     [SerializeField] private Rigidbody2D _rb;
 
@@ -51,17 +53,19 @@ public class PlayerStateMachine : MonoBehaviour
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; }}
     public float AppliedMovement { get { return _appliedMovementX; } set { _appliedMovementX = value; }}
     
-    public bool IsMovementPressed { get {return _isMovementPressed; } set { _isMovementPressed = value; }}
+    public bool IsMovementPressed { get { return _isMovementPressed; } set { _isMovementPressed = value; }}
     public bool IsJumpPressed { get { return _isJumpPressed; } set { _isJumpPressed = value; }}
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
     public bool CanFlip { get {return _canFlip; } set { _canFlip = value; }}
+    public bool IsOnSlope { get { return _isOnSlope; }}
 
+    public Collider2D GroundCollider { get { return _groundCollider;}}
     public float JumpForce { get { return jumpForce; } set { jumpForce = value; }}
     public float MovementSpeed { get { return movementSpeed; }}
     public Rigidbody2D Rigidbod { get { return _rb; }}
-    public RaycastHit2D Ray { get {return hit2D; }}
+    public RaycastHit2D Ray { get {return frontRay; }}
     //For workaround in Drag. Will be changed
     public Transform GroundCheck { get {return groundCheck; }}
     public Transform FrontCheck { get {return frontCheck; }}
@@ -136,13 +140,23 @@ public class PlayerStateMachine : MonoBehaviour
     }
     void CheckForGround()
     {
-        _isOnGround = Physics2D.OverlapCircle(groundCheck.position, 0.25f, groundLayer);
+        _groundCollider = Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer);
+        _isOnGround = _groundCollider;
+        if(_isOnGround && _groundCollider.CompareTag("Slope"))
+        {
+            _isOnSlope = true;
+        }
+        else{
+            _isOnSlope = false;
+        }
+        //Debug.Log("IS ON SLOPE: " + _isOnSlope);
     }
     public void CheckFront(){
         _thereIsSomething = Physics2D.Raycast(frontCheck.position, transform.right, 50f, groundLayer);
-        hit2D = Physics2D.Raycast(frontCheck.position, transform.right, 50f, groundLayer);
-        if(_thereIsSomething && hit2D.collider.CompareTag("Movable")){
+        frontRay = Physics2D.Raycast(frontCheck.position, transform.right, 50f, groundLayer);
+        if(_thereIsSomething && frontRay.collider.CompareTag("Movable")){
             _canDrag = true;
+            //Debug.Log("Candrag");
         }
         else
         {
