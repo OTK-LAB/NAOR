@@ -18,6 +18,7 @@ public class InteractSystem : MonoBehaviour
     Animator anim2;
     Transform PlayerPosition;
     bool active = false;
+    bool actived = false;
     Vector2 movement;
 
     bool deneme = true;
@@ -42,6 +43,7 @@ public class InteractSystem : MonoBehaviour
     }
     void tagControl(bool isInRange)
     {
+        /*
         if (this.tag == "stairs")
         {
             anim = related_object.GetComponent<Animator>();
@@ -50,14 +52,17 @@ public class InteractSystem : MonoBehaviour
             else
                 stairsCancel();
         }
-        else if (this.tag == "platform")
+        */
+       
+        if(this.tag == "platform")
         {
-            anim = related_object.GetComponent<Animator>();
+            Debug.Log("Platformmuþ bu"); 
             anim2 = related_object2.GetComponent<Animator>();
             
-            if (isInRange && !active)
+            if (isInRange && !actived)
                 platformActive();
         }
+       
         else if(this.tag=="boxcontrol")
         {
             related_rigidbody = related_object.GetComponent<Rigidbody2D>();
@@ -95,19 +100,20 @@ public class InteractSystem : MonoBehaviour
     }
     void platformActive()
     {
-
-        active = true;
+        Debug.Log("Çaðýrýldý");
+        interactAction.Invoke();
+        actived = true;
         anim2.SetBool("trig", true);
-        anim.SetBool("Trigger", true);
+        
 
         StartCoroutine(backtoIdle());
     }
     IEnumerator backtoIdle()
     {
-        yield return new WaitForSeconds(4);
-        anim.SetBool("Trigger", false);
+        yield return new WaitForSeconds(14);
+        
         anim2.SetBool("trig", false);
-        active = false;
+        actived = false;
         isInRange = false;
     }
     public void BoxControl()
