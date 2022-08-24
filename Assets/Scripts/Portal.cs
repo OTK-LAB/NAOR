@@ -7,6 +7,8 @@ public class Portal : MonoBehaviour
     public bool portal1;
     public bool portal2;
 
+    private GameObject clone;
+
     private Rigidbody2D enteredRigidbody;
     private float enterVelocity, exitVelocity;
 
@@ -17,13 +19,13 @@ public class Portal : MonoBehaviour
         
         if (portal1)
         {
-            PortalController.portalControllerInstance.DisableCollider("portal2");
-            PortalController.portalControllerInstance.CreateClone("atPortal2");
+            PortalController.instance.DisableCollider("portal2");
+            PortalController.instance.CreateClone("atPortal2");
         }
         else if (portal2)
         {
-            PortalController.portalControllerInstance.DisableCollider("portal1");
-            PortalController.portalControllerInstance.CreateClone("atPortal1");
+            PortalController.instance.DisableCollider("portal1");
+            PortalController.instance.CreateClone("atPortal1");
         }
     }
 
@@ -31,15 +33,17 @@ public class Portal : MonoBehaviour
     {
         exitVelocity = enteredRigidbody.velocity.x;
 
+        clone = PortalController.instance.instantiatedClone;
+
         if (enterVelocity != exitVelocity)
         {
-            Destroy(GameObject.Find("Clone"));
+            Destroy(clone);
         }
-        else if (gameObject.name != "Clone")
+        else if (gameObject != clone)
         {
-            Destroy(collision.gameObject);
-            PortalController.portalControllerInstance.EnableColliders();
-            GameObject.Find("Clone").name = "Player";
+            collision.transform.position = clone.transform.position;
+            PortalController.instance.EnableColliders();
+            Destroy(clone);
         }
     }
 }

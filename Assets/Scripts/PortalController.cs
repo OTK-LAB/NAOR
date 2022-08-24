@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PortalController : MonoBehaviour
 {
-    public static PortalController portalControllerInstance;
+    public static PortalController instance;
 
     [SerializeField] private GameObject portal1, portal2;
 
@@ -14,11 +14,13 @@ public class PortalController : MonoBehaviour
 
     [SerializeField] private GameObject clone;
 
+    [HideInInspector] public GameObject instantiatedClone;
+
 
 
     void Start()
     {
-        portalControllerInstance = this;
+        instance = this;
         portal1Collider = portal1.GetComponent<Collider2D>();
         portal2Collider = portal2.GetComponent<Collider2D>();
     }
@@ -27,13 +29,11 @@ public class PortalController : MonoBehaviour
     {
         if (whereToCreate == "atPortal1")
         {
-            var instanciatedClone = Instantiate(clone, portal1SpawnPoint.position, Quaternion.identity);
-            instanciatedClone.gameObject.name = "Clone";
+            instantiatedClone = Instantiate(clone, portal1SpawnPoint.position, Quaternion.identity);
         }
         else if (whereToCreate == "atPortal2")
         {
-            var instanciatedClone = Instantiate(clone, portal2SpawnPoint.position, Quaternion.identity);
-            instanciatedClone.gameObject.name = "Clone";
+            instantiatedClone = Instantiate(clone, portal2SpawnPoint.position, Quaternion.identity);
         }
     }
 
