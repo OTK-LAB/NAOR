@@ -43,6 +43,18 @@ public class PlayerIdleState : PlayerBaseState
         {   
             SwitchState(Factory.Slide());
         }
+        //if(Ctx.CanClimbLedge)
+        //{
+        //    if(SuperState == Factory.Grounded() && Ctx.IsJumpPressed){
+        //        SwitchState(Factory.Climb());
+        //    }
+        //    if(SuperState == Factory.Jump())
+        //    {   
+        //        Debug.Log("buraya kadar celdum");
+        //        SwitchState(Factory.Hang());
+        //    }
+        //}
+
     }
     public override void InitializeSubstate()
     {

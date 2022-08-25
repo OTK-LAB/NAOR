@@ -48,6 +48,16 @@ public class PlayerRunningState : PlayerBaseState
         {
             SwitchState(Factory.Slide());
         }
+        //if(Ctx.CanClimbLedge)
+        //{
+        //    if(SuperState == Factory.Grounded() && Ctx.IsJumpPressed){
+        //        SwitchState(Factory.Climb());
+        //    }
+        //    if(SuperState == Factory.Jump())
+        //    {
+        //        SwitchState(Factory.Hang());
+        //    }
+        //}
     }
     public override void InitializeSubstate()
     {

@@ -29,6 +29,10 @@ public class PlayerJumpingState : PlayerBaseState
         {
             SwitchState(Factory.Grounded());
         }
+        if(Ctx.CanClimbLedge)
+        {
+            SwitchState(Factory.Hang());
+        }
     }
     public override void InitializeSubstate()
     {

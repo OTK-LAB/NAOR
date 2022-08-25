@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 //TODO:
-//  Add ledge detection and create PlayerVaultState
-//  Implement sliding physics
+//  Add coyote time
+//  Implement jump cooldown
+//  Refine FrontCheck()
 //  Upgrade grounded detection with collider raycast
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -25,12 +26,19 @@ public class PlayerStateMachine : MonoBehaviour
     bool _canFlip = true;
     bool _isOnGround;
     bool _isCrouching = false;
-    //Dragging
+    float _defaultGravity;
+
+    //Dragging and Ledge Detection
     bool _toggleDrag = false;
     public Transform frontCheck;
-    bool _thereIsSomething;
+    public Transform topCheck;
+    bool _thereIsGroundFront;
+    bool _thereIsGroundTop;
     bool _canDrag;
+    bool _canClimbLedge;
     RaycastHit2D frontRay;
+    RaycastHit2D topRay;
+
     //Sliding
     Collider2D _groundCollider;
     bool _isOnSlope;
@@ -60,6 +68,8 @@ public class PlayerStateMachine : MonoBehaviour
     public bool DragToggle { get { return _toggleDrag; }}
     public bool CanFlip { get {return _canFlip; } set { _canFlip = value; }}
     public bool IsOnSlope { get { return _isOnSlope; }}
+    public bool CanClimbLedge { get { return _canClimbLedge; }}
+    public bool FacingRight { get { return _facingRight;}}
 
     public Collider2D GroundCollider { get { return _groundCollider;}}
     public float JumpForce { get { return jumpForce; } set { jumpForce = value; }}
@@ -69,8 +79,10 @@ public class PlayerStateMachine : MonoBehaviour
     //For workaround in Drag. Will be changed
     public Transform GroundCheck { get {return groundCheck; }}
     public Transform FrontCheck { get {return frontCheck; }}
+    public float DefaultGravity { get {return _defaultGravity;}}
     void Awake()
     {
+        _defaultGravity = _rb.gravityScale;
         _states = new PlayerStateFactory(this);
         _currentState = _states.Grounded();
         _currentState.EnterState();
@@ -104,6 +116,7 @@ public class PlayerStateMachine : MonoBehaviour
         CurrentState.UpdateStates();
     }
     private void FixedUpdate() {
+        CheckFront();
         Move(_appliedMovementX);
     }
 
@@ -152,9 +165,23 @@ public class PlayerStateMachine : MonoBehaviour
         //Debug.Log("IS ON SLOPE: " + _isOnSlope);
     }
     public void CheckFront(){
-        _thereIsSomething = Physics2D.Raycast(frontCheck.position, transform.right, 50f, groundLayer);
-        frontRay = Physics2D.Raycast(frontCheck.position, transform.right, 50f, groundLayer);
-        if(_thereIsSomething && frontRay.collider.CompareTag("Movable")){
+        frontRay = Physics2D.Raycast(frontCheck.position, transform.right, 1f, groundLayer);
+        _thereIsGroundFront = frontRay;
+
+        topRay = Physics2D.Raycast(topCheck.position, transform.right, 1f, groundLayer);
+        _thereIsGroundTop = topRay;
+        if(_thereIsGroundFront && !_thereIsGroundTop)
+        {
+            _canClimbLedge = true;
+            Debug.Log("CanClimbLedge " + _canClimbLedge);
+        }
+        else
+        {
+            _canClimbLedge = false;
+        }
+        
+
+        if(_thereIsGroundFront && frontRay.collider.CompareTag("Movable")){
             _canDrag = true;
             //Debug.Log("Candrag");
         }
@@ -163,6 +190,7 @@ public class PlayerStateMachine : MonoBehaviour
             _canDrag = false;
         }
     }
+
     void Move(float movementInput)
     {
         _rb.velocity = new Vector2(movementInput, _rb.velocity.y);

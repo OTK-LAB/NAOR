@@ -6,7 +6,7 @@ public class PlayerGroundedState : PlayerBaseState
     :base (currentContext, playerStateFactory)
     {
         IsRootState = true;
-}
+    }
     public override void EnterState()
     {
         InitializeSubstate();
@@ -14,7 +14,6 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void UpdateState()
     {
-        Ctx.CheckFront();
         CheckSwitchStates();
     }
     public override void ExitState()
@@ -23,7 +22,7 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(!Ctx.IsOnSlope && Ctx.IsJumpPressed)
+        if(!Ctx.IsOnSlope && !Ctx.CanClimbLedge && Ctx.IsJumpPressed)
         {
             SwitchState(Factory.Jump());
         }
@@ -34,6 +33,10 @@ public class PlayerGroundedState : PlayerBaseState
         if(!Ctx.IsOnSlope && Ctx.DragToggle)
         {
             SwitchState(Factory.Drag());
+        }
+        if(Ctx.CanClimbLedge && Ctx.IsJumpPressed)
+        {
+            SwitchState(Factory.Climb());
         }
     }
     public override void InitializeSubstate()

@@ -7,7 +7,9 @@ enum PlayerStates {
     drag,
     jump,
     attack,
-    slide
+    slide,
+    climb,
+    hang
 }
 
 public class PlayerStateFactory
@@ -25,6 +27,8 @@ public class PlayerStateFactory
         _states[PlayerStates.jump] = new PlayerJumpingState(_context, this);
         _states[PlayerStates.attack] = new PlayerAttackingState(_context, this);
         _states[PlayerStates.slide] = new PlayerSlideState(_context, this);
+        _states[PlayerStates.climb] = new PlayerClimbState(_context, this);
+        _states[PlayerStates.hang] = new PlayerHangState(_context, this);
     }
 
     public PlayerBaseState Idle()
@@ -58,5 +62,13 @@ public class PlayerStateFactory
     public PlayerBaseState Slide()
     {
         return _states[PlayerStates.slide];
+    }
+    public PlayerBaseState Climb()
+    {
+        return _states[PlayerStates.climb];
+    }
+    public PlayerBaseState Hang()
+    {
+        return _states[PlayerStates.hang];
     }
 }
