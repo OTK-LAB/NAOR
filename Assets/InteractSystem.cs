@@ -19,6 +19,7 @@ public class InteractSystem : MonoBehaviour
     Transform PlayerPosition;
     bool active = false;
     bool actived = false;
+    bool activedd = false;
     Vector2 movement;
 
     bool deneme = true;
@@ -43,18 +44,14 @@ public class InteractSystem : MonoBehaviour
     }
     void tagControl(bool isInRange)
     {
-        /*
+
         if (this.tag == "stairs")
         {
-            anim = related_object.GetComponent<Animator>();
-            if (isInRange)
+            if (isInRange && !activedd)
                 stairsActive();
-            else
-                stairsCancel();
         }
-        */
        
-        if(this.tag == "platform")
+        else if(this.tag == "platform")
         {
             Debug.Log("Platformmuþ bu"); 
             anim2 = related_object2.GetComponent<Animator>();
@@ -90,20 +87,19 @@ public class InteractSystem : MonoBehaviour
             }
         }
     }
+    
     void stairsActive()
     {
-        anim.SetBool("Trigger", true);
+        interactAction.Invoke();
+        activedd = true;
     }
-    void stairsCancel()
-    {
-        anim.SetBool("Trigger", false);
-    }
+
     void platformActive()
     {
         Debug.Log("Çaðýrýldý");
         interactAction.Invoke();
         actived = true;
-        anim2.SetBool("trig", true);
+        anim2.SetBool("Trigger", true);
         
 
         StartCoroutine(backtoIdle());
@@ -112,7 +108,7 @@ public class InteractSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(14);
         
-        anim2.SetBool("trig", false);
+        anim2.SetBool("Trigger", false);
         actived = false;
         isInRange = false;
     }
