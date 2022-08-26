@@ -1275,6 +1275,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  interactAction2:
+    m_PersistentCalls:
+      m_Calls: []
   related_object: {fileID: 151475692}
   related_object2: {fileID: 904574057}
 --- !u!61 &282415054
@@ -5713,6 +5716,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  interactAction2:
+    m_PersistentCalls:
+      m_Calls: []
   related_object: {fileID: 12056840}
   related_object2: {fileID: 0}
 --- !u!1 &1562790639
@@ -7723,6 +7729,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  interactAction2:
+    m_PersistentCalls:
+      m_Calls: []
   related_object: {fileID: 358621143}
   related_object2: {fileID: 0}
 --- !u!61 &1753670115
@@ -8570,7 +8579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6767471348927797584, guid: 9bb5ade445de31d4ca5250fd95083eac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -68.9
+      value: -71
       objectReference: {fileID: 0}
     - target: {fileID: 6767471348927797584, guid: 9bb5ade445de31d4ca5250fd95083eac, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8724,7 +8733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5960616312223843821, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.5
+      value: -7.4
       objectReference: {fileID: 0}
     - target: {fileID: 5960616312223843821, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8775,7 +8784,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1172923122}
     - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
+      propertyPath: interactAction2.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
       propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
+      propertyPath: interactAction2.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
@@ -8783,12 +8800,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 114980359}
     - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
+      propertyPath: interactAction2.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 114980359}
+    - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
       propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: miniStairsGo
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
+      propertyPath: interactAction2.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
+      propertyPath: interactAction2.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: miniStairsCome
       objectReference: {fileID: 0}
     - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
       propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: EasingEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
+      propertyPath: interactAction2.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EasingEditor, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
+      propertyPath: interactAction2.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
@@ -9119,6 +9156,9 @@ MonoBehaviour:
   isInRange: 0
   interactKey: 0
   interactAction:
+    m_PersistentCalls:
+      m_Calls: []
+  interactAction2:
     m_PersistentCalls:
       m_Calls: []
   related_object: {fileID: 0}

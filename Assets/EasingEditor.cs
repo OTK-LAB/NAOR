@@ -27,14 +27,14 @@ public class EasingEditor : MonoBehaviour
     public void miniStairsGo()
     {
         Debug.Log("merdivenler gidiyo");
-        LeanTween.moveX(miniStairsForward, -74, 10);
+        LeanTween.moveX(miniStairsForward, -74, 3);
        
     }
 
     public void miniStairsCome()
     {
         Debug.Log("merdivenler geliyor");
-        LeanTween.moveX(miniStairsBack, -71, 10);
+        LeanTween.moveX(miniStairsBack, -71, 5);
     }
 
 
