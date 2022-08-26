@@ -55,7 +55,7 @@ public class ReflectiveCube : MonoBehaviour
                 Debug.Log("carptim");
                 boxhit = _hit.collider;
                 Debug.Log(boxhit.gameObject);
-                correct_box = _hit.collider.gameObject;
+               // correct_box = _hit.collider.gameObject;
                 _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
                 _hit.collider.GetComponent<ReflectiveCube>().hitMe = true;
             }
