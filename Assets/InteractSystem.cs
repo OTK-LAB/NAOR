@@ -10,30 +10,39 @@ public class InteractSystem : MonoBehaviour
     public KeyCode interactKey;
     public UnityEvent interactAction;
     public GameObject related_object;
-    public GameObject related_object2;
+    public GameObject related_cp;
     public GameObject easingEditor;
+    GameObject player;
 
     Rigidbody2D related_rigidbody; 
     Rigidbody2D player_rb; 
     Animator anim;
     
-    Transform PlayerPosition;
     bool active = false;
-    
-    
+    [HideInInspector] public bool arrowHit = false;
+    bool playerMovement = true;
+
     Vector2 movement;
 
-    bool deneme = true;
+
     void Start()
     {
-      
+        player = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
     {
         if (this.tag != "Player")
             tagControl(isInRange);
-        else if (this.tag == "Player" && deneme)
+        else if (this.tag == "Player" && playerMovement)
             move();
+        if (arrowHit)
+        {
+            Debug.Log("reborn");
+            GameObject.FindGameObjectWithTag("darkness").GetComponent<Animator>().enabled = true;
+            arrowHit = false;
+            active = false;
+            player.GetComponent<Transform>().position = movement;
+        }
     }
 
     public void move()
@@ -58,10 +67,8 @@ public class InteractSystem : MonoBehaviour
         }
        
         else if(this.tag == "platform")
-        {
-            
-            anim = related_object2.GetComponent<Animator>();
-            
+        {  
+            anim = related_object.GetComponent<Animator>();            
             if (isInRange && !active)
                 platformActive();
         }
@@ -88,6 +95,7 @@ public class InteractSystem : MonoBehaviour
         {
             if(isInRange && !active)
             {
+                movement = new Vector2 (related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
                 active = true;
                 interactAction.Invoke();
             }
@@ -107,13 +115,10 @@ public class InteractSystem : MonoBehaviour
         active = false;
     }
     void platformActive()
-    {
-        
+    {        
         interactAction.Invoke();
         active = true;
         anim.SetBool("Trigger", true);
-        
-
         StartCoroutine(backtoIdle());
     }
     IEnumerator backtoIdle()
@@ -127,10 +132,24 @@ public class InteractSystem : MonoBehaviour
     public void BoxControl()
     {
         Debug.Log("Doðru tuþ, hareket etcem");
-        deneme = false;
+        playerMovement = false;
         movement.x = Input.GetAxisRaw("Horizontal"); //x'i unity üzerinden kapatýyoruz zaten hareket etmemiþ oluyo 
-        movement.y= Input.GetAxisRaw("Vertical");
-        related_rigidbody.MovePosition(related_rigidbody.position + movement * 0.5f * Time.fixedDeltaTime);
+        movement.x = related_rigidbody.position.x;
+        //movement.y= Input.GetAxisRaw("Vertical");
+        if ( Input.GetKeyDown(KeyCode.W))
+        {
+            movement.y = related_rigidbody.position.y + 5;
+            related_rigidbody.position = movement;
+        }
+            
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            movement.y = related_rigidbody.position.y - 5;
+            related_rigidbody.position = movement;
+        }
+            
+      
+        //related_rigidbody.MovePosition(related_rigidbody.position + movement * 0.5f * Time.fixedDeltaTime);
 
     }
     private void OnTriggerEnter2D(Collider2D collision)

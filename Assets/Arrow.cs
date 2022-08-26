@@ -14,20 +14,21 @@ public class Arrow : MonoBehaviour
     public static float daggerDamage = 5f;
     public static Arrow instance;
     float y, x;
-
+    bool b = false;
     public bool left;
     public bool right;
+    public GameObject InteractSystemTrigger;
     // Start is called before the first frame update
     private void Awake()
     {
         instance = this;
     }
+
     void Start()
     {
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
         rb = this.GetComponent<Rigidbody2D>();
         x = PlayerPosition.position.x + 20;
-        Debug.Log(x);
         if (this.gameObject.tag=="uparrow")
             y = PlayerPosition.position.y + 1;
         else if(this.gameObject.tag=="downarrow")
@@ -64,8 +65,11 @@ public class Arrow : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            InteractSystemTrigger.GetComponent<InteractSystem>().arrowHit = true;
+            Debug.Log("dead");
             Destroy(gameObject);
-            //collision.transform.SendMessage("DamagePlayer", 10);
+           // this.gameObject.SetActive (false);
+            b = true;
         }
 
     }
