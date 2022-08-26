@@ -10,6 +10,7 @@ public class EasingEditor : MonoBehaviour
     public GameObject miniStairsBack;
 
 
+
     void Start()
     {
        
@@ -20,14 +21,14 @@ public class EasingEditor : MonoBehaviour
     public void platformController()
     {
         Debug.Log("Platform haraket ediyor");
-        LeanTween.moveX(platformForward, -6, 4); //if it hasn't delay second one be active
-        LeanTween.moveX(platformBack, 2, 4).setDelay(10f);
+        LeanTween.moveX(platformForward, -6, 2); //if it hasn't delay second one be active
+        LeanTween.moveX(platformBack, 2, 1).setDelay(4f);
     }
 
     public void miniStairsGo()
     {
         Debug.Log("merdivenler gidiyo");
-        LeanTween.moveX(miniStairsForward, -74, 3);
+        LeanTween.moveX(miniStairsForward, -74, 3); //moves 'current position' to -74 in 3 second
        
     }
 

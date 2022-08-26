@@ -9,23 +9,24 @@ public class InteractSystem : MonoBehaviour
     public bool isInRange;
     public KeyCode interactKey;
     public UnityEvent interactAction;
-    public UnityEvent interactAction2;
     public GameObject related_object;
     public GameObject related_object2;
+    public GameObject easingEditor;
 
     Rigidbody2D related_rigidbody; 
     Rigidbody2D player_rb; 
     Animator anim;
-    Animator anim2;
+    
     Transform PlayerPosition;
     bool active = false;
-    bool actived = false;
-    bool activedd = false;
+    
+    
     Vector2 movement;
 
     bool deneme = true;
     void Start()
     {
+      
     }
     void Update()
     {
@@ -48,9 +49,9 @@ public class InteractSystem : MonoBehaviour
 
         if (this.tag == "stairs")
         {
-            if (isInRange && !activedd)
+            if (isInRange && !active)
                 stairsActive();
-            else if (!isInRange && activedd)
+            else if (!isInRange && active)
                 stairsDeactive();
 
             
@@ -59,9 +60,9 @@ public class InteractSystem : MonoBehaviour
         else if(this.tag == "platform")
         {
             
-            anim2 = related_object2.GetComponent<Animator>();
+            anim = related_object2.GetComponent<Animator>();
             
-            if (isInRange && !actived)
+            if (isInRange && !active)
                 platformActive();
         }
        
@@ -96,30 +97,31 @@ public class InteractSystem : MonoBehaviour
     void stairsActive()
     {
         interactAction.Invoke();
-        activedd = true;
+        active = true;
     }
 
     void stairsDeactive()
     {
-        interactAction2.Invoke();
-        activedd = false;
+        easingEditor.GetComponent<EasingEditor>().miniStairsCome();
+        
+        active = false;
     }
     void platformActive()
     {
         
         interactAction.Invoke();
-        actived = true;
-        anim2.SetBool("Trigger", true);
+        active = true;
+        anim.SetBool("Trigger", true);
         
 
         StartCoroutine(backtoIdle());
     }
     IEnumerator backtoIdle()
     {
-        yield return new WaitForSeconds(14);
+        yield return new WaitForSeconds(6); // WaitForSeconds is (first move time + delay time)
         
-        anim2.SetBool("Trigger", false);
-        actived = false;
+        anim.SetBool("Trigger", false);
+        active = false;
         isInRange = false;
     }
     public void BoxControl()
@@ -142,5 +144,6 @@ public class InteractSystem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
             isInRange = false;
+        
     }
 }

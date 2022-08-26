@@ -508,7 +508,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8928973714970435745, guid: e01303c1f562e9945bed42b432b8651c, type: 3}
   m_PrefabInstance: {fileID: 8928973715065444006}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1162201407}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6b860fd2d07ac24fa44f50e0a58893e, type: 3}
@@ -1275,11 +1275,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  interactAction2:
-    m_PersistentCalls:
-      m_Calls: []
   related_object: {fileID: 151475692}
-  related_object2: {fileID: 904574057}
+  related_object2: {fileID: 0}
+  easingEditor: {fileID: 0}
 --- !u!61 &282415054
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4464,6 +4462,11 @@ Transform:
   m_Father: {fileID: 572353769}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1162201407 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8928973714970435744, guid: e01303c1f562e9945bed42b432b8651c, type: 3}
+  m_PrefabInstance: {fileID: 8928973715065444006}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1171910306
 GameObject:
   m_ObjectHideFlags: 0
@@ -5699,7 +5702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe5ab0ee45d99648834eab57a90b588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInRange: 0
+  isInRange: 1
   interactKey: 101
   interactAction:
     m_PersistentCalls:
@@ -5716,11 +5719,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  interactAction2:
-    m_PersistentCalls:
-      m_Calls: []
   related_object: {fileID: 12056840}
   related_object2: {fileID: 0}
+  easingEditor: {fileID: 0}
 --- !u!1 &1562790639
 GameObject:
   m_ObjectHideFlags: 0
@@ -7729,11 +7730,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  interactAction2:
-    m_PersistentCalls:
-      m_Calls: []
   related_object: {fileID: 358621143}
   related_object2: {fileID: 0}
+  easingEditor: {fileID: 0}
 --- !u!61 &1753670115
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8780,12 +8779,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
+      propertyPath: easingEditor
+      value: 
+      objectReference: {fileID: 1162201407}
+    - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
       propertyPath: related_object
       value: 
       objectReference: {fileID: 1172923122}
     - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
       propertyPath: interactAction2.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5960616312223843823, guid: 81eddba245aa7bb488a28a060ceb15be, type: 3}
       propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -9158,11 +9161,9 @@ MonoBehaviour:
   interactAction:
     m_PersistentCalls:
       m_Calls: []
-  interactAction2:
-    m_PersistentCalls:
-      m_Calls: []
   related_object: {fileID: 0}
   related_object2: {fileID: 0}
+  easingEditor: {fileID: 0}
 --- !u!50 &2064790005
 Rigidbody2D:
   serializedVersion: 4
@@ -9451,14 +9452,22 @@ PrefabInstance:
       propertyPath: m_Offset.x
       value: -0.12909603
       objectReference: {fileID: 0}
+    - target: {fileID: 1296227678434174401, guid: 854c43f96d57ae843b1c5ae00fdd50c4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1296227678434174402, guid: 854c43f96d57ae843b1c5ae00fdd50c4, type: 3}
       propertyPath: isInRange
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1296227678434174402, guid: 854c43f96d57ae843b1c5ae00fdd50c4, type: 3}
+      propertyPath: easingEditor
+      value: 
+      objectReference: {fileID: 1162201407}
+    - target: {fileID: 1296227678434174402, guid: 854c43f96d57ae843b1c5ae00fdd50c4, type: 3}
       propertyPath: related_object
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1790513527}
     - target: {fileID: 1296227678434174402, guid: 854c43f96d57ae843b1c5ae00fdd50c4, type: 3}
       propertyPath: related_object2
       value: 
@@ -9629,6 +9638,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3624582076133808236, guid: 155b46fbc3696544ba04608b997fb9c6, type: 3}
+      propertyPath: easingEditor
+      value: 
+      objectReference: {fileID: 1162201407}
     - target: {fileID: 3624582076133808236, guid: 155b46fbc3696544ba04608b997fb9c6, type: 3}
       propertyPath: related_object
       value: 
