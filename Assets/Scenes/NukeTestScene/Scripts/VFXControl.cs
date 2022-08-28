@@ -5,12 +5,16 @@ using UnityEngine;
 public class VFXControl : MonoBehaviour
 {
     public float        nukeDelay;
-    public GameObject   meteor;
-    public GameObject   nuke;
+    public GameObject   meteorVFX;
+    public GameObject   nukeVFX;
+    public GameObject   audioSourceObject;
+    public AudioClip    nukeSFX;
+    //public AudioClip    meteorSFX;
+    private AudioSource  audioSource;
 
     void Start()
     {
-        
+        audioSource = audioSourceObject.transform.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -18,7 +22,8 @@ public class VFXControl : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(Nuke());
-            GameObject vfxmeteor = Instantiate(meteor) as GameObject;
+            //audioSource.PlayOneShot(meteorSFX);
+            GameObject vfxmeteor = Instantiate(meteorVFX) as GameObject;
             Destroy(vfxmeteor, nukeDelay);
         }
     }
@@ -26,7 +31,8 @@ public class VFXControl : MonoBehaviour
     IEnumerator Nuke()
     {
         yield return new WaitForSeconds(nukeDelay);
-        GameObject vfxNuke = Instantiate(nuke) as GameObject;
+        audioSource.PlayOneShot(nukeSFX);
+        GameObject vfxNuke = Instantiate(nukeVFX) as GameObject;
         Destroy(vfxNuke, 10);
     }
 }
