@@ -27,7 +27,6 @@ public class TempPlayer : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
-        Debug.Log(Input.GetAxisRaw("Horizontal"));
         xAxis = Input.GetAxisRaw("Horizontal");
 
 
