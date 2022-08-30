@@ -13,9 +13,9 @@ public class DayNightCycle : MonoBehaviour
     public Color dayTint;
     public Color nightTint;
     public Light2D globalLight;
-    public SpriteRenderer stars;
     public VolumeProfile volume;
 
+    public SpriteRenderer[] stars;
     public Light2D[] lights;
 
     void Start()
@@ -32,7 +32,9 @@ public class DayNightCycle : MonoBehaviour
     {
         cam.backgroundColor = Color.Lerp(dayColor, Color.black, Mathf.PingPong(Time.time/cycleTime, 1));
         globalLight.intensity = Mathf.Lerp(0.9f, 0.6f, Mathf.PingPong(Time.time / cycleTime, 1));
-        stars.color = new Color(stars.color.r, stars.color.g, stars.color.b, Mathf.Lerp(0f, 1f, Mathf.PingPong(Time.time / cycleTime, 1)));
+
+        foreach (var star in stars)
+            star.color = new Color(star.color.r, star.color.g, star.color.b, Mathf.Lerp(0f, 1f, Mathf.PingPong(Time.time / cycleTime, 1)));
             
         if(volume.TryGet<Bloom>(out Bloom bloom))
         {
