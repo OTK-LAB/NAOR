@@ -29,15 +29,17 @@ public class PlayerStateMachine : MonoBehaviour
     float _defaultGravity;
 
     //Dragging and Ledge Detection
+    [SerializeField] private float _detectionDistance;
     bool _toggleDrag = false;
     public Transform frontCheck;
-    public Transform topCheck;
+    public Transform _ledgeCheckTop;
+    public Transform _ledgeCheckBot;
     bool _thereIsGroundFront;
     bool _thereIsGroundTop;
+    bool _thereIsGroundBot;
     bool _canDrag;
     bool _canClimbLedge;
     RaycastHit2D frontRay;
-    RaycastHit2D topRay;
 
     //Sliding
     Collider2D _groundCollider;
@@ -111,12 +113,15 @@ public class PlayerStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CurrentState.UpdateStates();
+        CheckForLedges();
         CheckForGround();
         FlipPlayer();
-        CurrentState.UpdateStates();
+        CheckFront();
     }
     private void FixedUpdate() {
-        CheckFront();
+        
+        
         Move(_appliedMovementX);
     }
 
@@ -165,21 +170,8 @@ public class PlayerStateMachine : MonoBehaviour
         //Debug.Log("IS ON SLOPE: " + _isOnSlope);
     }
     public void CheckFront(){
-        frontRay = Physics2D.Raycast(frontCheck.position, transform.right, 1f, groundLayer);
+        frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _detectionDistance, groundLayer);
         _thereIsGroundFront = frontRay;
-
-        topRay = Physics2D.Raycast(topCheck.position, transform.right, 1f, groundLayer);
-        _thereIsGroundTop = topRay;
-        if(_thereIsGroundFront && !_thereIsGroundTop)
-        {
-            _canClimbLedge = true;
-            Debug.Log("CanClimbLedge " + _canClimbLedge);
-        }
-        else
-        {
-            _canClimbLedge = false;
-        }
-        
 
         if(_thereIsGroundFront && frontRay.collider.CompareTag("Movable")){
             _canDrag = true;
@@ -189,6 +181,22 @@ public class PlayerStateMachine : MonoBehaviour
         {
             _canDrag = false;
         }
+    }
+
+    public void CheckForLedges()
+    {
+        _thereIsGroundTop = Physics2D.Raycast(_ledgeCheckTop.position, transform.right, _detectionDistance, groundLayer);
+        _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, transform.right, _detectionDistance, groundLayer);
+
+        if(_thereIsGroundBot && !_thereIsGroundTop)
+        {
+            _canClimbLedge = true;
+        }
+        else
+        {
+            _canClimbLedge = false;
+        }
+        //Debug.Log("Can Climb Ledge: " + _canClimbLedge);
     }
 
     void Move(float movementInput)

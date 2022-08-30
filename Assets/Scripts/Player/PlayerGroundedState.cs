@@ -22,7 +22,7 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(!Ctx.IsOnSlope && !Ctx.CanClimbLedge && Ctx.IsJumpPressed)
+        if(!Ctx.IsOnSlope && !Ctx.CanClimbLedge && (Ctx.IsJumpPressed || !Ctx.IsOnGround))
         {
             SwitchState(Factory.Jump());
         }

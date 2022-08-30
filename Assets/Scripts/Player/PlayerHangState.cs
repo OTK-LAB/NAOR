@@ -11,6 +11,7 @@ public class PlayerHangState : PlayerBaseState
         Ctx.Rigidbod.gravityScale = 0;
         Ctx.Rigidbod.velocity = new Vector2(0.0f, 0.0f);
         Ctx.PlayerAnimator.Play("PlayerHang");
+        Ctx.CanFlip = false;
     }
     public override void UpdateState()
     {
@@ -18,7 +19,7 @@ public class PlayerHangState : PlayerBaseState
     }
     public override void ExitState()
     {
-        
+        Ctx.CanFlip = true;   
     }
     public override void CheckSwitchStates()
     {

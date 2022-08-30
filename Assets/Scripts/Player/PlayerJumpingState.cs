@@ -10,8 +10,13 @@ public class PlayerJumpingState : PlayerBaseState
     {
         InitializeSubstate();
         //Debug.Log("JUMP STATE");
-        Ctx.Rigidbod.velocity = new Vector2(Ctx.Rigidbod.velocity.x, Ctx.JumpForce);
-        Ctx.PlayerAnimator.Play("PlayerJump");
+        if(Ctx.IsOnGround)
+        {
+            Ctx.Rigidbod.velocity = new Vector2(Ctx.Rigidbod.velocity.x, Ctx.JumpForce);
+            Ctx.PlayerAnimator.Play("PlayerJump");
+        }
+
+        
     }
     public override void UpdateState()
     {   
@@ -21,7 +26,7 @@ public class PlayerJumpingState : PlayerBaseState
     {
         //FIXME:
         // Does not work for now
-        Ctx.PlayerAnimator.Play("PlayerLand");
+        // Ctx.PlayerAnimator.Play("PlayerLand");
     }
     public override void CheckSwitchStates()
     {
