@@ -9,14 +9,17 @@ public class InteractSystem : MonoBehaviour
     public bool isInRange;
     public KeyCode interactKey;
     public UnityEvent interactAction;
-    public GameObject related_object;
+    public GameObject related_object , related_object2;
     public GameObject related_cp;
     public GameObject easingEditor;
+    private GameObject takeArrow;
+    private GameObject takeArrow2;
     GameObject player;
 
     Rigidbody2D related_rigidbody; 
     Rigidbody2D player_rb; 
     Animator anim;
+
     
     bool active = false;
     [HideInInspector] public bool arrowHit = false;
@@ -95,13 +98,56 @@ public class InteractSystem : MonoBehaviour
         {
             if(isInRange && !active)
             {
+                arrowActive();
                 movement = new Vector2 (related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
                 active = true;
-                interactAction.Invoke();
+            }
+        }
+        else if (this.tag == "arrowtrigger2")
+        {
+            if (isInRange && !active)
+            {
+                arrowActive();
+                movement = new Vector2(related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
+                active = true;
+            }
+        }
+        else if (this.tag == "arrowtrigger3")
+        {
+            if (isInRange && !active)
+            {
+               
+                arrowActive2();
+                
+                movement = new Vector2(related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
+                active = true;
             }
         }
     }
     
+    void arrowActive()
+    {
+        takeArrow = Instantiate(related_object, related_cp.transform.position, Quaternion.identity);
+        takeArrow.SetActive(true);
+        StartCoroutine(backtoArrow());
+
+    }
+    void arrowActive2()
+    {
+
+        takeArrow = Instantiate(related_object, related_cp.transform.position, Quaternion.identity);
+        takeArrow.SetActive(true);
+        takeArrow2 = Instantiate(related_object2, related_cp.transform.position, Quaternion.identity);
+        takeArrow2.SetActive(true);
+        StartCoroutine(backtoArrow());
+    }
+    IEnumerator backtoArrow()
+    {
+        yield return new WaitForSeconds(2); // WaitForSeconds is (first move time + delay time)
+
+        active = false;
+        isInRange = false;
+    }
     void stairsActive()
     {
         interactAction.Invoke();
