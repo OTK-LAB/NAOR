@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8868875594440754266}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.48, y: -0.01, z: 0}
+  m_LocalPosition: {x: 0.43, y: -0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8868875594690866232}
   - component: {fileID: 8868875594690866235}
   - component: {fileID: 8868875594690866234}
-  - component: {fileID: 8868875594690866238}
+  - component: {fileID: 8052600516390882259}
   m_Layer: 0
   m_Name: Light Point
   m_TagString: Light
@@ -171,7 +171,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.05303192
-        value: 0.07771492
+        value: 0.13156319
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -234,13 +234,10 @@ MonoBehaviour:
   laserFirePoint: {fileID: 8868875594440754267}
   m_lineRenderer: {fileID: 8868875594690866235}
   hitMe: 0
-  reflectObject1: {fileID: 0}
-  reflectObject2: {fileID: 0}
-  reflectObject3: {fileID: 0}
-  reflectObject4: {fileID: 0}
-  reflectObject5: {fileID: 0}
---- !u!61 &8868875594690866238
-BoxCollider2D:
+  hitWall: 0
+  correct_box: {fileID: 0}
+--- !u!58 &8052600516390882259
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -253,15 +250,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Radius: 0.38
