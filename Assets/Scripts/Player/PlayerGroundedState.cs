@@ -22,37 +22,20 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(!Ctx.IsOnSlope && !Ctx.CanClimbLedge && (Ctx.IsJumpPressed || !Ctx.IsOnGround))
+        if(!Ctx.IsOnGround)
         {
-            SwitchState(Factory.Jump());
-        }
-        if(!Ctx.IsOnSlope && Ctx.IsCrouching)
-        {
-            SwitchState(Factory.Crouch());
-        }
-        if(!Ctx.IsOnSlope && Ctx.DragToggle)
-        {
-            SwitchState(Factory.Drag());
-        }
-        if(Ctx.CanClimbLedge && Ctx.IsJumpPressed)
-        {
-            SwitchState(Factory.Climb());
+            SwitchState(Factory.InAir());
         }
     }
     public override void InitializeSubstate()
     {
-        if(!Ctx.IsMovementPressed)
+        if(Ctx.IsOnSlope)
         {
-            SetSubState(Factory.Idle());
+            SetSubState(Factory.Slide());
         }
-        if(Ctx.IsMovementPressed)
+        else
         {
-            SetSubState(Factory.Run());
+            SetSubState(Factory.Standing());
         }
-    }
-
-    public override string StateName()
-    {
-        return "Grounded";
     }
 }

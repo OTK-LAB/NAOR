@@ -25,8 +25,6 @@ public abstract class PlayerBaseState
     public abstract void ExitState();
     public abstract void CheckSwitchStates();
     public abstract void InitializeSubstate();
-    public abstract string StateName();
-
     public void UpdateStates()
     {
         UpdateState();
@@ -64,6 +62,7 @@ public abstract class PlayerBaseState
     {
         _currentSubState = newSubState;
         newSubState.SetSuperState(this);
+        _currentSubState.EnterState();
     }
     protected void PrintCurrentHierarchy()
     {

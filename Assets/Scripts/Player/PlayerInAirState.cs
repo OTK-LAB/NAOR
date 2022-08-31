@@ -1,14 +1,15 @@
 using UnityEngine;
 
-public class PlayerCrouchState : PlayerBaseState
+public class PlayerInAirState : PlayerBaseState
 {
-    public PlayerCrouchState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerInAirState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory)
-    {}
+    {
+        IsRootState = true;
+    }
     public override void EnterState()
     {
         InitializeSubstate();
-        //Debug.Log("CROUCHING");
     }
     public override void UpdateState()
     {
@@ -20,20 +21,20 @@ public class PlayerCrouchState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(!Ctx.IsCrouching)
+        if(Ctx.IsOnGround)
         {
-            SwitchState(Factory.Standing());
+            SwitchState(Factory.Grounded());
         }
     }
     public override void InitializeSubstate()
     {
-        if(!Ctx.IsMovementPressed)
+        if(Ctx.Rigidbod.velocity.y > 0)
         {
-            SetSubState(Factory.Idle());
+            SetSubState(Factory.Jump());
         }
-        if(Ctx.IsMovementPressed)
+        if(Ctx.Rigidbod.velocity.y < 0)
         {
-            SetSubState(Factory.Run());
+            SetSubState(Factory.Fall());
         }
     }
 }

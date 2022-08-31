@@ -6,17 +6,11 @@ public class PlayerRunningState : PlayerBaseState
     :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {
-        if(SuperState == Factory.Jump()){
-            //Debug.Log("run : Jump");
-        }
-        if(SuperState==Factory.Slide())
-        {
-            //Debug.Log("run : slide");
-        }
+
     }
     public override void UpdateState()
     {
-        if(SuperState == Factory.Grounded())
+        if(SuperState == Factory.Standing())
         {
             Ctx.PlayerAnimator.Play("PlayerRun");
             
@@ -24,7 +18,8 @@ public class PlayerRunningState : PlayerBaseState
         if(SuperState == Factory.Crouch()){
             Ctx.PlayerAnimator.Play("PlayerCrawl");
             Ctx.AppliedMovement = Ctx.CurrentMovementInput.x * (Ctx.MovementSpeed / 2);
-        }else if(SuperState == Factory.Slide())
+        }
+        else if(SuperState == Factory.Slide())
         {
             Ctx.AppliedMovement = 0;
         }
@@ -44,28 +39,9 @@ public class PlayerRunningState : PlayerBaseState
         {
             SwitchState(Factory.Idle());
         }
-        if(Ctx.IsOnSlope)
-        {
-            SwitchState(Factory.Slide());
-        }
-        //if(Ctx.CanClimbLedge)
-        //{
-        //    if(SuperState == Factory.Grounded() && Ctx.IsJumpPressed){
-        //        SwitchState(Factory.Climb());
-        //    }
-        //    if(SuperState == Factory.Jump())
-        //    {
-        //        SwitchState(Factory.Hang());
-        //    }
-        //}
     }
     public override void InitializeSubstate()
     {
 
-    }
-
-    public override string StateName()
-    {
-        return "Run";
     }
 }

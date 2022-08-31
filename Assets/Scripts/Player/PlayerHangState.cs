@@ -3,9 +3,7 @@ using UnityEngine;
 public class PlayerHangState : PlayerBaseState
 {
     public PlayerHangState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
-    :base (currentContext, playerStateFactory) {
-        IsRootState = true;
-    }
+    :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {
         Ctx.Rigidbod.gravityScale = 0;
@@ -31,10 +29,5 @@ public class PlayerHangState : PlayerBaseState
     public override void InitializeSubstate()
     {
         
-    }
-
-    public override string StateName()
-    {
-        return "Hang";
     }
 }

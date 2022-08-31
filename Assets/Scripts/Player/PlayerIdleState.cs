@@ -6,19 +6,11 @@ public class PlayerIdleState : PlayerBaseState
     :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {
-        if(SuperState == Factory.Jump()){
-            //Debug.Log("idle : Jump");
-        }
-        if(SuperState==Factory.Slide())
-        {
-            //Debug.Log("idle : slide");
-        }
         Ctx.AppliedMovement = 0;
-
     }
     public override void UpdateState()
     {
-        if(SuperState == Factory.Grounded())
+        if(SuperState == Factory.Standing())
         {
             Ctx.PlayerAnimator.Play("PlayerIdle");
         }
@@ -39,30 +31,9 @@ public class PlayerIdleState : PlayerBaseState
         {
             SwitchState(Factory.Run());
         }
-        if(Ctx.IsOnSlope)
-        {   
-            SwitchState(Factory.Slide());
-        }
-        //if(Ctx.CanClimbLedge)
-        //{
-        //    if(SuperState == Factory.Grounded() && Ctx.IsJumpPressed){
-        //        SwitchState(Factory.Climb());
-        //    }
-        //    if(SuperState == Factory.Jump())
-        //    {   
-        //        Debug.Log("buraya kadar celdum");
-        //        SwitchState(Factory.Hang());
-        //    }
-        //}
-
     }
     public override void InitializeSubstate()
     {
 
-    }
-
-    public override string StateName()
-    {
-        return "Idle";
     }
 }

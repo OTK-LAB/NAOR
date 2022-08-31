@@ -3,20 +3,12 @@ using UnityEngine;
 public class PlayerJumpingState : PlayerBaseState
 {
     public PlayerJumpingState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
-    :base (currentContext, playerStateFactory) {
-        IsRootState = true;
-    }
+    :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {
         InitializeSubstate();
-        //Debug.Log("JUMP STATE");
-        if(Ctx.IsOnGround)
-        {
-            Ctx.Rigidbod.velocity = new Vector2(Ctx.Rigidbod.velocity.x, Ctx.JumpForce);
-            Ctx.PlayerAnimator.Play("PlayerJump");
-        }
-
-        
+        Ctx.Rigidbod.velocity = new Vector2(Ctx.Rigidbod.velocity.x, Ctx.JumpForce);
+        Ctx.PlayerAnimator.Play("PlayerJump");        
     }
     public override void UpdateState()
     {   
@@ -24,15 +16,13 @@ public class PlayerJumpingState : PlayerBaseState
     }
     public override void ExitState()
     {
-        //FIXME:
-        // Does not work for now
-        // Ctx.PlayerAnimator.Play("PlayerLand");
+
     }
     public override void CheckSwitchStates()
     {
-        if(Ctx.IsOnGround)
+        if(Ctx.Rigidbod.velocity.y < 0)
         {
-            SwitchState(Factory.Grounded());
+            SwitchState(Factory.Fall());
         }
         if(Ctx.CanClimbLedge)
         {
@@ -49,10 +39,5 @@ public class PlayerJumpingState : PlayerBaseState
         {
             SetSubState(Factory.Run());
         }
-    }
-
-    public override string StateName()
-    {
-        return "Jump";
     }
 }

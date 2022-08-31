@@ -6,16 +6,13 @@ public class PlayerClimbState : PlayerBaseState
     bool positionChanged;
     public PlayerClimbState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory) {
-        IsRootState = true;
     }
     public override void EnterState()
     {
         positionChanged = false;
-        waitTime = Time.time + 2;
+        waitTime = Time.time + 1.5f;
         Ctx.CanFlip = false;
         Ctx.PlayerAnimator.Play("PlayerClimb");
-
-        
     }
     public override void UpdateState()
     {
@@ -24,12 +21,14 @@ public class PlayerClimbState : PlayerBaseState
             positionChanged = true;
             if(Ctx.FacingRight)
             {
-                Ctx.Rigidbod.transform.position = new Vector2(Ctx.Rigidbod.transform.position.x + 2, Ctx.Rigidbod.transform.position.y + 3);
+                Ctx.Rigidbod.transform.position = new Vector2(Ctx.Rigidbod.transform.position.x + 2, Ctx.Rigidbod.transform.position.y + 2);
             }
             else
             {
-                Ctx.Rigidbod.transform.position = new Vector2(Ctx.Rigidbod.transform.position.x -2, Ctx.Rigidbod.transform.position.y + 3);
+                Ctx.Rigidbod.transform.position = new Vector2(Ctx.Rigidbod.transform.position.x -2, Ctx.Rigidbod.transform.position.y + 2);
             }
+            SwitchState(Factory.Standing());
+
         }
         CheckSwitchStates();
     }
@@ -40,20 +39,11 @@ public class PlayerClimbState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(Time.time >= waitTime)
-        {
-            SwitchState(Factory.Grounded());
-        }
+
     }
     public override void InitializeSubstate()
     {
 
     }
 
-    public override string StateName()
-    {
-        return "Idle";
-    }
-
-    
 }

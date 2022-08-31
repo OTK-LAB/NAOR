@@ -9,7 +9,10 @@ enum PlayerStates {
     attack,
     slide,
     climb,
-    hang
+    hang,
+    inAir,
+    fall,
+    standing
 }
 
 public class PlayerStateFactory
@@ -29,6 +32,9 @@ public class PlayerStateFactory
         _states[PlayerStates.slide] = new PlayerSlideState(_context, this);
         _states[PlayerStates.climb] = new PlayerClimbState(_context, this);
         _states[PlayerStates.hang] = new PlayerHangState(_context, this);
+        _states[PlayerStates.inAir] = new PlayerInAirState(_context, this);
+        _states[PlayerStates.fall] = new PlayerFallState(_context, this);
+        _states[PlayerStates.standing] = new PlayerStandingState(_context, this);
     }
 
     public PlayerBaseState Idle()
@@ -70,5 +76,17 @@ public class PlayerStateFactory
     public PlayerBaseState Hang()
     {
         return _states[PlayerStates.hang];
+    }
+    public PlayerBaseState InAir()
+    {
+        return _states[PlayerStates.inAir];
+    }
+    public PlayerBaseState Fall()
+    {
+        return _states[PlayerStates.fall];
+    }
+    public PlayerBaseState Standing()
+    {
+        return _states[PlayerStates.standing];
     }
 }

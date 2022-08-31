@@ -5,12 +5,12 @@ public class PlayerDragState : PlayerBaseState
     //Used a workaround solution to detach the object we drag
     Transform groundcheck;
     Transform frontcheck;
+    Transform topcheck;
+    Transform botcheck;
 
     public PlayerDragState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory)
-    {
-        IsRootState = true;
-    }
+    {}
     public override void EnterState()
     {
         InitializeSubstate();
@@ -19,6 +19,8 @@ public class PlayerDragState : PlayerBaseState
         Ctx.CanFlip = false;
         groundcheck = Ctx.GroundCheck;
         frontcheck = Ctx.FrontCheck;
+        topcheck = Ctx.TopCheck;
+        botcheck = Ctx.BotCheck;
         //FIXME:
         //This is going to be controlled in idle and movement states once we have proper animations
         Ctx.PlayerAnimator.Play("PlayerDrag");
@@ -32,13 +34,15 @@ public class PlayerDragState : PlayerBaseState
         Ctx.Rigidbod.transform.DetachChildren();
         groundcheck.SetParent(Ctx.Rigidbod.transform);
         frontcheck.SetParent(Ctx.Rigidbod.transform);
+        topcheck.SetParent(Ctx.Rigidbod.transform);
+        botcheck.SetParent(Ctx.Rigidbod.transform);
         Ctx.CanFlip = true;
     }
     public override void CheckSwitchStates()
     {
         if(!Ctx.DragToggle)
         {
-            SwitchState(Factory.Grounded());
+            SwitchState(Factory.Standing());
         }
     }
     public override void InitializeSubstate()
@@ -51,9 +55,5 @@ public class PlayerDragState : PlayerBaseState
         {
             SetSubState(Factory.Run());
         }
-    }
-    public override string StateName()
-    {
-        return "Drag";
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 //  Implement jump cooldown
 //  Refine FrontCheck()
 //  Upgrade grounded detection with collider raycast
+//  Try to implement drag -> slide transition
 public class PlayerStateMachine : MonoBehaviour
 {
     // state variables
@@ -81,12 +82,14 @@ public class PlayerStateMachine : MonoBehaviour
     //For workaround in Drag. Will be changed
     public Transform GroundCheck { get {return groundCheck; }}
     public Transform FrontCheck { get {return frontCheck; }}
+    public Transform TopCheck { get {return _ledgeCheckTop;}}
+    public Transform BotCheck { get {return _ledgeCheckBot;}}
     public float DefaultGravity { get {return _defaultGravity;}}
     void Awake()
     {
         _defaultGravity = _rb.gravityScale;
         _states = new PlayerStateFactory(this);
-        _currentState = _states.Grounded();
+        _currentState = _states.InAir();
         _currentState.EnterState();
         _animator = GetComponent<Animator>();
 
@@ -120,8 +123,6 @@ public class PlayerStateMachine : MonoBehaviour
         CheckFront();
     }
     private void FixedUpdate() {
-        
-        
         Move(_appliedMovementX);
     }
 
