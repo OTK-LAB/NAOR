@@ -11,6 +11,11 @@ public class VFXControl : MonoBehaviour
     public AudioClip    nukeSFX;
     //public AudioClip    meteorSFX;
     private AudioSource  audioSource;
+    public Cinemachine.CinemachineVirtualCamera vcam;
+
+    public bool deployNuke = false;
+    private bool nukeDeployed = false;
+    private bool nuking;
 
     void Start()
     {
@@ -19,20 +24,44 @@ public class VFXControl : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(deployNuke)
         {
             StartCoroutine(Nuke());
             //audioSource.PlayOneShot(meteorSFX);
             GameObject vfxmeteor = Instantiate(meteorVFX) as GameObject;
             Destroy(vfxmeteor, nukeDelay);
+            deployNuke = false;
+        }
+        if (nuking && vcam.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain < 4.1f)
+            vcam.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain += Time.deltaTime / 2;
+        else if (!nuking && vcam.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain > 0)
+        {
+            vcam.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain -= Time.deltaTime * 2;
+            if (vcam.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain < 0)
+                vcam.GetCinemachineComponent<Cinemachine.CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player") && !nukeDeployed)
+        {
+            deployNuke = true;
+            nukeDeployed = true;
         }
     }
 
     IEnumerator Nuke()
     {
         yield return new WaitForSeconds(nukeDelay);
+        nuking = true;
         audioSource.PlayOneShot(nukeSFX);
         GameObject vfxNuke = Instantiate(nukeVFX) as GameObject;
         Destroy(vfxNuke, 10);
+        Invoke("DisableNuke", 9);
+    }
+
+    void DisableNuke()
+    {
+        nuking = false;
     }
 }
