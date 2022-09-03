@@ -93,8 +93,8 @@ Transform:
   m_GameObject: {fileID: 3566700556202655783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.31, y: -5.84, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 0.375}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3566700557266633652}
   - {fileID: 3566700556004403446}
@@ -170,7 +170,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 5
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -204,17 +204,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a324dd2e9a904044fb07f712148ec0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 7
   _detectionDistance: 1
   frontCheck: {fileID: 3566700556004403446}
   _ledgeCheckTop: {fileID: 3566700555855229747}
   _ledgeCheckBot: {fileID: 3566700557146729040}
   _rb: {fileID: 3566700556202655781}
-  jumpForce: 20
+  jumpForce: 10
   jumpTimer: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   groundCheck: {fileID: 3566700557266633652}
 --- !u!114 &3566700556202656217
 MonoBehaviour:
