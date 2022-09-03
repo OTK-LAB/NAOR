@@ -17,6 +17,8 @@ public class VFXControl : MonoBehaviour
     private bool nukeDeployed = false;
     private bool nuking;
 
+    public GameObject dustWave;
+
     void Start()
     {
         audioSource = audioSourceObject.transform.GetComponent<AudioSource>();
@@ -54,6 +56,7 @@ public class VFXControl : MonoBehaviour
     {
         yield return new WaitForSeconds(nukeDelay);
         nuking = true;
+        dustWave.SetActive(true);
         audioSource.PlayOneShot(nukeSFX);
         GameObject vfxNuke = Instantiate(nukeVFX) as GameObject;
         Destroy(vfxNuke, 10);
