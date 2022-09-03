@@ -3,7 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Box
+  - Light
+  - wall
+  - boxcontrol
+  - arrowtrigger3
+  - arrowtrigger
+  - arrowtrigger2
+  - downarrow
+  - uparrow
+  - ministairs
+  - stairs
+  - platform
+  - Slope
+  - Movable
   layers:
   - Default
   - TransparentFX
@@ -11,11 +25,11 @@ TagManager:
   - 
   - Water
   - UI
+  - Ground
   - 
   - 
   - 
-  - 
-  - 
+  - Nuke
   - 
   - 
   - 
@@ -41,6 +55,18 @@ TagManager:
   - name: Background
     uniqueID: 2840019169
     locked: 0
+  - name: ThirdRow
+    uniqueID: 1654577655
+    locked: 0
+  - name: SecondRow
+    uniqueID: 299241329
+    locked: 0
+  - name: FirstRow
+    uniqueID: 1695253253
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 1289085443
     locked: 0
