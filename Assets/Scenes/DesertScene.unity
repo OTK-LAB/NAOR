@@ -2512,7 +2512,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 152.44325, y: 9.863949}
+  m_Offset: {x: 150.16333, y: 9.863949}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2523,7 +2523,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 336.66324, y: 54.207016}
+  m_Size: {x: 332.1034, y: 54.207016}
   m_EdgeRadius: 0
 --- !u!66 &207303286
 CompositeCollider2D:
@@ -2545,18 +2545,18 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 207303285}
     m_ColliderPaths:
-    - - X: 3207748608
+    - - X: 3162150144
         Y: 369674560
       - X: -158883664
         Y: 369674560
       - X: -158883664
         Y: -172395584
-      - X: 3207748608
+      - X: 3162150144
         Y: -172395584
   m_CompositePaths:
     m_Paths:
-    - - {x: 320.77484, y: -17.23956}
-      - {x: 320.77484, y: 36.967457}
+    - - {x: 316.215, y: -17.23956}
+      - {x: 316.215, y: 36.967457}
       - {x: -15.888367, y: 36.967426}
       - {x: -15.888338, y: -17.23956}
   m_VertexDistance: 0.0005
@@ -10717,7 +10717,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 969101290}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.643908, y: 2.696155, z: 10.702166}
+  m_LocalPosition: {x: -29.255985, y: 2.6961503, z: 10.702166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10959,7 +10959,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.8209302, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -10976,7 +10976,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984441721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -29.643908, y: 2.696155, z: 10.702166}
+  m_LocalPosition: {x: -29.643906, y: 2.696155, z: 10.702166}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15990,7 +15990,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1488821753}
   - component: {fileID: 1488821754}
-  m_Layer: 0
+  - component: {fileID: 1488821755}
+  m_Layer: 6
   m_Name: "d\xFCzeltmeta\u015Ftabure"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16064,6 +16065,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1488821755
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488821752}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.09674001, y: -0.24183428}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 13.03, y: 11.9}
+    newSize: {x: 13.03, y: 11.9}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.2912574, y: 7.3534956}
+  m_EdgeRadius: 0
 --- !u!1 &1490330842
 GameObject:
   m_ObjectHideFlags: 0
@@ -17256,9 +17283,11 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -4.8562207, y: -3.8464532}
-  - {x: -4.682197, y: -3.8564515}
-  - {x: -4.4753714, y: -3.5205708}
+  - {x: -4.5473547, y: -3.93208}
+  - {x: -4.491623, y: -3.8676202}
+  - {x: -4.1172147, y: -3.740222}
+  - {x: -3.4674096, y: -3.6166215}
+  - {x: -3.0532131, y: -3.5280254}
   - {x: -0.6101843, y: -3.5321422}
   - {x: -0.6131968, y: -3.665488}
   - {x: 0.19009437, y: -3.664328}
@@ -20706,14 +20735,14 @@ EdgeCollider2D:
   - {x: 4.759312, y: 0.48929}
   - {x: 5.273394, y: 0.5921849}
   - {x: 5.633822, y: 0.7312638}
-  - {x: 6.101144, y: 0.97976714}
-  - {x: 6.6346097, y: 1.3539879}
-  - {x: 7.1938815, y: 1.8726634}
-  - {x: 7.4067235, y: 2.1490636}
-  - {x: 7.617168, y: 2.2836156}
-  - {x: 7.721873, y: 2.4323425}
-  - {x: 8.06052, y: 2.6220589}
-  - {x: 8.59458, y: 2.5882595}
+  - {x: 6.1446476, y: 0.94980025}
+  - {x: 7.02623, y: 1.3040437}
+  - {x: 7.6398964, y: 1.6728848}
+  - {x: 8.00503, y: 1.9792519}
+  - {x: 8.389548, y: 2.193715}
+  - {x: 8.57037, y: 2.2725198}
+  - {x: 8.854622, y: 2.4122913}
+  - {x: 9.270423, y: 2.5457697}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0

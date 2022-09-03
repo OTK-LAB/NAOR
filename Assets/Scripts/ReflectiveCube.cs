@@ -66,7 +66,7 @@ public class ReflectiveCube : MonoBehaviour
             }
             else
             {
-                Debug.Log("geri çektim");
+                Debug.Log("geri ï¿½ektim");
                 boxhit.GetComponent<ReflectiveCube>().hitMe = false;
 
             }
