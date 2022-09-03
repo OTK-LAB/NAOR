@@ -171,10 +171,18 @@ public class PlayerStateMachine : MonoBehaviour
         //Debug.Log("IS ON SLOPE: " + _isOnSlope);
     }
     public void CheckFront(){
-        frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _detectionDistance, groundLayer);
+        if(_facingRight)
+        {
+            frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _detectionDistance, groundLayer);
+        }
+        else
+        {
+            frontRay = Physics2D.Raycast(frontCheck.position, -transform.right, _detectionDistance, groundLayer);
+        }
+
         _thereIsGroundFront = frontRay;
 
-        if(_thereIsGroundFront && frontRay.collider.CompareTag("Movable")){
+        if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable") || frontRay.collider.CompareTag("Box"))){
             _canDrag = true;
             //Debug.Log("Candrag");
         }
@@ -186,8 +194,16 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void CheckForLedges()
     {
-        _thereIsGroundTop = Physics2D.Raycast(_ledgeCheckTop.position, transform.right, _detectionDistance, groundLayer);
-        _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, transform.right, _detectionDistance, groundLayer);
+        if(_facingRight)
+        {
+            _thereIsGroundTop = Physics2D.Raycast(_ledgeCheckTop.position, transform.right, _detectionDistance, groundLayer);
+            _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, transform.right, _detectionDistance, groundLayer);
+        }
+        else
+        {
+            _thereIsGroundTop = Physics2D.Raycast(_ledgeCheckTop.position, -transform.right, _detectionDistance, groundLayer);
+            _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, -transform.right, _detectionDistance, groundLayer);
+        }
 
         if(_thereIsGroundBot && !_thereIsGroundTop)
         {
