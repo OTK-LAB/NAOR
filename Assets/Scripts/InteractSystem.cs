@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class InteractSystem : MonoBehaviour
@@ -11,6 +12,7 @@ public class InteractSystem : MonoBehaviour
     public UnityEvent interactAction;
     public GameObject related_object , related_object2;
     public GameObject related_cp;
+    public Image image;
     public GameObject easingEditor;
     private GameObject takeArrow;
     private GameObject takeArrow2;
@@ -22,7 +24,8 @@ public class InteractSystem : MonoBehaviour
 
     
     bool active = false;
-    [HideInInspector] public bool arrowHit = false;
+   // [HideInInspector] 
+    public bool arrowHit = false;
     bool playerMovement = true;
 
     Vector2 movement;
@@ -36,26 +39,38 @@ public class InteractSystem : MonoBehaviour
     {
         if (this.tag != "Player")
             tagControl(isInRange);
-        else if (this.tag == "Player" && playerMovement)
-            move();
+       
         if (arrowHit)
-        {
-            Debug.Log("reborn");
-            GameObject.FindGameObjectWithTag("darkness").GetComponent<Animator>().enabled = true;
-            arrowHit = false;
-            active = false;
-            player.GetComponent<Transform>().position = movement;
-        }
+            ArrowHit();
     }
-
-    public void move()
+    void ArrowHit()
     {
-        player_rb = this.gameObject.GetComponent<Rigidbody2D>();
-        movement.x = Input.GetAxisRaw("Horizontal"); //x'i unity üzerinden kapatýyoruz zaten hareket etmemiþ oluyo 
-        movement.y = Input.GetAxisRaw("Vertical");
-        player_rb.MovePosition(player_rb.position + movement * 5f * Time.fixedDeltaTime);
-
+        movement.x = GameObject.FindGameObjectWithTag("start").GetComponent<Transform>().position.x;
+        movement.y = player.GetComponent<Transform>().position.y;
+        related_object2 = GameObject.FindGameObjectWithTag("uparrow");
+        Debug.Log(related_object2);
+        Destroy(related_object2);
+        related_object2 = GameObject.FindGameObjectWithTag("downarrow");
+        Debug.Log(related_object2);
+        Destroy(related_object2);
+        var tempColor = image.color;
+        tempColor.a = 255;
+        image.color = tempColor;
+        arrowHit = false;
+        active = false;
+        player.GetComponent<Transform>().position = movement;
+        StartCoroutine(darkness());
     }
+    IEnumerator darkness()
+    {
+        yield return new WaitForSeconds(0.75f); // WaitForSeconds is (first move time + delay time)
+        var tempColor = image.color;
+        tempColor.a = 0f;
+        image.color = tempColor;
+        active = false;
+    }
+
+    
     void tagControl(bool isInRange)
     {
 
@@ -94,24 +109,14 @@ public class InteractSystem : MonoBehaviour
                 interactAction.Invoke();
            
         }
-        else if(this.tag=="arrowtrigger")
+        else if(this.tag=="arrowtrigger" || this.tag == "arrowtrigger2")
         {
             if(isInRange && !active)
             {
                 arrowActive();
                 movement = new Vector2 (related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
                 active = true;
-                this.enabled = false;
-            }
-        }
-        else if (this.tag == "arrowtrigger2")
-        {
-            if (isInRange && !active)
-            {
-                arrowActive();
-                movement = new Vector2(related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
-                active = true;
-                this.enabled = false;
+          
             }
         }
         else if (this.tag == "arrowtrigger3")
@@ -121,7 +126,7 @@ public class InteractSystem : MonoBehaviour
                 arrowActive2();
                 movement = new Vector2(related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
                 active = true;
-                this.enabled = false;
+            
             }
         }
     }
@@ -203,7 +208,7 @@ public class InteractSystem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
             isInRange = true;
-        if (collision.gameObject.CompareTag("box") && this.tag == "stairs")
+        if (collision.gameObject.CompareTag("Box") && this.tag == "stairs")
             isInRange = true;
     }
     private void OnTriggerExit2D(Collider2D collision)

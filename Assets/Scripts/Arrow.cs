@@ -14,7 +14,6 @@ public class Arrow : MonoBehaviour
     public static float daggerDamage = 5f;
     public static Arrow instance;
     float y, x;
-    bool b = false;
     public bool left;
     public bool right;
     public GameObject InteractSystemTrigger;
@@ -53,7 +52,7 @@ public class Arrow : MonoBehaviour
             this.gameObject.GetComponent<SpriteRenderer>().flipX = false;
         }
 
-        Destroy(gameObject, 10f);
+        Destroy(gameObject, 5f);
 
     }
 
@@ -75,8 +74,7 @@ public class Arrow : MonoBehaviour
             InteractSystemTrigger.GetComponent<InteractSystem>().arrowHit = true;
             Debug.Log("dead");
             Destroy(gameObject);
-           // this.gameObject.SetActive (false);
-            b = true;
+
         }
 
     }
