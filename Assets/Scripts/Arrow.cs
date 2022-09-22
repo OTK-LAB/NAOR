@@ -30,9 +30,12 @@ public class Arrow : MonoBehaviour
         
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
         rb = this.GetComponent<Rigidbody2D>();
+        Debug.Log("arrow"+rb.position);
 
         x = SpawnPoint.transform.position.x;
         y = SpawnPoint.transform.position.y;
+
+        Debug.Log("yeniarrow" + SpawnPoint.transform.position);
 
         if (this.gameObject.tag == "uparrow")
             y = y + 1;

@@ -87,7 +87,7 @@ public class InteractSystem : MonoBehaviour
         else if(this.tag == "platform")
         {  
             anim = related_object.GetComponent<Animator>();            
-            if (isInRange && !active && Input.GetKeyDown(interactKey))
+            if (isInRange && !active)
                 platformActive();
         }
        
@@ -136,6 +136,7 @@ public class InteractSystem : MonoBehaviour
         takeArrow = Instantiate(related_object, related_cp.transform.position, Quaternion.identity);
         takeArrow.SetActive(true);
         StartCoroutine(backtoArrow());
+        Debug.Log(related_cp.transform.position);
 
     }
     void arrowActive2()
@@ -156,19 +157,18 @@ public class InteractSystem : MonoBehaviour
     }
     void stairsActive()
     {
-        interactAction.Invoke();
+        easingEditor.GetComponent<EasingEditor>().miniStairsGo();
         active = true;
     }
 
     void stairsDeactive()
     {
         easingEditor.GetComponent<EasingEditor>().miniStairsCome();
-        
         active = false;
     }
     void platformActive()
-    {        
-        interactAction.Invoke();
+    {
+        easingEditor.GetComponent<EasingEditor>().platformController();
         active = true;
         anim.SetBool("Trigger", true);
         StartCoroutine(backtoIdle());
