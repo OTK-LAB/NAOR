@@ -48,10 +48,8 @@ public class InteractSystem : MonoBehaviour
         movement.x = GameObject.FindGameObjectWithTag("start").GetComponent<Transform>().position.x;
         movement.y = player.GetComponent<Transform>().position.y;
         related_object2 = GameObject.FindGameObjectWithTag("uparrow");
-        Debug.Log(related_object2);
         Destroy(related_object2);
         related_object2 = GameObject.FindGameObjectWithTag("downarrow");
-        Debug.Log(related_object2);
         Destroy(related_object2);
         var tempColor = image.color;
         tempColor.a = 255;
@@ -133,10 +131,11 @@ public class InteractSystem : MonoBehaviour
     
     void arrowActive()
     {
+        Debug.Log("spawn point: "+related_cp.transform.position);
         takeArrow = Instantiate(related_object, related_cp.transform.position, Quaternion.identity);
         takeArrow.SetActive(true);
         StartCoroutine(backtoArrow());
-        Debug.Log(related_cp.transform.position);
+
 
     }
     void arrowActive2()

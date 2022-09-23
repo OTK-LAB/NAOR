@@ -17,7 +17,7 @@ public class Arrow : MonoBehaviour
     public bool left;
     public bool right;
     public GameObject InteractSystemTrigger;
-    public GameObject SpawnPoint;
+    //public GameObject SpawnPoint;
     
     // Start is called before the first frame update
     private void Awake()
@@ -30,12 +30,11 @@ public class Arrow : MonoBehaviour
         
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
         rb = this.GetComponent<Rigidbody2D>();
-        Debug.Log("arrow"+rb.position);
+        Debug.Log("doðdu güneþim"+rb.position);
 
-        x = SpawnPoint.transform.position.x;
-        y = SpawnPoint.transform.position.y;
+        x = rb.transform.position.x;
+        y = rb.transform.position.y;
 
-        Debug.Log("yeniarrow" + SpawnPoint.transform.position);
 
         if (this.gameObject.tag == "uparrow")
             y = y + 1;
