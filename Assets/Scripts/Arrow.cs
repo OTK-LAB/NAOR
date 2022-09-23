@@ -16,7 +16,6 @@ public class Arrow : MonoBehaviour
     float y, x;
     public bool left;
     public bool right;
-    public GameObject InteractSystemTrigger;
     //public GameObject SpawnPoint;
     
     // Start is called before the first frame update
@@ -73,7 +72,10 @@ public class Arrow : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            InteractSystemTrigger.GetComponent<InteractSystem>().arrowHit = true;
+            GameObject.FindGameObjectWithTag("arrowtrigger").GetComponent<InteractSystem>().arrowHit = true;
+            GameObject.FindGameObjectWithTag("arrowtrigger").GetComponent<InteractSystem>().isInRange = false;
+            //InteractSystemTrigger.GetComponent<InteractSystem>().arrowHit = true;
+           // Debug.Log(InteractSystemTrigger.GetComponent<InteractSystem>().arrowHit);
             Debug.Log("dead");
             Destroy(gameObject);
 

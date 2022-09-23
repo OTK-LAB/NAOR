@@ -39,7 +39,6 @@ public class InteractSystem : MonoBehaviour
     {
         if (this.tag != "Player")
             tagControl(isInRange);
-       
         if (arrowHit)
             ArrowHit();
     }
@@ -112,6 +111,7 @@ public class InteractSystem : MonoBehaviour
             if(isInRange && !active)
             {
                 arrowActive();
+             
                 movement = new Vector2 (related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
                 active = true;
           
