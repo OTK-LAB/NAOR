@@ -19,7 +19,7 @@ public class EasingEditor : MonoBehaviour
         buttonTriggerTransform = GameObject.FindGameObjectWithTag("platform").GetComponent<Transform>();
         Debug.Log("Platform haraket ediyor");
         LeanTween.moveX(platform, buttonTriggerTransform.position.x -16, 2); //if it hasn't delay second one be active
-        LeanTween.moveX(platform, buttonTriggerTransform.position.x -12 , 1).setDelay(4f);
+        LeanTween.moveX(platform, buttonTriggerTransform.position.x -11.7f , 1).setDelay(4f);
     }
 
     public void miniStairsGo()
