@@ -92,12 +92,12 @@ public class InteractSystem : MonoBehaviour
         {
             related_rigidbody = related_object.GetComponent<Rigidbody2D>();
 
-            if (isInRange && Input.GetKeyDown(interactKey) && !active)                  // etki alanýndaysa ve doðru tuþa basmýþsa
-                active = true;          //hareketi aktifleþtir player scripti enable false
-            else if (isInRange && Input.GetKeyDown(interactKey) && active)              // etki alanýndaysa, doðru tuþa bir kez daha basmýþsa
+            if (isInRange && Input.GetKeyDown(interactKey) && !active)                  // etki alanï¿½ndaysa ve doï¿½ru tuï¿½a basmï¿½ï¿½sa
+                active = true;          //hareketi aktifleï¿½tir player scripti enable false
+            else if (isInRange && Input.GetKeyDown(interactKey) && active)              // etki alanï¿½ndaysa, doï¿½ru tuï¿½a bir kez daha basmï¿½ï¿½sa
                 active = false;         //hareketi iptal et player scripti enable true
 
-            if (isInRange && active)             //etki alanýndaysa ve hareket yeteneðini aktif etmiþse iliþkili event fonksiyonunu çaðýr yani boxcontrol
+            if (isInRange && active)             //etki alanï¿½ndaysa ve hareket yeteneï¿½ini aktif etmiï¿½se iliï¿½kili event fonksiyonunu ï¿½aï¿½ï¿½r yani boxcontrol
                 interactAction.Invoke();
         }
         else if(this.tag=="music")
@@ -182,9 +182,9 @@ public class InteractSystem : MonoBehaviour
     }
     public void BoxControl()
     {
-        Debug.Log("Doðru tuþ, hareket etcem");
-        GameObject.FindGameObjectWithTag("Player").GetComponent<InteractSystem>().enabled = false;
-        movement.x = Input.GetAxisRaw("Horizontal"); //x'i unity üzerinden kapatýyoruz zaten hareket etmemiþ oluyo 
+        Debug.Log("Doï¿½ru tuï¿½, hareket etcem");
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<InteractSystem>().enabled = false;
+        movement.x = Input.GetAxisRaw("Horizontal"); //x'i unity ï¿½zerinden kapatï¿½yoruz zaten hareket etmemiï¿½ oluyo 
         movement.x = related_rigidbody.position.x;
         movement.y= Input.GetAxisRaw("Vertical");
         /*if ( Input.GetKeyDown(KeyCode.W))
