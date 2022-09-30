@@ -12,7 +12,8 @@ public class ReflectiveCube : MonoBehaviour
     Transform m_transform;
     public bool hitMe = false;
     public bool hitWall = false;
-    bool winwin = false;
+    bool winwin = false, hit=false;
+
 
 
     public GameObject correct_box;
@@ -52,22 +53,29 @@ public class ReflectiveCube : MonoBehaviour
             Draw2DRay(laserFirePoint.position, _hit.point);
             if (_hit.collider.tag == "Box")
             {
-                Debug.Log("carptim");
+                //Debug.Log("carptim");
                 boxhit = _hit.collider;
                 Debug.Log(boxhit.gameObject);
                // correct_box = _hit.collider.gameObject;
                 _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
                 _hit.collider.GetComponent<ReflectiveCube>().hitMe = true;
+                hit = true;
             }
             else if (_hit.collider.tag == "wall")
             {
+                Debug.Log("carptim");
                 _hit.collider.GetComponent<ReflectiveCube>().enabled = true;
                 _hit.collider.GetComponent<ReflectiveCube>().hitWall = true;
+                hit = true;
             }
-            else
+            else 
             {
-                Debug.Log("geri �ektim");
-                boxhit.GetComponent<ReflectiveCube>().hitMe = false;
+                if (hit)
+                {
+                    Debug.Log("geri cektim");
+                    hit = false;
+                    boxhit.GetComponent<ReflectiveCube>().hitMe = false;
+                }
 
             }
         }
