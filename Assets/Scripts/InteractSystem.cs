@@ -10,7 +10,7 @@ public class InteractSystem : MonoBehaviour
     public bool isInRange;
     public KeyCode interactKey;
     public UnityEvent interactAction;
-    public GameObject related_object , related_object2;
+    public GameObject related_object, related_object2;
     public GameObject related_cp;
     public Image image;
     public GameObject easingEditor;
@@ -18,13 +18,13 @@ public class InteractSystem : MonoBehaviour
     private GameObject takeArrow2;
     GameObject player;
 
-    Rigidbody2D related_rigidbody; 
-    Rigidbody2D player_rb; 
+    Rigidbody2D related_rigidbody;
+    Rigidbody2D player_rb;
     Animator anim;
 
-    
+
     bool active = false;
-   // [HideInInspector] 
+    // [HideInInspector] 
     public bool arrowHit = false;
     bool playerMovement = true;
 
@@ -67,7 +67,7 @@ public class InteractSystem : MonoBehaviour
         active = false;
     }
 
-    
+
     void tagControl(bool isInRange)
     {
 
@@ -78,17 +78,23 @@ public class InteractSystem : MonoBehaviour
             else if (!isInRange && active)
                 stairsDeactive();
 
-            
+
         }
-       
-        else if(this.tag == "platform")
-        {  
-            anim = related_object.GetComponent<Animator>();            
+
+        else if (this.tag == "platform")
+        {
+            anim = related_object.GetComponent<Animator>();
             if (isInRange && !active)
                 platformActive();
         }
-       
-        else if(this.tag=="boxcontrol")
+
+        else if (this.tag == "getaway")
+        {
+            if (isInRange && !active)
+                getawayActive();
+        }
+
+        else if (this.tag == "boxcontrol")
         {
             related_rigidbody = related_object.GetComponent<Rigidbody2D>();
 
@@ -100,21 +106,21 @@ public class InteractSystem : MonoBehaviour
             if (isInRange && active)             //etki alan�ndaysa ve hareket yetene�ini aktif etmi�se ili�kili event fonksiyonunu �a��r yani boxcontrol
                 interactAction.Invoke();
         }
-        else if(this.tag=="music")
+        else if (this.tag == "music")
         {
             if (isInRange && Input.GetKeyDown(interactKey))
                 interactAction.Invoke();
-           
+
         }
-        else if(this.tag=="arrowtrigger" || this.tag == "arrowtrigger2")
+        else if (this.tag == "arrowtrigger" || this.tag == "arrowtrigger2")
         {
-            if(isInRange && !active)
+            if (isInRange && !active)
             {
                 arrowActive();
-             
-                movement = new Vector2 (related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
+
+                movement = new Vector2(related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
                 active = true;
-          
+
             }
         }
         else if (this.tag == "arrowtrigger3")
@@ -124,14 +130,14 @@ public class InteractSystem : MonoBehaviour
                 arrowActive2();
                 movement = new Vector2(related_cp.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y);
                 active = true;
-            
+
             }
         }
     }
-    
+
     void arrowActive()
     {
-        Debug.Log("spawn point: "+related_cp.transform.position);
+        Debug.Log("spawn point: " + related_cp.transform.position);
         takeArrow = Instantiate(related_object, related_cp.transform.position, Quaternion.identity);
         takeArrow.SetActive(true);
         StartCoroutine(backtoArrow());
@@ -175,10 +181,17 @@ public class InteractSystem : MonoBehaviour
     IEnumerator backtoIdle()
     {
         yield return new WaitForSeconds(6); // WaitForSeconds is (first move time + delay time)
-        
+
         anim.SetBool("Trigger", false);
         active = false;
         isInRange = false;
+    }
+
+    public void getawayActive()
+    {
+        Debug.Log("getaway de");
+        easingEditor.GetComponent<EasingEditor>().getawayController();
+        active = true;
     }
     public void BoxControl()
     {
@@ -186,7 +199,7 @@ public class InteractSystem : MonoBehaviour
         //GameObject.FindGameObjectWithTag("Player").GetComponent<InteractSystem>().enabled = false;
         movement.x = Input.GetAxisRaw("Horizontal"); //x'i unity �zerinden kapat�yoruz zaten hareket etmemi� oluyo 
         movement.x = related_rigidbody.position.x;
-        movement.y= Input.GetAxisRaw("Vertical");
+        movement.y = Input.GetAxisRaw("Vertical");
         /*if ( Input.GetKeyDown(KeyCode.W))
         {
             movement.y = related_rigidbody.position.y + 5;
@@ -198,8 +211,8 @@ public class InteractSystem : MonoBehaviour
             movement.y = related_rigidbody.position.y - 5;
             related_rigidbody.position = movement;
         }*/
-            
-      
+
+
         related_rigidbody.MovePosition(related_rigidbody.position + movement * 5f * Time.fixedDeltaTime);
 
     }
@@ -214,6 +227,6 @@ public class InteractSystem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
             isInRange = false;
-        
+
     }
 }
