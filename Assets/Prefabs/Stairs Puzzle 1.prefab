@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 695650895194089482}
   m_Layer: 0
-  m_Name: Stairs Puzzle
+  m_Name: Stairs Puzzle 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1179,19 +1179,7 @@ MonoBehaviour:
   interactKey: 0
   interactAction:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EasingEditor, Assembly-CSharp
-        m_MethodName: miniStairsGo
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: move_left
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   related_object: {fileID: 6074671569958916011}
   related_object2: {fileID: 0}
   related_cp: {fileID: 0}
