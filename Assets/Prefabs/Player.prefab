@@ -93,7 +93,7 @@ Transform:
   m_GameObject: {fileID: 3566700556202655783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.31, y: -5.84, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3566700557266633652}
@@ -118,11 +118,11 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 4
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &3566700556202655780
 CapsuleCollider2D:
@@ -152,13 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a324dd2e9a904044fb07f712148ec0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 4
+  movementSpeed: 7
   _detectionDistance: 1
   frontCheck: {fileID: 3566700556004403446}
   _ledgeCheckTop: {fileID: 3566700555855229747}
   _ledgeCheckBot: {fileID: 3566700557146729040}
   _rb: {fileID: 3566700556202655781}
-  jumpForce: 20
+  jumpForce: 16
   jumpTimer: 0
   groundLayer:
     serializedVersion: 2
@@ -255,7 +255,7 @@ SpriteRenderer:
   m_SortingLayerID: 1289085443
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d73dcd2e3d64d5a4289b4b03eb3f7be5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 56a05a79fe6384e4387d617192a5b93b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
