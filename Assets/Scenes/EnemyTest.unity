@@ -2059,7 +2059,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.550999, y: 5.1149697, z: -9.117128}
+  m_LocalPosition: {x: 0.28317642, y: 5.1149697, z: -9.117128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2914,13 +2914,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667546487}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -59.99, y: -7.01, z: -0.33593825}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.831963, y: -2.7506485, z: -0.11391047}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 1262596401}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &667546489
 BoxCollider2D:
@@ -5139,6 +5139,39 @@ Transform:
   m_Father: {fileID: 1728736117}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1262596400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1262596401}
+  m_Layer: 0
+  m_Name: Walls
+  m_TagString: parent
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1262596401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262596400}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -51.15804, y: -4.2593517, z: -0.22202778}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 667546488}
+  - {fileID: 1268144428}
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1268144427
 GameObject:
   m_ObjectHideFlags: 0
@@ -5163,13 +5196,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268144427}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -49.01, y: -7.01, z: -0.33593825}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.1480408, y: -2.7506485, z: -0.11391047}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 1262596401}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1268144429
 BoxCollider2D:
@@ -5523,7 +5556,6 @@ GameObject:
   - component: {fileID: 1387379227}
   - component: {fileID: 1387379231}
   - component: {fileID: 1387379230}
-  - component: {fileID: 1387379233}
   m_Layer: 0
   m_Name: MeleeEnemy
   m_TagString: Untagged
@@ -5677,29 +5709,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0db74e122c6cc84585d04852359fd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
---- !u!195 &1387379233
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387379226}
-  m_Enabled: 0
-  m_AgentTypeID: 0
-  m_Radius: 2
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.48
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  playerPos: {fileID: 0}
+  distance: 5
+  speedEnemy: 5
+  wall: {fileID: 1268144427}
+  wall2: {fileID: 667546487}
 --- !u!1 &1391653631
 GameObject:
   m_ObjectHideFlags: 0
@@ -8940,7 +8954,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.3054545, y: 1}
+    m_SensorSize: {x: 3.592068, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

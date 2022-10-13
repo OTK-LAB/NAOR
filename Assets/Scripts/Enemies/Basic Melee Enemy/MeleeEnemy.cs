@@ -51,6 +51,7 @@ public class MeleeEnemy : MonoBehaviour
     void Update()
     {
         checkState();
+        Debug.Log(state);
     }
     void checkState()
     {
@@ -70,18 +71,17 @@ public class MeleeEnemy : MonoBehaviour
             case State.STATE_ATTACK:
                 ChangeAnimationState(attack);
                 attacktoPlayer();
-                state = State.STATE_COOLDOWN; //ataktan hemen sonra cool down
                 break;
             case State.STATE_COOLDOWN:
                 ChangeAnimationState(idle);
                 coolDown();
                 //3? saniye sonra state de�i�imi
                 //oyuncu radardaysa ama yak�n�nda de�ilse
-                state = State.STATE_FOLLOWING;
+                //state = State.STATE_FOLLOWING;
                 //oyuncu radarda ve yak�ndaysa
-                state = State.STATE_ATTACK;
+               // state = State.STATE_ATTACK;
                 //oyuncu radarda de�ilse
-                state = State.STATE_FOLLOWING;
+              //  state = State.STATE_FOLLOWING;
                 break;
             case State.STATE_NOTDAMAGE:
                 ChangeAnimationState(notdamage);
@@ -106,7 +106,12 @@ public class MeleeEnemy : MonoBehaviour
     {
         Debug.Log(Vector2.Distance(transform.position, playerPos.position));
         if (Vector2.Distance(transform.position, playerPos.position) < distance)
-            state = State.STATE_FOLLOWING;
+        {
+            if (Vector2.Distance(transform.position, playerPos.position) <= 2)
+                state = State.STATE_ATTACK;
+            else
+                state = State.STATE_FOLLOWING;
+        }
         else
         {
             state = State.STATE_STARTINGMOVE;
@@ -125,12 +130,19 @@ public class MeleeEnemy : MonoBehaviour
     }
     void attacktoPlayer()
     {
-
+        Debug.Log("atak zamanı");
+        StartCoroutine(backtoCoolDown());
+    }
+    IEnumerator backtoCoolDown()
+    {
+        yield return new WaitForSeconds(0.5f);
+        state = State.STATE_COOLDOWN;
     }
     void coolDown()
     {
-
+        Debug.Log("cool down");
     }
+  
 
     void ChangeAnimationState(string newState)
     {
