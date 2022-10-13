@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 public class DialogueManager : MonoBehaviour
 {
@@ -9,11 +10,22 @@ public class DialogueManager : MonoBehaviour
     public  TextMeshProUGUI actorName;
     public TextMeshProUGUI messageText;
     public RectTransform backgroundBox;
+    public InputAction action;
 
     Message[] currentMessages;
     Actor[] currentActors;
     int activeMessage = 0;
     public static bool isActive = false;
+
+    private void OnEnable()
+    {
+        action.Enable();
+    }
+
+    private void OneDisable()
+    {
+        action.Disable();
+    }
 
     public void OpenDialogue(Message[] messages, Actor[] actors)
     {
@@ -56,7 +68,7 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isActive == true)
+        if (action.triggered && isActive == true)
         {
             NextMessage();
         }
