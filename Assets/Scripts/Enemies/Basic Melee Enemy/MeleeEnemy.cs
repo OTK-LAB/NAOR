@@ -39,7 +39,7 @@ public class MeleeEnemy : MonoBehaviour
     public GameObject wall;
     public GameObject wall2;
 
-
+    float timer;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -141,8 +141,13 @@ public class MeleeEnemy : MonoBehaviour
     void coolDown()
     {
         Debug.Log("cool down");
+        timer += Time.deltaTime;
+        if (timer >= 2)
+        {
+            checkPlayer();
+            timer = 0;
+        }
     }
-  
 
     void ChangeAnimationState(string newState)
     {
