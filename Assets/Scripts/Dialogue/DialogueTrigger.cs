@@ -11,6 +11,12 @@ public class DialogueTrigger : MonoBehaviour
     {
         FindObjectOfType<DialogueManager>().OpenDialogue(messages, actors);
     }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+	if (collider.CompareTag("Player") == true)
+	    StartDialogue();
+    }
 }
 [System.Serializable]
 public class Message
