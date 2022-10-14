@@ -10,13 +10,13 @@ public class DialogueManager : MonoBehaviour
     public  TextMeshProUGUI actorName;
     public TextMeshProUGUI messageText;
     public RectTransform backgroundBox;
-    public InputAction action;
+    //public InputAction action;
 
     Message[] currentMessages;
     Actor[] currentActors;
     int activeMessage = 0;
     public static bool isActive = false;
-
+/*
     private void OnEnable()
     {
         action.Enable();
@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
     {
         action.Disable();
     }
-
+*/
     public void OpenDialogue(Message[] messages, Actor[] actors)
     {
         currentMessages = messages;
@@ -49,13 +49,13 @@ public class DialogueManager : MonoBehaviour
     public void NextMessage()
     {
         activeMessage++;
-        if(activeMessage >= currentMessages.Length)
+        if(activeMessage < currentMessages.Length)
         {
             DisplayMessage();
         }
         else
         {
-            Debug.Log("Conversation enabled");
+            Debug.Log("Conversation ended");
             isActive = false;
         }
     }
@@ -68,9 +68,17 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (action.triggered && isActive == true)
+        if (Keyboard.current.anyKey.wasPressedThisFrame && isActive == true)
         {
             NextMessage();
         }
     }
+
+/*	IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(5);
+        if (isActive == true)
+		NextMessage();
+    }
+*/
 }
