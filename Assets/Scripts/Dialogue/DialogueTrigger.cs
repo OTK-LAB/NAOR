@@ -6,9 +6,10 @@ public class DialogueTrigger : MonoBehaviour
 {
     public Message[] messages;
     public Actor[] actors;
-
+    public GameObject DialogueBox;
     public void StartDialogue()
     {
+	DialogueBox.SetActive(true);
         FindObjectOfType<DialogueManager>().OpenDialogue(messages, actors);
     }
 

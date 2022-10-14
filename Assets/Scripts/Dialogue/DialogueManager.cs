@@ -57,6 +57,7 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("Conversation ended");
             isActive = false;
+	    gameObject.SetActive(false);
         }
     }
     // Start is called before the first frame update
