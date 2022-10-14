@@ -31,20 +31,26 @@ public class MeleeEnemy : MonoBehaviour
     Vector3 movement;
     bool Moveright = true;
 
-    //Following
+    //Following & CoolDown
     public Transform playerPos;
     private Vector2 currentPlayerPos;
     public float distance;
-    public float speedEnemy=5f;
+    public float speedEnemy = 5f;
     public GameObject wall;
     public GameObject wall2;
-
     float timer;
+
+    //Attack
+    public GameObject attackPoint;
+    public float attackRange;
+    int random_nd; //random_notdamage
+
+
     void Start()
     {
         animator = GetComponent<Animator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-
+        attackPoint = GameObject.FindGameObjectWithTag("sword") ;
 
     }
 
@@ -75,18 +81,11 @@ public class MeleeEnemy : MonoBehaviour
             case State.STATE_COOLDOWN:
                 ChangeAnimationState(idle);
                 coolDown();
-                //3? saniye sonra state de�i�imi
-                //oyuncu radardaysa ama yak�n�nda de�ilse
-                //state = State.STATE_FOLLOWING;
-                //oyuncu radarda ve yak�ndaysa
-               // state = State.STATE_ATTACK;
-                //oyuncu radarda de�ilse
-              //  state = State.STATE_FOLLOWING;
                 break;
             case State.STATE_NOTDAMAGE:
                 ChangeAnimationState(notdamage);
+                coolDown();
                 break;
-
         }
     }
     void startingMove()
@@ -107,7 +106,7 @@ public class MeleeEnemy : MonoBehaviour
         Debug.Log(Vector2.Distance(transform.position, playerPos.position));
         if (Vector2.Distance(transform.position, playerPos.position) < distance)
         {
-            if (Vector2.Distance(transform.position, playerPos.position) <= 2)
+            if (Vector2.Distance(transform.position, playerPos.position) <= 1.5f)
                 state = State.STATE_ATTACK;
             else
                 state = State.STATE_FOLLOWING;
@@ -130,17 +129,21 @@ public class MeleeEnemy : MonoBehaviour
     }
     void attacktoPlayer()
     {
-        Debug.Log("atak zamanı");
+        random_nd = Random.Range(0, 100);
+        Debug.Log("atak zamanı ♥♥ random_notdamage:" + random_nd);
         StartCoroutine(backtoCoolDown());
     }
     IEnumerator backtoCoolDown()
     {
         yield return new WaitForSeconds(0.5f);
-        state = State.STATE_COOLDOWN;
+        if (random_nd <=15)
+            state = State.STATE_NOTDAMAGE;
+        else
+            state = State.STATE_COOLDOWN;
     }
     void coolDown()
     {
-        Debug.Log("cool down");
+        Debug.Log("cool down ☻☻");
         timer += Time.deltaTime;
         if (timer >= 2)
         {
@@ -159,10 +162,10 @@ public class MeleeEnemy : MonoBehaviour
     {
         if (trig.CompareTag("wall"))
         {
-            if (Moveright)  Moveright = false; 
-            else  Moveright = true; 
+            if (Moveright) Moveright = false;
+            else Moveright = true;
             transform.Rotate(0f, 180f, 0f);
-           // transform.position = transform.position + movement * Time.deltaTime;
+            // transform.position = transform.position + movement * Time.deltaTime;
         }
     }
     void flip()
@@ -184,5 +187,8 @@ public class MeleeEnemy : MonoBehaviour
             }
         }
     }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
+    }
 }
-
