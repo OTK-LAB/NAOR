@@ -27,6 +27,7 @@ public abstract class CombatBaseState
             ExitState();
             Ctx.CurrentCombatState = newState;
             newState.EnterState();
+            Debug.Log("Combat State: " + newState);
         }
     }
 

@@ -10,13 +10,16 @@ public class PlayerIdleState : PlayerBaseState
     }
     public override void UpdateState()
     {
-        if(SuperState == Factory.Standing())
+        if(Ctx.CurrentCombatState == Ctx.CombatFactory.Peaceful())
         {
-            Ctx.PlayerAnimator.Play("PlayerIdle");
-        }
-        if(SuperState == Factory.Crouch())
-        {
-            Ctx.PlayerAnimator.Play("PlayerCrouch");
+           if(SuperState == Factory.Standing())
+            {
+                Ctx.PlayerAnimator.Play("PlayerIdle");
+            }
+            if(SuperState == Factory.Crouch())
+            {
+                Ctx.PlayerAnimator.Play("PlayerCrouch");
+            }
         }
 
         CheckSwitchStates();

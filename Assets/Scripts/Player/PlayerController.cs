@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     // getters and setters
     public PlayerBaseState CurrentMovementState { get { return _currentState; } set { _currentState = value; }}
     public CombatBaseState CurrentCombatState { get { return _combatState; } set { _combatState = value; }}
-    
+    public CombatStateFactory CombatFactory { get { return _combatStates;}}
     public PlayerInputActions PlayerInputActions { get { return _playerInputActions; } set { _playerInputActions = value; }}
     public Animator PlayerAnimator { get { return _animator;}}
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; }}
@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Attack.started += OnAttackPressed;
         _playerInputActions.Player.Attack.performed += OnAttackPressed;
         _playerInputActions.Player.Attack.canceled += OnAttackPressed;
-        
+
 
         _playerInputActions.Player.Jump.started += OnJump;
         _playerInputActions.Player.Jump.canceled += OnJump;
