@@ -3,18 +3,18 @@ using UnityEngine;
 public abstract class PlayerBaseState
 {
     private bool _isRootState = false;
-    private PlayerStateMachine _ctx;
+    private PlayerController _ctx;
     private PlayerStateFactory _factory;
     private PlayerBaseState _currentSuperState;
     private PlayerBaseState _currentSubState;
 
     protected bool IsRootState { set { _isRootState = value; } }
-    protected PlayerStateMachine Ctx { get { return _ctx; } }
+    protected PlayerController Ctx { get { return _ctx; } }
     protected PlayerStateFactory Factory { get { return _factory;} }
-    protected PlayerBaseState SuperState { get {return _currentSuperState;}}
-    protected PlayerBaseState SubState { get {return _currentSubState;}}
+    public PlayerBaseState SuperState { get {return _currentSuperState;}}
+    public PlayerBaseState SubState { get {return _currentSubState;}}
     
-    public PlayerBaseState( PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerBaseState( PlayerController currentContext, PlayerStateFactory playerStateFactory)
     {
         _ctx = currentContext;
         _factory = playerStateFactory;
@@ -40,7 +40,7 @@ public abstract class PlayerBaseState
 
         if(newState._isRootState){
             // switch current state of context
-            _ctx.CurrentState = newState;
+            _ctx.CurrentMovementState = newState;
         }
         else if(_currentSuperState != null)
         {
@@ -52,7 +52,7 @@ public abstract class PlayerBaseState
         //new state enters state
         newState.EnterState();
 
-        Ctx.CurrentState.PrintCurrentHierarchy();
+        Ctx.CurrentMovementState.PrintCurrentHierarchy();
     }
     protected void SetSuperState(PlayerBaseState newSuperState)
     {
@@ -75,5 +75,18 @@ public abstract class PlayerBaseState
         {
             Debug.Log("-------------------------");
         }
+    }
+
+    public bool Query(PlayerBaseState query)
+    {
+        if(this == query)
+        {
+            return true;
+        }
+        if(_currentSubState != null)
+        {
+            _currentSubState.Query(query);
+        }
+        return false;
     }
 }

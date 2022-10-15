@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerJumpingState : PlayerBaseState
 {
-    public PlayerJumpingState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerJumpingState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {

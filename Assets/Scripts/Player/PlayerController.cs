@@ -9,17 +9,20 @@ using UnityEngine.InputSystem;
 //  Refine FrontCheck()
 //  Upgrade grounded detection with collider raycast
 //  Try to implement drag -> slide transition
-public class PlayerStateMachine : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     // state variables
     private PlayerBaseState _currentState;
-    private PlayerStateFactory _states;
+    private CombatBaseState _combatState;
+    private PlayerStateFactory _movementStates;
+    private CombatStateFactory _combatStates;
     private PlayerInputActions _playerInputActions;
     private Animator _animator;
     
     //Movement
     [Header("Movement")]
     [SerializeField] private float movementSpeed;
+    [SerializeField] private float groundDetectionDistance;
     Vector2 _currentMovementInput;
     float _appliedMovementX;
     bool _isMovementPressed; 
@@ -57,8 +60,14 @@ public class PlayerStateMachine : MonoBehaviour
     public LayerMask groundLayer;
     public Transform groundCheck;
 
+    //Combat
+    //[Header("Combat")]
+    private bool _isAttackPressed;
+
     // getters and setters
-    public PlayerBaseState CurrentState { get { return _currentState; } set { _currentState = value; }}
+    public PlayerBaseState CurrentMovementState { get { return _currentState; } set { _currentState = value; }}
+    public CombatBaseState CurrentCombatState { get { return _combatState; } set { _combatState = value; }}
+    
     public PlayerInputActions PlayerInputActions { get { return _playerInputActions; } set { _playerInputActions = value; }}
     public Animator PlayerAnimator { get { return _animator;}}
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; }}
@@ -66,6 +75,7 @@ public class PlayerStateMachine : MonoBehaviour
     
     public bool IsMovementPressed { get { return _isMovementPressed; } set { _isMovementPressed = value; }}
     public bool IsJumpPressed { get { return _isJumpPressed; } set { _isJumpPressed = value; }}
+    public bool IsAttackPressed { get { return _isAttackPressed;}}
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
@@ -88,8 +98,11 @@ public class PlayerStateMachine : MonoBehaviour
     void Awake()
     {
         _defaultGravity = _rb.gravityScale;
-        _states = new PlayerStateFactory(this);
-        _currentState = _states.InAir();
+        _movementStates = new PlayerStateFactory(this);
+        _combatStates = new CombatStateFactory(this, _movementStates);
+        _combatState = _combatStates.Peaceful();
+        _currentState = _movementStates.InAir();
+        _combatState.EnterState();
         _currentState.EnterState();
         _animator = GetComponent<Animator>();
 
@@ -98,6 +111,11 @@ public class PlayerStateMachine : MonoBehaviour
         _playerInputActions.Player.Move.started += OnMovementInput;
         _playerInputActions.Player.Move.canceled += OnMovementInput;
         _playerInputActions.Player.Move.performed += OnMovementInput;
+
+        _playerInputActions.Player.Attack.started += OnAttackPressed;
+        _playerInputActions.Player.Attack.performed += OnAttackPressed;
+        _playerInputActions.Player.Attack.canceled += OnAttackPressed;
+        
 
         _playerInputActions.Player.Jump.started += OnJump;
         _playerInputActions.Player.Jump.canceled += OnJump;
@@ -116,7 +134,8 @@ public class PlayerStateMachine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CurrentState.UpdateStates();
+        CurrentCombatState.UpdateState();
+        CurrentMovementState.UpdateStates();
         CheckForLedges();
         CheckForGround();
         FlipPlayer();
@@ -137,7 +156,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
     void OnCrouch(InputAction.CallbackContext context)
     {
-        if(_currentState == _states.Grounded() && !_isCrouching)
+        if(_currentState == _movementStates.Grounded() && !_isCrouching)
         {
             _isCrouching = true;
         }
@@ -148,7 +167,7 @@ public class PlayerStateMachine : MonoBehaviour
     }
     void OnDrag(InputAction.CallbackContext context)
     {   
-        if(_currentState == _states.Grounded() && !_toggleDrag && _canDrag)
+        if(_currentState == _movementStates.Grounded() && !_toggleDrag && _canDrag)
         {
             _toggleDrag = true;
         }
@@ -157,9 +176,13 @@ public class PlayerStateMachine : MonoBehaviour
             _toggleDrag = false;
         }
     }
+    void OnAttackPressed(InputAction.CallbackContext context)
+    {
+        _isAttackPressed = context.ReadValueAsButton();
+    }
     void CheckForGround()
     {
-        _groundCollider = Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer);
+        _groundCollider = Physics2D.OverlapCircle(groundCheck.position, groundDetectionDistance, groundLayer);
         _isOnGround = _groundCollider;
         if(_isOnGround && _groundCollider.CompareTag("Slope"))
         {

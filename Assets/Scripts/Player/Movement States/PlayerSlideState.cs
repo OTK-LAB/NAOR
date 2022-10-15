@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerSlideState : PlayerBaseState
 {
     float gravity;
-    public PlayerSlideState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerSlideState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory) {
         gravity = Ctx.Rigidbod.gravityScale;
     }
