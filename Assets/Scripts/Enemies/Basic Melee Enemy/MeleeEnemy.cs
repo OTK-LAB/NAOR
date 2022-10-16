@@ -130,7 +130,7 @@ public class MeleeEnemy : MonoBehaviour
     void attacktoPlayer()
     {
         random_nd = Random.Range(0, 100);
-        Debug.Log("atak zamanı ♥♥ random_notdamage:" + random_nd);
+        Debug.Log("atak zamani ♥♥ random_notdamage:" + random_nd);
         StartCoroutine(backtoCoolDown());
     }
     IEnumerator backtoCoolDown()
