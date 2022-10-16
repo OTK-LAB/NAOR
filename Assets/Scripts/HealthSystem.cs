@@ -1,12 +1,17 @@
-public class HealthSystem
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HealthSystem : MonoBehaviour
 {
+    [SerializeField]
     private int currentHealth;
+    [SerializeField]
     private int maxHealth;
 
-    public HealthSystem(int maxHealth)
+    void Start()
     {
-        this.maxHealth = maxHealth;
-        this.currentHealth = maxHealth;
+        currentHealth = maxHealth;
     }
 
     public int GetHealth()

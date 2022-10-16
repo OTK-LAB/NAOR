@@ -43,9 +43,10 @@ public class MeleeEnemy : MonoBehaviour
     //Attack
     public GameObject attackPoint;
     public float attackRange;
+    bool attackable = true;
     int random_nd; //random_notdamage
 
-
+    float deneme;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -57,7 +58,7 @@ public class MeleeEnemy : MonoBehaviour
     void Update()
     {
         checkState();
-        Debug.Log(state);
+       // Debug.Log(state);
     }
     void checkState()
     {
@@ -103,7 +104,7 @@ public class MeleeEnemy : MonoBehaviour
     }
     void checkPlayer()
     {
-        Debug.Log(Vector2.Distance(transform.position, playerPos.position));
+        //Debug.Log(Vector2.Distance(transform.position, playerPos.position));
         if (Vector2.Distance(transform.position, playerPos.position) < distance)
         {
             if (Vector2.Distance(transform.position, playerPos.position) <= 1.5f)
@@ -130,8 +131,15 @@ public class MeleeEnemy : MonoBehaviour
     void attacktoPlayer()
     {
         random_nd = Random.Range(0, 100);
-        Debug.Log("atak zamani ♥♥ random_notdamage:" + random_nd);
+       // Debug.Log("atak zamani ♥♥ random_notdamage:" + random_nd);
         StartCoroutine(backtoCoolDown());
+        if (attackable)
+        {
+            attackable = false;
+            this.GetComponent<HealthSystem>().Damage(10);
+            Debug.Log(this.GetComponent<HealthSystem>().GetHealth());
+        }
+       
     }
     IEnumerator backtoCoolDown()
     {
@@ -143,11 +151,12 @@ public class MeleeEnemy : MonoBehaviour
     }
     void coolDown()
     {
-        Debug.Log("cool down ☻☻");
+        //Debug.Log("cool down ☻☻");
         timer += Time.deltaTime;
         if (timer >= 2)
         {
             checkPlayer();
+            attackable = true;
             timer = 0;
         }
     }
