@@ -5,21 +5,21 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     [SerializeField]
-    private int currentHealth;
+    private float currentHealth;
     [SerializeField]
-    private int maxHealth;
+    private float maxHealth;
 
     void Start()
     {
         currentHealth = maxHealth;
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return currentHealth;
     }
 
-    public void Damage(int damageAmount)
+    public void Damage(float damageAmount)
     {
         currentHealth -= damageAmount;
 
@@ -29,7 +29,7 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    public void Heal(int healAmount)
+    public void Heal(float healAmount)
     {
         currentHealth += healAmount;
 

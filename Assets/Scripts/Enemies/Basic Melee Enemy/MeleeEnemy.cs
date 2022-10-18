@@ -32,7 +32,8 @@ public class MeleeEnemy : MonoBehaviour
     bool Moveright = true;
 
     //Following & CoolDown
-    public Transform playerPos;
+    private GameObject player;
+    private Transform playerPos;
     private Vector2 currentPlayerPos;
     public float distance;
     public float speedEnemy = 5f;
@@ -43,14 +44,17 @@ public class MeleeEnemy : MonoBehaviour
     //Attack
     public GameObject attackPoint;
     public float attackRange;
+    public float damageamount;
     bool attackable = true;
     int random_nd; //random_notdamage
-
-    float deneme;
+    bool alive = true;
+    LayerMask enemyLayers;
+    
     void Start()
     {
         animator = GetComponent<Animator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
         attackPoint = GameObject.FindGameObjectWithTag("sword") ;
 
     }
@@ -58,6 +62,7 @@ public class MeleeEnemy : MonoBehaviour
     void Update()
     {
         checkState();
+        amIdead();
        // Debug.Log(state);
     }
     void checkState()
@@ -135,9 +140,16 @@ public class MeleeEnemy : MonoBehaviour
         StartCoroutine(backtoCoolDown());
         if (attackable)
         {
-            attackable = false;
-            this.GetComponent<HealthSystem>().Damage(10);
-            Debug.Log(this.GetComponent<HealthSystem>().GetHealth());
+           attackable = false;
+           Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange);
+            foreach(Collider2D enemy in hitPlayer)
+            {
+                if (enemy.tag == "Player")
+                {
+                    player.GetComponent<HealthSystem>().Damage(damageamount);
+                    Debug.Log("We hit" + enemy.name);
+                }
+            }
         }
        
     }
@@ -175,6 +187,17 @@ public class MeleeEnemy : MonoBehaviour
             else Moveright = true;
             transform.Rotate(0f, 180f, 0f);
             // transform.position = transform.position + movement * Time.deltaTime;
+        }
+    }
+    void amIdead()
+    {
+        if (this.GetComponent<HealthSystem>().GetHealth() <= 0)
+        {
+
+            ChangeAnimationState(death);
+            GetComponent<Collider2D>().enabled = false;
+            this.enabled = false;
+            GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
         }
     }
     void flip()

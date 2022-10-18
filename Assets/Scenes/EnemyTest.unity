@@ -5556,6 +5556,7 @@ GameObject:
   - component: {fileID: 1387379227}
   - component: {fileID: 1387379231}
   - component: {fileID: 1387379230}
+  - component: {fileID: 1387379233}
   m_Layer: 0
   m_Name: MeleeEnemy
   m_TagString: Untagged
@@ -5623,7 +5624,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 2a25ca5ed66f7e54c8e97c7ce3315866, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5664,7 +5665,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.17581737, y: -0.04125473}
+  m_Offset: {x: -0.17581737, y: -0.047551036}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.36, y: 0.55}
@@ -5675,7 +5676,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.29685843, y: 0.6162117}
+  m_Size: {x: 0.29685843, y: 0.60361874}
   m_EdgeRadius: 0
 --- !u!50 &1387379231
 Rigidbody2D:
@@ -5685,7 +5686,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387379226}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -5710,13 +5711,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0db74e122c6cc84585d04852359fd64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPos: {fileID: 0}
   distance: 5
   speedEnemy: 5
   wall: {fileID: 1268144427}
   wall2: {fileID: 667546487}
   attackPoint: {fileID: 2020694503}
   attackRange: 0.7
+  damageamount: 10
+--- !u!114 &1387379233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1387379226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a25cdde9ff64cba4995d61e34b8efb89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 20
 --- !u!1 &1391653631
 GameObject:
   m_ObjectHideFlags: 0
