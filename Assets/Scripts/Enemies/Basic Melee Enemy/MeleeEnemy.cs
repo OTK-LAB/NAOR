@@ -146,7 +146,7 @@ public class MeleeEnemy : MonoBehaviour
             {
                 if (enemy.tag == "Player")
                 {
-                    player.GetComponent<HealthSystem>().Damage(damageamount);
+                   // player.GetComponent<HealthSystem>().Damage(damageamount); PLAYER'A HEALTH SYSTEM EKLENİNCE AKTİF EDİLMELİ
                     Debug.Log("We hit" + enemy.name);
                 }
             }
