@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.InputSystem;
 //  Implement jump cooldown
 //  Refine FrontCheck()
 //  Upgrade grounded detection with collider raycast
-//  Try to implement drag -> slide transition
+//  Add hit logic with events and a new state
 public class PlayerController : MonoBehaviour
 {
     // state variables
@@ -63,8 +64,14 @@ public class PlayerController : MonoBehaviour
     //Combat
     //[Header("Combat")]
     private bool _isAttackPressed;
+    private bool _isHit;
+    private bool _isDead;
+    HealthSystem _healthSystem;
 
     // getters and setters
+    public bool IsDead { get { return _isDead;} set { _isDead = value;}}
+    public bool IsHit { get { return _isHit;} set { _isHit = value;}}
+    public HealthSystem HealthSystem { get { return _healthSystem;} set { _healthSystem = value;}}
     public PlayerBaseState CurrentMovementState { get { return _currentState; } set { _currentState = value; }}
     public CombatBaseState CurrentCombatState { get { return _combatState; } set { _combatState = value; }}
     public CombatStateFactory CombatFactory { get { return _combatStates;}}
@@ -105,6 +112,10 @@ public class PlayerController : MonoBehaviour
         _combatState.EnterState();
         _currentState.EnterState();
         _animator = GetComponent<Animator>();
+        _healthSystem = GetComponent<HealthSystem>();
+
+        HealthSystem.OnHit += OnHit;
+        HealthSystem.OnDead += OnDead;
 
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Player.Enable();
@@ -112,7 +123,7 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Move.canceled += OnMovementInput;
         _playerInputActions.Player.Move.performed += OnMovementInput;
 
-        _playerInputActions.Player.Attack.started += OnAttackPressed;
+        //_playerInputActions.Player.Attack.started += OnAttackPressed;
         _playerInputActions.Player.Attack.performed += OnAttackPressed;
         _playerInputActions.Player.Attack.canceled += OnAttackPressed;
 
@@ -178,7 +189,27 @@ public class PlayerController : MonoBehaviour
     }
     void OnAttackPressed(InputAction.CallbackContext context)
     {
+        Debug.Log("Basıldınız");
         _isAttackPressed = context.ReadValueAsButton();
+        Debug.Log(_isAttackPressed);
+    }
+
+    void OnHit(object sender, EventArgs e)
+    {
+        if(!IsDead)
+        {
+            IsHit = true;
+            Debug.Log("AAHHH, BU ACIDI!");
+        }
+    }
+
+    void OnDead(object sender, EventArgs e)
+    {
+        if(!IsDead)
+        {
+            IsDead = true;
+            Debug.Log("İŞTE BUNA KAZA DERİM!");
+        }
     }
     void CheckForGround()
     {

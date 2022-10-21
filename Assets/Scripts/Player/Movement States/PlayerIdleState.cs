@@ -21,7 +21,7 @@ public class PlayerIdleState : PlayerBaseState
                 Ctx.PlayerAnimator.Play("PlayerCrouch");
             }
         }
-
+        //TODO: 
         CheckSwitchStates();
     }
     public override void ExitState()

@@ -7,12 +7,10 @@ public class CombatBasicAttackState : CombatBaseState
     base(currentContext, combatStateFactory, movementStateFactory){}
     public override void EnterState()
     {
-        endtime = Time.time + 1.0f;
         Ctx.PlayerAnimator.Play("PlayerBasicAttack");   
     }
     public override void UpdateState(){
-        if(Time.time > endtime)
-            SwitchState(CombatFactory.Peaceful());
+
     }
     public override void ExitState()
     {
@@ -22,6 +20,9 @@ public class CombatBasicAttackState : CombatBaseState
     {
 
     }
-
+    public void OnBasicAttackEnded()
+    {
+        SwitchState(CombatFactory.Peaceful());
+    }
     
 }
