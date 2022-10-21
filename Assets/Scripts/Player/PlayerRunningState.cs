@@ -10,6 +10,7 @@ public class PlayerRunningState : PlayerBaseState
     }
     public override void UpdateState()
     {
+        CheckSwitchStates();
         if(SuperState == Factory.Standing())
         {
             Ctx.PlayerAnimator.Play("PlayerRun");
@@ -27,7 +28,6 @@ public class PlayerRunningState : PlayerBaseState
         {
             Ctx.AppliedMovement = Ctx.CurrentMovementInput.x * Ctx.MovementSpeed;
         }
-        CheckSwitchStates();
     }
     public override void ExitState()
     {
