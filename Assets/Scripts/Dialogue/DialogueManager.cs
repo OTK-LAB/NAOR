@@ -58,6 +58,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("Conversation ended");
             isActive = false;
 	    gameObject.SetActive(false);
+	    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>().enabled = true;
         }
     }
     // Start is called before the first frame update
@@ -69,7 +70,7 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.anyKey.wasPressedThisFrame && isActive == true)
+        if ((Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)&& isActive == true)
         {
             NextMessage();
         }
