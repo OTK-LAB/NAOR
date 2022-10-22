@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MeleeEnemy : MonoBehaviour
 {
@@ -47,9 +48,18 @@ public class MeleeEnemy : MonoBehaviour
     public float damageamount;
     bool attackable = true;
     int random_nd; //random_notdamage
-    bool alive = true;
+    bool IsDead = false;
     LayerMask enemyLayers;
+    HealthSystem _healthSystem; 
     
+    void Awake()
+    {
+        _healthSystem = GetComponent<HealthSystem>();
+
+        _healthSystem.OnHit += OnHit;
+        _healthSystem.OnDead += OnDead; 
+
+    }
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -62,8 +72,6 @@ public class MeleeEnemy : MonoBehaviour
     void Update()
     {
         checkState();
-        amIdead();
-       // Debug.Log(state);
     }
     void checkState()
     {
@@ -135,8 +143,8 @@ public class MeleeEnemy : MonoBehaviour
     }
     void attacktoPlayer()
     {
-        random_nd = Random.Range(0, 100);
-       // Debug.Log("atak zamani ♥♥ random_notdamage:" + random_nd);
+        random_nd = UnityEngine.Random.Range(0, 100);
+       // Debug.Log("atak zamani ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ random_notdamage:" + random_nd);
         StartCoroutine(backtoCoolDown());
         if (attackable)
         {
@@ -156,20 +164,24 @@ public class MeleeEnemy : MonoBehaviour
     IEnumerator backtoCoolDown()
     {
         yield return new WaitForSeconds(0.5f);
-        if (random_nd <=15)
+        if (random_nd <= 15)
+        {
+            _healthSystem.Invincible = true;
             state = State.STATE_NOTDAMAGE;
+        }
         else
             state = State.STATE_COOLDOWN;
     }
     void coolDown()
     {
-        //Debug.Log("cool down ☻☻");
+        //Debug.Log("cool down ☻☻ ♣◘•♦○♥☻ ☺");
         timer += Time.deltaTime;
         if (timer >= 2)
         {
             checkPlayer();
             attackable = true;
             timer = 0;
+            _healthSystem.Invincible = false;
         }
     }
 
@@ -189,12 +201,21 @@ public class MeleeEnemy : MonoBehaviour
             // transform.position = transform.position + movement * Time.deltaTime;
         }
     }
-    void amIdead()
-    {
-        if (this.GetComponent<HealthSystem>().GetHealth() <= 0)
-        {
 
+    void OnHit(object sender, EventArgs e)
+    {
+        if(!IsDead)
+        {
+            ChangeAnimationState(hit);
+            Debug.Log("Vurdu");
+        }
+    }
+    void OnDead(object sender, EventArgs e)
+    {
+        if(!IsDead)
+        {
             ChangeAnimationState(death);
+            Debug.Log("öl");
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;
             GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
