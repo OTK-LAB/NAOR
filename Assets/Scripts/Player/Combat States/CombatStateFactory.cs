@@ -14,8 +14,8 @@ public class CombatStateFactory
         _context = currentContext;
         _movementFactory = movementFactory;
 
-        _states[CombatStates.peaceful] = new CombatPeacefulState(_context, this, _movementFactory);
-        _states[CombatStates.basicAttack] = new CombatBasicAttackState(_context, this, _movementFactory);
+        _states[CombatStates.peaceful] = new CombatPeacefulState(_context, this, _movementFactory, 0);
+        _states[CombatStates.basicAttack] = new CombatBasicAttackState(_context, this, _movementFactory, 10);
     }
 
     public CombatBaseState Peaceful()

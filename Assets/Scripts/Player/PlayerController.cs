@@ -3,6 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
+
+// Dear programmer:
+// When I wrote this code, only god and
+// I knew how it worked.
+// Now, only god knows it!
+//
+// Therefore if you are trying to optimize
+// this routine and it fails (most surely),
+// please increase this counter as a
+// warning for the next person:
+//
+// total_hours_wasted_here = 14
 
 //TODO:
 //  Add coyote time
@@ -29,6 +42,7 @@ public class PlayerController : MonoBehaviour
     bool _isMovementPressed; 
     bool _facingRight = true;
     bool _canFlip = true;
+    bool _canMove = true;
     bool _isOnGround;
     bool _isCrouching = false;
     float _defaultGravity;
@@ -68,9 +82,14 @@ public class PlayerController : MonoBehaviour
     private bool _isDead;
     HealthSystem _healthSystem;
 
+    //Debugging
+    public TextMeshProUGUI _movementHierarchyText;
+    public TextMeshProUGUI _combatStateText;
+
     // getters and setters
     public bool IsDead { get { return _isDead;} set { _isDead = value;}}
     public bool IsHit { get { return _isHit;} set { _isHit = value;}}
+    public bool CanMove{ get { return _canMove;} set { _canMove = value;}}
     public HealthSystem HealthSystem { get { return _healthSystem;} set { _healthSystem = value;}}
     public PlayerBaseState CurrentMovementState { get { return _currentState; } set { _currentState = value; }}
     public CombatBaseState CurrentCombatState { get { return _combatState; } set { _combatState = value; }}
@@ -152,8 +171,9 @@ public class PlayerController : MonoBehaviour
         FlipPlayer();
         CheckFront();
     }
-    private void FixedUpdate() {
-        Move(_appliedMovementX);
+    private void FixedUpdate()
+    {
+            Move(_appliedMovementX);
     }
 
     void OnMovementInput(InputAction.CallbackContext context)
@@ -272,7 +292,10 @@ public class PlayerController : MonoBehaviour
 
     void Move(float movementInput)
     {
-        _rb.velocity = new Vector2(movementInput, _rb.velocity.y);
+        if(_canMove)
+            _rb.velocity = new Vector2(movementInput, _rb.velocity.y);
+        else
+            _rb.velocity = new Vector2(0, _rb.velocity.y);
     }
     void FlipPlayer()
     {

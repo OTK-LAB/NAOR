@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public abstract class PlayerBaseState
 {
@@ -51,7 +52,7 @@ public abstract class PlayerBaseState
         
         //new state enters state
         newState.EnterState();
-
+        Ctx._movementHierarchyText.SetText(string.Empty);
         Ctx.CurrentMovementState.PrintCurrentHierarchy();
     }
     protected void SetSuperState(PlayerBaseState newSuperState)
@@ -67,6 +68,7 @@ public abstract class PlayerBaseState
     protected void PrintCurrentHierarchy()
     {
         Debug.Log(this);
+        Ctx._movementHierarchyText.SetText(Ctx._movementHierarchyText.text + this + "\n");
         if(_currentSubState != null)
         {
             _currentSubState.PrintCurrentHierarchy();
@@ -85,7 +87,7 @@ public abstract class PlayerBaseState
         }
         if(_currentSubState != null)
         {
-            _currentSubState.Query(query);
+            return _currentSubState.Query(query);
         }
         return false;
     }

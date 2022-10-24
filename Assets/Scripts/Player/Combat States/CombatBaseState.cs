@@ -5,16 +5,19 @@ public abstract class CombatBaseState
     private PlayerController _ctx;
     private CombatStateFactory _combatFactory;
     private PlayerStateFactory _movementFactory;
+    private float _damageAmount = 0;
 
+    public float DamageAmount { get {return _damageAmount;}} 
     protected PlayerController Ctx { get { return _ctx;}}
     protected CombatStateFactory CombatFactory { get { return _combatFactory; }}
     protected PlayerStateFactory MovementFactory{ get { return _movementFactory;}}
 
-    public CombatBaseState( PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory)
+    public CombatBaseState( PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage)
     {
         _ctx = currentContext; 
         _combatFactory = combatStateFactory;
         _movementFactory = movementStateFactory;
+        _damageAmount = damage;
     }
 
     public abstract void EnterState();
@@ -27,7 +30,8 @@ public abstract class CombatBaseState
             ExitState();
             Ctx.CurrentCombatState = newState;
             newState.EnterState();
-            Debug.Log("Combat State: " + newState);
+            Debug.Log("Combat State: \n---------------------" + newState);
+            Ctx._combatStateText.SetText(Ctx.CurrentCombatState.ToString());
         }
     }
 
