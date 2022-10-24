@@ -2,14 +2,12 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerBaseState
 {
-    public PlayerIdleState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerIdleState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {
         Ctx.AppliedMovement = 0;
-    }
-    public override void UpdateState()
-    {
+
         if(SuperState == Factory.Standing())
         {
             Ctx.PlayerAnimator.Play("PlayerIdle");
@@ -18,7 +16,11 @@ public class PlayerIdleState : PlayerBaseState
         {
             Ctx.PlayerAnimator.Play("PlayerCrouch");
         }
-
+    }
+    public override void UpdateState()
+    {
+        
+        //TODO: 
         CheckSwitchStates();
     }
     public override void ExitState()

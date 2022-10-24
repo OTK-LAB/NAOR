@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerGroundedState : PlayerBaseState
 {
-    public PlayerGroundedState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerGroundedState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory)
     {
         IsRootState = true;
@@ -25,6 +25,10 @@ public class PlayerGroundedState : PlayerBaseState
         if(!Ctx.IsOnGround)
         {
             SwitchState(Factory.InAir());
+        }
+        if(Ctx.CurrentCombatState != Ctx.CombatFactory.Peaceful())
+        {
+            SwitchState(Factory.Busy());
         }
     }
     public override void InitializeSubstate()
