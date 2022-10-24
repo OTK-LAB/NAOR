@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
+    private bool invincible = false;
     public bool denemexd = false;
     [SerializeField]
     private float currentHealth;
@@ -14,6 +15,8 @@ public class HealthSystem : MonoBehaviour
     public event EventHandler OnHit;
     public event EventHandler OnDead;
 
+    public bool Invincible { set { invincible = value; } }
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -21,7 +24,7 @@ public class HealthSystem : MonoBehaviour
 
     private void Update()
     {
-        if(denemexd)
+        if (denemexd)
         {
             Damage(10.0f);
         }
@@ -35,7 +38,7 @@ public class HealthSystem : MonoBehaviour
     {
         currentHealth -= damageAmount;
 
-        if(currentHealth < 0)
+        if (currentHealth < 0 && !invincible)
         {
             currentHealth = 0;
             OnDead?.Invoke(this, EventArgs.Empty);
@@ -49,7 +52,7 @@ public class HealthSystem : MonoBehaviour
     {
         currentHealth += healAmount;
 
-        if(currentHealth > maxHealth)
+        if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }

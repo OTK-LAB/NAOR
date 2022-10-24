@@ -25,6 +25,10 @@ public class PlayerInAirState : PlayerBaseState
         {
             SwitchState(Factory.Grounded());
         }
+        if(Ctx.CurrentCombatState != Ctx.CombatFactory.Peaceful())
+        {
+            SwitchState(Factory.Busy());
+        }
     }
     public override void InitializeSubstate()
     {

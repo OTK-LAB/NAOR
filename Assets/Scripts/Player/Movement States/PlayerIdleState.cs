@@ -7,20 +7,19 @@ public class PlayerIdleState : PlayerBaseState
     public override void EnterState()
     {
         Ctx.AppliedMovement = 0;
+
+        if(SuperState == Factory.Standing())
+        {
+            Ctx.PlayerAnimator.Play("PlayerIdle");
+        }
+        if(SuperState == Factory.Crouch())
+        {
+            Ctx.PlayerAnimator.Play("PlayerCrouch");
+        }
     }
     public override void UpdateState()
     {
-        if(Ctx.CurrentCombatState == Ctx.CombatFactory.Peaceful())
-        {
-           if(SuperState == Factory.Standing())
-            {
-                Ctx.PlayerAnimator.Play("PlayerIdle");
-            }
-            if(SuperState == Factory.Crouch())
-            {
-                Ctx.PlayerAnimator.Play("PlayerCrouch");
-            }
-        }
+        
         //TODO: 
         CheckSwitchStates();
     }
