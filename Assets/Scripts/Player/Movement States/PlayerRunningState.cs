@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerRunningState : PlayerBaseState
 {
-    public PlayerRunningState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerRunningState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory) {}
     public override void EnterState()
     {

@@ -6,20 +6,20 @@ enum PlayerStates {
     crouch,
     drag,
     jump,
-    attack,
     slide,
     climb,
     hang,
     inAir,
     fall,
-    standing
+    standing,
+    busy
 }
 
 public class PlayerStateFactory
 {
-    PlayerStateMachine _context;
+    PlayerController _context;
     Dictionary<PlayerStates, PlayerBaseState> _states = new Dictionary<PlayerStates, PlayerBaseState>();
-    public PlayerStateFactory(PlayerStateMachine currentContext)
+    public PlayerStateFactory(PlayerController currentContext)
     {
         _context = currentContext;
         _states[PlayerStates.idle] = new PlayerIdleState(_context, this);
@@ -28,13 +28,13 @@ public class PlayerStateFactory
         _states[PlayerStates.crouch] = new PlayerCrouchState(_context, this);
         _states[PlayerStates.drag] = new PlayerDragState(_context, this);
         _states[PlayerStates.jump] = new PlayerJumpingState(_context, this);
-        _states[PlayerStates.attack] = new PlayerAttackingState(_context, this);
         _states[PlayerStates.slide] = new PlayerSlideState(_context, this);
         _states[PlayerStates.climb] = new PlayerClimbState(_context, this);
         _states[PlayerStates.hang] = new PlayerHangState(_context, this);
         _states[PlayerStates.inAir] = new PlayerInAirState(_context, this);
         _states[PlayerStates.fall] = new PlayerFallState(_context, this);
         _states[PlayerStates.standing] = new PlayerStandingState(_context, this);
+        _states[PlayerStates.busy] = new PlayerBusyState(_context,this);
     }
 
     public PlayerBaseState Idle()
@@ -48,10 +48,6 @@ public class PlayerStateFactory
     public PlayerBaseState Jump()
     {
         return _states[PlayerStates.jump];
-    }
-    public PlayerBaseState Attack()
-    {
-        return _states[PlayerStates.attack];
     }
     public PlayerBaseState Grounded()
     {
@@ -88,5 +84,9 @@ public class PlayerStateFactory
     public PlayerBaseState Standing()
     {
         return _states[PlayerStates.standing];
+    }
+    public PlayerBaseState Busy()
+    {
+        return _states[PlayerStates.busy];
     }
 }
