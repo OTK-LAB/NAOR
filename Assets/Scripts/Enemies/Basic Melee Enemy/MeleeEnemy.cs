@@ -12,7 +12,8 @@ public class MeleeEnemy : MonoBehaviour
         STATE_FOLLOWING,
         STATE_ATTACK,
         STATE_COOLDOWN,
-        STATE_NOTDAMAGE
+        STATE_NOTDAMAGE,
+        STATE_HIT
     };
 
     State state = State.STATE_STARTINGMOVE;
@@ -49,6 +50,8 @@ public class MeleeEnemy : MonoBehaviour
     bool attackable = true;
     int random_nd; //random_notdamage
     bool IsDead = false;
+    public bool isHit = false;
+
     LayerMask enemyLayers;
     HealthSystem _healthSystem; 
     
@@ -72,6 +75,8 @@ public class MeleeEnemy : MonoBehaviour
     void Update()
     {
         checkState();
+        if (isHit)
+            state = State.STATE_HIT;
     }
     void checkState()
     {
@@ -94,11 +99,15 @@ public class MeleeEnemy : MonoBehaviour
                 break;
             case State.STATE_COOLDOWN:
                 ChangeAnimationState(idle);
-                coolDown();
+                coolDown(2);
+                break;
+            case State.STATE_HIT:
+                hitState();
                 break;
             case State.STATE_NOTDAMAGE:
+                isHit = false;
                 ChangeAnimationState(notdamage);
-                coolDown();
+                coolDown(2);
                 break;
         }
     }
@@ -115,9 +124,29 @@ public class MeleeEnemy : MonoBehaviour
             transform.position = transform.position + movement * Time.deltaTime;
         }
     }
+    void hitState()
+    {
+        if (isHit)
+        {
+            if (Moveright)
+                transform.position = new Vector2((float)(transform.position.x - 0.2), transform.position.y);
+            else
+                transform.position = new Vector2((float)(transform.position.x + 0.2), transform.position.y);
+            ChangeAnimationState(hit);
+            Debug.Log("Vurdu");
+            isHit = false;
+            attackable = true;
+            StartCoroutine(backtoPlayerCheck());
+        }
+    }
+    IEnumerator backtoPlayerCheck()
+    {
+        yield return new WaitForSeconds(1f);
+        checkPlayer();
+    }
+
     void checkPlayer()
     {
-        //Debug.Log(Vector2.Distance(transform.position, playerPos.position));
         if (Vector2.Distance(transform.position, playerPos.position) < distance)
         {
             if (Vector2.Distance(transform.position, playerPos.position) <= 1.5f)
@@ -144,9 +173,7 @@ public class MeleeEnemy : MonoBehaviour
     void attacktoPlayer()
     {
         random_nd = UnityEngine.Random.Range(0, 100);
-       // Debug.Log("atak zamani ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ random_notdamage:" + random_nd);
-        StartCoroutine(backtoCoolDown());
-        if (attackable)
+        if (attackable && !isHit)
         {
            attackable = false;
            Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange);
@@ -158,25 +185,30 @@ public class MeleeEnemy : MonoBehaviour
                     Debug.Log("We hit" + enemy.name);
                 }
             }
-        }
-       
+            StartCoroutine(backtoCoolDown());
+        }       
+
     }
     IEnumerator backtoCoolDown()
     {
         yield return new WaitForSeconds(0.5f);
-        if (random_nd <= 15)
+        if (!isHit)
         {
-            _healthSystem.Invincible = true;
-            state = State.STATE_NOTDAMAGE;
+            if (random_nd <= 15)
+            {
+                _healthSystem.Invincible = true;
+                state = State.STATE_NOTDAMAGE;
+            }
+            else
+                state = State.STATE_COOLDOWN;
         }
         else
-            state = State.STATE_COOLDOWN;
+            state = State.STATE_HIT;
     }
-    void coolDown()
+    void coolDown(int i)
     {
-        //Debug.Log("cool down ☻☻ ♣◘•♦○♥☻ ☺");
         timer += Time.deltaTime;
-        if (timer >= 2)
+        if (timer >= i)
         {
             checkPlayer();
             attackable = true;
@@ -204,16 +236,17 @@ public class MeleeEnemy : MonoBehaviour
 
     void OnHit(object sender, EventArgs e)
     {
-        if(!IsDead)
-        {
-            ChangeAnimationState(hit);
-            Debug.Log("Vurdu");
+        if (!IsDead)
+        { 
+            state = State.STATE_HIT; 
+            isHit = true;
         }
     }
     void OnDead(object sender, EventArgs e)
     {
         if(!IsDead)
         {
+            IsDead = true;
             ChangeAnimationState(death);
             Debug.Log("öl");
             GetComponent<Collider2D>().enabled = false;
