@@ -1,15 +1,17 @@
 using UnityEngine;
 
-public class PlayerFallState : PlayerBaseState
+public class PlayerCrouchState : PlayerBaseState
 {
-    public PlayerFallState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
-    :base (currentContext, playerStateFactory) {}
+    public PlayerCrouchState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
+    :base (currentContext, playerStateFactory)
+    {}
     public override void EnterState()
     {
-        InitializeSubstate();       
+        InitializeSubstate();
+        //Debug.Log("CROUCHING");
     }
     public override void UpdateState()
-    {   
+    {
         CheckSwitchStates();
     }
     public override void ExitState()
@@ -18,13 +20,9 @@ public class PlayerFallState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        /*if(Ctx.CanClimbLedge)
+        if(!Ctx.IsCrouching)
         {
-            SwitchState(Factory.Hang());
-        }*/
-        if (Ctx.CanSwing)
-        {
-            SwitchState(Factory.Swing());
+            SwitchState(Factory.Standing());
         }
     }
     public override void InitializeSubstate()

@@ -4,7 +4,7 @@ public class PlayerClimbState : PlayerBaseState
 {
     float waitTime;
     bool positionChanged;
-    public PlayerClimbState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerClimbState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory) {
     }
     public override void EnterState()
