@@ -8,7 +8,7 @@ public class PlayerDragState : PlayerBaseState
     Transform topcheck;
     Transform botcheck;
 
-    public PlayerDragState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerDragState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory)
     {}
     public override void EnterState()
