@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 using TMPro;
 public class DialogueManager : MonoBehaviour
 {
+    [Header("Params")]
+    [SerializeField] private float typingSpeed = 0.04f;
     public Image actorImage;
     public  TextMeshProUGUI actorName;
     public TextMeshProUGUI messageText;
@@ -16,6 +18,7 @@ public class DialogueManager : MonoBehaviour
     Actor[] currentActors;
     int activeMessage = 0;
     public static bool isActive = false;
+    private Coroutine displayLineCoroutine;
 /*
     private void OnEnable()
     {
@@ -39,11 +42,16 @@ public class DialogueManager : MonoBehaviour
     void DisplayMessage()
     {
         Message messageToDisplay = currentMessages[activeMessage];
-        messageText.text = messageToDisplay.message;
+        //messageText.text = messageToDisplay.message;
 
         Actor actorToDisplay = currentActors[messageToDisplay.actorId];
         actorName.text = actorToDisplay.name;
         actorImage.sprite = actorToDisplay.sprite;
+        if(displayLineCoroutine != null)
+        {
+            StopCoroutine(displayLineCoroutine);
+        };
+        displayLineCoroutine = StartCoroutine(DisplayLine(messageToDisplay.message));
     }
 
     public void NextMessage()
@@ -58,8 +66,21 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("Conversation ended");
             isActive = false;
 	    gameObject.SetActive(false);
-	    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>().enabled = true;
+	   // GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>().enabled = true;
         }
+    }
+
+    private IEnumerator DisplayLine(string line)
+    {
+        //empty the dialogue text
+        messageText.text = "";
+
+        foreach (char letter in line.ToCharArray())
+        {
+            messageText.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
     }
     // Start is called before the first frame update
     void Start()

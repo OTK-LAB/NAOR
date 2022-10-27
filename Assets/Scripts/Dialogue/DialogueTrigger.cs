@@ -35,7 +35,7 @@ public class DialogueTrigger : MonoBehaviour
 	{
 		if(Mouse.current.leftButton.wasPressedThisFrame && !DialogueBox.activeInHierarchy)
 	    	{
-	    	 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>().enabled = false;
+	    	 //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>().enabled = false;
 	         GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 	    	 StartDialogue();
 		}
