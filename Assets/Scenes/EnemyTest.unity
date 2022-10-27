@@ -2067,7 +2067,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.550991, y: 5.1149697, z: -9.117128}
+  m_LocalPosition: {x: -8.873943, y: 5.1149697, z: -9.117128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5686,7 +5686,7 @@ GameObject:
   - component: {fileID: 1387379233}
   m_Layer: 0
   m_Name: MeleeEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5860,7 +5860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   denemexd: 0
   currentHealth: 0
-  maxHealth: 20
+  maxHealth: 200
 --- !u!1 &1391653631
 GameObject:
   m_ObjectHideFlags: 0
@@ -9132,7 +9132,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.6978192, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

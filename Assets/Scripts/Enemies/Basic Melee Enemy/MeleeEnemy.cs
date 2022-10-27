@@ -75,8 +75,6 @@ public class MeleeEnemy : MonoBehaviour
     void Update()
     {
         checkState();
-        if (isHit)
-            state = State.STATE_HIT;
     }
     void checkState()
     {
@@ -94,7 +92,6 @@ public class MeleeEnemy : MonoBehaviour
                 following();
                 break;
             case State.STATE_ATTACK:
-                ChangeAnimationState(attack);
                 attacktoPlayer();
                 break;
             case State.STATE_COOLDOWN:
@@ -105,9 +102,7 @@ public class MeleeEnemy : MonoBehaviour
                 hitState();
                 break;
             case State.STATE_NOTDAMAGE:
-                isHit = false;
-                ChangeAnimationState(notdamage);
-                coolDown(2);
+                nDamage();
                 break;
         }
     }
@@ -124,10 +119,19 @@ public class MeleeEnemy : MonoBehaviour
             transform.position = transform.position + movement * Time.deltaTime;
         }
     }
+    void nDamage()
+    {
+        isHit = false;
+        _healthSystem.Invincible = true;
+        attackable = true;
+        ChangeAnimationState(notdamage);
+        coolDown(2);
+    }
     void hitState()
     {
         if (isHit)
         {
+            Debug.Log("Hit State");
             if (Moveright)
                 transform.position = new Vector2((float)(transform.position.x - 0.2), transform.position.y);
             else
@@ -175,25 +179,26 @@ public class MeleeEnemy : MonoBehaviour
         random_nd = UnityEngine.Random.Range(0, 100);
         if (attackable && !isHit)
         {
-           attackable = false;
-           Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange);
+            ChangeAnimationState(attack);
+            attackable = false;
+            Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange);
             foreach(Collider2D enemy in hitPlayer)
             {
                 if (enemy.tag == "Player")
                 {
-                   // player.GetComponent<HealthSystem>().Damage(damageamount); PLAYER'A HEALTH SYSTEM EKLENİNCE AKTİF EDİLMELİ
+                    player.GetComponent<HealthSystem>().Damage(damageamount); 
                     Debug.Log("We hit" + enemy.name);
                 }
             }
             StartCoroutine(backtoCoolDown());
-        }       
+        }   
 
     }
     IEnumerator backtoCoolDown()
     {
-        yield return new WaitForSeconds(0.5f);
         if (!isHit)
         {
+            yield return new WaitForSeconds(0.5f);
             if (random_nd <= 15)
             {
                 _healthSystem.Invincible = true;
@@ -210,10 +215,12 @@ public class MeleeEnemy : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= i)
         {
-            checkPlayer();
             attackable = true;
             timer = 0;
             _healthSystem.Invincible = false;
+            Debug.Log("false");
+            checkPlayer();
+
         }
     }
 
