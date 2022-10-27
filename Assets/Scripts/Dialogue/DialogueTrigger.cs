@@ -8,6 +8,7 @@ public class DialogueTrigger : MonoBehaviour
     public Actor[] actors;
     public GameObject DialogueBox;
     public GameObject InteractionText;
+    public Animator animator;
 
     public void StartDialogue()
     {
@@ -19,9 +20,9 @@ public class DialogueTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
 	if (collider.CompareTag("Player") == true)
-	{
-	    InteractionText.SetActive(true);
-	}
+	    {
+	        InteractionText.SetActive(true);
+	    }
     }
     
      private void OnTriggerExit2D(Collider2D collider)
@@ -35,10 +36,12 @@ public class DialogueTrigger : MonoBehaviour
 	{
 		if(Mouse.current.leftButton.wasPressedThisFrame && !DialogueBox.activeInHierarchy)
 	    	{
-	    	 //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>().enabled = false;
-	         GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+             
+	    	 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().enabled = false;
+                animator.Play("PlayerIdle");
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 	    	 StartDialogue();
-		}
+		    }
 	    }
     }
 }

@@ -6,12 +6,13 @@ using UnityEngine.InputSystem;
 using TMPro;
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Params")]
-    [SerializeField] private float typingSpeed = 0.04f;
+    
+    public float typingSpeed = 0.04f;
     public Image actorImage;
     public  TextMeshProUGUI actorName;
     public TextMeshProUGUI messageText;
     public RectTransform backgroundBox;
+    public bool typeWriteRunning = false;
     //public InputAction action;
 
     Message[] currentMessages;
@@ -47,10 +48,6 @@ public class DialogueManager : MonoBehaviour
         Actor actorToDisplay = currentActors[messageToDisplay.actorId];
         actorName.text = actorToDisplay.name;
         actorImage.sprite = actorToDisplay.sprite;
-        if(displayLineCoroutine != null)
-        {
-            StopCoroutine(displayLineCoroutine);
-        };
         displayLineCoroutine = StartCoroutine(DisplayLine(messageToDisplay.message));
     }
 
@@ -66,7 +63,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("Conversation ended");
             isActive = false;
 	    gameObject.SetActive(false);
-	   // GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStateMachine>().enabled = true;
+	   GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().enabled = true;
         }
     }
 
@@ -77,6 +74,12 @@ public class DialogueManager : MonoBehaviour
 
         foreach (char letter in line.ToCharArray())
         {
+            typeWriteRunning = true;
+            /*if (Keyboard.current.anyKey.wasPressedThisFrame)
+            {
+                messageText.text = line;
+                break;
+            }*/
             messageText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
@@ -91,10 +94,21 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)&& isActive == true)
+        if ((Mouse.current.leftButton.wasPressedThisFrame) && isActive == true)
         {
-            NextMessage();
+            if (typeWriteRunning)
+            {
+                typeWriteRunning = false;
+                if (displayLineCoroutine != null)
+                {
+                    StopCoroutine(displayLineCoroutine);
+                    messageText.text = currentMessages[activeMessage].message;
+                }           
+            }
+            else
+                NextMessage();
         }
+
     }
 
 /*	IEnumerator Wait()
