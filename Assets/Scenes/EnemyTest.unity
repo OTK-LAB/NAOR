@@ -1337,6 +1337,14 @@ PrefabInstance:
       propertyPath: _movementHierarchyText
       value: 
       objectReference: {fileID: 1304470487}
+    - target: {fileID: 6518641809233875278, guid: e4fc3419f3357e84f964ed275d47a1e9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 7712882145264662802, guid: e4fc3419f3357e84f964ed275d47a1e9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4fc3419f3357e84f964ed275d47a1e9, type: 3}
 --- !u!1 &386533037
@@ -2067,7 +2075,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.873943, y: 5.1149697, z: -9.117128}
+  m_LocalPosition: {x: -11.550991, y: 5.1149697, z: -9.117128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5749,9 +5757,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: 1289085443
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2a25ca5ed66f7e54c8e97c7ce3315866, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5771,7 +5779,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387379226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -59, y: -7.96, z: -0.4609922}
+  m_LocalPosition: {x: -58.17, y: -7.96, z: -0.4609922}
   m_LocalScale: {x: 3.7879374, y: 3.9534562, z: 0.9742136}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5858,9 +5866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a25cdde9ff64cba4995d61e34b8efb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  denemexd: 0
   currentHealth: 0
-  maxHealth: 200
+  maxHealth: 50
 --- !u!1 &1391653631
 GameObject:
   m_ObjectHideFlags: 0
@@ -6085,7 +6092,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.5522976, y: -0.105847836}
+  m_Offset: {x: -0.5522995, y: -0.19055271}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6096,7 +6103,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 182.69, y: 1.0705652}
+  m_Size: {x: 182.69, y: 0.9011555}
   m_EdgeRadius: 0
 --- !u!4 &1441774458
 Transform:
@@ -9132,7 +9139,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.6978192, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

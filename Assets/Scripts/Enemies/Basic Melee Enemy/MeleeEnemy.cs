@@ -52,6 +52,9 @@ public class MeleeEnemy : MonoBehaviour
     bool IsDead = false;
     public bool isHit = false;
 
+    //Hit
+    Vector2 temp;
+    Rigidbody2D rb;
     LayerMask enemyLayers;
     HealthSystem _healthSystem; 
     
@@ -65,6 +68,7 @@ public class MeleeEnemy : MonoBehaviour
     }
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -130,30 +134,27 @@ public class MeleeEnemy : MonoBehaviour
     void hitState()
     {
         if (isHit)
-        {
-            Debug.Log("Hit State");
+        {       
+            Debug.Log("Moveright"+ Moveright);
+            temp = new Vector2((transform.position.x + 2), transform.position.y);
             if (Moveright)
-                transform.position = new Vector2((float)(transform.position.x - 0.2), transform.position.y);
+                rb.MovePosition((Vector2)transform.position + (temp * speedEnemy * Time.deltaTime));
             else
-                transform.position = new Vector2((float)(transform.position.x + 0.2), transform.position.y);
+                rb.MovePosition((Vector2)transform.position - (temp * speedEnemy * Time.deltaTime));
+          
             ChangeAnimationState(hit);
             Debug.Log("Vurdu");
             isHit = false;
             attackable = true;
-            StartCoroutine(backtoPlayerCheck());
         }
     }
-    IEnumerator backtoPlayerCheck()
-    {
-        yield return new WaitForSeconds(1f);
-        checkPlayer();
-    }
+
 
     void checkPlayer()
     {
         if (Vector2.Distance(transform.position, playerPos.position) < distance)
         {
-            if (Vector2.Distance(transform.position, playerPos.position) <= 1.5f)
+            if (Vector2.Distance(transform.position, playerPos.position) <= 1)
                 state = State.STATE_ATTACK;
             else
                 state = State.STATE_FOLLOWING;
@@ -190,7 +191,7 @@ public class MeleeEnemy : MonoBehaviour
                     Debug.Log("We hit" + enemy.name);
                 }
             }
-            StartCoroutine(backtoCoolDown());
+           // StartCoroutine(backtoCoolDown());
         }   
 
     }
@@ -198,7 +199,7 @@ public class MeleeEnemy : MonoBehaviour
     {
         if (!isHit)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.01f);
             if (random_nd <= 15)
             {
                 _healthSystem.Invincible = true;
