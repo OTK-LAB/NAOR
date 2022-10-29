@@ -6,15 +6,21 @@ public class PlayerDashState : PlayerBaseState
 {
     public PlayerDashState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     : base(currentContext, playerStateFactory) { }
-
-    float currentdashingtime;
+    float originalDashingTime;
+    float originalGravityScale;
     public override void EnterState()
     {
         InitializeSubstate();
-        Debug.Log("In Enter");
-        Ctx.CanDash = false;
 
-        currentdashingtime = Ctx.DashingTime;
+
+        Debug.Log("In Enter");
+        
+        Ctx.CanDash = false;
+        originalGravityScale = Ctx.Rigidbod.gravityScale;
+        originalDashingTime = Ctx.DashingTime;
+
+        Ctx.Rigidbod.gravityScale = 0f;
+
     }
     public override void UpdateState()
     {
@@ -24,18 +30,25 @@ public class PlayerDashState : PlayerBaseState
         {
             Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * 1, 0));
             Ctx.DashingTime = Ctx.DashingTime - Time.deltaTime;
+
         }
         else if (Ctx.FacingRight==false)
         {
             Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * -1, 0));
             Ctx.DashingTime = Ctx.DashingTime - Time.deltaTime;
+
         }
 
         CheckSwitchStates();
     }
     public override void ExitState()
     {
-        Ctx.DashingTime = currentdashingtime;
+        Debug.Log("In Exit");
+        Ctx.Rigidbod.gravityScale = originalGravityScale;
+        Ctx.DashingTime = originalDashingTime;
+        Ctx.CanDash = true;
+
+
     }
     public override void CheckSwitchStates()
     {
