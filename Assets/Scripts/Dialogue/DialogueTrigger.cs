@@ -9,42 +9,64 @@ public class DialogueTrigger : MonoBehaviour
     public GameObject DialogueBox;
     public GameObject InteractionText;
     public Animator animator;
+    public PlayerInputActions inputActions;
+    public bool inRange = false;
 
-    public void StartDialogue()
+    void Awake()
     {
-	DialogueBox.SetActive(true);
-        FindObjectOfType<DialogueManager>().OpenDialogue(messages, actors);
-	
+        inputActions = new PlayerInputActions();
+        inputActions.Interaction.Enable();
+
+        inputActions.Interaction.NpcInteraction.started += OnDialougeTriggered;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-	if (collider.CompareTag("Player") == true)
-	    {
+	if (collider.CompareTag("Player"))
+	    {   
+            inRange = true;
 	        InteractionText.SetActive(true);
 	    }
     }
     
      private void OnTriggerExit2D(Collider2D collider)
      {
-      InteractionText.SetActive(false);
+        inRange = false;
+        InteractionText.SetActive(false);
      }
 
     private void Update()
     {
-	if (InteractionText.activeInHierarchy)
-	{
-		if(Mouse.current.leftButton.wasPressedThisFrame && !DialogueBox.activeInHierarchy)
-	    	{
-             
-	    	 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().enabled = false;
-                animator.Play("PlayerIdle");
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-	    	 StartDialogue();
-		    }
-	    }
+	//if (InteractionText.activeInHierarchy)
+	//{
+	//	if(Mouse.current.leftButton.wasPressedThisFrame && !DialogueBox.activeInHierarchy)
+	//    	{
+    //         
+	//    	 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().enabled = false;
+    //            animator.Play("PlayerIdle");
+    //            GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+	//    	 StartDialogue();
+	//	    }
+	//    }
+    }
+    public void StartDialogue()
+    {
+        //FIXME:
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Disable();
+	    DialogueBox.SetActive(true);
+        FindObjectOfType<DialogueManager>().OpenDialogue(messages, actors);
+	
+    }
+
+    void OnDialougeTriggered(InputAction.CallbackContext context)
+    {
+        if(inRange)
+        {
+            StartDialogue();
+        }
     }
 }
+
 [System.Serializable]
 public class Message
 {

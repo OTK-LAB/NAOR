@@ -62,8 +62,9 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("Conversation ended");
             isActive = false;
-	    gameObject.SetActive(false);
-	   GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().enabled = true;
+	        gameObject.SetActive(false);
+            //FIXME:
+	        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Enable();
         }
     }
 
