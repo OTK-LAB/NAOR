@@ -6,6 +6,7 @@ enum PlayerStates {
     crouch,
     drag,
     jump,
+    dash,
     slide,
     climb,
     hang,
@@ -28,6 +29,7 @@ public class PlayerStateFactory
         _states[PlayerStates.crouch] = new PlayerCrouchState(_context, this);
         _states[PlayerStates.drag] = new PlayerDragState(_context, this);
         _states[PlayerStates.jump] = new PlayerJumpingState(_context, this);
+        _states[PlayerStates.dash] = new PlayerDashState(_context, this);
         _states[PlayerStates.slide] = new PlayerSlideState(_context, this);
         _states[PlayerStates.climb] = new PlayerClimbState(_context, this);
         _states[PlayerStates.hang] = new PlayerHangState(_context, this);
@@ -48,6 +50,9 @@ public class PlayerStateFactory
     public PlayerBaseState Jump()
     {
         return _states[PlayerStates.jump];
+    }public PlayerBaseState Dash()
+    {
+        return _states[PlayerStates.dash];
     }
     public PlayerBaseState Grounded()
     {

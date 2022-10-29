@@ -75,6 +75,16 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
     public Transform groundCheck;
 
+    //Dash
+    [Header("Dash")]
+    bool _isDashPressed;
+    [SerializeField] private float _dashingVelocity;
+    [SerializeField] private float _dashingTime;
+    private Vector2 _dashingDir;
+    private bool _isDasghing;
+    private bool _canDash=true;
+
+
     //Combat
     //[Header("Combat")]
     private bool _isAttackPressed;
@@ -101,17 +111,25 @@ public class PlayerController : MonoBehaviour
     
     public bool IsMovementPressed { get { return _isMovementPressed; } set { _isMovementPressed = value; }}
     public bool IsJumpPressed { get { return _isJumpPressed; } set { _isJumpPressed = value; }}
+    public bool IsDashPressed { get { return _isDashPressed; } set { _isDashPressed = value; } }
+    public bool IsDashing { get { return _isDasghing; } set { _isDasghing = value; } }
+
     public bool IsAttackPressed { get { return _isAttackPressed;}}
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
     public bool CanFlip { get {return _canFlip; } set { _canFlip = value; }}
+    public bool CanDash { get { return _canDash; } set { _canDash = value; } }
     public bool IsOnSlope { get { return _isOnSlope; }}
     public bool CanClimbLedge { get { return _canClimbLedge; }}
     public bool FacingRight { get { return _facingRight;}}
 
     public Collider2D GroundCollider { get { return _groundCollider;}}
     public float JumpForce { get { return jumpForce; } set { jumpForce = value; }}
+    public float DashingVelcoity { get { return _dashingVelocity; } set {_dashingVelocity = value; }}
+    public float DashingTime { get { return _dashingTime; } set { _dashingTime = value; }}
+
+    public Vector2 DashingDirection { get { return _dashingDir; } set { _dashingDir = value; }}
     public float MovementSpeed { get { return movementSpeed; }}
     public Rigidbody2D Rigidbod { get { return _rb; }}
     public RaycastHit2D Ray { get {return frontRay; }}
@@ -150,6 +168,9 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Jump.started += OnJump;
         _playerInputActions.Player.Jump.canceled += OnJump;
 
+        _playerInputActions.Player.Dash.started += OnDash;
+        _playerInputActions.Player.Dash.canceled += OnDash;
+
         _playerInputActions.Player.Crouch.started += OnCrouch;
 
         _playerInputActions.Player.Drag.started += OnDrag;
@@ -184,6 +205,10 @@ public class PlayerController : MonoBehaviour
     void OnJump(InputAction.CallbackContext context)
     {
         _isJumpPressed = context.ReadValueAsButton();
+    } 
+    void OnDash(InputAction.CallbackContext context)
+    {
+        _isDashPressed = context.ReadValueAsButton();
     }
     void OnCrouch(InputAction.CallbackContext context)
     {
