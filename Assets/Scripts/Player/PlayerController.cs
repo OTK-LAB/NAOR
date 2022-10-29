@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     float _defaultGravity;
 
     //Dragging and Ledge Detection
-    [SerializeField] private float _detectionDistance;
+
     bool _toggleDrag = false;
     public Transform frontCheck;
     public Transform _ledgeCheckTop;
@@ -83,6 +83,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 _dashingDir;
     private bool _isDasghing;
     private bool _canDash=true;
+    [SerializeField] private float _detectionDistance;
+    [SerializeField] public float _dashDetectionDistance;
+    public Collider2D wallCollider;
+    public Transform _positionAfterDash;
 
 
     //Combat
@@ -141,6 +145,9 @@ public class PlayerController : MonoBehaviour
     public float DefaultGravity { get {return _defaultGravity;}}
     void Awake()
     {
+
+        //FIXME:
+
         _defaultGravity = _rb.gravityScale;
         _movementStates = new PlayerStateFactory(this);
         _combatStates = new CombatStateFactory(this, _movementStates);
@@ -272,23 +279,29 @@ public class PlayerController : MonoBehaviour
     public void CheckFront(){
         if(_facingRight)
         {
-            frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _detectionDistance, groundLayer);
+            frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _dashDetectionDistance, groundLayer);
         }
         else
         {
-            frontRay = Physics2D.Raycast(frontCheck.position, -transform.right, _detectionDistance, groundLayer);
+            frontRay = Physics2D.Raycast(frontCheck.position, -transform.right, _dashDetectionDistance, groundLayer);
         }
 
         _thereIsGroundFront = frontRay;
 
-        if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable") || frontRay.collider.CompareTag("Box"))){
-            _canDrag = true;
-            //Debug.Log("Candrag");
-        }
-        else
+        if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable")))
         {
-            _canDrag = false;
+            wallCollider = frontRay.collider;
+            IsDashing = true;
         }
+
+        //if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable") || frontRay.collider.CompareTag("Box"))){
+        //    _canDrag = true;
+        //    Debug.Log("Candrag");
+        //}
+        //else
+        //{
+        //    _canDrag = false;
+        //}
     }
 
     public void CheckForLedges()

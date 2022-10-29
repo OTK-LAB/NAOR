@@ -4,13 +4,33 @@ using UnityEngine;
 
 public class PlayerDashState : PlayerBaseState
 {
+
+    Vector2 positionAfterDash;
     public PlayerDashState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     : base(currentContext, playerStateFactory) { }
     float originalDashingTime;
     float originalGravityScale;
     public override void EnterState()
     {
-        InitializeSubstate();
+
+        if(Ctx.IsDashing)
+        {             
+            if(Ctx.FacingRight)
+            {
+               positionAfterDash = new Vector2(Ctx.wallCollider.transform.position.x - 3, Ctx.Rigidbod.position.y);
+            }
+            else
+            {
+                positionAfterDash= new Vector2(Ctx.wallCollider.transform.position.x -3, Ctx.Rigidbod.position.y);
+            }
+        }
+        else
+        {   
+            if(Ctx.FacingRight)
+                positionAfterDash = new Vector2(Ctx.Rigidbod.position.x + Ctx._dashDetectionDistance , Ctx.Rigidbod.position.y);
+            else
+                positionAfterDash = new Vector2(Ctx.Rigidbod.position.x - Ctx._dashDetectionDistance, Ctx.Rigidbod.position.y);
+        }
 
 
         Debug.Log("In Enter");
@@ -26,15 +46,18 @@ public class PlayerDashState : PlayerBaseState
     {
         Debug.Log("In Update");
         //   Ctx.Rigidbod.velocity = new Vector2(Ctx.das, Ctx.Rigidbod.velocity.y);
+        
         if (Ctx.FacingRight == true)
         {
-            Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * 1, 0));
+            //Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * 1, 0));
+            Ctx.AppliedMovement = Ctx.DashingVelcoity;
             Ctx.DashingTime = Ctx.DashingTime - Time.deltaTime;
 
         }
         else if (Ctx.FacingRight==false)
         {
-            Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * -1, 0));
+            //Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * -1, 0));
+            Ctx.AppliedMovement = -Ctx.DashingVelcoity;
             Ctx.DashingTime = Ctx.DashingTime - Time.deltaTime;
 
         }
@@ -52,7 +75,7 @@ public class PlayerDashState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if (Ctx.DashingTime<=0)
+        if (Ctx.Rigidbod.position.x == positionAfterDash.x)
         {
             SwitchState(Factory.Standing());
         }
