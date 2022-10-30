@@ -15,7 +15,7 @@ using TMPro;
 // please increase this counter as a
 // warning for the next person:
 //
-// total_hours_wasted_here = 14
+// total_hours_wasted_here = 15
 
 //TODO:
 //  Add coyote time
