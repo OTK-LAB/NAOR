@@ -7,6 +7,7 @@ public class FXManager : MonoBehaviour
     [Header("Sounds")]
     [SerializeField] private    AudioSource[]       WalkSounds;
     [SerializeField] private    AudioSource[]       JumpSounds;
+    [SerializeField] private    AudioSource[]       SwordSounds;
     [Header("")]
     [SerializeField] private    ParticleSystem[]    PS;
     private                     int                 flip = 0;
@@ -37,6 +38,10 @@ public class FXManager : MonoBehaviour
 
     void PlayLanding() {
         JumpSounds[1].Play();
+    }
+
+    void PlaySwordSwing() {
+        SwordSounds[0].Play();
     }
 
     private void Update() {
