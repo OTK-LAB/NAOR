@@ -31,31 +31,21 @@ public class DialogueTrigger : MonoBehaviour
     
      private void OnTriggerExit2D(Collider2D collider)
      {
-        inRange = false;
-        InteractionText.SetActive(false);
+        if (collider.CompareTag("Player"))
+        {
+            inRange = false;
+            InteractionText.SetActive(false);
+            inputActions.Interaction.Enable();
+        }
      }
 
-    private void Update()
-    {
-	//if (InteractionText.activeInHierarchy)
-	//{
-	//	if(Mouse.current.leftButton.wasPressedThisFrame && !DialogueBox.activeInHierarchy)
-	//    	{
-    //         
-	//    	 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().enabled = false;
-    //            animator.Play("PlayerIdle");
-    //            GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-	//    	 StartDialogue();
-	//	    }
-	//    }
-    }
     public void StartDialogue()
     {
         //FIXME:
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Disable();
 	    DialogueBox.SetActive(true);
         FindObjectOfType<DialogueManager>().OpenDialogue(messages, actors);
-	
+	    inputActions.Interaction.Disable();
     }
 
     void OnDialougeTriggered(InputAction.CallbackContext context)

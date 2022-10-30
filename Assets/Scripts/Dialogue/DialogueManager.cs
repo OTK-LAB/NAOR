@@ -12,25 +12,13 @@ public class DialogueManager : MonoBehaviour
     public  TextMeshProUGUI actorName;
     public TextMeshProUGUI messageText;
     public RectTransform backgroundBox;
-    public bool typeWriteRunning = false;
-    //public InputAction action;
 
     Message[] currentMessages;
     Actor[] currentActors;
     int activeMessage = 0;
     public static bool isActive = false;
     private Coroutine displayLineCoroutine;
-/*
-    private void OnEnable()
-    {
-        action.Enable();
-    }
 
-    private void OneDisable()
-    {
-        action.Disable();
-    }
-*/
     public void OpenDialogue(Message[] messages, Actor[] actors)
     {
         currentMessages = messages;
@@ -75,21 +63,10 @@ public class DialogueManager : MonoBehaviour
 
         foreach (char letter in line.ToCharArray())
         {
-            typeWriteRunning = true;
-            /*if (Keyboard.current.anyKey.wasPressedThisFrame)
-            {
-                messageText.text = line;
-                break;
-            }*/
             messageText.text += letter;
             yield return new WaitForSeconds(typingSpeed);
         }
 
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -97,9 +74,8 @@ public class DialogueManager : MonoBehaviour
     {
         if ((Mouse.current.leftButton.wasPressedThisFrame) && isActive == true)
         {
-            if (typeWriteRunning)
+            if (messageText.text != currentMessages[activeMessage].message)
             {
-                typeWriteRunning = false;
                 if (displayLineCoroutine != null)
                 {
                     StopCoroutine(displayLineCoroutine);
