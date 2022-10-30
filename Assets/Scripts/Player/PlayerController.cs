@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _dashingVelocity;
     [SerializeField] private float _dashingTime;
     private Vector2 _dashingDir;
-    private bool _isDasghing;
+    public bool _isDashing;
     private bool _canDash=true;
     [SerializeField] private float _detectionDistance;
     [SerializeField] public float _dashDetectionDistance;
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
     public bool IsMovementPressed { get { return _isMovementPressed; } set { _isMovementPressed = value; }}
     public bool IsJumpPressed { get { return _isJumpPressed; } set { _isJumpPressed = value; }}
     public bool IsDashPressed { get { return _isDashPressed; } set { _isDashPressed = value; } }
-    public bool IsDashing { get { return _isDasghing; } set { _isDasghing = value; } }
+    public bool IsDashing { get { return _isDashing; } set { _isDashing = value; } }
 
     public bool IsAttackPressed { get { return _isAttackPressed;}}
     public bool IsOnGround { get { return _isOnGround; }}
@@ -276,7 +276,9 @@ public class PlayerController : MonoBehaviour
         }
         //Debug.Log("IS ON SLOPE: " + _isOnSlope);
     }
-    public void CheckFront(){
+    public void CheckFront(){ 
+        
+            // Create dash check 
         if(_facingRight)
         {
             frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _dashDetectionDistance, groundLayer);
@@ -290,8 +292,12 @@ public class PlayerController : MonoBehaviour
 
         if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable")))
         {
-            wallCollider = frontRay.collider;
-            IsDashing = true;
+            wallCollider = frontRay.collider; //passableObjectCollider
+            IsDashing = true; //FİX IsPass
+        }
+        else
+        {
+            IsDashing = false;
         }
 
         //if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable") || frontRay.collider.CompareTag("Box"))){

@@ -13,32 +13,38 @@ public class PlayerDashState : PlayerBaseState
     public override void EnterState()
     {
 
-        if(Ctx.IsDashing)
-        {             
-            if(Ctx.FacingRight)
-            {
-               positionAfterDash = new Vector2(Ctx.wallCollider.transform.position.x - 3, Ctx.Rigidbod.position.y);
-            }
-            else
-            {
-                positionAfterDash= new Vector2(Ctx.wallCollider.transform.position.x -3, Ctx.Rigidbod.position.y);
-            }
-        }
-        else
-        {   
-            if(Ctx.FacingRight)
-                positionAfterDash = new Vector2(Ctx.Rigidbod.position.x + Ctx._dashDetectionDistance , Ctx.Rigidbod.position.y);
-            else
-                positionAfterDash = new Vector2(Ctx.Rigidbod.position.x - Ctx._dashDetectionDistance, Ctx.Rigidbod.position.y);
-        }
+        //    if(Ctx.IsDashing)
+        //    {             
+        //        if(Ctx.FacingRight)
+        //        {
+        //           positionAfterDash = new Vector2(Ctx.wallCollider.transform.position.x - 3, Ctx.Rigidbod.position.y);
+        //        }
+        //        else
+        //        {
+        //            positionAfterDash= new Vector2(Ctx.wallCollider.transform.position.x -3, Ctx.Rigidbod.position.y);
+        //        }
+        //    }
+        //    else
+        //    {   
+        //        if(Ctx.FacingRight)
+        //            positionAfterDash = new Vector2(Ctx.Rigidbod.position.x + Ctx._dashDetectionDistance , Ctx.Rigidbod.position.y);
+        //        else
+        //            positionAfterDash = new Vector2(Ctx.Rigidbod.position.x - Ctx._dashDetectionDistance, Ctx.Rigidbod.position.y);
+        //    }
 
+
+        if (Ctx.IsDashing)
+        {
+            Ctx.wallCollider.isTrigger = true;
+        }
+        
 
         Debug.Log("In Enter");
         
         Ctx.CanDash = false;
         originalGravityScale = Ctx.Rigidbod.gravityScale;
         originalDashingTime = Ctx.DashingTime;
-
+        
         Ctx.Rigidbod.gravityScale = 0f;
 
     }
@@ -70,12 +76,12 @@ public class PlayerDashState : PlayerBaseState
         Ctx.Rigidbod.gravityScale = originalGravityScale;
         Ctx.DashingTime = originalDashingTime;
         Ctx.CanDash = true;
-
+        Ctx.wallCollider.isTrigger=false;
 
     }
     public override void CheckSwitchStates()
     {
-        if (Ctx.Rigidbod.position.x == positionAfterDash.x)
+        if (Ctx.DashingTime<=0)
         {
             SwitchState(Factory.Standing());
         }
