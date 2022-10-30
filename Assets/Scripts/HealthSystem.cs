@@ -6,7 +6,6 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     private bool invincible = false;
-    public bool denemexd = false;
     [SerializeField]
     private float currentHealth;
     [SerializeField]
@@ -22,13 +21,6 @@ public class HealthSystem : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    private void Update()
-    {
-        if (denemexd)
-        {
-            Damage(10.0f);
-        }
-    }
     public float GetHealth()
     {
         return currentHealth;
@@ -36,16 +28,19 @@ public class HealthSystem : MonoBehaviour
 
     public void Damage(float damageAmount)
     {
-        currentHealth -= damageAmount;
 
-        if (currentHealth < 0 && !invincible)
+        if (!invincible)
         {
-            currentHealth = 0;
-            OnDead?.Invoke(this, EventArgs.Empty);
+            currentHealth -= damageAmount;
+            OnHit?.Invoke(this, EventArgs.Empty); //BATU & ZEYNEP bunu unutma ! hasar animasyonunu oynatýp hasar almamasýný istiyorsak bunu if dýþýna çýkartalým ama düþmanlarý da ona göre düzenleyelim
+            if (currentHealth < 0 )
+            {
+                currentHealth = 0;
+                OnDead?.Invoke(this, EventArgs.Empty);             
+            }
+
         }
 
-        OnHit?.Invoke(this, EventArgs.Empty);
-        denemexd = false;
     }
 
     public void Heal(float healAmount)
