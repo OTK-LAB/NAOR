@@ -15,6 +15,11 @@ public class DialogueManager : MonoBehaviour
 
     Message[] currentMessages;
     Actor[] currentActors;
+
+    public GameObject Buttons;
+    public int buttonId;
+    public int finalMessage;
+
     int activeMessage = 0;
     public static bool isActive = false;
     private Coroutine displayLineCoroutine;
@@ -31,7 +36,6 @@ public class DialogueManager : MonoBehaviour
     void DisplayMessage()
     {
         Message messageToDisplay = currentMessages[activeMessage];
-        //messageText.text = messageToDisplay.message;
 
         Actor actorToDisplay = currentActors[messageToDisplay.actorId];
         actorName.text = actorToDisplay.name;
@@ -39,12 +43,14 @@ public class DialogueManager : MonoBehaviour
         displayLineCoroutine = StartCoroutine(DisplayLine(messageToDisplay.message));
     }
 
-    public void NextMessage()
+    public void NextMessage(int messageId)
     {
-        activeMessage++;
+        activeMessage = messageId;
         if(activeMessage < currentMessages.Length)
         {
             DisplayMessage();
+            if (buttonId == activeMessage)
+                Buttons.SetActive(true);
         }
         else
         {
@@ -83,7 +89,12 @@ public class DialogueManager : MonoBehaviour
                 }           
             }
             else
-                NextMessage();
+            {
+                if (activeMessage == finalMessage)
+                    NextMessage(currentMessages.Length);
+                else if(activeMessage != buttonId)
+                    NextMessage(activeMessage + 1);
+            }
         }
 
     }
