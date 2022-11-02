@@ -81,11 +81,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _dashingVelocity;
     [SerializeField] private float _dashingTime;
     private Vector2 _dashingDir;
-    public bool _isDashing;
+    public bool _isDashing=false;
     private bool _canDash=true;
     [SerializeField] private float _detectionDistance;
     [SerializeField] public float _dashDetectionDistance;
-    public Collider2D wallCollider;
     public Transform _positionAfterDash;
 
 
@@ -116,6 +115,7 @@ public class PlayerController : MonoBehaviour
     public bool IsMovementPressed { get { return _isMovementPressed; } set { _isMovementPressed = value; }}
     public bool IsJumpPressed { get { return _isJumpPressed; } set { _isJumpPressed = value; }}
     public bool IsDashPressed { get { return _isDashPressed; } set { _isDashPressed = value; } }
+    public bool ThereIsGroundFront { get { return _thereIsGroundFront; } set { _thereIsGroundFront = value; } }
     public bool IsDashing { get { return _isDashing; } set { _isDashing = value; } }
 
     public bool IsAttackPressed { get { return _isAttackPressed;}}
@@ -290,15 +290,8 @@ public class PlayerController : MonoBehaviour
 
         _thereIsGroundFront = frontRay;
 
-        if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable")))
-        {
-            wallCollider = frontRay.collider; //passableObjectCollider
-            IsDashing = true; //FİX IsPass
-        }
-        else
-        {
-            IsDashing = false;
-        }
+       
+        
 
         //if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable") || frontRay.collider.CompareTag("Box"))){
         //    _canDrag = true;

@@ -8,42 +8,16 @@ public class PlayerDashState : PlayerBaseState
     Vector2 positionAfterDash;
     public PlayerDashState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     : base(currentContext, playerStateFactory) { }
-    float originalDashingTime;
-    float originalGravityScale;
+    static float currentDashingTime;
+    Collider2D obstacle;
     public override void EnterState()
     {
 
-        //    if(Ctx.IsDashing)
-        //    {             
-        //        if(Ctx.FacingRight)
-        //        {
-        //           positionAfterDash = new Vector2(Ctx.wallCollider.transform.position.x - 3, Ctx.Rigidbod.position.y);
-        //        }
-        //        else
-        //        {
-        //            positionAfterDash= new Vector2(Ctx.wallCollider.transform.position.x -3, Ctx.Rigidbod.position.y);
-        //        }
-        //    }
-        //    else
-        //    {   
-        //        if(Ctx.FacingRight)
-        //            positionAfterDash = new Vector2(Ctx.Rigidbod.position.x + Ctx._dashDetectionDistance , Ctx.Rigidbod.position.y);
-        //        else
-        //            positionAfterDash = new Vector2(Ctx.Rigidbod.position.x - Ctx._dashDetectionDistance, Ctx.Rigidbod.position.y);
-        //    }
-
-
-        if (Ctx.IsDashing)
-        {
-            Ctx.wallCollider.isTrigger = true;
-        }
-        
-
         Debug.Log("In Enter");
-        
+        Ctx.IsDashing = false;
+        Ctx.CanFlip = false;
         Ctx.CanDash = false;
-        originalGravityScale = Ctx.Rigidbod.gravityScale;
-        originalDashingTime = Ctx.DashingTime;
+        currentDashingTime = Ctx.DashingTime;
         
         Ctx.Rigidbod.gravityScale = 0f;
 
@@ -52,58 +26,57 @@ public class PlayerDashState : PlayerBaseState
     {
         Debug.Log("In Update");
         //   Ctx.Rigidbod.velocity = new Vector2(Ctx.das, Ctx.Rigidbod.velocity.y);
-        
-        if (Ctx.FacingRight == true)
-        {
-            //Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * 1, 0));
-            Ctx.AppliedMovement = Ctx.DashingVelcoity;
-            Ctx.DashingTime = Ctx.DashingTime - Time.deltaTime;
+        if (!Ctx.IsDashing) { 
+            if (Ctx.FacingRight == true)
+            {
+                //Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * 1, 0));
+                Ctx.AppliedMovement = Ctx.DashingVelcoity;
+                currentDashingTime = currentDashingTime - Time.deltaTime;
 
-        }
-        else if (Ctx.FacingRight==false)
-        {
-            //Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * -1, 0));
-            Ctx.AppliedMovement = -Ctx.DashingVelcoity;
-            Ctx.DashingTime = Ctx.DashingTime - Time.deltaTime;
+            }
+            else if (Ctx.FacingRight == false)
+            {
+                //Ctx.Rigidbod.AddForce(new Vector2(Ctx.DashingVelcoity * -1, 0));
+                Ctx.AppliedMovement = -Ctx.DashingVelcoity;
+                currentDashingTime = currentDashingTime - Time.deltaTime;
 
-        }
-
+            }
+            if (Ctx.ThereIsGroundFront && (Ctx.Ray.collider.CompareTag("Passable")))
+            {
+                obstacle = Ctx.Ray.collider; //passableObjectCollider
+                obstacle.isTrigger = true;
+            }
+            }
         CheckSwitchStates();
+
+
     }
     public override void ExitState()
     {
         Debug.Log("In Exit");
-        Ctx.Rigidbod.gravityScale = originalGravityScale;
-        Ctx.DashingTime = originalDashingTime;
+        Ctx.IsDashing = true;
+        Ctx.Rigidbod.gravityScale = Ctx.DefaultGravity;
+        Ctx.CanFlip = true;
         Ctx.CanDash = true;
-        Ctx.wallCollider.isTrigger=false;
-
+        if(obstacle != null)
+            obstacle.isTrigger = false;
     }
     public override void CheckSwitchStates()
     {
-        if (Ctx.DashingTime<=0)
+        if (currentDashingTime <= 0)
         {
-            SwitchState(Factory.Standing());
+            if (Ctx.IsOnGround)
+            {
+                SwitchState(Factory.Standing());
+            }
+            else
+            {
+                SwitchState(Factory.Fall());
+            }
         }
-        if (Ctx.Rigidbod.velocity.y < 0)
-        {
-            SwitchState(Factory.Fall());
-        }
-        if (Ctx.CanClimbLedge)
-        {
-            SwitchState(Factory.Hang());
-        }
-    
     }
     public override void InitializeSubstate()
     {
-        if (!Ctx.IsMovementPressed)
-        {
-            SetSubState(Factory.Idle());
-        }
-        if (Ctx.IsMovementPressed)
-        {
-            SetSubState(Factory.Run());
-        }
+      
     }
 }

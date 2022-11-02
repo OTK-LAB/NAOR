@@ -37,6 +37,10 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SetSubState(Factory.Slide());
         }
+        else if(Ctx.IsDashing)
+        {
+            SetSubState(Factory.Dash());
+        }
         else
         {
             SetSubState(Factory.Standing());

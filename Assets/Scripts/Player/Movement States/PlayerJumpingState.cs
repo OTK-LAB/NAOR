@@ -28,6 +28,10 @@ public class PlayerJumpingState : PlayerBaseState
         {
             SwitchState(Factory.Hang());
         }
+        if (Ctx.IsDashPressed&&Ctx.CanDash)
+        {
+            SwitchState(Factory.Dash());
+        }
     }
     public override void InitializeSubstate()
     {

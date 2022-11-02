@@ -18,9 +18,13 @@ public class PlayerFallState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(Ctx.CanClimbLedge)
+      //  if(Ctx.CanClimbLedge)
+      //  {
+      //      SwitchState(Factory.Hang());
+      //  }
+        if (Ctx.IsDashPressed && Ctx.CanDash)
         {
-            SwitchState(Factory.Hang());
+            SwitchState(Factory.Dash());
         }
     }
     public override void InitializeSubstate()

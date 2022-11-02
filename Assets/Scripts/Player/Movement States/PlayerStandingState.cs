@@ -38,7 +38,7 @@ public class PlayerStandingState : PlayerBaseState
         {
             SwitchState(Factory.Jump());
         }
-        if (Ctx.IsDashPressed&&Ctx.CanDash)
+        if (Ctx.IsDashPressed && Ctx.CanDash)
         {
             SwitchState(Factory.Dash());
         }
