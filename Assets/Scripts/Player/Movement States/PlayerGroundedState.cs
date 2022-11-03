@@ -22,6 +22,11 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
+        //FIXME: bu if-else yapisinin degismesi gerekebilir
+        if (Ctx.IsDashPressed && Ctx.CanDash)
+        {
+            SwitchState(Factory.Dash());
+        }
         if(!Ctx.IsOnGround)
         {
             SwitchState(Factory.InAir());
@@ -37,10 +42,12 @@ public class PlayerGroundedState : PlayerBaseState
         {
             SetSubState(Factory.Slide());
         }
+        /*
         else if(Ctx.IsDashing)
         {
             SetSubState(Factory.Dash());
         }
+        */
         else
         {
             SetSubState(Factory.Standing());

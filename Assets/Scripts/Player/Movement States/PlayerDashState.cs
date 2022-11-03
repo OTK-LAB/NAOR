@@ -7,12 +7,14 @@ public class PlayerDashState : PlayerBaseState
 
     Vector2 positionAfterDash;
     public PlayerDashState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
-    : base(currentContext, playerStateFactory) { }
+    : base(currentContext, playerStateFactory) { 
+        IsRootState = true;
+    }
     static float currentDashingTime;
     Collider2D obstacle;
     public override void EnterState()
     {
-
+        Ctx.Rigidbod.velocity = new Vector2(0, 0);
         Debug.Log("In Enter");
         Ctx.IsDashing = false;
         Ctx.CanFlip = false;
@@ -67,11 +69,11 @@ public class PlayerDashState : PlayerBaseState
         {
             if (Ctx.IsOnGround)
             {
-                SwitchState(Factory.Standing());
+                SwitchState(Factory.Grounded());
             }
             else
             {
-                SwitchState(Factory.Fall());
+                SwitchState(Factory.InAir());
             }
         }
     }
