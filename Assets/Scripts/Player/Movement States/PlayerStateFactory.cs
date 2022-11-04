@@ -12,7 +12,8 @@ enum PlayerStates {
     inAir,
     fall,
     standing,
-    busy
+    busy,
+    swing
 }
 
 public class PlayerStateFactory
@@ -35,6 +36,7 @@ public class PlayerStateFactory
         _states[PlayerStates.fall] = new PlayerFallState(_context, this);
         _states[PlayerStates.standing] = new PlayerStandingState(_context, this);
         _states[PlayerStates.busy] = new PlayerBusyState(_context,this);
+        _states[PlayerStates.swing] = new PlayerSwingState(_context, this);
     }
 
     public PlayerBaseState Idle()
@@ -88,5 +90,9 @@ public class PlayerStateFactory
     public PlayerBaseState Busy()
     {
         return _states[PlayerStates.busy];
+    }
+    public PlayerBaseState Swing()
+    {
+        return _states[PlayerStates.swing];
     }
 }

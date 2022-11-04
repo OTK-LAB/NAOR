@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerSwingState : PlayerBaseState
 {
-    public PlayerSwingState(PlayerStateMachine currentContext, PlayerStateFactory playerStateFactory)
+    public PlayerSwingState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     : base(currentContext, playerStateFactory) { }
 
     public override void EnterState()
@@ -12,7 +12,7 @@ public class PlayerSwingState : PlayerBaseState
         Ctx.Rigidbod.velocity = Vector2.zero;
         Ctx.Rigidbod.constraints = RigidbodyConstraints2D.None;
         Ctx.CanFlip = false;
-        //Ctx.AppliedMovement = 0;
+        Ctx.CanMove = false;
         Ctx.GetComponent<HingeJoint2D>().enabled = true;
         Ctx.PlayerAnimator.Play("PlayerSwing");
         Ctx.transform.position = Ctx.TopRaycastHit.collider.transform.position + new Vector3(-0.39f, 0.13f);
@@ -26,6 +26,7 @@ public class PlayerSwingState : PlayerBaseState
     public override void ExitState()
     {
         Ctx.CanFlip = true;
+        Ctx.CanMove = true;
         Ctx.Rigidbod.gravityScale = Ctx.DefaultGravity;
         Ctx.transform.localRotation = Quaternion.Euler(Vector3.zero);
         Ctx.Rigidbod.constraints = RigidbodyConstraints2D.FreezeRotation;

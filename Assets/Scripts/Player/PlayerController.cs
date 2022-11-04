@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
     bool _thereIsGroundBot;
     bool _canDrag;
     bool _canClimbLedge;
+    bool _canSwing;
+    RaycastHit2D _topRaycastHit;
     RaycastHit2D frontRay;
 
     //Sliding
@@ -108,12 +110,14 @@ public class PlayerController : MonoBehaviour
     public bool CanFlip { get {return _canFlip; } set { _canFlip = value; }}
     public bool IsOnSlope { get { return _isOnSlope; }}
     public bool CanClimbLedge { get { return _canClimbLedge; }}
+    public bool CanSwing { get { return _canSwing; } }
     public bool FacingRight { get { return _facingRight;}}
 
     public Collider2D GroundCollider { get { return _groundCollider;}}
     public float JumpForce { get { return jumpForce; } set { jumpForce = value; }}
     public float MovementSpeed { get { return movementSpeed; }}
     public Rigidbody2D Rigidbod { get { return _rb; }}
+    public RaycastHit2D TopRaycastHit { get { return _topRaycastHit; } }
     public RaycastHit2D Ray { get {return frontRay; }}
     //For workaround in Drag. Will be changed
     public Transform GroundCheck { get {return groundCheck; }}
@@ -147,8 +151,8 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Attack.canceled += OnAttackPressed;
 
 
-        _playerInputActions.Player.Jump.started += OnJump;
-        _playerInputActions.Player.Jump.canceled += OnJump;
+        _playerInputActions.Player.Jump.started += OnJump; 
+        _playerInputActions.Player.Jump.canceled += OnJumpCanceled;
 
         _playerInputActions.Player.Crouch.started += OnCrouch;
 
@@ -183,8 +187,13 @@ public class PlayerController : MonoBehaviour
     }
     void OnJump(InputAction.CallbackContext context)
     {
-        _isJumpPressed = context.ReadValueAsButton();
+        _isJumpPressed = true;
     }
+    void OnJumpCanceled(InputAction.CallbackContext context)
+    {
+        _isJumpPressed = false;
+    }
+
     void OnCrouch(InputAction.CallbackContext context)
     {
         if(_currentState == _movementStates.Grounded() && !_isCrouching)
@@ -270,23 +279,27 @@ public class PlayerController : MonoBehaviour
     {
         if(_facingRight)
         {
-            _thereIsGroundTop = Physics2D.Raycast(_ledgeCheckTop.position, transform.right, _detectionDistance, groundLayer);
+            _topRaycastHit = Physics2D.Raycast(_ledgeCheckTop.position, transform.right, _detectionDistance, groundLayer);
             _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, transform.right, _detectionDistance, groundLayer);
         }
         else
         {
-            _thereIsGroundTop = Physics2D.Raycast(_ledgeCheckTop.position, -transform.right, _detectionDistance, groundLayer);
+            _topRaycastHit = Physics2D.Raycast(_ledgeCheckTop.position, -transform.right, _detectionDistance, groundLayer);
             _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, -transform.right, _detectionDistance, groundLayer);
         }
 
-        if(_thereIsGroundBot && !_thereIsGroundTop)
+        /*if(_thereIsGroundBot && !_thereIsGroundTop)
         {
             _canClimbLedge = true;
         }
         else
         {
             _canClimbLedge = false;
-        }
+        }*/
+        if (_topRaycastHit.collider != null)
+            _canSwing = true;
+        else
+            _canSwing = false;
         //Debug.Log("Can Climb Ledge: " + _canClimbLedge);
     }
 
