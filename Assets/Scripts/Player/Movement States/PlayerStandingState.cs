@@ -11,6 +11,7 @@ public class PlayerStandingState : PlayerBaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
+        Debug.Log("Standing çalıştı");
     }
     public override void ExitState()
     {

@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     bool _isMovementPressed; 
     bool _facingRight = true;
     bool _canFlip = true;
-    bool _canMove = true;
+    public bool _canMove = true;
     bool _isOnGround;
     bool _isCrouching = false;
     float _defaultGravity;
@@ -218,9 +218,8 @@ public class PlayerController : MonoBehaviour
     }
     void OnAttackPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("Basıldınız");
         _isAttackPressed = context.ReadValueAsButton();
-        Debug.Log(_isAttackPressed);
+        Debug.Log("dasdasd");
     }
 
     void OnHit(object sender, EventArgs e)
@@ -307,8 +306,6 @@ public class PlayerController : MonoBehaviour
     {
         if(_canMove)
             _rb.velocity = new Vector2(movementInput, _rb.velocity.y);
-        else
-            _rb.velocity = new Vector2(0, _rb.velocity.y);
     }
     void FlipPlayer()
     {

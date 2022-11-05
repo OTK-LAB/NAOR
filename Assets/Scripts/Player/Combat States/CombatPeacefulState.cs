@@ -20,7 +20,6 @@ public class CombatPeacefulState : CombatBaseState
         if(Ctx.IsAttackPressed && Ctx.CurrentMovementState.Query(MovementFactory.Standing()))
         {
             SwitchState(CombatFactory.BasicAttack());
-            Debug.Log("ben temizlemedim hala");
         }
     }
 }

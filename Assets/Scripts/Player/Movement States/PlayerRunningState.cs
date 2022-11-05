@@ -27,11 +27,13 @@ public class PlayerRunningState : PlayerBaseState
         else
         {
             Ctx.AppliedMovement = Ctx.CurrentMovementInput.x * Ctx.MovementSpeed;
+            Debug.Log("RUN update");
         }
+        Debug.Log("Run çalışıyor");
     }
     public override void ExitState()
     {
-
+        Debug.Log("RUN ÇIKTI");
     }
     public override void CheckSwitchStates()
     {

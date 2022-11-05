@@ -42,6 +42,7 @@ public abstract class PlayerBaseState
         if(newState._isRootState){
             // switch current state of context
             _ctx.CurrentMovementState = newState;
+            _currentSubState = null;
         }
         else if(_currentSuperState != null)
         {
