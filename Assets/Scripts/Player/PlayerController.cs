@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour
     private CombatStateFactory _combatStates;
     private PlayerInputActions _playerInputActions;
     private Animator _animator;
-    
+    private CapsuleCollider2D _playerCollider;
+
     //Movement
     [Header("Movement")]
     [SerializeField] private float movementSpeed;
@@ -85,7 +86,6 @@ public class PlayerController : MonoBehaviour
     private bool _canDash=true;
     [SerializeField] private float _detectionDistance;
     [SerializeField] public float _dashDetectionDistance;
-    public Transform _positionAfterDash;
 
 
     //Combat
@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
     public CombatStateFactory CombatFactory { get { return _combatStates;}}
     public PlayerInputActions PlayerInputActions { get { return _playerInputActions; } set { _playerInputActions = value; }}
     public Animator PlayerAnimator { get { return _animator;}}
+    public CapsuleCollider2D PlayerCollider { get { return _playerCollider; } }
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; }}
     public float AppliedMovement { get { return _appliedMovementX; } set { _appliedMovementX = value; }}
     
@@ -148,6 +149,7 @@ public class PlayerController : MonoBehaviour
 
         //FIXME:
 
+        _playerCollider = GetComponent<CapsuleCollider2D>();
         _defaultGravity = _rb.gravityScale;
         _movementStates = new PlayerStateFactory(this);
         _combatStates = new CombatStateFactory(this, _movementStates);
