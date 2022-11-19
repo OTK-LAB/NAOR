@@ -194,6 +194,34 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Interaction"",
+            ""id"": ""642eeefc-a510-4961-9a35-f86a6b67904a"",
+            ""actions"": [
+                {
+                    ""name"": ""Npc Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""c893644e-6f6c-40c3-9973-93ce9ee86fd0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3bb4bb1f-da80-4c83-8b17-187acf1d0a06"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Npc Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -206,6 +234,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        // Interaction
+        m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
+        m_Interaction_NpcInteraction = m_Interaction.FindAction("Npc Interaction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -334,6 +365,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Interaction
+    private readonly InputActionMap m_Interaction;
+    private IInteractionActions m_InteractionActionsCallbackInterface;
+    private readonly InputAction m_Interaction_NpcInteraction;
+    public struct InteractionActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public InteractionActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NpcInteraction => m_Wrapper.m_Interaction_NpcInteraction;
+        public InputActionMap Get() { return m_Wrapper.m_Interaction; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractionActions set) { return set.Get(); }
+        public void SetCallbacks(IInteractionActions instance)
+        {
+            if (m_Wrapper.m_InteractionActionsCallbackInterface != null)
+            {
+                @NpcInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+                @NpcInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+                @NpcInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+            }
+            m_Wrapper.m_InteractionActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @NpcInteraction.started += instance.OnNpcInteraction;
+                @NpcInteraction.performed += instance.OnNpcInteraction;
+                @NpcInteraction.canceled += instance.OnNpcInteraction;
+            }
+        }
+    }
+    public InteractionActions @Interaction => new InteractionActions(this);
     public interface IPlayerActions
     {
         void OnJump(InputAction.CallbackContext context);
@@ -342,5 +406,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDrag(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+    }
+    public interface IInteractionActions
+    {
+        void OnNpcInteraction(InputAction.CallbackContext context);
     }
 }

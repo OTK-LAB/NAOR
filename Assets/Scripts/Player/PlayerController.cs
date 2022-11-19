@@ -15,7 +15,7 @@ using TMPro;
 // please increase this counter as a
 // warning for the next person:
 //
-// total_hours_wasted_here = 14
+// total_hours_wasted_here = 15
 
 //TODO:
 //  Add coyote time
@@ -269,14 +269,14 @@ public class PlayerController : MonoBehaviour
     {
         _groundCollider = Physics2D.OverlapCircle(groundCheck.position, groundDetectionDistance, groundLayer);
         _isOnGround = _groundCollider;
-        if(_isOnGround && _groundCollider.CompareTag("Slope"))
+        /*if(_isOnGround && _groundCollider.CompareTag("Slope"))
         {
             _isOnSlope = true;
         }
         else{
             _isOnSlope = false;
         }
-        //Debug.Log("IS ON SLOPE: " + _isOnSlope);
+        Debug.Log("IS ON SLOPE: " + _isOnSlope);*/
     }
     public void CheckFront(){ 
         
