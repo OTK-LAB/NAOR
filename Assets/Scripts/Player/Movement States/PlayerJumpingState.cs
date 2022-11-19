@@ -16,7 +16,9 @@ public class PlayerJumpingState : PlayerBaseState
     }
     public override void ExitState()
     {
-
+        //FIXME:
+        //  This line causes jumping again when jump pressed while falling
+        //Ctx.IsJumpPressed = false;
     }
     public override void CheckSwitchStates()
     {

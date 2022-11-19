@@ -17,7 +17,7 @@ public class PlayerInAirState : PlayerBaseState
     }
     public override void ExitState()
     {
-
+        Ctx.IsJumpPressed = false;
     }
     public override void CheckSwitchStates()
     {

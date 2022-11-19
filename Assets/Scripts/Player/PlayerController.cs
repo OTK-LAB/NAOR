@@ -174,11 +174,13 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Attack.canceled += OnAttackPressed;
 
 
-        _playerInputActions.Player.Jump.started += OnJump;
-        _playerInputActions.Player.Jump.canceled += OnJump;
+        _playerInputActions.Player.Jump.performed += OnJump;
+        //_playerInputActions.Player.Jump.started += OnJump;
+        //_playerInputActions.Player.Jump.canceled += OnJump;
 
-        _playerInputActions.Player.Dash.started += OnDash;
-        _playerInputActions.Player.Dash.canceled += OnDash;
+        //_playerInputActions.Player.Dash.started += OnDash;
+        //_playerInputActions.Player.Dash.canceled += OnDash;
+        _playerInputActions.Player.Dash.performed += OnDash;
 
         _playerInputActions.Player.Crouch.started += OnCrouch;
 
@@ -213,11 +215,11 @@ public class PlayerController : MonoBehaviour
     }
     void OnJump(InputAction.CallbackContext context)
     {
-        _isJumpPressed = context.ReadValueAsButton();
+        _isJumpPressed = true;
     } 
     void OnDash(InputAction.CallbackContext context)
     {
-        _isDashPressed = context.ReadValueAsButton();
+        _isDashPressed = true;
     }
     void OnCrouch(InputAction.CallbackContext context)
     {

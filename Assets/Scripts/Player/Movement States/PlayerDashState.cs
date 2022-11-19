@@ -49,13 +49,13 @@ public class PlayerDashState : PlayerBaseState
     public override void ExitState()
     {
         Debug.Log("In Exit");
-        Ctx.IsDashing = true;
         Ctx.Rigidbod.gravityScale = Ctx.DefaultGravity;
         Ctx.CanFlip = true;
         Ctx.CanDash = true;
         Ctx.PlayerCollider.isTrigger = false;
         Ctx.GetComponent<HealthSystem>().Invincible = false;
         Ctx.GetComponent<SpriteRenderer>().color = new Color(Ctx.GetComponent<SpriteRenderer>().color.r, Ctx.GetComponent<SpriteRenderer>().color.g, Ctx.GetComponent<SpriteRenderer>().color.b, 1);
+        Ctx.IsDashPressed = false;
     }
     public override void CheckSwitchStates()
     {
