@@ -298,9 +298,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 484f70f32dc9e3f45a70eec962ac23db, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 307b6e379aadd28499c87178d7833722, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5424,9 +5424,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 484f70f32dc9e3f45a70eec962ac23db, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ae5922d809a9bc84fac22c29d8c600c8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10422,9 +10422,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 484f70f32dc9e3f45a70eec962ac23db, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a2ecbeffd667e4c41a6703a2f2a622c2, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10681,6 +10681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 7
   groundDetectionDistance: 0.2
+  _canMove: 1
   _detectionDistance: 1
   frontCheck: {fileID: 6518641809027266659}
   _ledgeCheckTop: {fileID: 6518641809112998822}
@@ -10739,6 +10740,8 @@ MonoBehaviour:
   WalkSounds:
   - {fileID: 3346072357014228053}
   - {fileID: 8489712305456891582}
+  - {fileID: 191962285580719521}
+  - {fileID: 7381284952646946419}
   JumpSounds:
   - {fileID: 3615229447767843762}
   - {fileID: 3082360973536721717}
@@ -10831,7 +10834,7 @@ HingeJoint2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6518641809233875122}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
@@ -10839,7 +10842,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0.264, y: -0.088}
-  m_ConnectedAnchor: {x: -25.68572, y: -7.200001}
+  m_ConnectedAnchor: {x: -65.64963, y: -3.7214463}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -15937,9 +15940,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0a209001dd389844e9d8602efbd8c143, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 33d9bc80b283f274e8765c9b3af049ce, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
