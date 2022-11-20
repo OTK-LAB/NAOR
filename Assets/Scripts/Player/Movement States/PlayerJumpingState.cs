@@ -16,7 +16,9 @@ public class PlayerJumpingState : PlayerBaseState
     }
     public override void ExitState()
     {
-
+        //FIXME:
+        //  This line causes jumping again when jump pressed while falling
+        //Ctx.IsJumpPressed = false;
     }
     public override void CheckSwitchStates()
     {
@@ -28,6 +30,12 @@ public class PlayerJumpingState : PlayerBaseState
         {
             SwitchState(Factory.Hang());
         }
+        /*
+        if (Ctx.IsDashPressed&&Ctx.CanDash)
+        {
+            SwitchState(Factory.Dash());
+        }
+        */
     }
     public override void InitializeSubstate()
     {

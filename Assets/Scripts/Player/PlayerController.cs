@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour
     private CombatStateFactory _combatStates;
     private PlayerInputActions _playerInputActions;
     private Animator _animator;
-    
+    private CapsuleCollider2D _playerCollider;
+
     //Movement
     [Header("Movement")]
     [SerializeField] private float movementSpeed;
@@ -48,7 +49,7 @@ public class PlayerController : MonoBehaviour
     float _defaultGravity;
 
     //Dragging and Ledge Detection
-    [SerializeField] private float _detectionDistance;
+
     bool _toggleDrag = false;
     public Transform frontCheck;
     public Transform _ledgeCheckTop;
@@ -75,6 +76,18 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
     public Transform groundCheck;
 
+    //Dash
+    [Header("Dash")]
+    bool _isDashPressed;
+    [SerializeField] private float _dashingVelocity;
+    [SerializeField] private float _dashingTime;
+    private Vector2 _dashingDir;
+    public bool _isDashing=false;
+    private bool _canDash=true;
+    [SerializeField] private float _detectionDistance;
+    [SerializeField] public float _dashDetectionDistance;
+
+
     //Combat
     //[Header("Combat")]
     private bool _isAttackPressed;
@@ -96,22 +109,32 @@ public class PlayerController : MonoBehaviour
     public CombatStateFactory CombatFactory { get { return _combatStates;}}
     public PlayerInputActions PlayerInputActions { get { return _playerInputActions; } set { _playerInputActions = value; }}
     public Animator PlayerAnimator { get { return _animator;}}
+    public CapsuleCollider2D PlayerCollider { get { return _playerCollider; } }
     public Vector2 CurrentMovementInput { get { return _currentMovementInput; } set { _currentMovementInput = value; }}
     public float AppliedMovement { get { return _appliedMovementX; } set { _appliedMovementX = value; }}
     
     public bool IsMovementPressed { get { return _isMovementPressed; } set { _isMovementPressed = value; }}
     public bool IsJumpPressed { get { return _isJumpPressed; } set { _isJumpPressed = value; }}
+    public bool IsDashPressed { get { return _isDashPressed; } set { _isDashPressed = value; } }
+    public bool ThereIsGroundFront { get { return _thereIsGroundFront; } set { _thereIsGroundFront = value; } }
+    public bool IsDashing { get { return _isDashing; } set { _isDashing = value; } }
+
     public bool IsAttackPressed { get { return _isAttackPressed;}}
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
     public bool CanFlip { get {return _canFlip; } set { _canFlip = value; }}
+    public bool CanDash { get { return _canDash; } set { _canDash = value; } }
     public bool IsOnSlope { get { return _isOnSlope; }}
     public bool CanClimbLedge { get { return _canClimbLedge; }}
     public bool FacingRight { get { return _facingRight;}}
 
     public Collider2D GroundCollider { get { return _groundCollider;}}
     public float JumpForce { get { return jumpForce; } set { jumpForce = value; }}
+    public float DashingVelcoity { get { return _dashingVelocity; } set {_dashingVelocity = value; }}
+    public float DashingTime { get { return _dashingTime; } set { _dashingTime = value; }}
+
+    public Vector2 DashingDirection { get { return _dashingDir; } set { _dashingDir = value; }}
     public float MovementSpeed { get { return movementSpeed; }}
     public Rigidbody2D Rigidbod { get { return _rb; }}
     public RaycastHit2D Ray { get {return frontRay; }}
@@ -123,6 +146,10 @@ public class PlayerController : MonoBehaviour
     public float DefaultGravity { get {return _defaultGravity;}}
     void Awake()
     {
+
+        //FIXME:
+
+        _playerCollider = GetComponent<CapsuleCollider2D>();
         _defaultGravity = _rb.gravityScale;
         _movementStates = new PlayerStateFactory(this);
         _combatStates = new CombatStateFactory(this, _movementStates);
@@ -147,8 +174,13 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Attack.canceled += OnAttackPressed;
 
 
-        _playerInputActions.Player.Jump.started += OnJump;
-        _playerInputActions.Player.Jump.canceled += OnJump;
+        _playerInputActions.Player.Jump.performed += OnJump;
+        //_playerInputActions.Player.Jump.started += OnJump;
+        //_playerInputActions.Player.Jump.canceled += OnJump;
+
+        //_playerInputActions.Player.Dash.started += OnDash;
+        //_playerInputActions.Player.Dash.canceled += OnDash;
+        _playerInputActions.Player.Dash.performed += OnDash;
 
         _playerInputActions.Player.Crouch.started += OnCrouch;
 
@@ -183,7 +215,11 @@ public class PlayerController : MonoBehaviour
     }
     void OnJump(InputAction.CallbackContext context)
     {
-        _isJumpPressed = context.ReadValueAsButton();
+        _isJumpPressed = true;
+    } 
+    void OnDash(InputAction.CallbackContext context)
+    {
+        _isDashPressed = true;
     }
     void OnCrouch(InputAction.CallbackContext context)
     {
@@ -235,35 +271,40 @@ public class PlayerController : MonoBehaviour
     {
         _groundCollider = Physics2D.OverlapCircle(groundCheck.position, groundDetectionDistance, groundLayer);
         _isOnGround = _groundCollider;
-        if(_isOnGround && _groundCollider.CompareTag("Slope"))
+        /*if(_isOnGround && _groundCollider.CompareTag("Slope"))
         {
             _isOnSlope = true;
         }
         else{
             _isOnSlope = false;
         }
-        //Debug.Log("IS ON SLOPE: " + _isOnSlope);
+        Debug.Log("IS ON SLOPE: " + _isOnSlope);*/
     }
-    public void CheckFront(){
+    public void CheckFront(){ 
+        
+            // Create dash check 
         if(_facingRight)
         {
-            frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _detectionDistance, groundLayer);
+            frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _dashDetectionDistance, groundLayer);
         }
         else
         {
-            frontRay = Physics2D.Raycast(frontCheck.position, -transform.right, _detectionDistance, groundLayer);
+            frontRay = Physics2D.Raycast(frontCheck.position, -transform.right, _dashDetectionDistance, groundLayer);
         }
 
         _thereIsGroundFront = frontRay;
 
-        if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable") || frontRay.collider.CompareTag("Box"))){
-            _canDrag = true;
-            //Debug.Log("Candrag");
-        }
-        else
-        {
-            _canDrag = false;
-        }
+       
+        
+
+        //if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable") || frontRay.collider.CompareTag("Box"))){
+        //    _canDrag = true;
+        //    Debug.Log("Candrag");
+        //}
+        //else
+        //{
+        //    _canDrag = false;
+        //}
     }
 
     public void CheckForLedges()
