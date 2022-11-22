@@ -298,9 +298,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 484f70f32dc9e3f45a70eec962ac23db, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 307b6e379aadd28499c87178d7833722, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5424,9 +5424,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 484f70f32dc9e3f45a70eec962ac23db, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ae5922d809a9bc84fac22c29d8c600c8, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10422,9 +10422,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 484f70f32dc9e3f45a70eec962ac23db, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a2ecbeffd667e4c41a6703a2f2a622c2, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -10680,7 +10680,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 7
   groundDetectionDistance: 0.2
-  _detectionDistance: 1
   frontCheck: {fileID: 6518641809027266659}
   _ledgeCheckTop: {fileID: 6518641809112998822}
   _ledgeCheckBot: {fileID: 6518641810438093509}
@@ -10691,6 +10690,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   groundCheck: {fileID: 6518641810314629921}
+  _dashingVelocity: 0
+  _dashingTime: 0
+  _isDashing: 0
+  _detectionDistance: 1
+  _dashDetectionDistance: 0
   _movementHierarchyText: {fileID: 0}
   _combatStateText: {fileID: 0}
 --- !u!114 &6518641809233875276
@@ -10738,6 +10742,8 @@ MonoBehaviour:
   WalkSounds:
   - {fileID: 3346072357014228053}
   - {fileID: 8489712305456891582}
+  - {fileID: 191962285580719521}
+  - {fileID: 7381284952646946419}
   JumpSounds:
   - {fileID: 3615229447767843762}
   - {fileID: 3082360973536721717}
@@ -10811,7 +10817,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1289085443
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 56a05a79fe6384e4387d617192a5b93b, type: 3}
   m_Color: {r: 0.34044623, g: 0.07342471, b: 0.4716981, a: 1}
   m_FlipX: 0
@@ -15912,9 +15918,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0a209001dd389844e9d8602efbd8c143, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 33d9bc80b283f274e8765c9b3af049ce, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
