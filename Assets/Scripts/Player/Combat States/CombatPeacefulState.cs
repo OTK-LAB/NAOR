@@ -22,5 +22,10 @@ public class CombatPeacefulState : CombatBaseState
             SwitchState(CombatFactory.BasicAttack());
             Debug.Log("ben temizlemedim hala");
         }
+      //  if (Ctx.IsHeavyAttackPressed && Ctx.CurrentMovementState.Query(MovementFactory.Standing()))
+      //  {
+      //      SwitchState(CombatFactory.HeavyAttack());
+      //      Debug.Log("ben temizlemedim hala");
+      //  }
     }
 }

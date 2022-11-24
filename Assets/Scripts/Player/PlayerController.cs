@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
     //Combat
     //[Header("Combat")]
     private bool _isAttackPressed;
+    private bool _isHeavyAttackPressed;
     private bool _isHit;
     private bool _isDead;
     HealthSystem _healthSystem;
@@ -120,6 +121,7 @@ public class PlayerController : MonoBehaviour
     public bool IsDashing { get { return _isDashing; } set { _isDashing = value; } }
 
     public bool IsAttackPressed { get { return _isAttackPressed;}}
+    public bool IsHeavyAttackPressed { get { return _isHeavyAttackPressed; } }
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
@@ -169,10 +171,12 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Move.canceled += OnMovementInput;
         _playerInputActions.Player.Move.performed += OnMovementInput;
 
-        //_playerInputActions.Player.Attack.started += OnAttackPressed;
+        _playerInputActions.Player.Attack.started += OnAttackPressed;
         _playerInputActions.Player.Attack.performed += OnAttackPressed;
         _playerInputActions.Player.Attack.canceled += OnAttackPressed;
 
+        //_playerInputActions.Player.HeavyAttack.started += OnHeavyAttackPressed;
+        _playerInputActions.Player.HeavyAttack.performed += OnHeavyAttackPressed;
 
         _playerInputActions.Player.Jump.performed += OnJump;
         //_playerInputActions.Player.Jump.started += OnJump;
@@ -186,6 +190,7 @@ public class PlayerController : MonoBehaviour
 
         _playerInputActions.Player.Drag.started += OnDrag;
     }
+
 
     // Start is called before the first frame update
     void Start()
@@ -246,8 +251,15 @@ public class PlayerController : MonoBehaviour
     void OnAttackPressed(InputAction.CallbackContext context)
     {
         Debug.Log("Basıldınız");
+
         _isAttackPressed = context.ReadValueAsButton();
-        Debug.Log(_isAttackPressed);
+        Debug.Log("attack"+_isAttackPressed);
+    }
+    void OnHeavyAttackPressed(InputAction.CallbackContext context)
+    {
+        Debug.Log("HeavyAttackPressed");
+        _isHeavyAttackPressed = context.ReadValueAsButton();
+        Debug.Log("heavyattack"+_isHeavyAttackPressed);
     }
 
     void OnHit(object sender, EventArgs e)
