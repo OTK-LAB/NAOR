@@ -16,7 +16,7 @@ using TMPro;
 // please increase this counter as a
 // warning for the next person:
 //
-// total_hours_wasted_here = 15
+// total_hours_wasted_here = 22
 
 //TODO:
 //  Add coyote time
@@ -121,8 +121,8 @@ public class PlayerController : MonoBehaviour
     public bool ThereIsGroundFront { get { return _thereIsGroundFront; } set { _thereIsGroundFront = value; } }
     public bool IsDashing { get { return _isDashing; } set { _isDashing = value; } }
 
-    public bool IsAttackPressed { get { return _isAttackPressed;}}
-    public bool IsHeavyAttackPressed { get { return _isHeavyAttackPressed; } }
+    public bool IsAttackPressed { get { return _isAttackPressed;} set { _isAttackPressed = value;}}
+    public bool IsHeavyAttackPressed { get { return _isHeavyAttackPressed; } set { _isHeavyAttackPressed = value;} }
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
@@ -172,12 +172,13 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Move.canceled += OnMovementInput;
         _playerInputActions.Player.Move.performed += OnMovementInput;
 
-        _playerInputActions.Player.Attack.started += OnAttackPressed;
+        //_playerInputActions.Player.Attack.started += OnAttackPressed;
         _playerInputActions.Player.Attack.performed += OnAttackPressed;
-        _playerInputActions.Player.Attack.canceled += OnAttackPressed;
+        //_playerInputActions.Player.Attack.canceled += OnAttackPressed;
 
         //_playerInputActions.Player.HeavyAttack.started += OnHeavyAttackPressed;
-        _playerInputActions.Player.HeavyAttack.performed += OnHeavyAttackPressed;
+        _playerInputActions.Player.Attack.performed += OnHeavyAttackPressed;
+        //_playerInputActions.Player.Attack.canceled += OnHeavyAttackPressed;
 
         _playerInputActions.Player.Jump.performed += OnJump;
         //_playerInputActions.Player.Jump.started += OnJump;
@@ -251,24 +252,22 @@ public class PlayerController : MonoBehaviour
     }
     void OnAttackPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("Basıldınız");
+        //Debug.Log("Basıldınız");
         if (context.interaction is TapInteraction) {
-            _isAttackPressed = context.ReadValueAsButton();
+            _isAttackPressed = true;
             //Debug.Log("attack" + _isAttackPressed);
             Debug.Log("attack"+context.phase);
         }
-       if (context.interaction is HoldInteraction) {
-            //Debug.Log("HeavyAttack");
-            Debug.Log("heavyAttack" + context.phase);
 
-        }
 
     }
     void OnHeavyAttackPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("HeavyAttackPressed");
-        _isHeavyAttackPressed = context.ReadValueAsButton();
-        Debug.Log("heavyattack"+_isHeavyAttackPressed);
+       if (context.interaction is HoldInteraction) {
+            //Debug.Log("HeavyAttack");
+            Debug.Log("heavyAttack" + context.phase);
+            _isHeavyAttackPressed = true;
+        }
     }
 
     void OnHit(object sender, EventArgs e)

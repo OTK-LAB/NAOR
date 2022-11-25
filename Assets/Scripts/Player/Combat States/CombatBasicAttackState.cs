@@ -8,6 +8,7 @@ public class CombatBasicAttackState : CombatBaseState
     { }
     public override void EnterState()
     {
+        Ctx.IsAttackPressed = false;
         Ctx.CanMove = false;
         Ctx.PlayerAnimator.Play("PlayerBasicAttack");
         endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length;
