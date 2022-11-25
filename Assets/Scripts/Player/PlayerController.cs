@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 using TMPro;
 
 // Dear programmer:
@@ -251,9 +252,17 @@ public class PlayerController : MonoBehaviour
     void OnAttackPressed(InputAction.CallbackContext context)
     {
         Debug.Log("Basıldınız");
+        if (context.interaction is TapInteraction) {
+            _isAttackPressed = context.ReadValueAsButton();
+            //Debug.Log("attack" + _isAttackPressed);
+            Debug.Log("attack"+context.phase);
+        }
+       if (context.interaction is HoldInteraction) {
+            //Debug.Log("HeavyAttack");
+            Debug.Log("heavyAttack" + context.phase);
 
-        _isAttackPressed = context.ReadValueAsButton();
-        Debug.Log("attack"+_isAttackPressed);
+        }
+
     }
     void OnHeavyAttackPressed(InputAction.CallbackContext context)
     {
