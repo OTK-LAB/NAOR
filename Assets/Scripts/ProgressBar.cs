@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class ProgressBar : MonoBehaviour
 {
 
 	public Slider slider;
 	public Gradient gradient;
 	public Image fill;
 
-	public void SetMaxHealth(float health)
+	public void SetMaxValue(float value)
 	{
-		slider.maxValue = health;
-		slider.value = health;
+		slider.maxValue = value;
+		slider.value = value;
 
 		fill.color = gradient.Evaluate(1f);
 	}
 
-	public void SetHealth(float health)
+	public void SetValue(float value)
 	{
-		slider.value = health;
+		slider.value = value;
 
 		fill.color = gradient.Evaluate(slider.normalizedValue);
 	}
