@@ -16,9 +16,12 @@ public class HealthSystem : MonoBehaviour
 
     public bool Invincible { set { invincible = value; } }
 
+    public HealthBar healthBar;
+
     void Start()
     {
         currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
     public float GetHealth()
@@ -40,7 +43,7 @@ public class HealthSystem : MonoBehaviour
             }
 
         }
-
+        healthBar.SetHealth(currentHealth);
     }
 
     public void Heal(float healAmount)
@@ -51,5 +54,6 @@ public class HealthSystem : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        healthBar.SetHealth(currentHealth);
     }
 }
