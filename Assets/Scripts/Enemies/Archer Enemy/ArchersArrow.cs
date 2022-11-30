@@ -15,7 +15,7 @@ public class ArchersArrow : MonoBehaviour
     private bool isGravityOn = false;
     private bool hasItGround = false;
     public GameObject fire;
-    private GameObject archer;
+    public GameObject archer;
     public static bool disabled = false;
 
     [SerializeField]
@@ -31,7 +31,6 @@ public class ArchersArrow : MonoBehaviour
     void Start()
     {
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
-        archer = GameObject.FindGameObjectWithTag("Archer");
         target = new Vector2(PlayerPosition.position.x - transform.position.x, PlayerPosition.position.y - transform.position.y);
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(target * archer.GetComponent<Archer>().LaunchForce);

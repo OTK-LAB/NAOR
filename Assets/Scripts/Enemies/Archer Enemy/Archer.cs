@@ -101,7 +101,7 @@ public class Archer : MonoBehaviour
                 coolDown(2);
                 break;
             case State.STATE_HIT:
-             //   hitState();
+                hitState();
                 break;
         }
     }
@@ -141,7 +141,7 @@ public class Archer : MonoBehaviour
 
         }
     }
-    void coolDown(int i)
+    void coolDown(float i)
     {
         state = State.STATE_COOLDOWN;
         timer += Time.deltaTime;
@@ -189,6 +189,23 @@ public class Archer : MonoBehaviour
             }
         }
     }
+    void hitState()
+    {
+        if (isHit)
+        {
+            Debug.Log("Moveright" + Moveright);
+            temp = new Vector2((transform.position.x + 2), transform.position.y);
+            if (Moveright)
+                rb.MovePosition((Vector2)transform.position + (temp * speedEnemy * Time.deltaTime));
+            else
+                rb.MovePosition((Vector2)transform.position - (temp * speedEnemy * Time.deltaTime));
+
+            ChangeAnimationState(hit);
+            Debug.Log("Vurdu");
+            isHit = false;
+            attackable = true;
+        }
+    }
 
     void OnHit(object sender, EventArgs e)
     {
@@ -196,6 +213,7 @@ public class Archer : MonoBehaviour
         {
             state = State.STATE_HIT;
             isHit = true;
+            Debug.Log("Vurdu");
         }
     }
     void OnDead(object sender, EventArgs e)
