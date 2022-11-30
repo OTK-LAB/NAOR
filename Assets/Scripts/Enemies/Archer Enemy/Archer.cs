@@ -133,18 +133,17 @@ public class Archer : MonoBehaviour
     }
     void ArrowMechanism()
     {
-
-            //target = new Vector2(PlayerPosition.position.x - transform.position.x, PlayerPosition.position.y - transform.position.y);
+        if(attackable)
+        {
             ChangeAnimationState(attack);
             GameObject ArrowIns = Instantiate(Arrow, transform.position, transform.rotation);
-        //  ArrowIns.GetComponent<Rigidbody2D>().AddForce(target* LaunchForce);
-        //Instantiate(Arrow, transform.position, Quaternion.LookRotation(Vector3.forward, transform.position - PlayerPosition.position));
-        attackable = false;
-        state = State.STATE_COOLDOWN;
+            attackable = false;
 
+        }
     }
     void coolDown(int i)
     {
+        state = State.STATE_COOLDOWN;
         timer += Time.deltaTime;
         if (timer >= i)
         {
@@ -153,7 +152,6 @@ public class Archer : MonoBehaviour
             _healthSystem.Invincible = false;
             Debug.Log("false");
             checkPlayer();
-
         }
     }
     void ChangeAnimationState(string newState)
@@ -169,7 +167,6 @@ public class Archer : MonoBehaviour
             if (Moveright) Moveright = false;
             else Moveright = true;
             transform.Rotate(0f, 180f, 0f);
-            // transform.position = transform.position + movement * Time.deltaTime;
         }
     }
 
