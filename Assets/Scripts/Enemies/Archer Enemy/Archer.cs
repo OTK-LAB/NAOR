@@ -37,14 +37,11 @@ public class Archer : MonoBehaviour
     //Attack
     public float damageamount;
     bool attackable = true;
-    int random_nd; //random_notdamage
     bool IsDead = false;
     public bool isHit = false;
-    [HideInInspector] public float CalculatedTime;
-    public float LaunchForce;
-    public float TimeBtwEachShot;
-    [HideInInspector] public Vector2 target;
     public GameObject Arrow;
+    public float LaunchForce;
+    public GameObject attackPoint;
 
     //Move
     Vector3 movement;
@@ -72,7 +69,6 @@ public class Archer : MonoBehaviour
         animator = GetComponent<Animator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindGameObjectWithTag("Player");
-        CalculatedTime = TimeBtwEachShot;
     }
 
 
@@ -83,7 +79,6 @@ public class Archer : MonoBehaviour
 
     void checkState()
     {
-        Debug.Log(state);
         switch (state)
         {
             case State.STATE_STARTINGMOVE:
@@ -92,11 +87,9 @@ public class Archer : MonoBehaviour
                 startingMove();
                 break;
             case State.STATE_ATTACK:
-                Debug.Log("attack");
                 ArrowMechanism();
                 break;
             case State.STATE_COOLDOWN:
-                Debug.Log("cooldown");
                 ChangeAnimationState(cooldown);
                 coolDown(2);
                 break;
@@ -107,7 +100,6 @@ public class Archer : MonoBehaviour
     }
     void startingMove()
     {
-        Debug.Log("move");
         if (Moveright)
         {
             movement = new Vector3(3, 0f, 0f);
@@ -136,7 +128,8 @@ public class Archer : MonoBehaviour
         if(attackable)
         {
             ChangeAnimationState(attack);
-            GameObject ArrowIns = Instantiate(Arrow, transform.position, transform.rotation);
+
+            GameObject ArrowIns = Instantiate(Arrow, attackPoint.transform.position, attackPoint.transform.rotation);
             attackable = false;
 
         }
@@ -150,7 +143,6 @@ public class Archer : MonoBehaviour
             attackable = true;
             timer = 0;
             _healthSystem.Invincible = false;
-            Debug.Log("false");
             checkPlayer();
         }
     }
@@ -193,7 +185,6 @@ public class Archer : MonoBehaviour
     {
         if (isHit)
         {
-            Debug.Log("Moveright" + Moveright);
             temp = new Vector2((transform.position.x + 2), transform.position.y);
             if (Moveright)
                 rb.MovePosition((Vector2)transform.position + (temp * speedEnemy * Time.deltaTime));
@@ -201,7 +192,6 @@ public class Archer : MonoBehaviour
                 rb.MovePosition((Vector2)transform.position - (temp * speedEnemy * Time.deltaTime));
 
             ChangeAnimationState(hit);
-            Debug.Log("Vurdu");
             isHit = false;
             attackable = true;
         }
@@ -213,7 +203,6 @@ public class Archer : MonoBehaviour
         {
             state = State.STATE_HIT;
             isHit = true;
-            Debug.Log("Vurdu");
         }
     }
     void OnDead(object sender, EventArgs e)
@@ -222,7 +211,6 @@ public class Archer : MonoBehaviour
         {
             IsDead = true;
             ChangeAnimationState(death);
-            Debug.Log("öl");
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;
             GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";

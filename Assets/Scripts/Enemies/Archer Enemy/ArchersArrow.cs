@@ -16,22 +16,21 @@ public class ArchersArrow : MonoBehaviour
     private bool hasItGround = false;
     public GameObject fire;
     public GameObject archer;
+    private GameObject player;
     public static bool disabled = false;
 
     [SerializeField]
     private float gravity;
     [SerializeField]
     private float damageRadius;
-    //  [SerializeField]
-    //  private LayerMask whatIsGround;
-    //  [SerializeField]
-    // private LayerMask whatIsPlayer;
     [SerializeField]
     private Transform damagePosition;
     void Start()
     {
-        PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
+        PlayerPosition = player.transform;
         target = new Vector2(PlayerPosition.position.x - transform.position.x, PlayerPosition.position.y - transform.position.y);
+        Debug.Log("player:"+PlayerPosition.position);
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(target * archer.GetComponent<Archer>().LaunchForce);
         rb.velocity = Vector3.Normalize(target) * arrowSpeed;
@@ -55,7 +54,6 @@ public class ArchersArrow : MonoBehaviour
                 rb.gravityScale = gravity;
             }
         }
-
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -63,11 +61,11 @@ public class ArchersArrow : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
-            collision.transform.SendMessage("DamagePlayer", ArrowDamage);
+            player.GetComponent<HealthSystem>().Damage(ArrowDamage);
         }
         if (collision.CompareTag("Ground"))
         {
-            fire_loc = new Vector3(GameObject.Find("DamagePosition").transform.position.x, (transform.position.y + 0.16f), 0);
+            fire_loc = new Vector3(damagePosition.position.x, (transform.position.y + 1f), 0);
             Instantiate(fire, fire_loc, Quaternion.LookRotation(Vector3.forward, fire_loc));
             hasItGround = true;
             rb.gravityScale = 0.0f;
