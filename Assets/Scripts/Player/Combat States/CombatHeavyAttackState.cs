@@ -9,9 +9,8 @@ public class CombatHeavyAttackState : CombatBaseState
     { }
     public override void EnterState()
     {
-        Ctx.IsHeavyAttackPressed = false;
+        Ctx.CanHeavyAttack = false;
         Debug.Log("Enter Heavy");
-        Ctx.CanMove = false;
         Ctx.PlayerAnimator.Play("PlayerHeavyAttack");
         endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length;
     }
@@ -24,7 +23,7 @@ public class CombatHeavyAttackState : CombatBaseState
     }
     public override void ExitState()
     {
-        Ctx.CanMove = true;
+            
     }
     public override void CheckSwitchStates()
     {

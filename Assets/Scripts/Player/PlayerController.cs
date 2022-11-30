@@ -93,6 +93,8 @@ public class PlayerController : MonoBehaviour
     //[Header("Combat")]
     private bool _isAttackPressed;
     private bool _isHeavyAttackPressed;
+    private bool _canHeavyAttack;
+    private bool _chargeCanceled;
     private bool _isHit;
     private bool _isDead;
     HealthSystem _healthSystem;
@@ -123,6 +125,8 @@ public class PlayerController : MonoBehaviour
 
     public bool IsAttackPressed { get { return _isAttackPressed;} set { _isAttackPressed = value;}}
     public bool IsHeavyAttackPressed { get { return _isHeavyAttackPressed; } set { _isHeavyAttackPressed = value;} }
+    public bool CanHeavyAttack { get { return _canHeavyAttack; } set { _canHeavyAttack = value;} }
+    public bool ChargeCanceled { get { return _chargeCanceled; } set { _chargeCanceled = value;} }
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
@@ -176,9 +180,9 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Attack.performed += OnAttackPressed;
         //_playerInputActions.Player.Attack.canceled += OnAttackPressed;
 
-        //_playerInputActions.Player.HeavyAttack.started += OnHeavyAttackPressed;
+        _playerInputActions.Player.Attack.started += OnHeavyAttackPressed;
         _playerInputActions.Player.Attack.performed += OnHeavyAttackPressed;
-        //_playerInputActions.Player.Attack.canceled += OnHeavyAttackPressed;
+        _playerInputActions.Player.Attack.canceled += OnHeavyAttackPressed;
 
         _playerInputActions.Player.Jump.performed += OnJump;
         //_playerInputActions.Player.Jump.started += OnJump;
@@ -265,8 +269,26 @@ public class PlayerController : MonoBehaviour
     {
        if (context.interaction is HoldInteraction) {
             //Debug.Log("HeavyAttack");
+            bool control=false; 
             Debug.Log("heavyAttack" + context.phase);
-            _isHeavyAttackPressed = true;
+            if (context.phase is InputActionPhase.Started)
+            {
+                _isHeavyAttackPressed = true;
+            }
+            else if (context.phase is InputActionPhase.Performed)
+            {
+                _canHeavyAttack = true;
+                control = true;
+            }
+            else if (context.phase is InputActionPhase.Canceled)
+            {
+                if (!control)
+                {
+                    // heavy attacktan peacefula geçtikten sonra cancaled gerçekleşiyor charge cancaled true kalıyor.
+                    _chargeCanceled = true;
+                }
+            }
+
         }
     }
 
