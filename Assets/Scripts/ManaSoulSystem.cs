@@ -5,7 +5,7 @@ using UnityEngine;
 public class ManaSoulSystem : MonoBehaviour
 {
     [SerializeField]
-    private float currentMana;
+    public float currentMana;
     [SerializeField]
     private float maxMana;
 
@@ -16,6 +16,8 @@ public class ManaSoulSystem : MonoBehaviour
 
     public ProgressBar manaBar;
     public ProgressBar soulBar;
+
+    public HealthSystem healthSystem;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +58,16 @@ public class ManaSoulSystem : MonoBehaviour
     {
         if (soulAmount <= currentSoul)
             currentSoul -= soulAmount;
-        soulBar.SetValue(currentSoul);
+
+        soulBar.SetValue(currentSoul);  
+    }
+
+    public void HealWithSoul(float healAmount)
+    {
+        if (currentSoul >= healAmount && healthSystem.currentHealth < healthSystem.maxHealth)
+        {
+            healthSystem.Heal(healAmount);
+            UseSoul(healAmount);
+        }
     }
 }

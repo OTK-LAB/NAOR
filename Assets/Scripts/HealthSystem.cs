@@ -7,9 +7,9 @@ public class HealthSystem : MonoBehaviour
 {
     private bool invincible = false;
     [SerializeField]
-    private float currentHealth;
+    public float currentHealth;
     [SerializeField]
-    private float maxHealth;
+    public float maxHealth;
 
     public event EventHandler OnHit;
     public event EventHandler OnDead;
