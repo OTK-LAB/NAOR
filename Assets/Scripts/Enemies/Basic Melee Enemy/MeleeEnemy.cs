@@ -233,7 +233,7 @@ public class MeleeEnemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D trig)
     {
-        if (trig.CompareTag("wall"))
+        if (trig.CompareTag("wall") && state==State.STATE_STARTINGMOVE)
         {
             if (Moveright) Moveright = false;
             else Moveright = true;

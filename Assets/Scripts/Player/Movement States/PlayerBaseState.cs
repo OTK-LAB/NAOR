@@ -69,7 +69,7 @@ public abstract class PlayerBaseState
     }
     protected void PrintCurrentHierarchy()
     {
-        Debug.Log(this);
+        //Debug.Log(this);
         Ctx._movementHierarchyText.SetText(Ctx._movementHierarchyText.text + this + "\n");
         if(_currentSubState != null)
         {
@@ -77,7 +77,7 @@ public abstract class PlayerBaseState
         }
         else
         {
-            Debug.Log("-------------------------");
+            //Debug.Log("-------------------------");
         }
     }
 

@@ -154,7 +154,7 @@ public class Archer : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D trig)
     {
-        if (trig.CompareTag("wall"))
+        if (trig.CompareTag("wall") && state== State.STATE_STARTINGMOVE)
         {
             if (Moveright) Moveright = false;
             else Moveright = true;
@@ -164,28 +164,30 @@ public class Archer : MonoBehaviour
 
     void flip()
     {
-        if (playerPos.position.x > (transform.position.x + 0.5f))
-        {
-            if (!Moveright)
+            Debug.Log(state);
+            if (playerPos.position.x > (transform.position.x + 0.5f))
             {
-                transform.Rotate(0f, 180f, 0f);
-                Moveright = true;
+                if (!Moveright)
+                {
+                    transform.Rotate(0f, 180f, 0f);
+                    Moveright = true;
+                }
             }
-        }
-        else
-        {
-            if (Moveright)
+            else
             {
-                transform.Rotate(0f, 180f, 0f);
-                Moveright = false;
+                if (Moveright)
+                {
+                    transform.Rotate(0f, 180f, 0f);
+                    Moveright = false;
+                }
             }
-        }
     }
     void hitState()
     {
         if (isHit)
         {
             temp = new Vector2((transform.position.x + 2), transform.position.y);
+            Debug.Log(temp);
             if (Moveright)
                 rb.MovePosition((Vector2)transform.position + (temp * speedEnemy * Time.deltaTime));
             else
@@ -211,6 +213,7 @@ public class Archer : MonoBehaviour
         {
             IsDead = true;
             ChangeAnimationState(death);
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;
             GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
