@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 2140491267603617522}
   - component: {fileID: 128264813129202752}
   m_Layer: 0
-  m_Name: MeleeEnemy
+  m_Name: SwordEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2140491267603617481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0db74e122c6cc84585d04852359fd64, type: 3}
+  m_Script: {fileID: 11500000, guid: 124ba8c33db3a6a48a5fa26f43e0323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 5
@@ -532,8 +532,8 @@ MonoBehaviour:
   wall: {fileID: 0}
   wall2: {fileID: 0}
   attackPoint: {fileID: 2140491268245304628}
-  attackRange: 0.7
-  damageamount: 10
+  attackRange: 0.8
+  damageamount: 50
   isHit: 0
 --- !u!95 &2140491267603617480
 Animator:
@@ -615,7 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 50
+  maxHealth: 200
 --- !u!114 &128264813129202752
 MonoBehaviour:
   m_ObjectHideFlags: 0

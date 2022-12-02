@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class MeleeEnemy : MonoBehaviour
+public class SwordEnemy : MonoBehaviour
 {
 
     enum State
