@@ -7,26 +7,46 @@ public class ManaSoulSystem : MonoBehaviour
     [SerializeField]
     public float currentMana;
     [SerializeField]
-    private float maxMana;
+    public float regenMana;
+    [SerializeField]
+    public float maxMana;
 
     [SerializeField]
     private float currentSoul;
     [SerializeField]
-    private float maxSoul;
+    public float maxSoul;
 
     public ProgressBar manaBar;
     public ProgressBar soulBar;
 
     public HealthSystem healthSystem;
-    // Start is called before the first frame update
+
+    private float elapsed = 0f;
+    private float regenDelay = 1.0f;
+
     void Start()
-    {
+    { 
         currentMana = maxMana;
         manaBar.SetMaxValue(maxMana);
 
         currentSoul = 0;
         soulBar.SetMaxValue(maxSoul);
         soulBar.SetValue(currentSoul);
+    }
+
+    void Update()
+    {
+        if (elapsed > regenDelay && currentMana < maxMana)
+        {
+            AddMana(regenMana);
+            elapsed = 0f;
+        }
+        elapsed += Time.deltaTime;
+        //StartCoroutine(Wait(1));
+    }
+    IEnumerator Wait(float second)
+    {
+        yield return new WaitForSeconds(second);
     }
 
     public void UseMana(float manaAmount)
@@ -43,6 +63,14 @@ public class ManaSoulSystem : MonoBehaviour
         }
         else
             currentMana -= manaAmount;
+        manaBar.SetValue(currentMana);
+    }
+
+    public void AddMana(float manaAmount)
+    {
+        currentMana += manaAmount;
+        if (currentMana > maxMana)
+            currentMana = maxMana;
         manaBar.SetValue(currentMana);
     }
 
