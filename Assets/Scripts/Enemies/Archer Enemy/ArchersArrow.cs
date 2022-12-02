@@ -7,7 +7,7 @@ public class ArchersArrow : MonoBehaviour
     private Vector3 fire_loc;
     private Vector2 target;
     Transform PlayerPosition;
-    public float ArrowDamage = 20f;
+    public float ArrowDamage;
     private Rigidbody2D rb;
     private float travelDistance;
     private float xStartPos;

@@ -35,7 +35,6 @@ public class Archer : MonoBehaviour
     float timer;
 
     //Attack
-    public float damageamount;
     bool attackable = true;
     bool IsDead = false;
     public bool isHit = false;

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ArchersFire : MonoBehaviour
 {
-    public float damage = 5;
+    public float damage;
+    public float fire_time;
     public GameObject player;
     private Animator fire_anim;
     private Rigidbody2D rb;
@@ -26,7 +27,7 @@ public class ArchersFire : MonoBehaviour
     private void Update()
     {
         timer += Time.deltaTime;
-        if (stay && timer > 0.5f)
+        if (stay && timer > (fire_time/10))
         {
             player.GetComponent<HealthSystem>().Damage(damage);
             timer = 0;
