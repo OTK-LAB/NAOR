@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
     private bool _isHeavyAttackPressed;
     private bool _canHeavyAttack;
     private bool _chargeCanceled;
+    private bool _isHeavyAttackPerformed = false;
     private bool _isHit;
     private bool _isDead;
     HealthSystem _healthSystem;
@@ -269,20 +270,20 @@ public class PlayerController : MonoBehaviour
     {
        if (context.interaction is HoldInteraction) {
             //Debug.Log("HeavyAttack");
-            bool control=false; 
             Debug.Log("heavyAttack" + context.phase);
             if (context.phase is InputActionPhase.Started)
             {
                 _isHeavyAttackPressed = true;
+                _isHeavyAttackPerformed = false;
             }
             else if (context.phase is InputActionPhase.Performed)
             {
                 _canHeavyAttack = true;
-                control = true;
+                _isHeavyAttackPerformed = true;
             }
             else if (context.phase is InputActionPhase.Canceled)
             {
-                if (!control)
+                if (!_isHeavyAttackPerformed)
                 {
                     // heavy attacktan peacefula geçtikten sonra cancaled gerçekleşiyor charge cancaled true kalıyor.
                     _chargeCanceled = true;
