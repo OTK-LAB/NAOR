@@ -15,20 +15,27 @@ public class CombatBasicAttackState : CombatBaseState
     }
     public override void UpdateState()
     {
-        if (Time.time >= endtime)
-        {
-            SwitchState(CombatFactory.Peaceful());
-        }
+        CheckSwitchStates();
     }
     public override void ExitState()
     {
-        Ctx.CanMove = true;
         //FIXME:
         //  Moves player forward after attacking
         Ctx.transform.position = new Vector2(Ctx.transform.position.x + (Ctx.FacingRight ? .57f : -0.57f), Ctx.transform.position.y);
     }
     public override void CheckSwitchStates()
     {
+        if (Time.time >= endtime)
+        {
+            if(Ctx.ComboTriggered)
+            {
+                SwitchState(CombatFactory.SecondAttack());
+            }
+            else
+            {
+                SwitchState(CombatFactory.Peaceful());
+            }
+        }
     }
     public void OnBasicAttackEnded()
     {

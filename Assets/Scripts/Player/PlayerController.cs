@@ -96,6 +96,8 @@ public class PlayerController : MonoBehaviour
     private bool _canHeavyAttack;
     private bool _chargeCanceled;
     private bool _isHeavyAttackPerformed = false;
+    private bool _canCombo;
+    private bool _comboTriggered;
     private bool _isHit;
     private bool _isDead;
     HealthSystem _healthSystem;
@@ -128,6 +130,9 @@ public class PlayerController : MonoBehaviour
     public bool IsHeavyAttackPressed { get { return _isHeavyAttackPressed; } set { _isHeavyAttackPressed = value;} }
     public bool CanHeavyAttack { get { return _canHeavyAttack; } set { _canHeavyAttack = value;} }
     public bool ChargeCanceled { get { return _chargeCanceled; } set { _chargeCanceled = value;} }
+    public bool CanCombo { get { return _canCombo;}}
+    public bool ComboTriggered { get { return _comboTriggered;} set { _comboTriggered = value;}}
+
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
@@ -259,7 +264,14 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log("Basıldınız");
         if (context.interaction is TapInteraction) {
-            _isAttackPressed = true;
+            if(_canCombo)
+            {
+                _comboTriggered = true;
+            }
+            else
+            {
+                _isAttackPressed = true;
+            }
             //Debug.Log("attack" + _isAttackPressed);
             Debug.Log("attack"+context.phase);
         }
@@ -270,6 +282,8 @@ public class PlayerController : MonoBehaviour
     {
        if (context.interaction is HoldInteraction) {
             //Debug.Log("HeavyAttack");
+            //TODO:
+            //  Combo yaparken charge'a girebiliyor, onu düzelt
             Debug.Log("heavyAttack" + context.phase);
             if (context.phase is InputActionPhase.Started)
             {
@@ -391,5 +405,15 @@ public class PlayerController : MonoBehaviour
                 _facingRight = !_facingRight;
             }
         }
+    }
+
+    void SetCanComboTrue()
+    {
+        _canCombo = true;
+    }
+
+    void SetCanComboFalse()
+    {
+        _canCombo = false;
     }
 }
