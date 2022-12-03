@@ -10,6 +10,7 @@ public class HealthSystem : MonoBehaviour
     public float currentHealth;
     [SerializeField]
     public float maxHealth;
+    float smoothing = 5;
 
     public event EventHandler OnHit;
     public event EventHandler OnDead;
@@ -24,6 +25,11 @@ public class HealthSystem : MonoBehaviour
         healthBar.SetMaxValue(maxHealth);
     }
 
+    private void Update()
+    {
+        if (currentHealth != healthBar.slider.value)
+            healthBar.SetValue(Mathf.Lerp(healthBar.slider.value, currentHealth, smoothing * Time.deltaTime));
+    }
     public float GetHealth()
     {
         return currentHealth;
@@ -31,7 +37,7 @@ public class HealthSystem : MonoBehaviour
 
     public void Damage(float damageAmount)
     {
-
+        smoothing = 10;
         if (!invincible)
         {
             currentHealth -= damageAmount;
@@ -43,17 +49,18 @@ public class HealthSystem : MonoBehaviour
             }
 
         }
-        healthBar.SetValue(currentHealth);
+        //healthBar.SetValue(currentHealth);
     }
 
     public void Heal(float healAmount)
     {
+        smoothing = 5;
         currentHealth += healAmount;
 
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
-        healthBar.SetValue(currentHealth);
+        //healthBar.SetValue(currentHealth);
     }
 }
