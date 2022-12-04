@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class soulMovement : MonoBehaviour
+public class SoulMovement : MonoBehaviour
 {
     public Transform player;
     public Vector2 startVelocity;
@@ -26,6 +26,9 @@ public class soulMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
+        {
             Destroy(this.gameObject, .3f);
+            player.GetComponent<ManaSoulSystem>().AddSoul(1);
+        }
     }
 }

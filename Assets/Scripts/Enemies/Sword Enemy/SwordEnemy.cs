@@ -56,8 +56,11 @@ public class SwordEnemy : MonoBehaviour
     Vector2 temp;
     Rigidbody2D rb;
     LayerMask enemyLayers;
-    HealthSystem _healthSystem; 
-    
+    HealthSystem _healthSystem;
+
+    public GameObject soul;
+
+
     void Awake()
     {
         _healthSystem = GetComponent<HealthSystem>();
@@ -254,7 +257,7 @@ public class SwordEnemy : MonoBehaviour
     {
         if(!IsDead)
         {
-            player.GetComponent<ManaSoulSystem>().AddSoul(1);
+            Instantiate(soul, transform.position, Quaternion.identity).GetComponent<SoulMovement>().player = player.transform;
             IsDead = true;
             ChangeAnimationState(death);
             Debug.Log("öl");

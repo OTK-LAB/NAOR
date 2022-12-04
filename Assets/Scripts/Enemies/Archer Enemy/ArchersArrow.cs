@@ -63,7 +63,7 @@ public class ArchersArrow : MonoBehaviour
             Destroy(gameObject);
             player.GetComponent<HealthSystem>().Damage(ArrowDamage);
         }
-        if (collision.CompareTag("Ground"))
+        if (collision.gameObject.layer == 6)
         {
             fire_loc = new Vector3(damagePosition.position.x, (transform.position.y + 1f), 0);
             Instantiate(fire, fire_loc, Quaternion.LookRotation(Vector3.forward, fire_loc));

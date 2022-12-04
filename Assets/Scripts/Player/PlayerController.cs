@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
     bool _toggleDrag = false;
     public Transform frontCheck;
+    public LayerMask frontCheckLayer;
     public Transform _ledgeCheckTop;
     public Transform _ledgeCheckBot;
     bool _thereIsGroundFront;
@@ -350,11 +351,11 @@ public class PlayerController : MonoBehaviour
             // Create dash check 
         if(_facingRight)
         {
-            frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _dashDetectionDistance, groundLayer);
+            frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _dashDetectionDistance, frontCheckLayer);
         }
         else
         {
-            frontRay = Physics2D.Raycast(frontCheck.position, -transform.right, _dashDetectionDistance, groundLayer);
+            frontRay = Physics2D.Raycast(frontCheck.position, -transform.right, _dashDetectionDistance, frontCheckLayer);
         }
 
         _thereIsGroundFront = frontRay;

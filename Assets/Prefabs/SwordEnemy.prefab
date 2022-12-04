@@ -438,9 +438,9 @@ GameObject:
   - component: {fileID: 2140491267603617485}
   - component: {fileID: 2140491267603617522}
   - component: {fileID: 128264813129202752}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SwordEnemy
-  m_TagString: Enemy
+  m_TagString: Passable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -535,6 +535,7 @@ MonoBehaviour:
   attackRange: 0.8
   damageamount: 50
   isHit: 0
+  soul: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
 --- !u!95 &2140491267603617480
 Animator:
   serializedVersion: 4
@@ -616,6 +617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 200
+  healthBar: {fileID: 0}
 --- !u!114 &128264813129202752
 MonoBehaviour:
   m_ObjectHideFlags: 0

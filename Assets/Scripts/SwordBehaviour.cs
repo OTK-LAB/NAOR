@@ -8,7 +8,7 @@ public class SwordBehaviour : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Enemy"))
+        if(other.gameObject.layer == 8)
         {
             other.GetComponent<HealthSystem>().Damage(_playerController.CurrentCombatState.DamageAmount);
         }

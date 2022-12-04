@@ -10666,6 +10666,7 @@ GameObject:
   - component: {fileID: 7474128260205761649}
   - component: {fileID: 6518641809233875275}
   - component: {fileID: 7712882145264662802}
+  - component: {fileID: 1141484669}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -10744,7 +10745,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 100
+  maxHealth: 1000
+  healthBar: {fileID: 0}
 --- !u!114 &6518641809233875277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10760,6 +10762,9 @@ MonoBehaviour:
   movementSpeed: 7
   groundDetectionDistance: 0.2
   frontCheck: {fileID: 6518641809027266659}
+  frontCheckLayer:
+    serializedVersion: 2
+    m_Bits: 320
   _ledgeCheckTop: {fileID: 6518641809112998822}
   _ledgeCheckBot: {fileID: 6518641810438093509}
   _rb: {fileID: 6518641809233875120}
@@ -10769,11 +10774,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   groundCheck: {fileID: 6518641810314629921}
-  _dashingVelocity: 0
-  _dashingTime: 0
+  _dashingVelocity: 30
+  _dashingTime: 0.2
   _isDashing: 0
   _detectionDistance: 1
-  _dashDetectionDistance: 0
+  _dashDetectionDistance: 5
   _movementHierarchyText: {fileID: 0}
   _combatStateText: {fileID: 0}
 --- !u!114 &6518641809233875276
@@ -10908,6 +10913,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1141484669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6518641809233875122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 624a8dff047139b42aac6a7a2bb02305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMana: 0
+  regenMana: 5
+  maxMana: 100
+  currentSoul: 0
+  maxSoul: 50
+  manaBar: {fileID: 0}
+  soulBar: {fileID: 0}
+  healthSystem: {fileID: 6518641809233875123}
+  smoothing: 5
 --- !u!1 &6518641810314629922
 GameObject:
   m_ObjectHideFlags: 0

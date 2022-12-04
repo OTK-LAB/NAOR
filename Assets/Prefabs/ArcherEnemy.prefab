@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 6684767046887524776}
   - component: {fileID: 6684767046887524771}
   - component: {fileID: 2318248176834665253}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ArcherEnemy
-  m_TagString: Enemy
+  m_TagString: Passable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,7 +173,6 @@ MonoBehaviour:
   speedEnemy: 7
   wall: {fileID: 0}
   wall2: {fileID: 0}
-  damageamount: 0
   isHit: 0
   Arrow: {fileID: 440562133715720225, guid: 4cf06fc5f25081444bbf7d89b59811a4, type: 3}
   LaunchForce: 40
@@ -192,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 150
+  healthBar: {fileID: 0}
 --- !u!1 &6684767046903314987
 GameObject:
   m_ObjectHideFlags: 0
