@@ -75,10 +75,10 @@ public abstract class PlayerBaseState
         {
             _currentSubState.PrintCurrentHierarchy();
         }
-        /*else
+        else
         {
-            Debug.Log("-------------------------");
-        }*/
+            //Debug.Log("-------------------------");
+        }
     }
 
     public bool Query(PlayerBaseState query)
