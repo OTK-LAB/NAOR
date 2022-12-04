@@ -6,7 +6,9 @@ public class CombatPeacefulState : CombatBaseState
     base(currentContext, combatStateFactory, movementStateFactory, damage){}
     public override void EnterState()
     {
-
+        Ctx.CanMove = true;
+        Ctx.CanFlip = true;
+        Ctx.ChargeCanceled = false;
     }
     public override void UpdateState(){
         CheckSwitchStates();
@@ -20,7 +22,11 @@ public class CombatPeacefulState : CombatBaseState
         if(Ctx.IsAttackPressed && Ctx.CurrentMovementState.Query(MovementFactory.Standing()))
         {
             SwitchState(CombatFactory.BasicAttack());
-            Debug.Log("ben temizlemedim hala");
         }
+        if (Ctx.IsHeavyAttackPressed && Ctx.CurrentMovementState.Query(MovementFactory.Standing()))
+        {
+            SwitchState(CombatFactory.Charge());
+        } 
+        
     }
 }
