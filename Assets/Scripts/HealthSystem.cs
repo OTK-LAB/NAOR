@@ -7,20 +7,29 @@ public class HealthSystem : MonoBehaviour
 {
     private bool invincible = false;
     [SerializeField]
-    private float currentHealth;
+    public float currentHealth;
     [SerializeField]
-    private float maxHealth;
+    public float maxHealth;
+    float smoothing = 5;
 
     public event EventHandler OnHit;
     public event EventHandler OnDead;
 
     public bool Invincible { set { invincible = value; } }
 
+    public ProgressBar healthBar;
+
     void Start()
     {
         currentHealth = maxHealth;
+        healthBar.SetMaxValue(maxHealth);
     }
 
+    private void Update()
+    {
+        if (currentHealth != healthBar.slider.value)
+            healthBar.SetValue(Mathf.Lerp(healthBar.slider.value, currentHealth, smoothing * Time.deltaTime));
+    }
     public float GetHealth()
     {
         return currentHealth;
@@ -28,7 +37,7 @@ public class HealthSystem : MonoBehaviour
 
     public void Damage(float damageAmount)
     {
-
+        smoothing = 10;
         if (!invincible)
         {
             Debug.Log("Vurdu");
@@ -41,16 +50,18 @@ public class HealthSystem : MonoBehaviour
             }
 
         }
-
+        //healthBar.SetValue(currentHealth);
     }
 
     public void Heal(float healAmount)
     {
+        smoothing = 5;
         currentHealth += healAmount;
 
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
+        //healthBar.SetValue(currentHealth);
     }
 }

@@ -254,6 +254,7 @@ public class SwordEnemy : MonoBehaviour
     {
         if(!IsDead)
         {
+            player.GetComponent<ManaSoulSystem>().AddSoul(1);
             IsDead = true;
             ChangeAnimationState(death);
             Debug.Log("öl");
