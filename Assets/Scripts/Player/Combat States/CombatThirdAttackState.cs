@@ -24,14 +24,7 @@ public class CombatThirdAttackState : CombatBaseState
     {
         if(Time.time >= endtime)
         {
-            if(Ctx.ComboTriggered)
-            {
-                SwitchState(CombatFactory.FourthAttack());
-            }
-            else
-            {
-                SwitchState(CombatFactory.Peaceful());
-            }
+            SwitchState(CombatFactory.Peaceful());
         }
     }
 }
