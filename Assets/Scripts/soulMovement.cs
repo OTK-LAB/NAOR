@@ -18,16 +18,14 @@ public class soulMovement : MonoBehaviour
         startVelocity.y = Random.Range(-5f, 5f);
     }
 
-    private void Update()
-    {
-        if (Physics2D.OverlapCircle(player.position + new Vector3(0, -1, 0), 0.1f, CollectableLayer))
-        {
-            Destroy(this.gameObject, 0.5f);
-        }
-    }
     private void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, player.position + new Vector3(0, -1, 0), speed * Time.deltaTime);
         rb.velocity = startVelocity;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+            Destroy(this.gameObject, .3f);
     }
 }
