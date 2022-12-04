@@ -99,7 +99,8 @@ public class PlayerController : MonoBehaviour
     private bool _isHit;
     private bool _isDead;
     HealthSystem _healthSystem;
-
+    ManaSoulSystem _manaSoulSystem;
+    
     //Debugging
     public TextMeshProUGUI _movementHierarchyText;
     public TextMeshProUGUI _combatStateText;
@@ -167,6 +168,7 @@ public class PlayerController : MonoBehaviour
         _currentState.EnterState();
         _animator = GetComponent<Animator>();
         _healthSystem = GetComponent<HealthSystem>();
+        _manaSoulSystem = GetComponent<ManaSoulSystem>();
 
         HealthSystem.OnHit += OnHit;
         HealthSystem.OnDead += OnDead;
@@ -231,7 +233,13 @@ public class PlayerController : MonoBehaviour
     } 
     void OnDash(InputAction.CallbackContext context)
     {
-        _isDashPressed = true;
+        if (_manaSoulSystem.currentMana >= 10)
+        {
+            _isDashPressed = true;
+            _manaSoulSystem.UseMana(10);
+        }
+        else
+            _isDashPressed = false;
     }
     void OnCrouch(InputAction.CallbackContext context)
     {
