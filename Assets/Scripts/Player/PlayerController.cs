@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Interactions;
 using TMPro;
 
 // Dear programmer:
@@ -15,7 +16,7 @@ using TMPro;
 // please increase this counter as a
 // warning for the next person:
 //
-// total_hours_wasted_here = 15
+// total_hours_wasted_here = 22
 
 //TODO:
 //  Add coyote time
@@ -91,10 +92,15 @@ public class PlayerController : MonoBehaviour
     //Combat
     //[Header("Combat")]
     private bool _isAttackPressed;
+    private bool _isHeavyAttackPressed;
+    private bool _canHeavyAttack;
+    private bool _chargeCanceled;
+    private bool _isHeavyAttackPerformed = false;
     private bool _isHit;
     private bool _isDead;
     HealthSystem _healthSystem;
-
+    ManaSoulSystem _manaSoulSystem;
+    
     //Debugging
     public TextMeshProUGUI _movementHierarchyText;
     public TextMeshProUGUI _combatStateText;
@@ -119,7 +125,10 @@ public class PlayerController : MonoBehaviour
     public bool ThereIsGroundFront { get { return _thereIsGroundFront; } set { _thereIsGroundFront = value; } }
     public bool IsDashing { get { return _isDashing; } set { _isDashing = value; } }
 
-    public bool IsAttackPressed { get { return _isAttackPressed;}}
+    public bool IsAttackPressed { get { return _isAttackPressed;} set { _isAttackPressed = value;}}
+    public bool IsHeavyAttackPressed { get { return _isHeavyAttackPressed; } set { _isHeavyAttackPressed = value;} }
+    public bool CanHeavyAttack { get { return _canHeavyAttack; } set { _canHeavyAttack = value;} }
+    public bool ChargeCanceled { get { return _chargeCanceled; } set { _chargeCanceled = value;} }
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
     public bool DragToggle { get { return _toggleDrag; }}
@@ -159,6 +168,7 @@ public class PlayerController : MonoBehaviour
         _currentState.EnterState();
         _animator = GetComponent<Animator>();
         _healthSystem = GetComponent<HealthSystem>();
+        _manaSoulSystem = GetComponent<ManaSoulSystem>();
 
         HealthSystem.OnHit += OnHit;
         HealthSystem.OnDead += OnDead;
@@ -171,8 +181,11 @@ public class PlayerController : MonoBehaviour
 
         //_playerInputActions.Player.Attack.started += OnAttackPressed;
         _playerInputActions.Player.Attack.performed += OnAttackPressed;
-        _playerInputActions.Player.Attack.canceled += OnAttackPressed;
+        //_playerInputActions.Player.Attack.canceled += OnAttackPressed;
 
+        _playerInputActions.Player.Attack.started += OnHeavyAttackPressed;
+        _playerInputActions.Player.Attack.performed += OnHeavyAttackPressed;
+        _playerInputActions.Player.Attack.canceled += OnHeavyAttackPressed;
 
         _playerInputActions.Player.Jump.performed += OnJump;
         //_playerInputActions.Player.Jump.started += OnJump;
@@ -186,6 +199,7 @@ public class PlayerController : MonoBehaviour
 
         _playerInputActions.Player.Drag.started += OnDrag;
     }
+
 
     // Start is called before the first frame update
     void Start()
@@ -219,7 +233,13 @@ public class PlayerController : MonoBehaviour
     } 
     void OnDash(InputAction.CallbackContext context)
     {
-        _isDashPressed = true;
+        if (_manaSoulSystem.currentMana >= 10)
+        {
+            _isDashPressed = true;
+            _manaSoulSystem.UseMana(10);
+        }
+        else
+            _isDashPressed = false;
     }
     void OnCrouch(InputAction.CallbackContext context)
     {
@@ -245,9 +265,40 @@ public class PlayerController : MonoBehaviour
     }
     void OnAttackPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("Basıldınız");
-        _isAttackPressed = context.ReadValueAsButton();
-        Debug.Log(_isAttackPressed);
+        //Debug.Log("Basıldınız");
+        if (context.interaction is TapInteraction) {
+            _isAttackPressed = true;
+            //Debug.Log("attack" + _isAttackPressed);
+            Debug.Log("attack"+context.phase);
+        }
+
+
+    }
+    void OnHeavyAttackPressed(InputAction.CallbackContext context)
+    {
+       if (context.interaction is HoldInteraction) {
+            //Debug.Log("HeavyAttack");
+            Debug.Log("heavyAttack" + context.phase);
+            if (context.phase is InputActionPhase.Started)
+            {
+                _isHeavyAttackPressed = true;
+                _isHeavyAttackPerformed = false;
+            }
+            else if (context.phase is InputActionPhase.Performed)
+            {
+                _canHeavyAttack = true;
+                _isHeavyAttackPerformed = true;
+            }
+            else if (context.phase is InputActionPhase.Canceled)
+            {
+                if (!_isHeavyAttackPerformed)
+                {
+                    // heavy attacktan peacefula geçtikten sonra cancaled gerçekleşiyor charge cancaled true kalıyor.
+                    _chargeCanceled = true;
+                }
+            }
+
+        }
     }
 
     void OnHit(object sender, EventArgs e)
