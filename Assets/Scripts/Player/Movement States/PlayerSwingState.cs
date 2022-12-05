@@ -8,14 +8,14 @@ public class PlayerSwingState : PlayerBaseState
     public override void EnterState()
     {
         InitializeSubstate();
+        Ctx.CanDetectSwing = false;
+        Ctx.CanSwing = false;
         Ctx.Rigidbod.gravityScale = 3;
         Ctx.Rigidbod.constraints = RigidbodyConstraints2D.None;
         Ctx.CanFlip = false;
         Ctx.CanMove = false;
         Ctx.GetComponent<HingeJoint2D>().enabled = true;
         Ctx.PlayerAnimator.Play("PlayerSwing");
-        //Ctx.Rigidbod.velocity = Vector2.zero;
-        //Ctx.Rigidbod.rotation = (Ctx.FacingRight ? -60 : 60);
         //Ctx.transform.position = Ctx.TopRaycastHit.collider.transform.position + (Ctx.FacingRight ? new Vector3(-0.39f, 0.13f): new Vector3(0.39f, -0.13f));
     }
 

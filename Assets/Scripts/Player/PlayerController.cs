@@ -59,8 +59,11 @@ public class PlayerController : MonoBehaviour
     bool _canDrag;
     bool _canClimbLedge;
     bool _canSwing;
+    bool _canDetectSwing = true;
     RaycastHit2D _topRaycastHit;
     RaycastHit2D frontRay;
+    
+
 
     //Sliding
     Collider2D _groundCollider;
@@ -110,7 +113,8 @@ public class PlayerController : MonoBehaviour
     public bool CanFlip { get {return _canFlip; } set { _canFlip = value; }}
     public bool IsOnSlope { get { return _isOnSlope; }}
     public bool CanClimbLedge { get { return _canClimbLedge; }}
-    public bool CanSwing { get { return _canSwing; } }
+    public bool CanSwing { get { return _canSwing; } set { _canSwing = value; } }
+    public bool CanDetectSwing { get { return _canDetectSwing; } set { _canDetectSwing = value; } }
     public bool FacingRight { get { return _facingRight;}}
 
     public Collider2D GroundCollider { get { return _groundCollider;}}
@@ -287,6 +291,12 @@ public class PlayerController : MonoBehaviour
             _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, -transform.right, _detectionDistance, groundLayer);
         }
 
+        if(_canDetectSwing)
+        {
+            _thereIsGroundTop = Physics2D.OverlapCircle(_ledgeCheckTop.position, groundDetectionDistance, groundLayer);
+            _canSwing = _thereIsGroundTop;
+        }
+
         /*if(_thereIsGroundBot && !_thereIsGroundTop)
         {
             _canClimbLedge = true;
@@ -295,11 +305,12 @@ public class PlayerController : MonoBehaviour
         {
             _canClimbLedge = false;
         }*/
-        if (_topRaycastHit.collider != null)
-            _canSwing = true;
-        else
-            _canSwing = false;
+
         //Debug.Log("Can Climb Ledge: " + _canClimbLedge);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(_ledgeCheckTop.position, groundDetectionDistance);
     }
 
     void Move(float movementInput)
