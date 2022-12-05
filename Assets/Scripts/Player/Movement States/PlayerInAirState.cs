@@ -17,10 +17,15 @@ public class PlayerInAirState : PlayerBaseState
     }
     public override void ExitState()
     {
-
+        Ctx.IsJumpPressed = false;
     }
     public override void CheckSwitchStates()
     {
+        //FIXME: bu if-else yapisinin degismesi gerekebilir
+        if (Ctx.IsDashPressed && Ctx.CanDash)
+        {
+            SwitchState(Factory.Dash());
+        }
         if(Ctx.IsOnGround)
         {
             SwitchState(Factory.Grounded());

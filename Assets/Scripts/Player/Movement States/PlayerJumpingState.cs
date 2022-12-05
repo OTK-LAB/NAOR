@@ -9,6 +9,8 @@ public class PlayerJumpingState : PlayerBaseState
         InitializeSubstate();
         Ctx.Rigidbod.velocity = new Vector2(Ctx.Rigidbod.velocity.x, Ctx.JumpForce);
         Ctx.PlayerAnimator.Play("PlayerJump");        
+        //This line causes jumping again when jump pressed while falling (?)
+        Ctx.IsJumpPressed = false;
     }
     public override void UpdateState()
     {   
@@ -16,7 +18,6 @@ public class PlayerJumpingState : PlayerBaseState
     }
     public override void ExitState()
     {
-
     }
     public override void CheckSwitchStates()
     {
@@ -32,6 +33,12 @@ public class PlayerJumpingState : PlayerBaseState
         {
             SwitchState(Factory.Swing());
         }
+        /*
+        if (Ctx.IsDashPressed&&Ctx.CanDash)
+        {
+            SwitchState(Factory.Dash());
+        }
+        */
     }
     public override void InitializeSubstate()
     {

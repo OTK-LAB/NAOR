@@ -30,7 +30,7 @@ public abstract class CombatBaseState
             ExitState();
             Ctx.CurrentCombatState = newState;
             newState.EnterState();
-            Debug.Log("Combat State: \n---------------------" + newState);
+            //Debug.Log("Combat State: \n---------------------" + newState);
             Ctx._combatStateText.SetText(Ctx.CurrentCombatState.ToString());
         }
     }

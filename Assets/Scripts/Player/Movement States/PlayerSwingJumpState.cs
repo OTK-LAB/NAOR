@@ -9,7 +9,7 @@ public class PlayerSwingJumpState : PlayerBaseState
  
     public override void EnterState()
     {
-        Ctx.Rigidbod.velocity = new Vector2((Ctx.Rigidbod.rotation / 20) + Ctx.Rigidbod.velocity.x, Ctx.JumpForce * 1.15f);
+        Ctx.Rigidbod.velocity = new Vector2((Ctx.Rigidbod.rotation / 15) + Ctx.Rigidbod.velocity.x, Ctx.JumpForce * 1.25f);
     }
 
     public override void UpdateState()

@@ -2,7 +2,13 @@ using System.Collections.Generic;
 
 enum CombatStates {
     peaceful,
-    basicAttack
+    basicAttack,
+    secondAttack,
+    thirdAttack,
+    fourthAttack,
+    fifthAttack,
+    heavyAttack,
+    charge,
 }
 public class CombatStateFactory
 {
@@ -16,6 +22,12 @@ public class CombatStateFactory
 
         _states[CombatStates.peaceful] = new CombatPeacefulState(_context, this, _movementFactory, 0);
         _states[CombatStates.basicAttack] = new CombatBasicAttackState(_context, this, _movementFactory, 10);
+        _states[CombatStates.secondAttack] = new CombatSecondAttackState(_context,this, _movementFactory, 15);
+        _states[CombatStates.thirdAttack] = new CombatThirdAttackState(_context, this, _movementFactory, 20);
+        _states[CombatStates.fourthAttack] = new CombatFourthAttackState(_context, this, _movementFactory, 25);
+        _states[CombatStates.fifthAttack] = new CombatFifthAttackState(_context, this, _movementFactory, 30);
+        _states[CombatStates.heavyAttack] = new CombatHeavyAttackState(_context, this, _movementFactory, 10);
+        _states[CombatStates.charge] = new CombatChargeState(_context, this, _movementFactory, 0);
     }
 
     public CombatBaseState Peaceful()
@@ -26,4 +38,28 @@ public class CombatStateFactory
     {
         return _states[CombatStates.basicAttack];
     }
+    public CombatBaseState SecondAttack()
+    {
+        return _states[CombatStates.secondAttack];
+    }
+    public CombatBaseState ThirdAttack()
+    {
+        return _states[CombatStates.thirdAttack];
+    }
+    public CombatBaseState FourthAttack()
+    {
+        return _states[CombatStates.fourthAttack];
+    }
+    public CombatBaseState FifthAttack()
+    {
+        return _states[CombatStates.fifthAttack];
+    }
+    public CombatBaseState HeavyAttack()
+    {
+        return _states[CombatStates.heavyAttack];
+    } public CombatBaseState Charge()
+    {
+        return _states[CombatStates.charge];
+    }
+    
 }

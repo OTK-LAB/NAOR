@@ -11,6 +11,7 @@ public class PlayerSwingState : PlayerBaseState
         Ctx.CanDetectSwing = false;
         Ctx.CanSwing = false;
         Ctx.Rigidbod.gravityScale = 3;
+        Ctx.Rigidbod.drag = 0.35f;
         Ctx.Rigidbod.constraints = RigidbodyConstraints2D.None;
         Ctx.CanFlip = false;
         Ctx.CanMove = false;
@@ -27,6 +28,7 @@ public class PlayerSwingState : PlayerBaseState
     public override void ExitState()
     {
         Ctx.Rigidbod.gravityScale = Ctx.DefaultGravity;
+        Ctx.Rigidbod.drag = 0;
         Ctx.GetComponent<HingeJoint2D>().enabled = false;
     }
 
@@ -34,6 +36,7 @@ public class PlayerSwingState : PlayerBaseState
     {
         if(Ctx.IsJumpPressed)
         {
+            Debug.Log("swingdejumpbastý");
             SwitchState(Factory.SwingJump());
         }
     }
