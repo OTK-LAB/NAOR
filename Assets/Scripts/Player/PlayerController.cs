@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
     float _defaultGravity;
 
     //Dragging and Ledge Detection
-
     bool _toggleDrag = false;
     public Transform frontCheck;
     public LayerMask frontCheckLayer;
@@ -61,6 +60,9 @@ public class PlayerController : MonoBehaviour
     bool _thereIsGroundBot;
     bool _canDrag;
     bool _canClimbLedge;
+    bool _canSwing;
+    bool _canDetectSwing = true;
+    RaycastHit2D _topRaycastHit;
     RaycastHit2D frontRay;
 
     //Sliding
@@ -142,6 +144,8 @@ public class PlayerController : MonoBehaviour
     public bool CanDash { get { return _canDash; } set { _canDash = value; } }
     public bool IsOnSlope { get { return _isOnSlope; }}
     public bool CanClimbLedge { get { return _canClimbLedge; }}
+    public bool CanSwing { get { return _canSwing; } set { _canSwing = value; } }
+    public bool CanDetectSwing { get { return _canDetectSwing; } set { _canDetectSwing = value; } }
     public bool FacingRight { get { return _facingRight;}}
 
     public Collider2D GroundCollider { get { return _groundCollider;}}
@@ -152,6 +156,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 DashingDirection { get { return _dashingDir; } set { _dashingDir = value; }}
     public float MovementSpeed { get { return movementSpeed; }}
     public Rigidbody2D Rigidbod { get { return _rb; }}
+    public RaycastHit2D TopRaycastHit { get { return _topRaycastHit; } }
     public RaycastHit2D Ray { get {return frontRay; }}
     //For workaround in Drag. Will be changed
     public Transform GroundCheck { get {return groundCheck; }}
@@ -377,16 +382,22 @@ public class PlayerController : MonoBehaviour
     {
         if(_facingRight)
         {
-            _thereIsGroundTop = Physics2D.Raycast(_ledgeCheckTop.position, transform.right, _detectionDistance, groundLayer);
+            _topRaycastHit = Physics2D.Raycast(_ledgeCheckTop.position, transform.right, _detectionDistance, groundLayer);
             _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, transform.right, _detectionDistance, groundLayer);
         }
         else
         {
-            _thereIsGroundTop = Physics2D.Raycast(_ledgeCheckTop.position, -transform.right, _detectionDistance, groundLayer);
+            _topRaycastHit = Physics2D.Raycast(_ledgeCheckTop.position, -transform.right, _detectionDistance, groundLayer);
             _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, -transform.right, _detectionDistance, groundLayer);
         }
 
-        if(_thereIsGroundBot && !_thereIsGroundTop)
+        if (_canDetectSwing)
+        {
+            _thereIsGroundTop = Physics2D.OverlapCircle(_ledgeCheckTop.position, groundDetectionDistance, groundLayer);
+            _canSwing = _thereIsGroundTop;
+        }
+
+        if (_thereIsGroundBot && !_thereIsGroundTop)
         {
             _canClimbLedge = true;
         }
@@ -399,10 +410,11 @@ public class PlayerController : MonoBehaviour
 
     void Move(float movementInput)
     {
+        //falseda velocityi 0 yapması swingi bozacak
         if(_canMove)
             _rb.velocity = new Vector2(movementInput, _rb.velocity.y);
-        else
-            _rb.velocity = new Vector2(0, _rb.velocity.y);
+        /*else
+            _rb.velocity = new Vector2(0, _rb.velocity.y);*/
     }
     void FlipPlayer()
     {

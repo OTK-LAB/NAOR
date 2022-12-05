@@ -10,7 +10,10 @@ public class PlayerBusyState : PlayerBaseState
     }
     public override void EnterState()
     {
+        //FIX WITH canMove MAYBE
+        Debug.Log("BUSY GİRDİ");
         Ctx.AppliedMovement = 0;
+        
     }
     public override void UpdateState()
     {
