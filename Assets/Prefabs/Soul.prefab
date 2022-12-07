@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 846734082}
   - component: {fileID: 846734081}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SoulTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3128993573511660036}
   - component: {fileID: 1194591963122104542}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SoulTrail (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,10 +273,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2509572642430713041}
-  - component: {fileID: 6645531098242029855}
-  - component: {fileID: 1323419808605738781}
   - component: {fileID: -4700802491834200776}
-  m_Layer: 8
+  - component: {fileID: 1323419808605738781}
+  - component: {fileID: 2622833971585780664}
+  m_Layer: 14
   m_Name: Soul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,45 +299,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6645531098242029855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2509572642430713040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8560ab03dc838094ca0f550a211d777e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  startVelocity: {x: 0, y: 5.04}
-  speed: 10
-  CollectableLayer:
-    serializedVersion: 2
-    m_Bits: 256
---- !u!50 &1323419808605738781
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2509572642430713040}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &-4700802491834200776
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -364,6 +325,45 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &1323419808605738781
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509572642430713040}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &2622833971585780664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509572642430713040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8560ab03dc838094ca0f550a211d777e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  startVelocity: {x: 0, y: 0}
+  speed: 8
+  CollectableLayer:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!1 &4334009381521196361
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,13 +375,13 @@ GameObject:
   - component: {fileID: 2943495943191907900}
   - component: {fileID: 2055866992925299895}
   - component: {fileID: 6437465506435034621}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SoulHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2943495943191907900
 Transform:
   m_ObjectHideFlags: 0
