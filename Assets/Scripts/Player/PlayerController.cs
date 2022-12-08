@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     bool _canFlip = true;
     bool _canMove = true;
     bool _isOnGround;
+    public bool _canNotPlunge;
     bool _isCrouching = false;
     float _defaultGravity;
 
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
     bool _canDetectSwing = true;
     RaycastHit2D _topRaycastHit;
     RaycastHit2D frontRay;
-
+    RaycastHit2D _plungeRayCast;
     //Sliding
     Collider2D _groundCollider;
     bool _isOnSlope;
@@ -96,6 +97,7 @@ public class PlayerController : MonoBehaviour
     //[Header("Combat")]
     private bool _isAttackPressed;
     private bool _isHeavyAttackPressed;
+    public bool _isDownPressed;
     private bool _canHeavyAttack;
     private bool _chargeCanceled;
     private bool _isHeavyAttackPerformed = false;
@@ -198,6 +200,10 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Attack.performed += OnHeavyAttackPressed;
         _playerInputActions.Player.Attack.canceled += OnHeavyAttackPressed;
 
+        _playerInputActions.Player.Down.started += OnDown;
+        _playerInputActions.Player.Down.performed += OnDown;
+        _playerInputActions.Player.Down.canceled += OnDown;
+
         _playerInputActions.Player.Jump.performed += OnJump;
         //_playerInputActions.Player.Jump.started += OnJump;
         //_playerInputActions.Player.Jump.canceled += OnJump;
@@ -237,6 +243,10 @@ public class PlayerController : MonoBehaviour
     {
         _currentMovementInput = context.ReadValue<Vector2>();
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
+    }
+    void OnDown(InputAction.CallbackContext context)
+    {
+        _isDownPressed = context.ReadValueAsButton();
     }
     void OnJump(InputAction.CallbackContext context)
     {
@@ -350,6 +360,10 @@ public class PlayerController : MonoBehaviour
             _isOnSlope = false;
         }
         Debug.Log("IS ON SLOPE: " + _isOnSlope);*/
+
+        _plungeRayCast = Physics2D.Raycast(groundCheck.position, -transform.up, 5f, groundLayer);
+
+        _canNotPlunge = _plungeRayCast;
     }
     public void CheckFront(){ 
         

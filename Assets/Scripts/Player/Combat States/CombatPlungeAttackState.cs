@@ -1,17 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatHeavyAttackState : CombatBaseState
+public class CombatPlungeAttackState : CombatBaseState
 {
     float endtime;
 
-    public CombatHeavyAttackState(PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage) :
+    public CombatPlungeAttackState(PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage) : 
     base(currentContext, combatStateFactory, movementStateFactory, damage)
-    { }
+    {
+    }
+
     public override void EnterState()
     {
         Ctx.CanHeavyAttack = false;
-        Debug.Log("Enter Heavy");
-        Ctx.PlayerAnimator.Play("PlayerHeavyAttack");
+        Debug.Log("Enter Plunge");
+        Ctx.PlayerAnimator.Play("PlayerPlungeAttack");
         endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length;
     }
     public override void UpdateState()
@@ -20,7 +24,6 @@ public class CombatHeavyAttackState : CombatBaseState
     }
     public override void ExitState()
     {
-            
     }
     public override void CheckSwitchStates()
     {
@@ -28,7 +31,19 @@ public class CombatHeavyAttackState : CombatBaseState
         {
             SwitchState(CombatFactory.Peaceful());
         }
-
     }
 
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }

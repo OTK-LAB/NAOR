@@ -9,6 +9,7 @@ enum CombatStates {
     fifthAttack,
     heavyAttack,
     charge,
+    plungeAttack,
 }
 public class CombatStateFactory
 {
@@ -28,6 +29,7 @@ public class CombatStateFactory
         _states[CombatStates.fifthAttack] = new CombatFifthAttackState(_context, this, _movementFactory, 30);
         _states[CombatStates.heavyAttack] = new CombatHeavyAttackState(_context, this, _movementFactory, 10);
         _states[CombatStates.charge] = new CombatChargeState(_context, this, _movementFactory, 0);
+        _states[CombatStates.plungeAttack] = new CombatPlungeAttackState(_context, this, _movementFactory, 75);
     }
 
     public CombatBaseState Peaceful()
@@ -57,9 +59,14 @@ public class CombatStateFactory
     public CombatBaseState HeavyAttack()
     {
         return _states[CombatStates.heavyAttack];
-    } public CombatBaseState Charge()
+    } 
+    public CombatBaseState Charge()
     {
         return _states[CombatStates.charge];
+    }
+    public CombatBaseState PlungeAttack()
+    {
+        return _states[CombatStates.plungeAttack];
     }
     
 }
