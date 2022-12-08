@@ -207,6 +207,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ManaStopInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""e15b5b6a-7573-4728-a4ad-b88eb3124f77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -218,6 +227,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Npc Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb1977a6-0de1-418d-885b-f76699b27e7e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ManaStopInteraction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -237,6 +257,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // Interaction
         m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
         m_Interaction_NpcInteraction = m_Interaction.FindAction("Npc Interaction", throwIfNotFound: true);
+        m_Interaction_ManaStopInteraction = m_Interaction.FindAction("ManaStopInteraction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -370,11 +391,13 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Interaction;
     private IInteractionActions m_InteractionActionsCallbackInterface;
     private readonly InputAction m_Interaction_NpcInteraction;
+    private readonly InputAction m_Interaction_ManaStopInteraction;
     public struct InteractionActions
     {
         private @PlayerInputActions m_Wrapper;
         public InteractionActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @NpcInteraction => m_Wrapper.m_Interaction_NpcInteraction;
+        public InputAction @ManaStopInteraction => m_Wrapper.m_Interaction_ManaStopInteraction;
         public InputActionMap Get() { return m_Wrapper.m_Interaction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -387,6 +410,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @NpcInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
                 @NpcInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
                 @NpcInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+                @ManaStopInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
+                @ManaStopInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
+                @ManaStopInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
             }
             m_Wrapper.m_InteractionActionsCallbackInterface = instance;
             if (instance != null)
@@ -394,6 +420,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @NpcInteraction.started += instance.OnNpcInteraction;
                 @NpcInteraction.performed += instance.OnNpcInteraction;
                 @NpcInteraction.canceled += instance.OnNpcInteraction;
+                @ManaStopInteraction.started += instance.OnManaStopInteraction;
+                @ManaStopInteraction.performed += instance.OnManaStopInteraction;
+                @ManaStopInteraction.canceled += instance.OnManaStopInteraction;
             }
         }
     }
@@ -410,5 +439,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface IInteractionActions
     {
         void OnNpcInteraction(InputAction.CallbackContext context);
+        void OnManaStopInteraction(InputAction.CallbackContext context);
     }
 }
