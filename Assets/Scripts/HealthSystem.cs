@@ -18,7 +18,6 @@ public class HealthSystem : MonoBehaviour
     public bool Invincible { set { invincible = value; } }
 
     public ProgressBar healthBar;
-
     void Start()
     {
         currentHealth = maxHealth;

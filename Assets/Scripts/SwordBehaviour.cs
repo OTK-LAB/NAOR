@@ -10,7 +10,7 @@ public class SwordBehaviour : MonoBehaviour
     {
         if(other.gameObject.layer == 8)
         {
-            other.GetComponent<HealthSystem>().Damage(_playerController.CurrentCombatState.DamageAmount);
+            other.GetComponent<EnemyHealthSystem>().Damage(_playerController.CurrentCombatState.DamageAmount);
         }
     }
 }

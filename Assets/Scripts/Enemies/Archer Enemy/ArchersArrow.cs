@@ -30,7 +30,6 @@ public class ArchersArrow : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         PlayerPosition = player.transform;
         target = new Vector2(PlayerPosition.position.x - transform.position.x, PlayerPosition.position.y - transform.position.y);
-        Debug.Log("player:"+PlayerPosition.position);
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(target * archer.GetComponent<Archer>().LaunchForce);
         rb.velocity = Vector3.Normalize(target) * arrowSpeed;

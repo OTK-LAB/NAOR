@@ -37,7 +37,7 @@ public class Archer : MonoBehaviour
     //Attack
     bool attackable = true;
     bool IsDead = false;
-    public bool isHit = false;
+    bool isHit = false;
     public GameObject Arrow;
     public float LaunchForce;
     public GameObject attackPoint;
@@ -50,12 +50,12 @@ public class Archer : MonoBehaviour
     Vector2 temp;
     Rigidbody2D rb;
     LayerMask enemyLayers;
-    HealthSystem _healthSystem;
+    EnemyHealthSystem _healthSystem;
 
     State state = State.STATE_STARTINGMOVE;
     void Awake()
     {
-        _healthSystem = GetComponent<HealthSystem>();
+        _healthSystem = GetComponent<EnemyHealthSystem>();
 
         _healthSystem.OnHit += OnHit;
         _healthSystem.OnDead += OnDead;
@@ -141,7 +141,6 @@ public class Archer : MonoBehaviour
         {
             attackable = true;
             timer = 0;
-            _healthSystem.Invincible = false;
             checkPlayer();
         }
     }
@@ -163,7 +162,6 @@ public class Archer : MonoBehaviour
 
     void flip()
     {
-            Debug.Log(state);
             if (playerPos.position.x > (transform.position.x + 0.5f))
             {
                 if (!Moveright)
@@ -186,7 +184,6 @@ public class Archer : MonoBehaviour
         if (isHit)
         {
             temp = new Vector2((transform.position.x + 2), transform.position.y);
-            Debug.Log(temp);
             if (Moveright)
                 rb.MovePosition((Vector2)transform.position + (temp * speedEnemy * Time.deltaTime));
             else

@@ -436,7 +436,7 @@ GameObject:
   - component: {fileID: 2140491267603617480}
   - component: {fileID: 2140491267603617484}
   - component: {fileID: 2140491267603617485}
-  - component: {fileID: 2140491267603617522}
+  - component: {fileID: 9127604593053501373}
   - component: {fileID: 128264813129202752}
   m_Layer: 8
   m_Name: SwordEnemy
@@ -603,7 +603,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.25251135, y: 0.60361874}
   m_EdgeRadius: 0
---- !u!114 &2140491267603617522
+--- !u!114 &9127604593053501373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -612,12 +612,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2140491267603617481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a25cdde9ff64cba4995d61e34b8efb89, type: 3}
+  m_Script: {fileID: 11500000, guid: 85acc288d0036904cbe8c76f21ec15e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 200
-  healthBar: {fileID: 0}
 --- !u!114 &128264813129202752
 MonoBehaviour:
   m_ObjectHideFlags: 0
