@@ -24,10 +24,12 @@ public class CombatPeacefulState : CombatBaseState
         {
             SwitchState(CombatFactory.PlungeAttack());
         }
+       
         if (Ctx.IsAttackPressed && Ctx.CurrentMovementState.Query(MovementFactory.Standing()))
         {
             SwitchState(CombatFactory.BasicAttack());
         }
+       
         if (Ctx.IsHeavyAttackPressed && Ctx.CurrentMovementState.Query(MovementFactory.Standing()))
         {
             SwitchState(CombatFactory.Charge());

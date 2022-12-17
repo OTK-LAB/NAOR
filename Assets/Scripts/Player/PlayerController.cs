@@ -361,7 +361,7 @@ public class PlayerController : MonoBehaviour
         }
         Debug.Log("IS ON SLOPE: " + _isOnSlope);*/
 
-        _plungeRayCast = Physics2D.Raycast(groundCheck.position, -transform.up, 5f, groundLayer);
+        _plungeRayCast = Physics2D.Raycast(groundCheck.position, -transform.up, 7f, groundLayer);
 
         _canNotPlunge = _plungeRayCast;
     }
