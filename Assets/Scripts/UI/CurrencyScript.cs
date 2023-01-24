@@ -49,14 +49,20 @@ public class CurrencyScript : MonoBehaviour
 
     public void ConvertCurrecny1toCurrency2(int amount)
     {
-        currency2 += 10 * amount;
-        currency1 -= amount;
+        if (currency1 >= amount)
+        {
+            currency2 += 10 * amount;
+            currency1 -= amount;
+        }
     }
 
     public void ConvertCurrecny2toCurrency1(int amount)
     {
-        currency2 -= (amount - amount%10);
-        currency1 += amount / 10;
+        if (currency2 >= amount)
+        {
+            currency2 -= (amount - amount % 10);
+            currency1 += amount / 10;
+        }
     }
     
 }
