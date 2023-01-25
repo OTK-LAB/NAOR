@@ -16,10 +16,7 @@ public class CombatHeavyAttackState : CombatBaseState
     }
     public override void UpdateState()
     {
-       if (Time.time >= endtime)
-       {
-           SwitchState(CombatFactory.Peaceful());
-       }
+        CheckSwitchStates();
     }
     public override void ExitState()
     {
@@ -27,6 +24,10 @@ public class CombatHeavyAttackState : CombatBaseState
     }
     public override void CheckSwitchStates()
     {
+        if (Time.time >= endtime)
+        {
+            SwitchState(CombatFactory.Peaceful());
+        }
 
     }
 
