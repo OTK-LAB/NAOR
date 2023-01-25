@@ -19,14 +19,21 @@ public class CombatPeacefulState : CombatBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(Ctx.IsAttackPressed && Ctx.CurrentMovementState.Query(MovementFactory.Standing()))
+        // FÝX:: When plunge attack performed basic attack too performes
+        if (!Ctx._canNotPlunge && Ctx.IsAttackPressed && Ctx._isDownPressed)
+        {
+            SwitchState(CombatFactory.PlungeAttack());
+        }
+       
+        if (Ctx.IsAttackPressed && Ctx.CurrentMovementState.Query(MovementFactory.Standing()))
         {
             SwitchState(CombatFactory.BasicAttack());
         }
+       
         if (Ctx.IsHeavyAttackPressed && Ctx.CurrentMovementState.Query(MovementFactory.Standing()))
         {
             SwitchState(CombatFactory.Charge());
-        } 
+        }
         
     }
 }
