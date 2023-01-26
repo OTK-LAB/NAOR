@@ -60,6 +60,11 @@ public class FXManager : MonoBehaviour
         PS[3].Play();
     }
 
+    void PlayHeavyPS()
+    {
+        PS[4].Play();
+    }
+
     private void Update() {
         if (doJumpParticle && Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer))
         {

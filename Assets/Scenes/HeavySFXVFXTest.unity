@@ -2860,7 +2860,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.509014, y: 5.12842, z: -9.117128}
+  m_LocalPosition: {x: 15.5090065, y: 5.12842, z: -9.117128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8062,6 +8062,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523273177}
   m_CullTransparentMesh: 1
+--- !u!82 &1525281923 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5029899971459866737, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+  m_PrefabInstance: {fileID: 2130726057}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1535711279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12418,7 +12423,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.777255, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -13027,6 +13032,58 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2394405549195115295, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394405549195115295, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394405549195115295, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394405549195115295, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394405549195115295, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394405549195115295, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394405549195115295, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394405549195115295, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2394405549195115295, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328218889407126170, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: SwordSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 1525281923}
+    - target: {fileID: 5029899971459866737, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5029899971459866737, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: efce0c10d61a82e4cae378a73eefeb50, type: 3}
+    - target: {fileID: 5743423862033422718, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_Name
+      value: BowSound
+      objectReference: {fileID: 0}
     - target: {fileID: 6684767046887524771, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
       propertyPath: wall
       value: 
