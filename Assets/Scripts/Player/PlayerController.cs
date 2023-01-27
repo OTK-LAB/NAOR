@@ -455,22 +455,6 @@ public class PlayerController : MonoBehaviour
         _canCombo = false;
     }
 
-    // Değişken atamalrını tamamla
-    public bool canDown;
-    public Collider2D dcol =null;
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("DowningPlatform"))
-        {
-            canDown = true;
-            dcol = collision.gameObject.GetComponent<Collider2D>();
-        }
-        else
-        {
-            canDown = false;
-        }
-    }
     
-
 
 }
