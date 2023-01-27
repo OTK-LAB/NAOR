@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour
     bool _canFlip = true;
     bool _canMove = true;
     bool _isOnGround;
-    public bool _canNotPlunge;
     bool _isCrouching = false;
     float _defaultGravity;
 
@@ -97,7 +96,8 @@ public class PlayerController : MonoBehaviour
     //[Header("Combat")]
     private bool _isAttackPressed;
     private bool _isHeavyAttackPressed;
-    public bool _isDownPressed;
+    private bool _isDownPressed;
+    private bool _canNotPlunge;
     private bool _canHeavyAttack;
     private bool _chargeCanceled;
     private bool _isHeavyAttackPerformed = false;
@@ -134,6 +134,9 @@ public class PlayerController : MonoBehaviour
 
     public bool IsAttackPressed { get { return _isAttackPressed;} set { _isAttackPressed = value;}}
     public bool IsHeavyAttackPressed { get { return _isHeavyAttackPressed; } set { _isHeavyAttackPressed = value;} }
+    public bool IsDownPressed { get { return _isDownPressed; } set { _isDownPressed = value;} }
+    public bool CanNotPlunge { get { return _canNotPlunge; } set { _canNotPlunge = value;} }
+
     public bool CanHeavyAttack { get { return _canHeavyAttack; } set { _canHeavyAttack = value;} }
     public bool ChargeCanceled { get { return _chargeCanceled; } set { _chargeCanceled = value;} }
     public bool CanCombo { get { return _canCombo;}}
@@ -451,4 +454,23 @@ public class PlayerController : MonoBehaviour
     {
         _canCombo = false;
     }
+
+    // Değişken atamalrını tamamla
+    public bool canDown;
+    public Collider2D dcol =null;
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("DowningPlatform"))
+        {
+            canDown = true;
+            dcol = collision.gameObject.GetComponent<Collider2D>();
+        }
+        else
+        {
+            canDown = false;
+        }
+    }
+    
+
+
 }

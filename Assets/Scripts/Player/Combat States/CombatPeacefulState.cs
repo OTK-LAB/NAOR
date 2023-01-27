@@ -20,7 +20,7 @@ public class CombatPeacefulState : CombatBaseState
     public override void CheckSwitchStates()
     {
         // FÝX:: When plunge attack performed basic attack too performes
-        if (!Ctx._canNotPlunge && Ctx.IsAttackPressed && Ctx._isDownPressed)
+        if (!Ctx.CanNotPlunge && Ctx.IsAttackPressed && Ctx.IsDownPressed)
         {
             SwitchState(CombatFactory.PlungeAttack());
         }

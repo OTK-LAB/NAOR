@@ -1,15 +1,32 @@
+using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
+
 
 public class PlayerStandingState : PlayerBaseState
 {
     public PlayerStandingState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory) {}
+
+    private IEnumerator coroutine;
+
     public override void EnterState()
     {
+        
         InitializeSubstate();
     }
     public override void UpdateState()
     {
+        if(Ctx.canDown == true && Ctx.IsDownPressed)
+        {
+            Physics2D.IgnoreCollision(Ctx.dcol, Ctx.PlayerCollider, true);
+            
+        }
+        else if (Ctx.canDown == false)
+        {
+            Physics2D.IgnoreCollision(Ctx.dcol, Ctx.PlayerCollider, false);
+        }
+
         CheckSwitchStates();
     }
     public override void ExitState()
@@ -56,4 +73,8 @@ public class PlayerStandingState : PlayerBaseState
             SetSubState(Factory.Idle());
         }
     }
+
+    
+    
+
 }
