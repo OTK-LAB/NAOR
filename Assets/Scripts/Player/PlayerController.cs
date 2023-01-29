@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
     private float jumpTimeCounter;
     public LayerMask groundLayer;
     public Transform groundCheck;
+    public LayerMask swingLayer;
 
     //Dash
     [Header("Dash")]
@@ -410,7 +411,7 @@ public class PlayerController : MonoBehaviour
 
         if (_canDetectSwing)
         {
-            _thereIsGroundTop = Physics2D.OverlapCircle(_ledgeCheckTop.position, groundDetectionDistance, groundLayer);
+            _thereIsGroundTop = Physics2D.OverlapCircle(_ledgeCheckTop.position, groundDetectionDistance, swingLayer);
             _canSwing = _thereIsGroundTop;
         }
 

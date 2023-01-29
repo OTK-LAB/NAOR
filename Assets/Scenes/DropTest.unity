@@ -426,13 +426,13 @@ GameObject:
   - component: {fileID: 59220152}
   - component: {fileID: 59220151}
   - component: {fileID: 59220150}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!50 &59220150
 Rigidbody2D:
   serializedVersion: 4
@@ -9362,6 +9362,10 @@ PrefabInstance:
       propertyPath: _combatStateText
       value: 
       objectReference: {fileID: 994593652}
+    - target: {fileID: 6518641809233875277, guid: e4fc3419f3357e84f964ed275d47a1e9, type: 3}
+      propertyPath: swingLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 6518641809233875277, guid: e4fc3419f3357e84f964ed275d47a1e9, type: 3}
       propertyPath: _movementHierarchyText
       value: 
