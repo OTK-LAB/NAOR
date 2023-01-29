@@ -20,8 +20,14 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 3757da37e36931447b84ca852c015afd, type: 3}
+      value: {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
     - time: 0.125
+      value: {fileID: 21300000, guid: 3757da37e36931447b84ca852c015afd, type: 3}
+    - time: 0.25
+      value: {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
+    - time: 0.375
+      value: {fileID: 21300000, guid: 3757da37e36931447b84ca852c015afd, type: 3}
+    - time: 0.5
       value: {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
     attribute: m_Sprite
     path: 
@@ -42,6 +48,9 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
+    - {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
+    - {fileID: 21300000, guid: 3757da37e36931447b84ca852c015afd, type: 3}
+    - {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
     - {fileID: 21300000, guid: 3757da37e36931447b84ca852c015afd, type: 3}
     - {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
   m_AnimationClipSettings:
@@ -49,7 +58,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.25
+    m_StopTime: 0.625
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -68,4 +77,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.625
+    functionName: setCoolDown
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 2
+    intParameter: 0
+    messageOptions: 0

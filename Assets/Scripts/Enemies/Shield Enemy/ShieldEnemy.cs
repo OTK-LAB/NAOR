@@ -108,6 +108,10 @@ public class ShieldEnemy : MonoBehaviour
                 ChangeAnimationState(hit);
                 //   hitState();
                 break;
+            case State.STATE_SHIELD:
+                ChangeAnimationState(shield);
+                break;
+
         }
     }
     void startingMove()

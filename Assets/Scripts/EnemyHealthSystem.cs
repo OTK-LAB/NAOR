@@ -41,7 +41,6 @@ public class EnemyHealthSystem : MonoBehaviour
             Debug.Log(gameObject.tag+ " acýmadý ki hehehe " + newDamageAmount);
             if (newDamageAmount >= 0)
             {
-                OnShield?.Invoke(this, EventArgs.Empty);
                 parent.GetComponent<EnemyHealthSystem>().onShield = true;
                 parent.GetComponent<EnemyHealthSystem>().Damage(newDamageAmount);     
             }           
@@ -49,12 +48,14 @@ public class EnemyHealthSystem : MonoBehaviour
         else if (!invincible)
         {
             Debug.Log(gameObject.tag+" girdim, aldýðým hasar: " + damageAmount);
-            print(onShield);
             currentHealth -= damageAmount;
             if (!onShield)
                 OnHit?.Invoke(this, EventArgs.Empty); //BATU & ZEYNEP bunu unutma ! hasar animasyonunu oynatýp hasar almamasýný istiyorsak bunu if dýþýna çýkartalým ama düþmanlarý da ona göre düzenleyelim
             else
+            {
+                OnShield?.Invoke(this, EventArgs.Empty);
                 onShield = false;
+            }
             if (currentHealth <= 0)
             {
                 currentHealth = 0;
