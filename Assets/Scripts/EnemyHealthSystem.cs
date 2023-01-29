@@ -12,7 +12,11 @@ public class EnemyHealthSystem : MonoBehaviour
     public float maxHealth;
 
     public event EventHandler OnHit;
+    public event EventHandler OnShield;
     public event EventHandler OnDead;
+    GameObject parent;
+    float newDamageAmount;
+    public bool onShield = false;
 
     public bool Invincible { set { invincible = value; } }
 
@@ -28,11 +32,29 @@ public class EnemyHealthSystem : MonoBehaviour
 
     public void Damage(float damageAmount)
     {
-        if (!invincible)
+
+        if (!invincible && gameObject.tag== "shield")
         {
-            Debug.Log("Vurdu");
+            damageAmount = 100;
+            parent = this.transform.parent.gameObject;
+            newDamageAmount= damageAmount- 35;
+            Debug.Log(gameObject.tag+ " acýmadý ki hehehe " + newDamageAmount);
+            if (newDamageAmount >= 0)
+            {
+                OnShield?.Invoke(this, EventArgs.Empty);
+                parent.GetComponent<EnemyHealthSystem>().onShield = true;
+                parent.GetComponent<EnemyHealthSystem>().Damage(newDamageAmount);     
+            }           
+        }
+        else if (!invincible)
+        {
+            Debug.Log(gameObject.tag+" girdim, aldýðým hasar: " + damageAmount);
+            print(onShield);
             currentHealth -= damageAmount;
-            OnHit?.Invoke(this, EventArgs.Empty); //BATU & ZEYNEP bunu unutma ! hasar animasyonunu oynatýp hasar almamasýný istiyorsak bunu if dýþýna çýkartalým ama düþmanlarý da ona göre düzenleyelim
+            if (!onShield)
+                OnHit?.Invoke(this, EventArgs.Empty); //BATU & ZEYNEP bunu unutma ! hasar animasyonunu oynatýp hasar almamasýný istiyorsak bunu if dýþýna çýkartalým ama düþmanlarý da ona göre düzenleyelim
+            else
+                onShield = false;
             if (currentHealth <= 0)
             {
                 currentHealth = 0;

@@ -49,6 +49,7 @@ public class ShieldEnemy : MonoBehaviour
     float timer;
     bool IsDead = false;
     bool isHit = false;
+    bool isShield = false;
 
     //Hit
     Vector2 temp;
@@ -64,6 +65,7 @@ public class ShieldEnemy : MonoBehaviour
 
        _healthSystem.OnHit += OnHit;
        _healthSystem.OnDead += OnDead;
+       _healthSystem.OnShield += OnShield;
 
     }
 
@@ -166,7 +168,7 @@ public class ShieldEnemy : MonoBehaviour
     {
         state = State.STATE_COOLDOWN;
     }
-    void coolDown(float i)
+    public void coolDown(float i)
     {
         timer += Time.deltaTime;
         if (timer >= i)
@@ -196,9 +198,16 @@ public class ShieldEnemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D trig)
+ /*   private void OnTriggerEnter2D(Collider2D trig)
     {
         if (trig.CompareTag("wall") && state == State.STATE_STARTINGMOVE)
+        {
+            turn();
+        }
+    }*/
+    public void turn()
+    {
+        if (state == State.STATE_STARTINGMOVE)
         {
             if (Moveright) Moveright = false;
             else Moveright = true;
@@ -214,6 +223,16 @@ public class ShieldEnemy : MonoBehaviour
             state = State.STATE_HIT;
             isHit = true;
         }
+    }
+    void OnShield(object sender, EventArgs e )
+    {
+        if (!IsDead)
+        {
+            Debug.Log("shield");
+            state = State.STATE_SHIELD;
+            isShield = true;
+        }
+
     }
     void OnDead(object sender, EventArgs e)
     {

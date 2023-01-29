@@ -173,7 +173,6 @@ MonoBehaviour:
   speedEnemy: 7
   wall: {fileID: 0}
   wall2: {fileID: 0}
-  isHit: 0
   Arrow: {fileID: 440562133715720225, guid: 4cf06fc5f25081444bbf7d89b59811a4, type: 3}
   LaunchForce: 40
   attackPoint: {fileID: 6684767046903314987}
@@ -189,6 +188,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85acc288d0036904cbe8c76f21ec15e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 150
 --- !u!1 &6684767046903314987
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,7 +39,6 @@ public class HealthSystem : MonoBehaviour
         smoothing = 10;
         if (!invincible)
         {
-            Debug.Log("Vurdu");
             currentHealth -= damageAmount;
             OnHit?.Invoke(this, EventArgs.Empty); //BATU & ZEYNEP bunu unutma ! hasar animasyonunu oynatýp hasar almamasýný istiyorsak bunu if dýþýna çýkartalým ama düþmanlarý da ona göre düzenleyelim
             if (currentHealth <= 0 )

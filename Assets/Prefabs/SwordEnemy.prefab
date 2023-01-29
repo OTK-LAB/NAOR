@@ -534,7 +534,6 @@ MonoBehaviour:
   attackPoint: {fileID: 2140491268245304628}
   attackRange: 0.8
   damageamount: 50
-  isHit: 0
   soul: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
 --- !u!95 &2140491267603617480
 Animator:
@@ -615,6 +614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85acc288d0036904cbe8c76f21ec15e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth: 200
 --- !u!114 &128264813129202752
 MonoBehaviour:
   m_ObjectHideFlags: 0
