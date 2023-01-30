@@ -8,13 +8,13 @@ public class PlayerStandingState : PlayerBaseState
     public PlayerStandingState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory) {}
 
-    
 
+    Collider2D tempcol;
     public override void EnterState()
     {
-        if (Ctx.GroundCollider != null)
+        if (tempcol!=null)
         {
-            Physics2D.IgnoreCollision(Ctx.GroundCollider, Ctx.PlayerCollider, false);
+            Physics2D.IgnoreCollision(tempcol, Ctx.PlayerCollider, false);
         }
         InitializeSubstate();
     }
@@ -22,6 +22,7 @@ public class PlayerStandingState : PlayerBaseState
     {
         if(Ctx.GroundCollider.gameObject.CompareTag("DowningPlatform") && Ctx.IsDownPressed)
         {
+            tempcol = Ctx.GroundCollider;
             Physics2D.IgnoreCollision(Ctx.GroundCollider, Ctx.PlayerCollider, true);
             
         }
@@ -30,7 +31,7 @@ public class PlayerStandingState : PlayerBaseState
     }
     public override void ExitState()
     {
-
+      
     }
     public override void CheckSwitchStates()
     {
