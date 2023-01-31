@@ -247,6 +247,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShallowGraveInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6f895cf-775d-44a1-9c10-99498ec38501"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -271,6 +280,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""ManaStopInteraction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e5c8541-963d-48c3-bb7c-9338c8438848"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShallowGraveInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -290,6 +310,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
         m_Interaction_NpcInteraction = m_Interaction.FindAction("Npc Interaction", throwIfNotFound: true);
         m_Interaction_ManaStopInteraction = m_Interaction.FindAction("ManaStopInteraction", throwIfNotFound: true);
+        m_Interaction_ShallowGraveInteraction = m_Interaction.FindAction("ShallowGraveInteraction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -432,12 +453,14 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private IInteractionActions m_InteractionActionsCallbackInterface;
     private readonly InputAction m_Interaction_NpcInteraction;
     private readonly InputAction m_Interaction_ManaStopInteraction;
+    private readonly InputAction m_Interaction_ShallowGraveInteraction;
     public struct InteractionActions
     {
         private @PlayerInputActions m_Wrapper;
         public InteractionActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @NpcInteraction => m_Wrapper.m_Interaction_NpcInteraction;
         public InputAction @ManaStopInteraction => m_Wrapper.m_Interaction_ManaStopInteraction;
+        public InputAction @ShallowGraveInteraction => m_Wrapper.m_Interaction_ShallowGraveInteraction;
         public InputActionMap Get() { return m_Wrapper.m_Interaction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -453,6 +476,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ManaStopInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
                 @ManaStopInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
                 @ManaStopInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
+                @ShallowGraveInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnShallowGraveInteraction;
             }
             m_Wrapper.m_InteractionActionsCallbackInterface = instance;
             if (instance != null)
@@ -463,6 +489,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ManaStopInteraction.started += instance.OnManaStopInteraction;
                 @ManaStopInteraction.performed += instance.OnManaStopInteraction;
                 @ManaStopInteraction.canceled += instance.OnManaStopInteraction;
+                @ShallowGraveInteraction.started += instance.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.performed += instance.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.canceled += instance.OnShallowGraveInteraction;
             }
         }
     }
@@ -481,5 +510,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnNpcInteraction(InputAction.CallbackContext context);
         void OnManaStopInteraction(InputAction.CallbackContext context);
+        void OnShallowGraveInteraction(InputAction.CallbackContext context);
     }
 }
