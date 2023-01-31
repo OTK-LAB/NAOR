@@ -15,7 +15,8 @@ public class EnemyHealthSystem : MonoBehaviour
     public event EventHandler OnShield;
     public event EventHandler OnDead;
     float newDamageAmount;
-    public bool onShield = false;
+    [HideInInspector] public bool onShield = false;
+    public float shieldProtection;
 
     public bool Invincible { set { invincible = value; } }
 
@@ -39,18 +40,14 @@ public class EnemyHealthSystem : MonoBehaviour
                 OnShield?.Invoke(this, EventArgs.Empty);
                 if(onShield)
                 {
-                    damageAmount = 100;
-                    damageAmount = damageAmount - 35;
-                    Debug.Log(" acýmadý ki hehehe ");
+                    damageAmount = 100; // silinebilir
+                    damageAmount = damageAmount - shieldProtection;
                 }
             }
 
             currentHealth -= damageAmount;
             if (!onShield)
-            {
                 OnHit?.Invoke(this, EventArgs.Empty);
-                Debug.Log(" vurdun beni god damn it " + damageAmount);
-            }
   
             if (currentHealth <= 0)
             {

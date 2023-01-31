@@ -86,7 +86,8 @@ public class Archer : MonoBehaviour
                 startingMove();
                 break;
             case State.STATE_ATTACK:
-                ArrowMechanism();
+                if (attackable)
+                    ChangeAnimationState(attack);
                 break;
             case State.STATE_COOLDOWN:
                 ChangeAnimationState(cooldown);
@@ -122,16 +123,10 @@ public class Archer : MonoBehaviour
         else
              state = State.STATE_STARTINGMOVE;
     }
-    void ArrowMechanism()
+    public void ArrowMechanism()
     {
-        if(attackable)
-        {
-            ChangeAnimationState(attack);
-
             GameObject ArrowIns = Instantiate(Arrow, attackPoint.transform.position, attackPoint.transform.rotation);
             attackable = false;
-
-        }
     }
     void coolDown(float i)
     {

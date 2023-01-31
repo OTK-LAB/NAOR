@@ -48,6 +48,7 @@ public class ShieldEnemy : MonoBehaviour
     [SerializeField] public float damageamount;
     float timer;
     bool IsDead = false;
+    bool detected=false;
    // bool isHit = false;
    // bool isShield = false;
 
@@ -56,7 +57,7 @@ public class ShieldEnemy : MonoBehaviour
     Rigidbody2D rb;
     LayerMask enemyLayers;
     EnemyHealthSystem _healthSystem;
-    public bool isBehind = false;
+    bool isBehind = false;
 
     State state = State.STATE_STARTINGMOVE;
    
@@ -88,7 +89,7 @@ public class ShieldEnemy : MonoBehaviour
         switch (state)
         {
             case State.STATE_STARTINGMOVE:
-                coolDown(3);
+                checkPlayer();
                 ChangeAnimationState(startingmove);
                 startingMove();
                 break;
@@ -135,18 +136,33 @@ public class ShieldEnemy : MonoBehaviour
     {
         if (Vector2.Distance(transform.position, playerPos.position) < distance)
         {
-            if (Vector2.Distance(transform.position, playerPos.position) <= 3)
-                state = State.STATE_ATTACK;
-            else
-                state = State.STATE_FOLLOWING;
+            detection(2);
+            if (detected)
+            {
+                if (Vector2.Distance(transform.position, playerPos.position) <= 3)
+                    state = State.STATE_ATTACK;
+                else
+                    state = State.STATE_FOLLOWING;
+            }
         }
         else
         {
+            detected = false;
             state = State.STATE_STARTINGMOVE;
             wall.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
             wall2.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
         }
 
+    }
+    void detection(int i )
+    {
+        timer += Time.deltaTime;
+        if (timer >= i)
+        {
+            timer = 0;
+            detected = true;
+
+        }
     }
     void following()
     {
@@ -234,7 +250,6 @@ public class ShieldEnemy : MonoBehaviour
     {
         if (!IsDead)
         {
-            Debug.Log("hit");
             state = State.STATE_HIT;
            // isHit = true;
         }
@@ -246,7 +261,6 @@ public class ShieldEnemy : MonoBehaviour
             checkBehind();
             if (isBehind)
             {
-                Debug.Log("shield");
                 state = State.STATE_SHIELD;
               //  isShield = true;
                 gameObject.GetComponent<EnemyHealthSystem>().onShield = true;
