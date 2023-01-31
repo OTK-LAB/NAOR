@@ -20,7 +20,7 @@ public class PlayerStandingState : PlayerBaseState
     }
     public override void UpdateState()
     {
-        if(Ctx.GroundCollider.gameObject.CompareTag("DowningPlatform") && Ctx.IsDownPressed)
+        if(Ctx.GroundCollider.gameObject.CompareTag("Droppable") && Ctx.IsDownPressed)
         {
             tempcol = Ctx.GroundCollider;
             Physics2D.IgnoreCollision(Ctx.GroundCollider, Ctx.PlayerCollider, true);
