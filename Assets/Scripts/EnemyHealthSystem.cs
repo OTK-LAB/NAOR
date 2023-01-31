@@ -14,7 +14,6 @@ public class EnemyHealthSystem : MonoBehaviour
     public event EventHandler OnHit;
     public event EventHandler OnShield;
     public event EventHandler OnDead;
-    GameObject parent;
     float newDamageAmount;
     public bool onShield = false;
 
@@ -33,34 +32,32 @@ public class EnemyHealthSystem : MonoBehaviour
     public void Damage(float damageAmount)
     {
 
-        if (!invincible && gameObject.tag== "shield")
+        if (!invincible)
         {
-            damageAmount = 100;
-            parent = this.transform.parent.gameObject;
-            newDamageAmount= damageAmount- 35;
-            Debug.Log(gameObject.tag+ " acýmadý ki hehehe " + newDamageAmount);
-            if (newDamageAmount >= 0)
-            {
-                parent.GetComponent<EnemyHealthSystem>().onShield = true;
-                parent.GetComponent<EnemyHealthSystem>().Damage(newDamageAmount);     
-            }           
-        }
-        else if (!invincible)
-        {
-            Debug.Log(gameObject.tag+" girdim, aldýðým hasar: " + damageAmount);
-            currentHealth -= damageAmount;
-            if (!onShield)
-                OnHit?.Invoke(this, EventArgs.Empty); //BATU & ZEYNEP bunu unutma ! hasar animasyonunu oynatýp hasar almamasýný istiyorsak bunu if dýþýna çýkartalým ama düþmanlarý da ona göre düzenleyelim
-            else
+            if(gameObject.tag == "shield" )
             {
                 OnShield?.Invoke(this, EventArgs.Empty);
-                onShield = false;
+                if(onShield)
+                {
+                    damageAmount = 100;
+                    damageAmount = damageAmount - 35;
+                    Debug.Log(" acýmadý ki hehehe ");
+                }
             }
+
+            currentHealth -= damageAmount;
+            if (!onShield)
+            {
+                OnHit?.Invoke(this, EventArgs.Empty);
+                Debug.Log(" vurdun beni god damn it " + damageAmount);
+            }
+  
             if (currentHealth <= 0)
             {
                 currentHealth = 0;
                 OnDead?.Invoke(this, EventArgs.Empty);
             }
+            onShield = false;
         }
     }
 

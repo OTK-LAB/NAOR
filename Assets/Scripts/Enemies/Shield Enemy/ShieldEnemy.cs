@@ -48,14 +48,15 @@ public class ShieldEnemy : MonoBehaviour
     [SerializeField] public float damageamount;
     float timer;
     bool IsDead = false;
-    bool isHit = false;
-    bool isShield = false;
+   // bool isHit = false;
+   // bool isShield = false;
 
     //Hit
     Vector2 temp;
     Rigidbody2D rb;
     LayerMask enemyLayers;
     EnemyHealthSystem _healthSystem;
+    public bool isBehind = false;
 
     State state = State.STATE_STARTINGMOVE;
    
@@ -87,7 +88,7 @@ public class ShieldEnemy : MonoBehaviour
         switch (state)
         {
             case State.STATE_STARTINGMOVE:
-                checkPlayer();
+                coolDown(3);
                 ChangeAnimationState(startingmove);
                 startingMove();
                 break;
@@ -97,6 +98,7 @@ public class ShieldEnemy : MonoBehaviour
                 following();
                 break;
             case State.STATE_ATTACK:
+                flip();
                 ChangeAnimationState(attack);
                 attacktoPlayer();
                 break;
@@ -201,14 +203,23 @@ public class ShieldEnemy : MonoBehaviour
             }
         }
     }
+    public void checkBehind()
+    {
 
- /*   private void OnTriggerEnter2D(Collider2D trig)
+        if (playerPos.position.x > (transform.position.x + 0.5f) && Moveright)
+            isBehind = true;
+        else if (playerPos.position.x <= (transform.position.x + 0.5f) && !Moveright)
+            isBehind = true;
+        else
+            isBehind = false;
+    }
+    private void OnTriggerEnter2D(Collider2D trig)
     {
         if (trig.CompareTag("wall") && state == State.STATE_STARTINGMOVE)
         {
             turn();
         }
-    }*/
+    }
     public void turn()
     {
         if (state == State.STATE_STARTINGMOVE)
@@ -225,16 +236,22 @@ public class ShieldEnemy : MonoBehaviour
         {
             Debug.Log("hit");
             state = State.STATE_HIT;
-            isHit = true;
+           // isHit = true;
         }
     }
     void OnShield(object sender, EventArgs e )
     {
         if (!IsDead)
         {
-            Debug.Log("shield");
-            state = State.STATE_SHIELD;
-            isShield = true;
+            checkBehind();
+            if (isBehind)
+            {
+                Debug.Log("shield");
+                state = State.STATE_SHIELD;
+              //  isShield = true;
+                gameObject.GetComponent<EnemyHealthSystem>().onShield = true;
+            }
+
         }
 
     }
