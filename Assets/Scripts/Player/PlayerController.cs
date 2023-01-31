@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
 
     //Combat
     //[Header("Combat")]
+    public Vector3 lastCheckpointPosition = Vector3.zero;
     private bool _isAttackPressed;
     private bool _isHeavyAttackPressed;
     public bool _isDownPressed;

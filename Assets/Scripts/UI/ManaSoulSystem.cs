@@ -12,7 +12,7 @@ public class ManaSoulSystem : MonoBehaviour
     public float maxMana;
 
     [SerializeField]
-    private float currentSoul;
+    public float currentSoul;
     [SerializeField]
     public float maxSoul;
 

@@ -9,7 +9,7 @@ public class ManaStop : MonoBehaviour
     public GameObject InteractionText;
     public PlayerInputActions inputActions;
 
-    bool isActive = true;
+    public bool isActive = true;
     bool inRange = false;
 
     void Awake()
