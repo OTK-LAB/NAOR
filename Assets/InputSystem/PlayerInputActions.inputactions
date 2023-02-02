@@ -234,6 +234,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ElevatorInteraction",
+                    "type": "Button",
+                    "id": "09d03b9f-993e-40e8-b1c6-4f90da25d83c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -267,6 +276,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ShallowGraveInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b09e0dc5-6a16-4df4-b24b-4e0578a99fa4",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ElevatorInteraction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
