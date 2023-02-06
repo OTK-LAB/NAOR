@@ -8,7 +8,7 @@ public class ShallowGrave : MonoBehaviour
     public GameObject Player;
     public GameObject InteractionText;
     public PlayerInputActions inputActions;
-    public GameObject ManaStop;
+    public ManaStop[] ManaStops;
     public GameObject Currency;
 
     bool active = false;
@@ -49,7 +49,8 @@ public class ShallowGrave : MonoBehaviour
             Player.GetComponent<PlayerController>().lastCheckpointPosition = transform.position;
             active = true;
             this.GetComponent<SpriteRenderer>().color = Color.green;
-            ManaStop.GetComponent<ManaStop>().isActive = true;
+            foreach (ManaStop manaStop in ManaStops)
+                manaStop.isActive = true;
         }
     }
 

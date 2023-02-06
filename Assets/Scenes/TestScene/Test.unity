@@ -2347,7 +2347,7 @@ GameObject:
   - component: {fileID: 453278790}
   - component: {fileID: 453278789}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: UseMana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5656,7 +5656,7 @@ GameObject:
   - component: {fileID: 928961023}
   - component: {fileID: 928961022}
   m_Layer: 5
-  m_Name: Button (4)
+  m_Name: Heal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6828,7 +6828,7 @@ GameObject:
   - component: {fileID: 1053020302}
   - component: {fileID: 1053020301}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: UseSoul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9275,6 +9275,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3638194961284494935, guid: 68e4d0d09dd6a5647b5a0e4e6aa5749a, type: 3}
   m_PrefabInstance: {fileID: 1423085481}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1423085483 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3638194961284494939, guid: 68e4d0d09dd6a5647b5a0e4e6aa5749a, type: 3}
+  m_PrefabInstance: {fileID: 1423085481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1423085482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1cf16d5e7c533e4580d77c40374a478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1441774456
 GameObject:
   m_ObjectHideFlags: 0
@@ -9581,6 +9592,14 @@ PrefabInstance:
       propertyPath: ManaStop
       value: 
       objectReference: {fileID: 1423085482}
+    - target: {fileID: 4875834879910941721, guid: bdebb95b797576d439b59d074eca24b6, type: 3}
+      propertyPath: ManaStops.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4875834879910941721, guid: bdebb95b797576d439b59d074eca24b6, type: 3}
+      propertyPath: ManaStops.Array.data[0]
+      value: 
+      objectReference: {fileID: 1423085483}
     - target: {fileID: 8203032906386281860, guid: bdebb95b797576d439b59d074eca24b6, type: 3}
       propertyPath: m_Name
       value: ShallowGrave
@@ -13113,7 +13132,7 @@ GameObject:
   - component: {fileID: 1834651152}
   - component: {fileID: 1834651151}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: AddSoul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
