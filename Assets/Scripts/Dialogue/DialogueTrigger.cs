@@ -22,7 +22,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-	if (collider.CompareTag("Player"))
+	    if (collider.CompareTag("Player"))
 	    {   
             inRange = true;
 	        InteractionText.SetActive(true);
