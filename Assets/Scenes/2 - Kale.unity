@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 200562310}
   - component: {fileID: 200562309}
   - component: {fileID: 200562308}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap11cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3268,14 +3268,6 @@ CompositeCollider2D:
         Y: 113999908
       - X: 2010000169
         Y: 113999908
-    - - X: 952000000
-        Y: 110000008
-      - X: 950000000
-        Y: 110000008
-      - X: 950000000
-        Y: 104000008
-      - X: 952000000
-        Y: 104000008
     - - X: 956000000
         Y: 110000008
       - X: 952000064
@@ -3283,6 +3275,14 @@ CompositeCollider2D:
       - X: 952000064
         Y: 104000008
       - X: 956000000
+        Y: 104000008
+    - - X: 952000000
+        Y: 110000008
+      - X: 950000000
+        Y: 110000008
+      - X: 950000000
+        Y: 104000008
+      - X: 952000000
         Y: 104000008
     - - X: 1654000228
         Y: 63999959
@@ -3408,6 +3408,14 @@ CompositeCollider2D:
         Y: 50000000
       - X: 924000000
         Y: 50000000
+    - - X: 619999936
+        Y: 28000000
+      - X: 610000000
+        Y: 28000000
+      - X: 610000000
+        Y: 26000002
+      - X: 619999936
+        Y: 26000002
     - - X: 609999936
         Y: 28000000
       - X: 602000000
@@ -3431,14 +3439,6 @@ CompositeCollider2D:
       - X: 630000000
         Y: 26000002
       - X: 634000000
-        Y: 26000002
-    - - X: 619999936
-        Y: 28000000
-      - X: 610000000
-        Y: 28000000
-      - X: 610000000
-        Y: 26000002
-      - X: 619999936
         Y: 26000002
     - - X: 870000000
         Y: 26000000
@@ -19226,7 +19226,7 @@ Tilemap:
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 1325, y: 306, z: 1}
+  m_Size: {x: 1346, y: 306, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -19825,11 +19825,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6518641809233875278, guid: e4fc3419f3357e84f964ed275d47a1e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 167.81
+      value: 168.3
       objectReference: {fileID: 0}
     - target: {fileID: 6518641809233875278, guid: e4fc3419f3357e84f964ed275d47a1e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.16
+      value: 6.8
       objectReference: {fileID: 0}
     - target: {fileID: 6518641809233875278, guid: e4fc3419f3357e84f964ed275d47a1e9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20862,7 +20862,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936019010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 167.81, y: 11.285, z: -10}
+  m_LocalPosition: {x: 168.3, y: 11.925, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20991,7 +20991,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1141283192}
   - component: {fileID: 1141283191}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid 11cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21317,7 +21317,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9323882, y: 1}
+    m_SensorSize: {x: 1.7788618, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -21334,7 +21334,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337328547}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 167.81, y: 11.285, z: -10}
+  m_LocalPosition: {x: 168.3, y: 11.925, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21440,7 +21440,7 @@ GameObject:
   - component: {fileID: 1541374020}
   - component: {fileID: 1541374019}
   - component: {fileID: 1541374018}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap55cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39720,7 +39720,7 @@ Tilemap:
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -1, y: -35, z: 0}
-  m_Size: {x: 255, y: 117, z: 1}
+  m_Size: {x: 270, y: 117, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -40302,7 +40302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2113435974}
   - component: {fileID: 2113435973}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid 55cm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
