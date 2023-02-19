@@ -4,18 +4,12 @@ enum PlayerStates {
     run,
     grounded,
     crouch,
-    drag,
     jump,
     dash,
-    slide,
-    climb,
-    hang,
     inAir,
     fall,
     standing,
     busy,
-    swing,
-    swingJump
 }
 
 public class PlayerStateFactory
@@ -29,18 +23,13 @@ public class PlayerStateFactory
         _states[PlayerStates.run] = new PlayerRunningState(_context, this);
         _states[PlayerStates.grounded] = new PlayerGroundedState(_context, this);
         _states[PlayerStates.crouch] = new PlayerCrouchState(_context, this);
-        _states[PlayerStates.drag] = new PlayerDragState(_context, this);
         _states[PlayerStates.jump] = new PlayerJumpingState(_context, this);
         _states[PlayerStates.dash] = new PlayerDashState(_context, this);
-        _states[PlayerStates.slide] = new PlayerSlideState(_context, this);
-        _states[PlayerStates.climb] = new PlayerClimbState(_context, this);
-        _states[PlayerStates.hang] = new PlayerHangState(_context, this);
         _states[PlayerStates.inAir] = new PlayerInAirState(_context, this);
         _states[PlayerStates.fall] = new PlayerFallState(_context, this);
         _states[PlayerStates.standing] = new PlayerStandingState(_context, this);
         _states[PlayerStates.busy] = new PlayerBusyState(_context,this);
-        _states[PlayerStates.swing] = new PlayerSwingState(_context, this);
-        _states[PlayerStates.swingJump] = new PlayerSwingJumpState(_context, this);
+
     }
 
     public PlayerBaseState Idle()
@@ -66,22 +55,6 @@ public class PlayerStateFactory
     {
         return _states[PlayerStates.crouch];
     }
-    public PlayerBaseState Drag()
-    {
-        return _states[PlayerStates.drag];
-    }
-    public PlayerBaseState Slide()
-    {
-        return _states[PlayerStates.slide];
-    }
-    public PlayerBaseState Climb()
-    {
-        return _states[PlayerStates.climb];
-    }
-    public PlayerBaseState Hang()
-    {
-        return _states[PlayerStates.hang];
-    }
     public PlayerBaseState InAir()
     {
         return _states[PlayerStates.inAir];
@@ -97,13 +70,5 @@ public class PlayerStateFactory
     public PlayerBaseState Busy()
     {
         return _states[PlayerStates.busy];
-    }
-    public PlayerBaseState Swing()
-    {
-        return _states[PlayerStates.swing];
-    }
-    public PlayerBaseState SwingJump()
-    {
-        return _states[PlayerStates.swingJump];
     }
 }

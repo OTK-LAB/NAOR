@@ -10,7 +10,6 @@ public class CombatHeavyAttackState : CombatBaseState
     public override void EnterState()
     {
         Ctx.CanHeavyAttack = false;
-        Debug.Log("Enter Heavy");
         Ctx.PlayerAnimator.Play("PlayerHeavyAttack");
         endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length;
     }
