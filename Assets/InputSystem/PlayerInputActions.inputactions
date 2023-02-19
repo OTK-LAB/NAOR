@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "66183411-a6c4-4159-a355-0fa03a7e32dd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -164,10 +173,32 @@
                     "name": "",
                     "id": "1feba7db-cf79-48ee-b7a6-de34196fab29",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Tap,Hold(duration=1)",
+                    "interactions": "Tap,Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "62c19514-f3b5-410a-bca7-f2d7167cf802",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "56dd53cf-74d1-4654-8e38-58831346e85c",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -185,6 +216,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ManaStopInteraction",
+                    "type": "Button",
+                    "id": "e15b5b6a-7573-4728-a4ad-b88eb3124f77",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShallowGraveInteraction",
+                    "type": "Button",
+                    "id": "b6f895cf-775d-44a1-9c10-99498ec38501",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -196,6 +245,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Npc Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb1977a6-0de1-418d-885b-f76699b27e7e",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ManaStopInteraction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e5c8541-963d-48c3-bb7c-9338c8438848",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShallowGraveInteraction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -80,6 +80,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""66183411-a6c4-4159-a355-0fa03a7e32dd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -186,10 +195,32 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""1feba7db-cf79-48ee-b7a6-de34196fab29"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Tap,Hold(duration=1)"",
+                    ""interactions"": ""Tap,Hold"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""62c19514-f3b5-410a-bca7-f2d7167cf802"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56dd53cf-74d1-4654-8e38-58831346e85c"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -207,6 +238,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ManaStopInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""e15b5b6a-7573-4728-a4ad-b88eb3124f77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShallowGraveInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6f895cf-775d-44a1-9c10-99498ec38501"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -218,6 +267,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Npc Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb1977a6-0de1-418d-885b-f76699b27e7e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ManaStopInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e5c8541-963d-48c3-bb7c-9338c8438848"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShallowGraveInteraction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -234,9 +305,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Down = m_Player.FindAction("Down", throwIfNotFound: true);
         // Interaction
         m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
         m_Interaction_NpcInteraction = m_Interaction.FindAction("Npc Interaction", throwIfNotFound: true);
+        m_Interaction_ManaStopInteraction = m_Interaction.FindAction("ManaStopInteraction", throwIfNotFound: true);
+        m_Interaction_ShallowGraveInteraction = m_Interaction.FindAction("ShallowGraveInteraction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -302,6 +376,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Drag;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_Down;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -312,6 +387,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Drag => m_Wrapper.m_Player_Drag;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @Down => m_Wrapper.m_Player_Down;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -339,6 +415,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Down.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDown;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -361,6 +440,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
             }
         }
     }
@@ -370,11 +452,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Interaction;
     private IInteractionActions m_InteractionActionsCallbackInterface;
     private readonly InputAction m_Interaction_NpcInteraction;
+    private readonly InputAction m_Interaction_ManaStopInteraction;
+    private readonly InputAction m_Interaction_ShallowGraveInteraction;
     public struct InteractionActions
     {
         private @PlayerInputActions m_Wrapper;
         public InteractionActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @NpcInteraction => m_Wrapper.m_Interaction_NpcInteraction;
+        public InputAction @ManaStopInteraction => m_Wrapper.m_Interaction_ManaStopInteraction;
+        public InputAction @ShallowGraveInteraction => m_Wrapper.m_Interaction_ShallowGraveInteraction;
         public InputActionMap Get() { return m_Wrapper.m_Interaction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -387,6 +473,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @NpcInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
                 @NpcInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
                 @NpcInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+                @ManaStopInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
+                @ManaStopInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
+                @ManaStopInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
+                @ShallowGraveInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnShallowGraveInteraction;
             }
             m_Wrapper.m_InteractionActionsCallbackInterface = instance;
             if (instance != null)
@@ -394,6 +486,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @NpcInteraction.started += instance.OnNpcInteraction;
                 @NpcInteraction.performed += instance.OnNpcInteraction;
                 @NpcInteraction.canceled += instance.OnNpcInteraction;
+                @ManaStopInteraction.started += instance.OnManaStopInteraction;
+                @ManaStopInteraction.performed += instance.OnManaStopInteraction;
+                @ManaStopInteraction.canceled += instance.OnManaStopInteraction;
+                @ShallowGraveInteraction.started += instance.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.performed += instance.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.canceled += instance.OnShallowGraveInteraction;
             }
         }
     }
@@ -406,9 +504,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDrag(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
     }
     public interface IInteractionActions
     {
         void OnNpcInteraction(InputAction.CallbackContext context);
+        void OnManaStopInteraction(InputAction.CallbackContext context);
+        void OnShallowGraveInteraction(InputAction.CallbackContext context);
     }
 }
