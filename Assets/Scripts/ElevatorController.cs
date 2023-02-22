@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ElavatorController : MonoBehaviour
+public class ElevatorController : MonoBehaviour
 {
     public PlayerInputActions inputActions;
     public Transform UpTrigger;
