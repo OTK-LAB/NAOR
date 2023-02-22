@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: attack
+  m_Name: shield
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,17 +20,15 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 5b4b5bb559abd044791dedff1b79315e, type: 3}
+      value: {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
     - time: 0.125
-      value: {fileID: 21300000, guid: 9351e6ac189df5a409a44e7b19fb1308, type: 3}
+      value: {fileID: 21300000, guid: 3757da37e36931447b84ca852c015afd, type: 3}
     - time: 0.25
-      value: {fileID: 21300000, guid: 41a89ec87611d144ba345dde9f14eb7f, type: 3}
+      value: {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
     - time: 0.375
-      value: {fileID: 21300000, guid: 5582bd9b3b2d30041aa476896aca6576, type: 3}
+      value: {fileID: 21300000, guid: 3757da37e36931447b84ca852c015afd, type: 3}
     - time: 0.5
-      value: {fileID: 21300000, guid: ad356ffa6d5fb044faa7b7a6441a601b, type: 3}
-    - time: 0.625
-      value: {fileID: 21300000, guid: bad448c2c13a09947a747764808348b7, type: 3}
+      value: {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,23 +48,22 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 5b4b5bb559abd044791dedff1b79315e, type: 3}
-    - {fileID: 21300000, guid: 9351e6ac189df5a409a44e7b19fb1308, type: 3}
-    - {fileID: 21300000, guid: 41a89ec87611d144ba345dde9f14eb7f, type: 3}
-    - {fileID: 21300000, guid: 5582bd9b3b2d30041aa476896aca6576, type: 3}
-    - {fileID: 21300000, guid: ad356ffa6d5fb044faa7b7a6441a601b, type: 3}
-    - {fileID: 21300000, guid: bad448c2c13a09947a747764808348b7, type: 3}
+    - {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
+    - {fileID: 21300000, guid: 3757da37e36931447b84ca852c015afd, type: 3}
+    - {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
+    - {fileID: 21300000, guid: 3757da37e36931447b84ca852c015afd, type: 3}
+    - {fileID: 21300000, guid: 93712d13d205c0543a397e7a337977fb, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 0.625
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 0
+    m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -81,17 +78,10 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.5
-    functionName: ArrowMechanism
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.625
-    functionName: coolDown
+    functionName: setCoolDown
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 1.5
-    intParameter: 2
+    floatParameter: 2
+    intParameter: 0
     messageOptions: 0

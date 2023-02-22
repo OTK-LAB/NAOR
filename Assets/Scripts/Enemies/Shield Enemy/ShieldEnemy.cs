@@ -3,80 +3,82 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class SwordEnemy : MonoBehaviour
+public class ShieldEnemy : MonoBehaviour
 {
+
 
     enum State
     {
         STATE_STARTINGMOVE,
         STATE_FOLLOWING,
+        STATE_SHIELD,
         STATE_ATTACK,
         STATE_COOLDOWN,
-        STATE_NOTDAMAGE,
         STATE_HIT
     };
 
-    State state = State.STATE_STARTINGMOVE;
+
 
     //Animations
     private Animator animator;
     private string currentState;
-    const string idle = "cooldown";
+    const string cooldown = "idle";
     const string hit = "hit";
     const string attack = "attack";
-    const string death = "dead";
-    const string follow = "following";
-    const string notdamage = "notdamage";
+    const string death = "death";
+    const string shield = "shield";
     const string startingmove = "startingmove";
-
-    //Move
-    Vector3 movement;
-    bool Moveright = true;
 
     //Following & CoolDown
     private GameObject player;
     private Transform playerPos;
     private Vector2 currentPlayerPos;
-    public float distance;
-    public float speedEnemy = 5f;
-    public GameObject wall;
-    public GameObject wall2;
-    float timer;
+    [SerializeField] public float distance;
+    [SerializeField] public float speedEnemy = 5f;
+    [SerializeField] public GameObject wall;
+    [SerializeField] public GameObject wall2;
+
+    //Move
+    Vector3 movement;
+    bool Moveright = true;
 
     //Attack
-    [SerializeField]  public GameObject attackPoint;
-    [SerializeField]  public float attackRange;
-    [SerializeField]  public float damageamount;
-    bool attackable = true;
-    int random_nd; //random_notdamage
+    public GameObject attackPoint;
+    [SerializeField] public float attackRange;
+    [SerializeField] public float damageamount;
+    float timer;
     bool IsDead = false;
-    bool isHit = false;
+    bool detected=false;
+   // bool isHit = false;
+   // bool isShield = false;
 
     //Hit
     Vector2 temp;
     Rigidbody2D rb;
     LayerMask enemyLayers;
     EnemyHealthSystem _healthSystem;
+    bool isBehind = false;
 
-    public GameObject soul;
-
-
+    State state = State.STATE_STARTINGMOVE;
+   
     void Awake()
     {
         _healthSystem = GetComponent<EnemyHealthSystem>();
-        animator = GetComponent<Animator>();
-        _healthSystem.OnHit += OnHit;
-        _healthSystem.OnDead += OnDead; 
+
+       _healthSystem.OnHit += OnHit;
+       _healthSystem.OnDead += OnDead;
+       _healthSystem.OnShield += OnShield;
 
     }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindGameObjectWithTag("Player");
-        attackPoint = GameObject.FindGameObjectWithTag("sword") ;
-
     }
+
 
     void Update()
     {
@@ -92,23 +94,27 @@ public class SwordEnemy : MonoBehaviour
                 startingMove();
                 break;
             case State.STATE_FOLLOWING:
+                ChangeAnimationState(startingmove);
                 checkPlayer();
-                ChangeAnimationState(follow);
                 following();
                 break;
             case State.STATE_ATTACK:
+                flip();
+                ChangeAnimationState(attack);
                 attacktoPlayer();
                 break;
             case State.STATE_COOLDOWN:
-                ChangeAnimationState(idle);
+                ChangeAnimationState(cooldown);
                 coolDown(2);
                 break;
             case State.STATE_HIT:
-                hitState();
+                ChangeAnimationState(hit);
+                //   hitState();
                 break;
-            case State.STATE_NOTDAMAGE:
-                nDamage();
+            case State.STATE_SHIELD:
+                ChangeAnimationState(shield);
                 break;
+
         }
     }
     void startingMove()
@@ -124,47 +130,39 @@ public class SwordEnemy : MonoBehaviour
             transform.position = transform.position + movement * Time.deltaTime;
         }
     }
-    void nDamage()
-    {
-        isHit = false;
-        _healthSystem.Invincible = true;
-        attackable = true;
-        ChangeAnimationState(notdamage);
-        coolDown(2);
-    }
-    void hitState()
-    {
-        if (isHit)
-        {       
-            temp = new Vector2((transform.position.x + 2), transform.position.y);
-            if (Moveright)
-                rb.MovePosition((Vector2)transform.position + (temp * speedEnemy * Time.deltaTime));
-            else
-                rb.MovePosition((Vector2)transform.position - (temp * speedEnemy * Time.deltaTime));
-          
-            ChangeAnimationState(hit);
-            isHit = false;
-            attackable = true;
-        }
-    }
 
 
     void checkPlayer()
     {
         if (Vector2.Distance(transform.position, playerPos.position) < distance)
         {
-            if (Vector2.Distance(transform.position, playerPos.position) <= 1)
-                state = State.STATE_ATTACK;
-            else
-                state = State.STATE_FOLLOWING;
+            detection(2);
+            if (detected)
+            {
+                if (Vector2.Distance(transform.position, playerPos.position) <= 3)
+                    state = State.STATE_ATTACK;
+                else
+                    state = State.STATE_FOLLOWING;
+            }
         }
         else
         {
+            detected = false;
             state = State.STATE_STARTINGMOVE;
             wall.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
             wall2.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
         }
 
+    }
+    void detection(int i )
+    {
+        timer += Time.deltaTime;
+        if (timer >= i)
+        {
+            timer = 0;
+            detected = true;
+
+        }
     }
     void following()
     {
@@ -174,87 +172,32 @@ public class SwordEnemy : MonoBehaviour
         wall.transform.parent = this.transform;
         wall2.transform.parent = this.transform;
     }
+
     void attacktoPlayer()
     {
-        random_nd = UnityEngine.Random.Range(0, 100);
-        if (attackable && !isHit)
-        {
-            ChangeAnimationState(attack);
-            attackable = false;
+
             Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange);
-            foreach(Collider2D enemy in hitPlayer)
+            foreach (Collider2D enemy in hitPlayer)
             {
                 if (enemy.tag == "Player")
-                    player.GetComponent<HealthSystem>().Damage(damageamount); 
+                {
+                    player.GetComponent<HealthSystem>().Damage(damageamount);
+                }
             }
-           // StartCoroutine(backtoCoolDown());
-        }   
 
     }
-    IEnumerator backtoCoolDown()
+    public void setCoolDown()
     {
-        if (!isHit)
-        {
-            yield return new WaitForSeconds(0.01f);
-            if (random_nd <= 15)
-            {
-                _healthSystem.Invincible = true;
-                state = State.STATE_NOTDAMAGE;
-            }
-            else
-                state = State.STATE_COOLDOWN;
-        }
-        else
-            state = State.STATE_HIT;
+        state = State.STATE_COOLDOWN;
     }
-    void coolDown(int i)
+    public void coolDown(float i)
     {
         timer += Time.deltaTime;
         if (timer >= i)
         {
-            attackable = true;
             timer = 0;
-            _healthSystem.Invincible = false;
             checkPlayer();
 
-        }
-    }
-
-    void ChangeAnimationState(string newState)
-    {
-        if (currentState == newState) return;
-        animator.Play(newState);
-        currentState = newState;
-    }
-    private void OnTriggerEnter2D(Collider2D trig)
-    {
-        if (trig.CompareTag("wall") && state==State.STATE_STARTINGMOVE)
-        {
-            if (Moveright) Moveright = false;
-            else Moveright = true;
-            transform.Rotate(0f, 180f, 0f);
-            // transform.position = transform.position + movement * Time.deltaTime;
-        }
-    }
-
-    void OnHit(object sender, EventArgs e)
-    {
-        if (!IsDead)
-        { 
-            state = State.STATE_HIT; 
-            isHit = true;
-        }
-    }
-    void OnDead(object sender, EventArgs e)
-    {
-        if(!IsDead)
-        {
-            Instantiate(soul, transform.position, Quaternion.identity).GetComponent<SoulMovement>().player = player.transform;
-            IsDead = true;
-            ChangeAnimationState(death);
-            GetComponent<Collider2D>().enabled = false;
-            this.enabled = false;
-            GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
         }
     }
     void flip()
@@ -276,8 +219,78 @@ public class SwordEnemy : MonoBehaviour
             }
         }
     }
+    public void checkBehind()
+    {
+
+        if (playerPos.position.x > (transform.position.x + 0.5f) && Moveright)
+            isBehind = true;
+        else if (playerPos.position.x <= (transform.position.x + 0.5f) && !Moveright)
+            isBehind = true;
+        else
+            isBehind = false;
+    }
+    private void OnTriggerEnter2D(Collider2D trig)
+    {
+        if (trig.CompareTag("wall") && state == State.STATE_STARTINGMOVE)
+        {
+            turn();
+        }
+    }
+    public void turn()
+    {
+        if (state == State.STATE_STARTINGMOVE)
+        {
+            if (Moveright) Moveright = false;
+            else Moveright = true;
+            transform.Rotate(0f, 180f, 0f);
+        }
+    }
+
+    void OnHit(object sender, EventArgs e)
+    {
+        if (!IsDead)
+        {
+            state = State.STATE_HIT;
+           // isHit = true;
+        }
+    }
+    void OnShield(object sender, EventArgs e )
+    {
+        if (!IsDead)
+        {
+            checkBehind();
+            if (isBehind)
+            {
+                state = State.STATE_SHIELD;
+              //  isShield = true;
+                gameObject.GetComponent<EnemyHealthSystem>().onShield = true;
+            }
+
+        }
+
+    }
+    void OnDead(object sender, EventArgs e)
+    {
+        if (!IsDead)
+        {
+            IsDead = true;
+            ChangeAnimationState(death);
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+            GetComponent<Collider2D>().enabled = false;
+            this.enabled = false;
+            GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(attackPoint.transform.position, attackRange);
+    }
+    
+    void ChangeAnimationState(string newState)
+    {
+        if (currentState == newState) return;
+        animator.Play(newState);
+        currentState = newState;
     }
 }
