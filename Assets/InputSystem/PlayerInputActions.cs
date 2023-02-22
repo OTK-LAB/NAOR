@@ -80,6 +80,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""66183411-a6c4-4159-a355-0fa03a7e32dd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -186,10 +195,32 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""1feba7db-cf79-48ee-b7a6-de34196fab29"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Tap,Hold(duration=1)"",
+                    ""interactions"": ""Tap,Hold"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""62c19514-f3b5-410a-bca7-f2d7167cf802"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56dd53cf-74d1-4654-8e38-58831346e85c"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -207,6 +238,33 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ManaStopInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""e15b5b6a-7573-4728-a4ad-b88eb3124f77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShallowGraveInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6f895cf-775d-44a1-9c10-99498ec38501"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ElevatorInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""3def8c1d-0ef5-4638-ac61-f2fc20ed73cf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -218,6 +276,67 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Npc Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb1977a6-0de1-418d-885b-f76699b27e7e"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ManaStopInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e5c8541-963d-48c3-bb7c-9338c8438848"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShallowGraveInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a8cc5d5-158c-4a87-b599-fd0f0ecf94bf"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ElevatorInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""fde5887e-cd07-4fed-bb46-077de69b4ed2"",
+            ""actions"": [
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""567a2623-4cfe-4064-83a0-4900eb3e23ca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""394ba0e4-a7ba-4437-8f44-c8d4d32de0ef"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -234,9 +353,16 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Down = m_Player.FindAction("Down", throwIfNotFound: true);
         // Interaction
         m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
         m_Interaction_NpcInteraction = m_Interaction.FindAction("Npc Interaction", throwIfNotFound: true);
+        m_Interaction_ManaStopInteraction = m_Interaction.FindAction("ManaStopInteraction", throwIfNotFound: true);
+        m_Interaction_ShallowGraveInteraction = m_Interaction.FindAction("ShallowGraveInteraction", throwIfNotFound: true);
+        m_Interaction_ElevatorInteraction = m_Interaction.FindAction("ElevatorInteraction", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Inventory = m_UI.FindAction("Inventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -302,6 +428,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Drag;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_Down;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -312,6 +439,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Drag => m_Wrapper.m_Player_Drag;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @Down => m_Wrapper.m_Player_Down;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -339,6 +467,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Down.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDown;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -361,6 +492,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
             }
         }
     }
@@ -370,11 +504,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Interaction;
     private IInteractionActions m_InteractionActionsCallbackInterface;
     private readonly InputAction m_Interaction_NpcInteraction;
+    private readonly InputAction m_Interaction_ManaStopInteraction;
+    private readonly InputAction m_Interaction_ShallowGraveInteraction;
+    private readonly InputAction m_Interaction_ElevatorInteraction;
     public struct InteractionActions
     {
         private @PlayerInputActions m_Wrapper;
         public InteractionActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @NpcInteraction => m_Wrapper.m_Interaction_NpcInteraction;
+        public InputAction @ManaStopInteraction => m_Wrapper.m_Interaction_ManaStopInteraction;
+        public InputAction @ShallowGraveInteraction => m_Wrapper.m_Interaction_ShallowGraveInteraction;
+        public InputAction @ElevatorInteraction => m_Wrapper.m_Interaction_ElevatorInteraction;
         public InputActionMap Get() { return m_Wrapper.m_Interaction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -387,6 +527,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @NpcInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
                 @NpcInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
                 @NpcInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+                @ManaStopInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
+                @ManaStopInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
+                @ManaStopInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnManaStopInteraction;
+                @ShallowGraveInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnShallowGraveInteraction;
+                @ElevatorInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnElevatorInteraction;
+                @ElevatorInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnElevatorInteraction;
+                @ElevatorInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnElevatorInteraction;
             }
             m_Wrapper.m_InteractionActionsCallbackInterface = instance;
             if (instance != null)
@@ -394,10 +543,52 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @NpcInteraction.started += instance.OnNpcInteraction;
                 @NpcInteraction.performed += instance.OnNpcInteraction;
                 @NpcInteraction.canceled += instance.OnNpcInteraction;
+                @ManaStopInteraction.started += instance.OnManaStopInteraction;
+                @ManaStopInteraction.performed += instance.OnManaStopInteraction;
+                @ManaStopInteraction.canceled += instance.OnManaStopInteraction;
+                @ShallowGraveInteraction.started += instance.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.performed += instance.OnShallowGraveInteraction;
+                @ShallowGraveInteraction.canceled += instance.OnShallowGraveInteraction;
+                @ElevatorInteraction.started += instance.OnElevatorInteraction;
+                @ElevatorInteraction.performed += instance.OnElevatorInteraction;
+                @ElevatorInteraction.canceled += instance.OnElevatorInteraction;
             }
         }
     }
     public InteractionActions @Interaction => new InteractionActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_Inventory;
+    public struct UIActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public UIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Inventory => m_Wrapper.m_UI_Inventory;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @Inventory.started -= m_Wrapper.m_UIActionsCallbackInterface.OnInventory;
+                @Inventory.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnInventory;
+                @Inventory.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnInventory;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Inventory.started += instance.OnInventory;
+                @Inventory.performed += instance.OnInventory;
+                @Inventory.canceled += instance.OnInventory;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IPlayerActions
     {
         void OnJump(InputAction.CallbackContext context);
@@ -406,9 +597,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnDrag(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
     }
     public interface IInteractionActions
     {
         void OnNpcInteraction(InputAction.CallbackContext context);
+        void OnManaStopInteraction(InputAction.CallbackContext context);
+        void OnShallowGraveInteraction(InputAction.CallbackContext context);
+        void OnElevatorInteraction(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnInventory(InputAction.CallbackContext context);
     }
 }

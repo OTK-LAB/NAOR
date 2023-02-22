@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
     bool _canDetectSwing = true;
     RaycastHit2D _topRaycastHit;
     RaycastHit2D frontRay;
-
+    RaycastHit2D _plungeRayCast;
     //Sliding
     Collider2D _groundCollider;
     bool _isOnSlope;
@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviour
     private float jumpTimeCounter;
     public LayerMask groundLayer;
     public Transform groundCheck;
+    public LayerMask swingLayer;
 
     //Dash
     [Header("Dash")]
@@ -94,8 +95,11 @@ public class PlayerController : MonoBehaviour
 
     //Combat
     //[Header("Combat")]
+    public Vector3 lastCheckpointPosition = Vector3.zero;
     private bool _isAttackPressed;
     private bool _isHeavyAttackPressed;
+    private bool _isDownPressed;
+    private bool _canNotPlunge;
     private bool _canHeavyAttack;
     private bool _chargeCanceled;
     private bool _isHeavyAttackPerformed = false;
@@ -132,6 +136,9 @@ public class PlayerController : MonoBehaviour
 
     public bool IsAttackPressed { get { return _isAttackPressed;} set { _isAttackPressed = value;}}
     public bool IsHeavyAttackPressed { get { return _isHeavyAttackPressed; } set { _isHeavyAttackPressed = value;} }
+    public bool IsDownPressed { get { return _isDownPressed; } set { _isDownPressed = value;} }
+    public bool CanNotPlunge { get { return _canNotPlunge; } set { _canNotPlunge = value;} }
+
     public bool CanHeavyAttack { get { return _canHeavyAttack; } set { _canHeavyAttack = value;} }
     public bool ChargeCanceled { get { return _chargeCanceled; } set { _chargeCanceled = value;} }
     public bool CanCombo { get { return _canCombo;}}
@@ -198,6 +205,10 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Attack.performed += OnHeavyAttackPressed;
         _playerInputActions.Player.Attack.canceled += OnHeavyAttackPressed;
 
+        _playerInputActions.Player.Down.started += OnDown;
+        _playerInputActions.Player.Down.performed += OnDown;
+        _playerInputActions.Player.Down.canceled += OnDown;
+
         _playerInputActions.Player.Jump.performed += OnJump;
         //_playerInputActions.Player.Jump.started += OnJump;
         //_playerInputActions.Player.Jump.canceled += OnJump;
@@ -238,11 +249,15 @@ public class PlayerController : MonoBehaviour
         _currentMovementInput = context.ReadValue<Vector2>();
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
+    void OnDown(InputAction.CallbackContext context)
+    {
+        _isDownPressed = context.ReadValueAsButton();
+    }
     void OnJump(InputAction.CallbackContext context)
     {
         _isJumpPressed = true;
     } 
-    void OnDash(InputAction.CallbackContext context)
+    public void OnDash(InputAction.CallbackContext context)
     {
         if (_manaSoulSystem.currentMana >= 10)
         {
@@ -350,6 +365,10 @@ public class PlayerController : MonoBehaviour
             _isOnSlope = false;
         }
         Debug.Log("IS ON SLOPE: " + _isOnSlope);*/
+
+        _plungeRayCast = Physics2D.Raycast(groundCheck.position, -transform.up, 7f, groundLayer);
+
+        _canNotPlunge = _plungeRayCast;
     }
     public void CheckFront(){ 
         
@@ -393,7 +412,7 @@ public class PlayerController : MonoBehaviour
 
         if (_canDetectSwing)
         {
-            _thereIsGroundTop = Physics2D.OverlapCircle(_ledgeCheckTop.position, groundDetectionDistance, groundLayer);
+            _thereIsGroundTop = Physics2D.OverlapCircle(_ledgeCheckTop.position, groundDetectionDistance, swingLayer);
             _canSwing = _thereIsGroundTop;
         }
 
@@ -437,4 +456,7 @@ public class PlayerController : MonoBehaviour
     {
         _canCombo = false;
     }
+
+    
+
 }
