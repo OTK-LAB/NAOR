@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
     {
         _isJumpPressed = true;
     } 
-    void OnDash(InputAction.CallbackContext context)
+    public void OnDash(InputAction.CallbackContext context)
     {
         if (_manaSoulSystem.currentMana >= 10)
         {
