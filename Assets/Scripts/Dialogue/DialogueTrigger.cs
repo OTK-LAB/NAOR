@@ -22,7 +22,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-	    if (collider.CompareTag("Player"))
+	    if (collider.CompareTag("Player") && InteractionText != null)
 	    {   
             inRange = true;
 	        InteractionText.SetActive(true);
@@ -31,7 +31,7 @@ public class DialogueTrigger : MonoBehaviour
     
      private void OnTriggerExit2D(Collider2D collider)
      {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") && InteractionText != null)
         {
             inRange = false;
             InteractionText.SetActive(false);
@@ -43,6 +43,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         //FIXME:
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Disable();
+        Destroy(InteractionText);
 	    DialogueBox.SetActive(true);
         FindObjectOfType<DialogueManager>().OpenDialogue(messages, actors);
 	    inputActions.Interaction.Disable();
