@@ -22,29 +22,20 @@ public class CurrencyScript : MonoBehaviour
         currency2Text.text = currency2.ToString();
     }
 
-    public void SpendMoney(int amount)
+    private void SpendMoney(int amount, int type)
     {
-        if (amount > currency2 + currency1 * 10)
-            return ;
-        else if (amount <= currency2)
+        if (type == 1 && amount <= currency1)
+            currency1 -= amount;
+        else if (type == 2 && amount <= currency2)
             currency2 -= amount;
-
-        else if (amount > currency2)
-        {
-            amount -= currency2;
-            currency2 = 0;
-            currency1 -= amount / 10;
-            if (amount % 10 != 0)
-            {
-                ConvertCurrecny1toCurrency2(1);
-                currency2 -= amount % 10;
-            }
-        }
     }
 
-    public void EarnMoney(int amount)
+    private void EarnMoney(int amount, int type)
     {
-        currency2 += amount;
+        if (type == 1)
+            currency1 += amount;
+        else
+            currency2 += amount;
     }
 
     public void ConvertCurrecny1toCurrency2(int amount)
@@ -65,4 +56,21 @@ public class CurrencyScript : MonoBehaviour
         }
     }
     
+    // Buttonlarla kolayca test etmek için kullanýlacak olan fonksiyonlar onunn dýþýnda kullanmayýz
+    public void SpendCurrency1(int amount)
+    {
+        SpendMoney(amount, 1);
+    }
+    public void SpendCurrency2(int amount)
+    {
+        SpendMoney(amount, 2);
+    }
+    public void EarnCurrency1(int amount)
+    {
+        EarnMoney(amount, 1);
+    }
+    public void EarnCurrency2(int amount)
+    {
+        EarnMoney(amount, 2);
+    }
 }
