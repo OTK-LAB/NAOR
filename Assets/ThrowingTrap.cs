@@ -7,7 +7,6 @@ public class ThrowingTrap : MonoBehaviour
 
     public GameObject arrowPrefab;
     public float arrowSpeed = 10f;
-    public float damage = 10f;
     public float arrowInterval = 2f;
 
     void Start()
