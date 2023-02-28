@@ -35,21 +35,9 @@ public class PlayerStandingState : PlayerBaseState
     }
     public override void CheckSwitchStates()
     {
-        if(Ctx.IsOnSlope)
-        {
-            SwitchState(Factory.Slide());
-        }
-        if(Ctx.DragToggle)
-        {
-            SwitchState(Factory.Drag());
-        }
         if(Ctx.IsCrouching)
         {
             SwitchState(Factory.Crouch());
-        }
-        if(Ctx.CanClimbLedge)
-        {
-            SwitchState(Factory.Climb());
         }
         if(Ctx.IsJumpPressed)
         {

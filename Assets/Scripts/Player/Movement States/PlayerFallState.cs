@@ -27,11 +27,6 @@ public class PlayerFallState : PlayerBaseState
         {
             SwitchState(Factory.Dash());
         }
-        
-        if(Ctx.CanSwing)
-        {
-            SwitchState(Factory.Swing());
-        }
     }
     public override void InitializeSubstate()
     {

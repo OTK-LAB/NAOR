@@ -20,10 +20,6 @@ public class PlayerRunningState : PlayerBaseState
             Ctx.PlayerAnimator.Play("PlayerCrawl");
             Ctx.AppliedMovement = Ctx.CurrentMovementInput.x * (Ctx.MovementSpeed / 2);
         }
-        else if(SuperState == Factory.Slide())
-        {
-            Ctx.AppliedMovement = 0;
-        }
         else
         {
             Ctx.AppliedMovement = Ctx.CurrentMovementInput.x * Ctx.MovementSpeed;

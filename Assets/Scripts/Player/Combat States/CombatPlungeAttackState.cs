@@ -17,7 +17,6 @@ public class CombatPlungeAttackState : CombatBaseState
         Ctx.IsAttackPressed = false;
         Ctx.CanHeavyAttack = false;
         Ctx.Rigidbod.velocity= Vector3.zero;
-        Debug.Log("Enter Plunge");
         Ctx.PlayerAnimator.Play("PlayerPlungeAttack");
 
     }

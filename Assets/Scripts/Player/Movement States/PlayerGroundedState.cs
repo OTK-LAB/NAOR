@@ -38,19 +38,6 @@ public class PlayerGroundedState : PlayerBaseState
     }
     public override void InitializeSubstate()
     {
-        if(Ctx.IsOnSlope)
-        {
-            SetSubState(Factory.Slide());
-        }
-        /*
-        else if(Ctx.IsDashing)
-        {
-            SetSubState(Factory.Dash());
-        }
-        */
-        else
-        {
-            SetSubState(Factory.Standing());
-        }
+        SetSubState(Factory.Standing());   
     }
 }
