@@ -1,4 +1,5 @@
 using UnityEngine;
+using static ResourceManager;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -18,45 +19,27 @@ public class ResourceManager : MonoBehaviour
     }
     #region Audio Classes
     [System.Serializable]
-    public class SFX
+    public class AudioClips<T>
     {
-        public AudioManager.Audio.SFX clip;
-        public AudioClip audio;
-    }
-    [System.Serializable]
-    public class VoiceLine
-    {
-        public AudioManager.Audio.VoiceLine clip;
-        public AudioClip audio;
-    }
-    [System.Serializable]
-    public class Soundtrack
-    {
-        public AudioManager.Audio.Soundtrack clip;
+        public T clip;
         public AudioClip audio;
     }
     #endregion
     [Header("Audio")]
-    public SFX[] sfx;
-    public VoiceLine[] voiceLine;
-    public Soundtrack[] soundtrack;
+    public AudioClips<AudioSystem.Audio.SFX>[] sfx;
+    public AudioClips<AudioSystem.Audio.VoiceLine>[] voiceLine;
+    public AudioClips<AudioSystem.Audio.Soundtrack>[] soundtrack;
 
     #region VfX Classes
     [System.Serializable]
-    public class Particle
+    public class VFXPrefabs<T>
     {
-        public VFXManager.VFX.ParticleSystem name;
-        public GameObject prefab;
-    }
-    [System.Serializable]
-    public class VFXGraph
-    {
-        public VFXManager.VFX.VFXGraph name;
+        public T name;
         public GameObject prefab;
     }
     #endregion
     [Header("Particle System")]
-    public Particle[] particle;
-    public VFXGraph[] vfxGraph;
+    public VFXPrefabs<VFXSystem.VFX.ParticleSystem>[] particle;
+    public VFXPrefabs<VFXSystem.VFX.VFXGraph>[] vfxGraph;
 
 }

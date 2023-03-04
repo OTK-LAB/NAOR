@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using UnityEngine.VFX;
 
-public static class VFXManager
+public static class VFXSystem
 {
     [System.Serializable]
     public class VFX
@@ -23,9 +23,9 @@ public static class VFXManager
 
     public static GameObject Play(VFX.ParticleSystem vfx, GameObject gameObject, Vector3 position, Quaternion rotation, Transform parent, bool clearBeforePlay = false, bool destroyAtFinish = false)
     {
-        if (Array.Exists<ResourceManager.Particle>(ResourceManager.i.particle, x => x.name == vfx))
+        if (Array.Exists(ResourceManager.i.particle, x => x.name == vfx))
         {
-            if (gameObject == null) gameObject = GameObject.Instantiate(Array.Find<ResourceManager.Particle>(ResourceManager.i.particle, x => x.name == vfx).prefab, position, rotation, parent);
+            if (gameObject == null) gameObject = GameObject.Instantiate(Array.Find(ResourceManager.i.particle, x => x.name == vfx).prefab, position, rotation, parent);
             ParticleSystem particleSystem = gameObject.GetComponent<ParticleSystem>();
             if (clearBeforePlay) particleSystem.Clear();
             particleSystem.Play();
@@ -38,14 +38,12 @@ public static class VFXManager
 
     public static GameObject Play(VFX.VFXGraph vfx, GameObject gameObject, Vector3 position, Quaternion rotation, Transform parent, bool clearBeforePlay = false)
     {
-        if (Array.Exists<ResourceManager.VFXGraph>(ResourceManager.i.vfxGraph, x => x.name == vfx))
+        if (Array.Exists(ResourceManager.i.vfxGraph, x => x.name == vfx))
         {
-            if (gameObject == null) gameObject = GameObject.Instantiate(Array.Find<ResourceManager.VFXGraph>(ResourceManager.i.vfxGraph, x => x.name == vfx).prefab, position, rotation, parent);
+            if (gameObject == null) gameObject = GameObject.Instantiate(Array.Find(ResourceManager.i.vfxGraph, x => x.name == vfx).prefab, position, rotation, parent);
             VisualEffect visualEffect = gameObject.GetComponent<VisualEffect>();
-
             if (clearBeforePlay) visualEffect.Reinit();
             else visualEffect.Play();
-
             return gameObject;
         }
         Debug.Log("VFXGraph Prefab" + vfx.ToString() + " not found!");

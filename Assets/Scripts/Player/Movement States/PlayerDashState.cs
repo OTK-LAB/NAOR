@@ -13,6 +13,7 @@ public class PlayerDashState : PlayerBaseState
     {
         Ctx.Rigidbod.velocity = new Vector2(0, 0);
         Debug.Log("In Enter");
+        Debug.Log("TIME1: " +Time.time);
         Ctx.CanFlip = false;
         Ctx.CanDash = false;
         currentDashingTime = Ctx.DashingTime;
@@ -48,8 +49,12 @@ public class PlayerDashState : PlayerBaseState
     }
     public override void ExitState()
     {
+        Debug.Log("TIME2: " + Time.time);
         Debug.Log("In Exit");
+        Debug.Log("INININ: " + Ctx.Rigidbod.gravityScale);
         Ctx.Rigidbod.gravityScale = Ctx.DefaultGravity;
+        Debug.Log("OUTOUTOUT: "+ Ctx.Rigidbod.gravityScale);
+        Debug.Log("In Exit");
         Ctx.CanFlip = true;
         Ctx.CanDash = true;
         Ctx.PlayerCollider.isTrigger = false;
