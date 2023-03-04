@@ -19,7 +19,7 @@ public class ElevatorController : MonoBehaviour
         inputActions = new PlayerInputActions();
         inputActions.Interaction.Enable();
 
-        inputActions.Interaction.ElevatorInteraction.started += OnElevatorPushed;
+        inputActions.Interaction.PlatformInteraction.started += Interacted;
     }
     void Start()
     {
@@ -48,7 +48,7 @@ public class ElevatorController : MonoBehaviour
         }
     }
 
-    void OnElevatorPushed(InputAction.CallbackContext context)
+    void Interacted(InputAction.CallbackContext context)
     {
         if (inRange&& canTrigger)
         {

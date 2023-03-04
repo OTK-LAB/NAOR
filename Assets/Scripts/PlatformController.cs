@@ -2,14 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.InputSystem;
 
 
 public class PlatformController : MonoBehaviour
 {
+    [SerializeField]
+    private Platforms platforms = Platforms.None;
+    [SerializeField]
+
+    public PlayerInputActions inputActions;
     public GameObject TargetObj;
+    private bool interaced;
     private bool isInRange = false;
     private bool loop;
 
+    void Awake()
+    {
+        inputActions = new PlayerInputActions();
+        inputActions.Interaction.Enable();
+
+        inputActions.Interaction.PlatformInteraction.started += Interacted;
+        inputActions.Interaction.PlatformInteraction.performed += Interacted;
+        inputActions.Interaction.PlatformInteraction.canceled += Interacted;
+    }
     void Start()
     {
         
@@ -17,17 +33,26 @@ public class PlatformController : MonoBehaviour
 
     void Update()
     {
-        Sequence mySequence = DOTween.Sequence();
-        if (isInRange && !loop)
+        if(isInRange)
         {
-            loop= true;
-            mySequence.Append(TargetObj.transform.DOLocalMoveY(-2, 0.5f).SetEase(Ease.InBack));
-            mySequence.Append(TargetObj.transform.DOLocalMoveY(0, 4).SetEase(Ease.InQuad));
-            mySequence.SetLoops(100, LoopType.Restart);
-
+            if (platforms == Platforms.CrushingTrap && !loop)
+            {
+                //Crushing Trap *************************************************************************
+                loop = true;
+                Sequence mySequence = DOTween.Sequence();
+                mySequence.Append(TargetObj.transform.DOLocalMoveY(-2, 0.5f).SetEase(Ease.InBack));
+                mySequence.Append(TargetObj.transform.DOLocalMoveY(0, 4).SetEase(Ease.InQuad));
+                mySequence.SetLoops(100, LoopType.Restart);
+            }
+            if (platforms == Platforms.MovingBridge && interaced)
+            {
+                TargetObj.transform.DORotate(new Vector3(0, 0, 0), 3f);
+            }
         }
-        
 
+     
+
+        
     }
 
 
@@ -49,5 +74,10 @@ public class PlatformController : MonoBehaviour
             isInRange = false;
             loop= false;
         }
+    }
+
+    void Interacted(InputAction.CallbackContext context)
+    {
+        interaced = context.ReadValueAsButton();
     }
 }
