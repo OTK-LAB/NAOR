@@ -29,6 +29,8 @@ public class SwordEnemy : MonoBehaviour
     const string notdamage = "notdamage";
     const string startingmove = "startingmove";
 
+    public Material material;
+
     //Move
     Vector3 movement;
     bool Moveright = true;
@@ -270,8 +272,10 @@ public class SwordEnemy : MonoBehaviour
     IEnumerator SpawnSoul(float wait)
     {
         yield return new WaitForSeconds(wait);
-        Instantiate(soul, transform.position, Quaternion.identity).GetComponent<SoulMovement>().player = player.transform;
+        Instantiate(soul, transform.position + new Vector3(0, 0.3f, 0), Quaternion.identity).GetComponent<SoulMovement>().player = player.transform;
+        Instantiate(soul, transform.position + new Vector3(0, -0.3f, 0), Quaternion.identity).GetComponent<SoulMovement>().player = player.transform;
     }
+
     void flip()
     {
         if (playerPos.position.x > (transform.position.x + 0.5f))

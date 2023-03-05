@@ -24,6 +24,8 @@ public class Archer : MonoBehaviour
     const string death = "death";
     const string startingmove = "run";
 
+    public Material material;
+
     //Following & CoolDown
     private GameObject player;
     private Transform playerPos;
@@ -51,6 +53,8 @@ public class Archer : MonoBehaviour
     Rigidbody2D rb;
     LayerMask enemyLayers;
     HealthSystem _healthSystem;
+
+    public GameObject soul;
 
     State state = State.STATE_STARTINGMOVE;
     void Awake()
@@ -211,11 +215,17 @@ public class Archer : MonoBehaviour
         if (!IsDead)
         {
             IsDead = true;
+            StartCoroutine(SpawnSoul(0.8f));
             ChangeAnimationState(death);
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;
             GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
         }
+    }
+    IEnumerator SpawnSoul(float wait)
+    {
+        yield return new WaitForSeconds(wait);
+        Instantiate(soul, transform.position, Quaternion.identity).GetComponent<SoulMovement>().player = player.transform;
     }
 }
