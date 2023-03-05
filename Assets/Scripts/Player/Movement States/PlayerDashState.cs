@@ -18,7 +18,6 @@ public class PlayerDashState : PlayerBaseState
         currentDashingTime = Ctx.DashingTime;
         Ctx.PlayerAnimator.Play("PlayerDash");
         Ctx.GetComponent<SpriteRenderer>().color = new Color(Ctx.GetComponent<SpriteRenderer>().color.r, Ctx.GetComponent<SpriteRenderer>().color.g, Ctx.GetComponent<SpriteRenderer>().color.b, 135/255f);
-        
         Ctx.GetComponent<HealthSystem>().Invincible = true;
     }
     public override void UpdateState()
@@ -46,6 +45,7 @@ public class PlayerDashState : PlayerBaseState
     public override void ExitState()
     {
         Ctx.Rigidbod.gravityScale = Ctx.DefaultGravity;
+        Ctx.AppliedMovement = 0;
         Ctx.CanFlip = true;
         Ctx.CanDash = true;
         Ctx.PlayerCollider.isTrigger = false;
