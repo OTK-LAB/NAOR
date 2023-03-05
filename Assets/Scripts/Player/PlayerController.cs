@@ -316,7 +316,7 @@ public class PlayerController : MonoBehaviour
         _groundCollider = Physics2D.OverlapCircle(groundCheck.position, groundDetectionDistance, groundLayer);
         _isOnGround = _groundCollider;
 
-        _plungeRayCast = Physics2D.Raycast(groundCheck.position, -transform.up, 7f, groundLayer);
+        //_plungeRayCast = Physics2D.Raycast(groundCheck.position, -transform.up, 7f, groundLayer);
 
         _canNotPlunge = _plungeRayCast;
     }
