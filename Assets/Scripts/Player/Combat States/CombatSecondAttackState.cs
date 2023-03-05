@@ -8,9 +8,9 @@ public class CombatSecondAttackState : CombatBaseState
     { }
     public override void EnterState()
     {
-        Ctx.ComboTriggered = false;
+        Ctx.IsAttackPressed = false;
         Ctx.PlayerAnimator.Play("PlayerSecondAttack");
-        endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length;
+        endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length/2;
     }
     public override void UpdateState()
     {
@@ -24,14 +24,16 @@ public class CombatSecondAttackState : CombatBaseState
     {
         if(Time.time >= endtime)
         {
-            if(Ctx.ComboTriggered)
-            {
-                SwitchState(CombatFactory.ThirdAttack());
-            }
-            else
-            {
-                SwitchState(CombatFactory.Peaceful());
-            }
+            Ctx.LastAttack = 2;
+            SwitchState(CombatFactory.Peaceful());
+            // if(Ctx.ComboTriggered)
+            // {
+            //     SwitchState(CombatFactory.ThirdAttack());
+            // }
+            // else
+            // {
+            //     SwitchState(CombatFactory.Peaceful());
+            // }
         }
     }
 }
