@@ -257,7 +257,7 @@ public class SwordEnemy : MonoBehaviour
     {
         if(!IsDead)
         {
-            Instantiate(soul, transform.position, Quaternion.identity).GetComponent<SoulMovement>().player = player.transform;
+            StartCoroutine(SpawnSoul(0.8f));
             IsDead = true;
             ChangeAnimationState(death);
             Debug.Log("öl");
@@ -265,6 +265,12 @@ public class SwordEnemy : MonoBehaviour
             this.enabled = false;
             GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
         }
+    }
+
+    IEnumerator SpawnSoul(float wait)
+    {
+        yield return new WaitForSeconds(wait);
+        Instantiate(soul, transform.position, Quaternion.identity).GetComponent<SoulMovement>().player = player.transform;
     }
     void flip()
     {
