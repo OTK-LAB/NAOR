@@ -17,6 +17,8 @@ public class PlatformController : MonoBehaviour
     private bool isInRange = false;
     private bool loop;
 
+
+
     void Awake()
     {
         inputActions = new PlayerInputActions();
@@ -28,39 +30,34 @@ public class PlatformController : MonoBehaviour
     }
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        if(isInRange)
+        if (isInRange)
         {
             if (platforms == Platforms.CrushingTrap && !loop)
             {
-                //Crushing Trap *************************************************************************
                 loop = true;
+                //Crushing Trap *************************************************************************
                 Sequence mySequence = DOTween.Sequence();
                 mySequence.Append(TargetObj.transform.DOLocalMoveY(-2, 0.5f).SetEase(Ease.InBack));
                 mySequence.Append(TargetObj.transform.DOLocalMoveY(0, 4).SetEase(Ease.InQuad));
-                mySequence.SetLoops(100, LoopType.Restart);
+                mySequence.SetLoops(-1, LoopType.Restart);
             }
             if (platforms == Platforms.MovingBridge && interaced)
             {
                 TargetObj.transform.DORotate(new Vector3(0, 0, 0), 3f);
             }
         }
-
-     
-
-        
     }
-
+   
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
             isInRange = true;
-            
         }
     }
     private void OnTriggerExit2D(Collider2D col)
@@ -68,7 +65,6 @@ public class PlatformController : MonoBehaviour
         if (col.CompareTag("Player"))
         {
             isInRange = false;
-            loop= false;
         }
     }
 
