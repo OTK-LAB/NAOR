@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.InputSystem;
-
+using Unity.VisualScripting.ReorderableList;
 
 public class PlatformController : MonoBehaviour
 {
@@ -17,6 +17,11 @@ public class PlatformController : MonoBehaviour
     private bool isInRange = false;
     private bool loop;
 
+    [SerializeField]
+    public float CTDownSpeed;
+    public float CTUpSpeed;
+    public float MTSpeed;
+    
 
 
     void Awake()
@@ -42,13 +47,13 @@ public class PlatformController : MonoBehaviour
                 loop = true;
                 //Crushing Trap *************************************************************************
                 Sequence mySequence = DOTween.Sequence();
-                mySequence.Append(TargetObj.transform.DOLocalMoveY(-2, 0.5f).SetEase(Ease.InBack));
-                mySequence.Append(TargetObj.transform.DOLocalMoveY(0, 4).SetEase(Ease.InQuad));
+                mySequence.Append(TargetObj.transform.DOLocalMoveY(-2, CTDownSpeed).SetEase(Ease.InBack));
+                mySequence.Append(TargetObj.transform.DOLocalMoveY(0, CTUpSpeed).SetEase(Ease.InQuad));
                 mySequence.SetLoops(-1, LoopType.Restart);
             }
             if (platforms == Platforms.MovingBridge && interaced)
             {
-                TargetObj.transform.DORotate(new Vector3(0, 0, 0), 3f);
+                TargetObj.transform.DORotate(new Vector3(0, 0, 0), MTSpeed);
             }
         }
     }
