@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInputActions _playerInputActions;
     private Animator _animator;
     private CapsuleCollider2D _playerCollider;
+    [SerializeField] private int _lastAttack;
 
     //Movement
     [Header("Movement")]
@@ -103,6 +104,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI _combatStateText;
 
     // getters and setters
+    public int LastAttack { get { return _lastAttack;} set { _lastAttack = value;}}
     public RaycastHit2D DashRay { get { return _dashRay;} }
     public bool DashPassCheck { get {return _dashPassCheck;}}
     public bool IsDead { get { return _isDead;} set { _isDead = value;}}
