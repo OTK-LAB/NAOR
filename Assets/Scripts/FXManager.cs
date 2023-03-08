@@ -45,6 +45,26 @@ public class FXManager : MonoBehaviour
         SwordSounds[0].Play();
     }
 
+    void PlayHeavyCharge()
+    {
+        SwordSounds[1].Play();
+    }
+
+    void PlayHeavyAttack()
+    {
+        SwordSounds[2].Play();
+    }
+
+    void PlayChargePS()
+    {
+        PS[3].Play();
+    }
+
+    void PlayHeavyPS()
+    {
+        PS[4].Play();
+    }
+
     private void Update() {
         if (doJumpParticle && Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer))
         {
