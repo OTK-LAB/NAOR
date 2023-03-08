@@ -11,34 +11,29 @@ public class PlayerDashState : PlayerBaseState
     static float currentDashingTime;
     public override void EnterState()
     {
+        Ctx.Rigidbod.gravityScale = 0f;
         Ctx.Rigidbod.velocity = new Vector2(0, 0);
-        Debug.Log("In Enter");
-        Debug.Log("TIME1: " +Time.time);
         Ctx.CanFlip = false;
         Ctx.CanDash = false;
         currentDashingTime = Ctx.DashingTime;
         Ctx.PlayerAnimator.Play("PlayerDash");
         Ctx.GetComponent<SpriteRenderer>().color = new Color(Ctx.GetComponent<SpriteRenderer>().color.r, Ctx.GetComponent<SpriteRenderer>().color.g, Ctx.GetComponent<SpriteRenderer>().color.b, 135/255f);
-        Ctx.Rigidbod.gravityScale = 0f;
         Ctx.GetComponent<HealthSystem>().Invincible = true;
     }
     public override void UpdateState()
     {
-        Debug.Log("In Update");
             if (Ctx.FacingRight == true)
             {
                 Ctx.AppliedMovement = Ctx.DashingVelcoity;
                 currentDashingTime -= Time.deltaTime;
-
             }
             else if (Ctx.FacingRight == false)
             {
                 Ctx.AppliedMovement = -Ctx.DashingVelcoity;
                 currentDashingTime -= Time.deltaTime;
             }
-            if (Ctx.ThereIsGroundFront && (Ctx.Ray.collider.CompareTag("Passable")))
+            if (Ctx.DashPassCheck && (Ctx.DashRay.collider.CompareTag("Passable")))
             {
-
                 Ctx.PlayerCollider.isTrigger = true;
             }
             else
@@ -49,12 +44,8 @@ public class PlayerDashState : PlayerBaseState
     }
     public override void ExitState()
     {
-        Debug.Log("TIME2: " + Time.time);
-        Debug.Log("In Exit");
-        Debug.Log("INININ: " + Ctx.Rigidbod.gravityScale);
         Ctx.Rigidbod.gravityScale = Ctx.DefaultGravity;
-        Debug.Log("OUTOUTOUT: "+ Ctx.Rigidbod.gravityScale);
-        Debug.Log("In Exit");
+        Ctx.AppliedMovement = 0;
         Ctx.CanFlip = true;
         Ctx.CanDash = true;
         Ctx.PlayerCollider.isTrigger = false;

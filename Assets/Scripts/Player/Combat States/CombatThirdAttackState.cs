@@ -8,9 +8,9 @@ public class CombatThirdAttackState : CombatBaseState
     { }
     public override void EnterState()
     {
-        Ctx.ComboTriggered = false;
+        Ctx.IsAttackPressed = false;
         Ctx.PlayerAnimator.Play("PlayerThirdAttack");
-        endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length;
+        endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length/2;
     }
     public override void UpdateState()
     {
@@ -24,6 +24,7 @@ public class CombatThirdAttackState : CombatBaseState
     {
         if(Time.time >= endtime)
         {
+            Ctx.LastAttack = 0;
             SwitchState(CombatFactory.Peaceful());
         }
     }

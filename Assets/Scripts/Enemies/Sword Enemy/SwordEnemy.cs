@@ -46,27 +46,27 @@ public class SwordEnemy : MonoBehaviour
     float timer;
 
     //Attack
-    public GameObject attackPoint;
-    public float attackRange;
-    public float damageamount;
+    [SerializeField]  public GameObject attackPoint;
+    [SerializeField]  public float attackRange;
+    [SerializeField]  public float damageamount;
     bool attackable = true;
     int random_nd; //random_notdamage
     bool IsDead = false;
-    public bool isHit = false;
+    bool isHit = false;
 
     //Hit
     Vector2 temp;
     Rigidbody2D rb;
     LayerMask enemyLayers;
-    HealthSystem _healthSystem;
+    EnemyHealthSystem _healthSystem;
 
     public GameObject soul;
 
 
     void Awake()
     {
-        _healthSystem = GetComponent<HealthSystem>();
-
+        _healthSystem = GetComponent<EnemyHealthSystem>();
+        animator = GetComponent<Animator>();
         _healthSystem.OnHit += OnHit;
         _healthSystem.OnDead += OnDead; 
 
@@ -74,7 +74,6 @@ public class SwordEnemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindGameObjectWithTag("Player");
         attackPoint = GameObject.FindGameObjectWithTag("sword") ;
@@ -94,7 +93,6 @@ public class SwordEnemy : MonoBehaviour
                 ChangeAnimationState(startingmove);
                 startingMove();
                 break;
-
             case State.STATE_FOLLOWING:
                 checkPlayer();
                 ChangeAnimationState(follow);
@@ -140,7 +138,6 @@ public class SwordEnemy : MonoBehaviour
     {
         if (isHit)
         {       
-            Debug.Log("Moveright"+ Moveright);
             temp = new Vector2((transform.position.x + 2), transform.position.y);
             if (Moveright)
                 rb.MovePosition((Vector2)transform.position + (temp * speedEnemy * Time.deltaTime));
@@ -148,7 +145,6 @@ public class SwordEnemy : MonoBehaviour
                 rb.MovePosition((Vector2)transform.position - (temp * speedEnemy * Time.deltaTime));
           
             ChangeAnimationState(hit);
-            Debug.Log("Vurdu");
             isHit = false;
             attackable = true;
         }
@@ -191,10 +187,7 @@ public class SwordEnemy : MonoBehaviour
             foreach(Collider2D enemy in hitPlayer)
             {
                 if (enemy.tag == "Player")
-                {
                     player.GetComponent<HealthSystem>().Damage(damageamount); 
-                    Debug.Log("We hit" + enemy.name);
-                }
             }
            // StartCoroutine(backtoCoolDown());
         }   
@@ -224,7 +217,6 @@ public class SwordEnemy : MonoBehaviour
             attackable = true;
             timer = 0;
             _healthSystem.Invincible = false;
-            Debug.Log("false");
             checkPlayer();
 
         }
@@ -262,7 +254,6 @@ public class SwordEnemy : MonoBehaviour
             StartCoroutine(SpawnSoul(0.8f));
             IsDead = true;
             ChangeAnimationState(death);
-            Debug.Log("öl");
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;
             GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";

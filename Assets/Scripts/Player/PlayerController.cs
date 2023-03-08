@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInputActions _playerInputActions;
     private Animator _animator;
     private CapsuleCollider2D _playerCollider;
+    [SerializeField] private int _lastAttack;
 
     //Movement
     [Header("Movement")]
@@ -49,22 +50,7 @@ public class PlayerController : MonoBehaviour
     bool _isCrouching = false;
     float _defaultGravity;
 
-    //Dragging and Ledge Detection
-    bool _toggleDrag = false;
-    public Transform frontCheck;
-    public LayerMask frontCheckLayer;
-    public Transform _ledgeCheckTop;
-    public Transform _ledgeCheckBot;
-    bool _thereIsGroundFront;
-    bool _thereIsGroundTop;
-    bool _thereIsGroundBot;
-    bool _canDrag;
-    bool _canClimbLedge;
-    bool _canSwing;
-    bool _canDetectSwing = true;
-    RaycastHit2D _topRaycastHit;
-    RaycastHit2D frontRay;
-
+    RaycastHit2D _plungeRayCast;
     //Sliding
     Collider2D _groundCollider;
     bool _isOnSlope;
@@ -73,20 +59,24 @@ public class PlayerController : MonoBehaviour
 
     //Jumping
     [Header("Jumping")]
-    bool _isJumpPressed;
+    public LayerMask groundLayer;
+    private bool _isJumpPressed;
     [SerializeField] private float jumpForce;
     public float jumpTimer;
     private float jumpTimeCounter;
-    public LayerMask groundLayer;
     public Transform groundCheck;
 
     //Dash
     [Header("Dash")]
+    [SerializeField]private LayerMask _dashLayers;
+    [SerializeField]private Transform frontCheck;
+    private RaycastHit2D _dashRay;
     bool _isDashPressed;
+    bool _dashPassCheck;
     [SerializeField] private float _dashingVelocity;
     [SerializeField] private float _dashingTime;
     private Vector2 _dashingDir;
-    public bool _isDashing=false;
+    private bool _isDashing=false;
     private bool _canDash=true;
     [SerializeField] private float _detectionDistance;
     [SerializeField] public float _dashDetectionDistance;
@@ -94,8 +84,11 @@ public class PlayerController : MonoBehaviour
 
     //Combat
     //[Header("Combat")]
+    public Vector3 lastCheckpointPosition = Vector3.zero;
     private bool _isAttackPressed;
     private bool _isHeavyAttackPressed;
+    private bool _isDownPressed;
+    private bool _canNotPlunge;
     private bool _canHeavyAttack;
     private bool _chargeCanceled;
     private bool _isHeavyAttackPerformed = false;
@@ -111,6 +104,9 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI _combatStateText;
 
     // getters and setters
+    public int LastAttack { get { return _lastAttack;} set { _lastAttack = value;}}
+    public RaycastHit2D DashRay { get { return _dashRay;} }
+    public bool DashPassCheck { get {return _dashPassCheck;}}
     public bool IsDead { get { return _isDead;} set { _isDead = value;}}
     public bool IsHit { get { return _isHit;} set { _isHit = value;}}
     public bool CanMove{ get { return _canMove;} set { _canMove = value;}}
@@ -127,11 +123,13 @@ public class PlayerController : MonoBehaviour
     public bool IsMovementPressed { get { return _isMovementPressed; } set { _isMovementPressed = value; }}
     public bool IsJumpPressed { get { return _isJumpPressed; } set { _isJumpPressed = value; }}
     public bool IsDashPressed { get { return _isDashPressed; } set { _isDashPressed = value; } }
-    public bool ThereIsGroundFront { get { return _thereIsGroundFront; } set { _thereIsGroundFront = value; } }
     public bool IsDashing { get { return _isDashing; } set { _isDashing = value; } }
 
     public bool IsAttackPressed { get { return _isAttackPressed;} set { _isAttackPressed = value;}}
     public bool IsHeavyAttackPressed { get { return _isHeavyAttackPressed; } set { _isHeavyAttackPressed = value;} }
+    public bool IsDownPressed { get { return _isDownPressed; } set { _isDownPressed = value;} }
+    public bool CanNotPlunge { get { return _canNotPlunge; } set { _canNotPlunge = value;} }
+
     public bool CanHeavyAttack { get { return _canHeavyAttack; } set { _canHeavyAttack = value;} }
     public bool ChargeCanceled { get { return _chargeCanceled; } set { _chargeCanceled = value;} }
     public bool CanCombo { get { return _canCombo;}}
@@ -139,13 +137,9 @@ public class PlayerController : MonoBehaviour
 
     public bool IsOnGround { get { return _isOnGround; }}
     public bool IsCrouching { get { return _isCrouching; }}
-    public bool DragToggle { get { return _toggleDrag; }}
     public bool CanFlip { get {return _canFlip; } set { _canFlip = value; }}
     public bool CanDash { get { return _canDash; } set { _canDash = value; } }
     public bool IsOnSlope { get { return _isOnSlope; }}
-    public bool CanClimbLedge { get { return _canClimbLedge; }}
-    public bool CanSwing { get { return _canSwing; } set { _canSwing = value; } }
-    public bool CanDetectSwing { get { return _canDetectSwing; } set { _canDetectSwing = value; } }
     public bool FacingRight { get { return _facingRight;}}
 
     public Collider2D GroundCollider { get { return _groundCollider;}}
@@ -156,13 +150,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 DashingDirection { get { return _dashingDir; } set { _dashingDir = value; }}
     public float MovementSpeed { get { return movementSpeed; }}
     public Rigidbody2D Rigidbod { get { return _rb; }}
-    public RaycastHit2D TopRaycastHit { get { return _topRaycastHit; } }
-    public RaycastHit2D Ray { get {return frontRay; }}
-    //For workaround in Drag. Will be changed
     public Transform GroundCheck { get {return groundCheck; }}
-    public Transform FrontCheck { get {return frontCheck; }}
-    public Transform TopCheck { get {return _ledgeCheckTop;}}
-    public Transform BotCheck { get {return _ledgeCheckBot;}}
     public float DefaultGravity { get {return _defaultGravity;}}
     void Awake()
     {
@@ -198,6 +186,10 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Attack.performed += OnHeavyAttackPressed;
         _playerInputActions.Player.Attack.canceled += OnHeavyAttackPressed;
 
+        _playerInputActions.Player.Down.started += OnDown;
+        _playerInputActions.Player.Down.performed += OnDown;
+        _playerInputActions.Player.Down.canceled += OnDown;
+
         _playerInputActions.Player.Jump.performed += OnJump;
         //_playerInputActions.Player.Jump.started += OnJump;
         //_playerInputActions.Player.Jump.canceled += OnJump;
@@ -207,8 +199,6 @@ public class PlayerController : MonoBehaviour
         _playerInputActions.Player.Dash.performed += OnDash;
 
         _playerInputActions.Player.Crouch.started += OnCrouch;
-
-        _playerInputActions.Player.Drag.started += OnDrag;
     }
 
 
@@ -223,10 +213,9 @@ public class PlayerController : MonoBehaviour
     {
         CurrentCombatState.UpdateState();
         CurrentMovementState.UpdateStates();
-        CheckForLedges();
         CheckForGround();
         FlipPlayer();
-        CheckFront();
+        CheckPassable();
     }
     private void FixedUpdate()
     {
@@ -238,11 +227,15 @@ public class PlayerController : MonoBehaviour
         _currentMovementInput = context.ReadValue<Vector2>();
         _isMovementPressed = _currentMovementInput.x != 0 || _currentMovementInput.y != 0;
     }
+    void OnDown(InputAction.CallbackContext context)
+    {
+        _isDownPressed = context.ReadValueAsButton();
+    }
     void OnJump(InputAction.CallbackContext context)
     {
         _isJumpPressed = true;
     } 
-    void OnDash(InputAction.CallbackContext context)
+    public void OnDash(InputAction.CallbackContext context)
     {
         if (_manaSoulSystem.currentMana >= 10)
         {
@@ -263,20 +256,8 @@ public class PlayerController : MonoBehaviour
             _isCrouching = false;
         }
     }
-    void OnDrag(InputAction.CallbackContext context)
-    {   
-        if(_currentState == _movementStates.Grounded() && !_toggleDrag && _canDrag)
-        {
-            _toggleDrag = true;
-        }
-        else
-        {
-            _toggleDrag = false;
-        }
-    }
     void OnAttackPressed(InputAction.CallbackContext context)
     {
-        //Debug.Log("Basıldınız");
         if (context.interaction is TapInteraction) {
             if(_canCombo)
             {
@@ -286,8 +267,6 @@ public class PlayerController : MonoBehaviour
             {
                 _isAttackPressed = true;
             }
-            //Debug.Log("attack" + _isAttackPressed);
-            Debug.Log("attack"+context.phase);
         }
 
 
@@ -295,10 +274,8 @@ public class PlayerController : MonoBehaviour
     void OnHeavyAttackPressed(InputAction.CallbackContext context)
     {
        if (context.interaction is HoldInteraction) {
-            //Debug.Log("HeavyAttack");
             //TODO:
             //  Combo yaparken charge'a girebiliyor, onu düzelt
-            Debug.Log("heavyAttack" + context.phase);
             if (context.phase is InputActionPhase.Started)
             {
                 _isHeavyAttackPressed = true;
@@ -326,7 +303,6 @@ public class PlayerController : MonoBehaviour
         if(!IsDead)
         {
             IsHit = true;
-            Debug.Log("AAHHH, BU ACIDI!");
         }
     }
 
@@ -335,82 +311,33 @@ public class PlayerController : MonoBehaviour
         if(!IsDead)
         {
             IsDead = true;
-            Debug.Log("İŞTE BUNA KAZA DERİM!");
         }
     }
     void CheckForGround()
     {
         _groundCollider = Physics2D.OverlapCircle(groundCheck.position, groundDetectionDistance, groundLayer);
         _isOnGround = _groundCollider;
-        /*if(_isOnGround && _groundCollider.CompareTag("Slope"))
-        {
-            _isOnSlope = true;
-        }
-        else{
-            _isOnSlope = false;
-        }
-        Debug.Log("IS ON SLOPE: " + _isOnSlope);*/
+
+        _plungeRayCast = Physics2D.Raycast(groundCheck.position, -transform.up, 7f, groundLayer);
+
+        _canNotPlunge = _plungeRayCast;
     }
-    public void CheckFront(){ 
-        
-            // Create dash check 
+    public void CheckPassable(){ 
+
+        // Create dash check 
         if(_facingRight)
         {
-            frontRay = Physics2D.Raycast(frontCheck.position, transform.right, _dashDetectionDistance, frontCheckLayer);
+            _dashRay = Physics2D.Raycast(frontCheck.position, transform.right, _dashDetectionDistance, _dashLayers);
         }
         else
         {
-            frontRay = Physics2D.Raycast(frontCheck.position, -transform.right, _dashDetectionDistance, frontCheckLayer);
+            _dashRay = Physics2D.Raycast(frontCheck.position, -transform.right, _dashDetectionDistance, _dashLayers);
         }
 
-        _thereIsGroundFront = frontRay;
-
-       
-        
-
-        //if(_thereIsGroundFront && (frontRay.collider.CompareTag("Movable") || frontRay.collider.CompareTag("Box"))){
-        //    _canDrag = true;
-        //    Debug.Log("Candrag");
-        //}
-        //else
-        //{
-        //    _canDrag = false;
-        //}
+        _dashPassCheck = _dashRay;
     }
-
-    public void CheckForLedges()
-    {
-        if(_facingRight)
-        {
-            _topRaycastHit = Physics2D.Raycast(_ledgeCheckTop.position, transform.right, _detectionDistance, groundLayer);
-            _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, transform.right, _detectionDistance, groundLayer);
-        }
-        else
-        {
-            _topRaycastHit = Physics2D.Raycast(_ledgeCheckTop.position, -transform.right, _detectionDistance, groundLayer);
-            _thereIsGroundBot = Physics2D.Raycast(_ledgeCheckBot.position, -transform.right, _detectionDistance, groundLayer);
-        }
-
-        if (_canDetectSwing)
-        {
-            _thereIsGroundTop = Physics2D.OverlapCircle(_ledgeCheckTop.position, groundDetectionDistance, groundLayer);
-            _canSwing = _thereIsGroundTop;
-        }
-
-        if (_thereIsGroundBot && !_thereIsGroundTop)
-        {
-            _canClimbLedge = true;
-        }
-        else
-        {
-            _canClimbLedge = false;
-        }
-        //Debug.Log("Can Climb Ledge: " + _canClimbLedge);
-    }
-
     void Move(float movementInput)
     {
-        //falseda velocityi 0 yapması swingi bozacak
         if(_canMove)
             _rb.velocity = new Vector2(movementInput, _rb.velocity.y);
         /*else

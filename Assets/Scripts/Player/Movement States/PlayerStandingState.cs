@@ -1,38 +1,43 @@
+using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
+
 
 public class PlayerStandingState : PlayerBaseState
 {
     public PlayerStandingState(PlayerController currentContext, PlayerStateFactory playerStateFactory)
     :base (currentContext, playerStateFactory) {}
+
+
+    Collider2D tempcol;
     public override void EnterState()
     {
+        if (tempcol!=null)
+        {
+            Physics2D.IgnoreCollision(tempcol, Ctx.PlayerCollider, false);
+        }
         InitializeSubstate();
     }
     public override void UpdateState()
     {
+        if(Ctx.GroundCollider.gameObject.CompareTag("Droppable") && Ctx.IsDownPressed)
+        {
+            tempcol = Ctx.GroundCollider;
+            Physics2D.IgnoreCollision(Ctx.GroundCollider, Ctx.PlayerCollider, true);
+            
+        }
+
         CheckSwitchStates();
     }
     public override void ExitState()
     {
-
+      
     }
     public override void CheckSwitchStates()
     {
-        if(Ctx.IsOnSlope)
-        {
-            SwitchState(Factory.Slide());
-        }
-        if(Ctx.DragToggle)
-        {
-            SwitchState(Factory.Drag());
-        }
         if(Ctx.IsCrouching)
         {
             SwitchState(Factory.Crouch());
-        }
-        if(Ctx.CanClimbLedge)
-        {
-            SwitchState(Factory.Climb());
         }
         if(Ctx.IsJumpPressed)
         {
@@ -56,4 +61,8 @@ public class PlayerStandingState : PlayerBaseState
             SetSubState(Factory.Idle());
         }
     }
+
+    
+    
+
 }

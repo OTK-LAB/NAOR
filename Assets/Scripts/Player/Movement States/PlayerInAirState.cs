@@ -41,7 +41,7 @@ public class PlayerInAirState : PlayerBaseState
         {
             SetSubState(Factory.Jump());
         }
-        if(Ctx.Rigidbod.velocity.y < 0)
+        if(Ctx.Rigidbod.velocity.y <= 0)
         {
             SetSubState(Factory.Fall());
         }

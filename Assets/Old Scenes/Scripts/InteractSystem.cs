@@ -26,7 +26,6 @@ public class InteractSystem : MonoBehaviour
     bool active = false;
    // [HideInInspector] 
     public bool arrowHit = false;
-    bool playerMovement = true;
 
     Vector2 movement;
 
