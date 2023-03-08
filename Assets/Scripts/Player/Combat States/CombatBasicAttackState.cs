@@ -11,7 +11,7 @@ public class CombatBasicAttackState : CombatBaseState
         Ctx.IsAttackPressed = false;
         Ctx.CanMove = false;
         Ctx.PlayerAnimator.Play("PlayerBasicAttack");
-        endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length;
+        endtime = Time.time + Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length/2;
     }
     public override void UpdateState()
     {
@@ -21,21 +21,25 @@ public class CombatBasicAttackState : CombatBaseState
     {
         //FIXME:
         //  Moves player forward after attacking
-        Ctx.transform.position = new Vector2(Ctx.transform.position.x + (Ctx.FacingRight ? .57f : -0.57f), Ctx.transform.position.y);
+        //Ctx.transform.position = new Vector2(Ctx.transform.position.x + (Ctx.FacingRight ? .57f : -0.57f), Ctx.transform.position.y);
     }
     public override void CheckSwitchStates()
     {
-        if (Time.time >= endtime)
-        {
-            if(Ctx.ComboTriggered)
-            {
-                SwitchState(CombatFactory.SecondAttack());
-            }
-            else
-            {
-                SwitchState(CombatFactory.Peaceful());
-            }
+        if(Time.time >= endtime){
+            Ctx.LastAttack = 1;
+            SwitchState(CombatFactory.Peaceful());
         }
+        // if (Time.time >= endtime)
+        // {
+        //     if(Ctx.ComboTriggered)
+        //     {
+        //         SwitchState(CombatFactory.SecondAttack());
+        //     }
+        //     else
+        //     {
+        //         SwitchState(CombatFactory.Peaceful());
+        //     }
+        // }
     }
     public void OnBasicAttackEnded()
     {
