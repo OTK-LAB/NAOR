@@ -4,7 +4,7 @@ public class CombatHeavyAttackState : CombatBaseState
 {
     float endtime;
 
-    public CombatHeavyAttackState(PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage) :
+    public CombatHeavyAttackState(PlayerController currentContext, CombatStateFactory combatStateFactory, Old_PlayerStateFactory movementStateFactory, float damage) :
     base(currentContext, combatStateFactory, movementStateFactory, damage)
     { }
     public override void EnterState()

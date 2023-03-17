@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CombatChargeState : CombatBaseState
 {
-    public CombatChargeState(PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage) :
+    public CombatChargeState(PlayerController currentContext, CombatStateFactory combatStateFactory, Old_PlayerStateFactory movementStateFactory, float damage) :
      base(currentContext, combatStateFactory, movementStateFactory, damage)
     { }
 

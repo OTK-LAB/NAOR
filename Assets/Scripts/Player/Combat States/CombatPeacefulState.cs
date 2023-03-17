@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CombatPeacefulState : CombatBaseState
 {
-    public CombatPeacefulState(PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage):
+    public CombatPeacefulState(PlayerController currentContext, CombatStateFactory combatStateFactory, Old_PlayerStateFactory movementStateFactory, float damage):
     base(currentContext, combatStateFactory, movementStateFactory, damage){}
 
     private float attackBuffer;

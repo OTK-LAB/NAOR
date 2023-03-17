@@ -7,7 +7,7 @@ public class CombatPlungeAttackState : CombatBaseState
     float endtime=5;
     bool exit=false; 
 
-    public CombatPlungeAttackState(PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage) : 
+    public CombatPlungeAttackState(PlayerController currentContext, CombatStateFactory combatStateFactory, Old_PlayerStateFactory movementStateFactory, float damage) : 
     base(currentContext, combatStateFactory, movementStateFactory, damage)
     {
     }

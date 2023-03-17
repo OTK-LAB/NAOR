@@ -27,9 +27,9 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     // state variables
-    private PlayerBaseState _currentState;
+    private Old_PlayerBaseState _currentState;
     private CombatBaseState _combatState;
-    private PlayerStateFactory _movementStates;
+    private Old_PlayerStateFactory _movementStates;
     private CombatStateFactory _combatStates;
     private PlayerInputActions _playerInputActions;
     private Animator _animator;
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
     public bool IsHit { get { return _isHit;} set { _isHit = value;}}
     public bool CanMove{ get { return _canMove;} set { _canMove = value;}}
     public HealthSystem HealthSystem { get { return _healthSystem;} set { _healthSystem = value;}}
-    public PlayerBaseState CurrentMovementState { get { return _currentState; } set { _currentState = value; }}
+    public Old_PlayerBaseState CurrentMovementState { get { return _currentState; } set { _currentState = value; }}
     public CombatBaseState CurrentCombatState { get { return _combatState; } set { _combatState = value; }}
     public CombatStateFactory CombatFactory { get { return _combatStates;}}
     public PlayerInputActions PlayerInputActions { get { return _playerInputActions; } set { _playerInputActions = value; }}
@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
 
         _playerCollider = GetComponent<CapsuleCollider2D>();
         _defaultGravity = _rb.gravityScale;
-        _movementStates = new PlayerStateFactory(this);
+        _movementStates = new Old_PlayerStateFactory(this);
         _combatStates = new CombatStateFactory(this, _movementStates);
         _combatState = _combatStates.Peaceful();
         _currentState = _movementStates.InAir();

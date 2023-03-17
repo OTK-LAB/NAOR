@@ -14,9 +14,9 @@ enum CombatStates {
 public class CombatStateFactory
 {
     PlayerController _context;
-    PlayerStateFactory _movementFactory;
+    Old_PlayerStateFactory _movementFactory;
     Dictionary<CombatStates, CombatBaseState> _states = new Dictionary<CombatStates, CombatBaseState>();
-    public CombatStateFactory(PlayerController currentContext, PlayerStateFactory movementFactory)
+    public CombatStateFactory(PlayerController currentContext, Old_PlayerStateFactory movementFactory)
     {
         _context = currentContext;
         _movementFactory = movementFactory;

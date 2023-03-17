@@ -22,7 +22,7 @@ public class EventFunctions : MonoBehaviour
         public enum Mode { Single, Queue, Random }
 
         public T clip;
-        [ReadOnly] public int currentIndex = 0;
+        [NonEditable] public int currentIndex = 0;
         public Mode playMode = Mode.Single;
         public MinMaxCurve volume = 1f;
         public MinMaxCurve pitch = 1f;
@@ -117,7 +117,7 @@ public class EventFunctions : MonoBehaviour
     public class RuleVFX<T>
     {
         public T name;
-        [ReadOnly] public GameObject gameObject = null;
+        [NonEditable] public GameObject gameObject = null;
         public Quaternion rotation = Quaternion.identity;
         public Transform parent = null;
         public Vector3 localPosition = Vector3.zero;

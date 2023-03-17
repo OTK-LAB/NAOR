@@ -3,7 +3,7 @@ using UnityEngine;
 public class CombatFourthAttackState : CombatBaseState
 {
     float endtime;
-    public CombatFourthAttackState(PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage) :
+    public CombatFourthAttackState(PlayerController currentContext, CombatStateFactory combatStateFactory, Old_PlayerStateFactory movementStateFactory, float damage) :
     base(currentContext, combatStateFactory, movementStateFactory, damage)
     { }
     public override void EnterState()

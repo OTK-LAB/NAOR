@@ -4,15 +4,15 @@ public abstract class CombatBaseState
 {
     private PlayerController _ctx;
     private CombatStateFactory _combatFactory;
-    private PlayerStateFactory _movementFactory;
+    private Old_PlayerStateFactory _movementFactory;
     private float _damageAmount = 0;
 
     public float DamageAmount { get {return _damageAmount;}} 
     protected PlayerController Ctx { get { return _ctx;}}
     protected CombatStateFactory CombatFactory { get { return _combatFactory; }}
-    protected PlayerStateFactory MovementFactory{ get { return _movementFactory;}}
+    protected Old_PlayerStateFactory MovementFactory{ get { return _movementFactory;}}
 
-    public CombatBaseState( PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage)
+    public CombatBaseState( PlayerController currentContext, CombatStateFactory combatStateFactory, Old_PlayerStateFactory movementStateFactory, float damage)
     {
         _ctx = currentContext; 
         _combatFactory = combatStateFactory;
@@ -34,7 +34,7 @@ public abstract class CombatBaseState
         }
     }
 
-    public bool CheckMovementState(PlayerBaseState query)
+    public bool CheckMovementState(Old_PlayerBaseState query)
     {
         return Ctx.CurrentMovementState.Query(query);
     }
