@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5853798891148039934}
   - component: {fileID: 5853798891148039935}
-  - component: {fileID: 5853798891148039929}
   m_Layer: 6
   m_Name: Stairs
   m_TagString: Untagged
@@ -25,9 +24,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5853798891148039933}
-  m_LocalRotation: {x: 0.0012036307, y: -0.0027119236, z: 0.4056668, w: 0.91401625}
+  m_LocalRotation: {x: 0.0012028439, y: -0.0027107762, z: 0.4056702, w: 0.91401476}
   m_LocalPosition: {x: -48.791, y: -6.186, z: 0}
-  m_LocalScale: {x: 3.55, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5853798892634485305}
@@ -42,7 +41,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5853798891148039933}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -61,18 +60,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.015705, y: 0.4931378}
   m_EdgeRadius: 0
---- !u!114 &5853798891148039929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5853798891148039933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 256dd3c03464f61498832b57284191d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5853798892100278849
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5853798892100278848}
   - component: {fileID: 5853798892100278850}
-  - component: {fileID: 5853798892100278851}
+  - component: {fileID: 238790928}
   m_Layer: 6
   m_Name: StairsTrigger
   m_TagString: Untagged
@@ -132,7 +119,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9943749, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5853798892100278851
+--- !u!114 &238790928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,7 +128,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5853798892100278849}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66937b024ef89d54eab1d79e6d6d0a21, type: 3}
+  m_Script: {fileID: 11500000, guid: 256dd3c03464f61498832b57284191d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   boxCollider: {fileID: 5853798891148039935}
