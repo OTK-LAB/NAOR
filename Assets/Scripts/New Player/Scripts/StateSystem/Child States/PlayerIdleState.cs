@@ -57,5 +57,9 @@ public class PlayerIdleState : State
         {
             stateMachine.ChangeState(player.CrouchState);
         }
+        else if (inputManager.Input_BasicAttack)
+        {
+            stateMachine.ChangeState(player.BasicAttack1State);
+        }
     }
 }

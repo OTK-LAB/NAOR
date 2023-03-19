@@ -15,9 +15,11 @@ GameObject:
   - component: {fileID: 5902648875053040775}
   - component: {fileID: 5902648875053040774}
   - component: {fileID: 5902648875053040769}
-  m_Layer: 0
+  - component: {fileID: 1391948044445387141}
+  - component: {fileID: 2348788264557028454}
+  m_Layer: 3
   m_Name: NewPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -281,6 +283,15 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
+          time: 0.2654666
+          value: 0.4604607
+          inSlope: 1.4690669
+          outSlope: 1.4690669
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
           time: 1
           value: 1
           inSlope: 0
@@ -536,6 +547,7 @@ MonoBehaviour:
         m_RotationOrder: 4
       dashTime: 0.35
       physics2DGravityScale: 0
+      manaCost: 0
     Check:
       groundCheckPosition: {x: 0, y: 0, z: 0}
       groundLayer:
@@ -551,6 +563,16 @@ MonoBehaviour:
     Material:
       zeroFriction: {fileID: 6200000, guid: 7b5ba42aecac46e4fbfbdc43a0b4116f, type: 2}
       infFriction: {fileID: 6200000, guid: 8a8f23d1b354b7e4883348fa4cf319aa, type: 2}
+    AttackState:
+      BasicAttack1:
+        attackTime: 0.25
+        maxStateTime: 0.7
+      BasicAttack2:
+        attackTime: 0.25
+        maxStateTime: 0.7
+      BasicAttack3:
+        attackTime: 0.25
+        maxStateTime: 0.7
 --- !u!114 &5902648875053040769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,3 +589,40 @@ MonoBehaviour:
   input_Jump: 0
   input_Dash: 0
   input_Crouch: 0
+  input_BasicAttack: 0
+--- !u!114 &1391948044445387141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5902648875053040768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a25cdde9ff64cba4995d61e34b8efb89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 50
+  maxHealth: 100
+  healthBar: {fileID: 0}
+--- !u!114 &2348788264557028454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5902648875053040768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 624a8dff047139b42aac6a7a2bb02305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMana: 50
+  regenMana: 5
+  maxMana: 100
+  currentSoul: 25
+  maxSoul: 50
+  manaBar: {fileID: 0}
+  soulBar: {fileID: 0}
+  healthSystem: {fileID: 1391948044445387141}
+  smoothing: 5

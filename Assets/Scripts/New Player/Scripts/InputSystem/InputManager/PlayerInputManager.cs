@@ -13,12 +13,14 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField, NonEditable] private bool input_Jump;
     [SerializeField, NonEditable] private bool input_Dash;
     [SerializeField, NonEditable] private bool input_Crouch;
+    [SerializeField, NonEditable] private bool input_BasicAttack;
 
 
     public float Input_Walk => input_Walk;
     public bool Input_Jump => input_Jump;
     public bool Input_Dash => input_Dash;
     public bool Input_Crouch => input_Crouch;
+    public bool Input_BasicAttack { get { return input_BasicAttack; } set { input_BasicAttack = value; } }
 
     public PlayerInputManager(Ultimate2DPlayer player, PlayerData playerData)
     {
@@ -45,6 +47,7 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Player.Dash.canceled += OnDash;
         playerControls.Player.Crouch.performed += OnCrouch;
         playerControls.Player.Crouch.canceled += OnCrouch;
+        playerControls.Player.BasicAttack.started += OnBasicAttack;
     }
 
     private void FixedUpdate()
@@ -90,6 +93,11 @@ public class PlayerInputManager : MonoBehaviour
     private void OnCrouch(InputAction.CallbackContext context)
     {
         input_Crouch = context.ReadValueAsButton();
+    }
+
+    private void OnBasicAttack(InputAction.CallbackContext context)
+    {
+        input_BasicAttack = context.ReadValueAsButton();
     }
     #endregion
 }

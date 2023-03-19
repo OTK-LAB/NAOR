@@ -12,6 +12,7 @@ public class PlayerDashState : State, IMove2D
     {
         base.Enter();
         rigidbody2D.gravityScale = playerData.Dash.Physics2DGravityScale;
+        player.ManaSoulSystem.UseMana(playerData.Dash.ManaCost);
     }
 
     public override void Update()

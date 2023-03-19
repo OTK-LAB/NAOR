@@ -109,6 +109,7 @@ public class PlayerData
         [SerializeField, BoundedCurve] private AnimationCurve dashXVelocityCurve;
         [SerializeField, Space(5)] private float dashTime;
         [SerializeField, NonEditable] private float physics2DGravityScale = 0f;
+        [SerializeField] private float manaCost;
 
         public float MaxHeight => maxHeight;
         public AnimationCurve DashHeightCurve => dashHeightCurve;
@@ -117,6 +118,7 @@ public class PlayerData
         public AnimationCurve DashXVelocityCurve => dashXVelocityCurve;
         public float DashTime => dashTime;
         public float Physics2DGravityScale => physics2DGravityScale;
+        public float ManaCost => manaCost;
     }
     [System.Serializable]
     public class CheckVariables
@@ -154,6 +156,42 @@ public class PlayerData
         public PhysicsMaterial2D ZeroFriction => zeroFriction;
         public PhysicsMaterial2D InfFriction => infFriction;
     }
+
+    [System.Serializable]
+    public class AttackStateVariables
+    {
+        [System.Serializable]
+        public class BasicAttack1Variables
+        {
+            [SerializeField] private float attackTime;
+            [SerializeField] private float maxStateTime;
+
+            public float AttackTime => attackTime;
+            public float MaxStateTime => maxStateTime;
+        }
+        [System.Serializable]
+        public class BasicAttack2Variables
+        {
+            [SerializeField] private float attackTime;
+            [SerializeField] private float maxStateTime;
+
+            public float AttackTime => attackTime;
+            public float MaxStateTime => maxStateTime;
+        }
+        [System.Serializable]
+        public class BasicAttack3Variables
+        {
+            [SerializeField] private float attackTime;
+            [SerializeField] private float maxStateTime;
+
+            public float AttackTime => attackTime;
+            public float MaxStateTime => maxStateTime;
+        }
+
+        public BasicAttack1Variables BasicAttack1;
+        public BasicAttack2Variables BasicAttack2;
+        public BasicAttack3Variables BasicAttack3;
+    }
     #endregion
 
     [Space(7)]
@@ -164,4 +202,5 @@ public class PlayerData
     public DashVariables Dash;
     public CheckVariables Check;
     public MaterialVariables Material;
+    public AttackStateVariables AttackState;
 }
