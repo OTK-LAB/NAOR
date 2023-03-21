@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpringController : MonoBehaviour
 {
     [SerializeField]
-    private float bounce = 20f;
+    public float bounce = 16f;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

@@ -15307,37 +15307,6 @@ Transform:
   m_Father: {fileID: 572353769}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1876452856 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 697111468461296415, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
-  m_PrefabInstance: {fileID: 697111466903662311}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &1876452859
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1876452856}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &1908355726
 GameObject:
   m_ObjectHideFlags: 0
@@ -16452,7 +16421,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.1455224, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -17451,14 +17420,6 @@ PrefabInstance:
       value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 697111467551760853, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 697111467551760853, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 697111467551760853, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -38.51
       objectReference: {fileID: 0}
@@ -17498,21 +17459,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 697111467551760855, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
-      propertyPath: m_Size.x
-      value: 0.72973084
-      objectReference: {fileID: 0}
-    - target: {fileID: 697111467551760855, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
-      propertyPath: m_Size.y
-      value: 0.31399244
-      objectReference: {fileID: 0}
-    - target: {fileID: 697111467551760855, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.34300378
-      objectReference: {fileID: 0}
-    - target: {fileID: 697111467551760855, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
+    - target: {fileID: 697111467551760854, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
+      propertyPath: bounce
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81878f782cbf91e4d8479b4d77ff091e, type: 3}
