@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2022792391}
   - component: {fileID: 2022792392}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SwordSwingSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4950,7 +4950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2877796811973684737}
   - component: {fileID: 3615229447767843762}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: JumpSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5078,7 +5078,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7028997393174634339}
   - component: {fileID: 8489712305456891582}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WalkSound1_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5207,7 +5207,7 @@ GameObject:
   - component: {fileID: 5757055602265321482}
   - component: {fileID: 8852631504666406732}
   - component: {fileID: 2688012482093595551}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: BloodPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10077,7 +10077,7 @@ GameObject:
   - component: {fileID: 5465145995114471295}
   - component: {fileID: 6559133002817075216}
   - component: {fileID: 1535711281}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BasicAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10145,6 +10145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerController: {fileID: 6518641809233875277}
+  Stick: {fileID: 0}
 --- !u!1 &2264114262813756263
 GameObject:
   m_ObjectHideFlags: 0
@@ -10155,7 +10156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8119492074758267089}
   - component: {fileID: 3082360973536721717}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LandSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10411,7 +10412,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6837238206053313326}
   - component: {fileID: 191962285580719521}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WalkSound2_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10540,7 +10541,7 @@ GameObject:
   - component: {fileID: 4510593026978457637}
   - component: {fileID: 4042329729695619296}
   - component: {fileID: 3143839735563262532}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DustPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15409,7 +15410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1970130454896653155}
   - component: {fileID: 7381284952646946419}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WalkSound2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15664,7 +15665,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6518641809027266659}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FrontCheck
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
@@ -15695,7 +15696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6518641809112998822}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LedgeCheckTop
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
@@ -15736,7 +15737,7 @@ GameObject:
   - component: {fileID: 7712882145264662802}
   - component: {fileID: 1141484669}
   - component: {fileID: 2174037379100741918}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -15828,28 +15829,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a324dd2e9a904044fb07f712148ec0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lastAttack: 0
   movementSpeed: 7
   groundDetectionDistance: 0.2
-  _canNotPlunge: 0
-  frontCheck: {fileID: 6518641809027266659}
-  frontCheckLayer:
-    serializedVersion: 2
-    m_Bits: 320
-  _ledgeCheckTop: {fileID: 6518641809112998822}
-  _ledgeCheckBot: {fileID: 6518641810438093509}
   _rb: {fileID: 6518641809233875120}
-  jumpForce: 16
-  jumpTimer: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 64
+  jumpForce: 16
+  jumpTimer: 0
   groundCheck: {fileID: 6518641810314629921}
+  _dashLayers:
+    serializedVersion: 2
+    m_Bits: 320
+  frontCheck: {fileID: 6518641809027266659}
   _dashingVelocity: 30
   _dashingTime: 0.35
-  _isDashing: 0
   _detectionDistance: 1
   _dashDetectionDistance: 5
-  _isDownPressed: 0
+  lastCheckpointPosition: {x: 0, y: 0, z: 0}
   _movementHierarchyText: {fileID: 0}
   _combatStateText: {fileID: 0}
 --- !u!114 &6518641809233875276
@@ -16042,7 +16040,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6518641810314629921}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -16073,7 +16071,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6518641810438093509}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: LedgeCheckBot
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
@@ -16106,7 +16104,7 @@ GameObject:
   - component: {fileID: 4452857155484764090}
   - component: {fileID: 6084589340111793485}
   - component: {fileID: 980013744296802128}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: JumpPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20974,7 +20972,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3155284231745334558}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25953,7 +25951,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8625353896113069339}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AttackColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25989,7 +25987,7 @@ GameObject:
   - component: {fileID: 7712882146070335451}
   - component: {fileID: 7712882146070335444}
   - component: {fileID: 7712882146070335445}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SecondAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26060,6 +26058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerController: {fileID: 6518641809233875277}
+  Stick: {fileID: 0}
 --- !u!1 &8618839417515343289
 GameObject:
   m_ObjectHideFlags: 0
@@ -26070,7 +26069,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7588285944696930985}
   - component: {fileID: 3346072357014228053}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WalkSound1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26199,7 +26198,7 @@ GameObject:
   - component: {fileID: 6165918485107938263}
   - component: {fileID: 233866260868887240}
   - component: {fileID: 6102840727485994276}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ThirdAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26234,6 +26233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerController: {fileID: 6518641809233875277}
+  Stick: {fileID: 0}
 --- !u!68 &6102840727485994276
 EdgeCollider2D:
   m_ObjectHideFlags: 0
