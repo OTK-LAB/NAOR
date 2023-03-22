@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CombatPlungeAttackState : CombatBaseState
 {
+    SpringController spring = GameObject.Find("Spring")?.GetComponent<SpringController>();
     float endtime=5;
-    bool exit=false; 
-
+    bool exit=false;
+    bool isPlungeAttack = false;
     public CombatPlungeAttackState(PlayerController currentContext, CombatStateFactory combatStateFactory, PlayerStateFactory movementStateFactory, float damage) : 
     base(currentContext, combatStateFactory, movementStateFactory, damage)
     {
@@ -18,7 +19,7 @@ public class CombatPlungeAttackState : CombatBaseState
         Ctx.CanHeavyAttack = false;
         Ctx.Rigidbod.velocity= Vector3.zero;
         Ctx.PlayerAnimator.Play("PlayerPlungeAttack");
-
+        isPlungeAttack = true;
     }
     public override void UpdateState()
     {
@@ -28,6 +29,7 @@ public class CombatPlungeAttackState : CombatBaseState
             Ctx.PlayerAnimator.Play("PlayerPlungeAttackExit");
             endtime= Time.time+Ctx.PlayerAnimator.GetCurrentAnimatorStateInfo(0).length;
             exit= true; // exit bool uses for run code only once
+            isPlungeAttack= false;
         }
         CheckSwitchStates();
         
@@ -41,6 +43,14 @@ public class CombatPlungeAttackState : CombatBaseState
     {
         if (Time.time >= endtime)
         {
+            float bounce = 16f;
+            if (isPlungeAttack)
+                bounce *= 2f;
+            
+            if (spring != null)
+            {
+                spring.bounce = bounce;
+            }
             SwitchState(CombatFactory.Peaceful());
         }
     }
