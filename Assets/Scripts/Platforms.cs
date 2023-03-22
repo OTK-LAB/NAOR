@@ -7,5 +7,6 @@ public enum Platforms
     None =0,
     CrushingTrap,
     MovingBridge,
+    LockedDoor,
 
 }

@@ -55,6 +55,10 @@ public class PlatformController : MonoBehaviour
             {
                 TargetObj.transform.DORotate(new Vector3(0, 0, 0), MTSpeed);
             }
+            if(platforms == Platforms.LockedDoor && interaced) 
+            {
+                TargetObj.transform.DORotate(new Vector3(0, 90, 0), 4f);
+            }
         }
     }
    
