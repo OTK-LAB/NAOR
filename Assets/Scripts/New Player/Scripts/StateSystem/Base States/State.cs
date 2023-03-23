@@ -60,9 +60,9 @@ public class State
                             || (playerData.Check.IsGrounded && (playerData.Jump.CoyoteTimeMaxTime == 0 || playerData.Jump.JumpBufferMaxTime == 0));
 
         SlopeCheck();
+        playerData.Check.CanPlungeAttack = PlungeAttackCheck();
         playerData.Check.IsOnMovableSlope = playerData.Check.IsOnSlope && playerData.Check.CurrentSlopeAngle <= playerData.Check.MaxSlopeAngle;
         SetPhysicsMaterial();
-
     }
     public virtual void SwitchStateLogic() { }
 
@@ -129,6 +129,19 @@ public class State
             playerData.Check.SlopeContactPosition = Vector2.zero;
             if (playerData.Check.IsOnSlope) playerData.Check.IsOnSlope = false;
             if (playerData.Check.CurrentSlopeAngle != 0f) playerData.Check.CurrentSlopeAngle = 0f;
+        }
+    }
+    private bool PlungeAttackCheck()
+    {
+        float _radius = player.CapsuleCollider2D.bounds.extents.x;
+        RaycastHit2D plungeHit = Physics2D.CircleCast(playerData.Check.GroundCheckPosition, _radius, Vector2.down, playerData.AttackState.PlungeAttack.MinHeight, playerData.Check.GroundLayer);
+        if (plungeHit)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
     #endregion

@@ -42,9 +42,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BasicAttack",
+                    "name": "Attack",
                     "type": "Button",
                     "id": "3b798780-ea13-40f5-8ecf-50b0fbd83b94",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PlungeAttack",
+                    "type": "Button",
+                    "id": "8ab60156-ddd1-4305-8d2b-4b22430abe6f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -169,7 +178,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "BasicAttack",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b60b4995-595c-4fb1-8b1b-284bcbf59b78",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlungeAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

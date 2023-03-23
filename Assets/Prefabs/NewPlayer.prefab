@@ -454,58 +454,31 @@ MonoBehaviour:
       xSlowDownTime: 0.1
     Dash:
       maxHeight: 1
-      dashHeightCurve:
+      heightCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.0032573286
+          value: 0
           inSlope: 0
           outSlope: 0
-          tangentMode: 0
+          tangentMode: 34
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.08248732
-          value: 0.0032573289
-          inSlope: 1.1107138
-          outSlope: 1.1107138
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.18519364
-        - serializedVersion: 3
-          time: 0.31000146
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.93002176
-          value: 0
-          inSlope: -0.82350725
-          outSlope: -0.82350725
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.07523349
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 0.009771986
+          value: 0
           inSlope: 0
           outSlope: 0
-          tangentMode: 136
+          tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.33333334
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-      dashYVelovityCurve:
+      yVelovityCurve:
         serializedVersion: 2
         m_Curve: []
         m_PreInfinity: 2
@@ -560,19 +533,34 @@ MonoBehaviour:
       onSlopeSpeedDirection: {x: 0, y: 0}
       isOnMovableSlope: 0
       slopeContactPosition: {x: 0, y: 0}
+      canPlungeAttack: 0
     Material:
       zeroFriction: {fileID: 6200000, guid: 7b5ba42aecac46e4fbfbdc43a0b4116f, type: 2}
       infFriction: {fileID: 6200000, guid: 8a8f23d1b354b7e4883348fa4cf319aa, type: 2}
     AttackState:
       BasicAttack1:
-        attackTime: 0.25
-        maxStateTime: 0.7
+        attackDuration: 0.4
+        maxStateTime: 0.8
       BasicAttack2:
-        attackTime: 0.25
-        maxStateTime: 0.7
+        attackDuration: 0.4
+        maxStateTime: 0.8
       BasicAttack3:
-        attackTime: 0.25
-        maxStateTime: 0.7
+        attackDuration: 0.4
+        maxStateTime: 0.8
+      ChargeAttack:
+        chargeTimeMaxTime: 0.5
+        attackDuration: 1
+        maxStateTime: 1.5
+      PlungeAttack:
+        minHeight: 4
+        waitDuration: 0.5
+        speedUpCurve:
+          serializedVersion: 2
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        speedUpTime: 0
 --- !u!114 &5902648875053040769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,7 +577,8 @@ MonoBehaviour:
   input_Jump: 0
   input_Dash: 0
   input_Crouch: 0
-  input_BasicAttack: 0
+  input_Attack: 0
+  input_PlungeAttack: 0
 --- !u!114 &1391948044445387141
 MonoBehaviour:
   m_ObjectHideFlags: 0

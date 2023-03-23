@@ -75,6 +75,10 @@ public class PlayerLandState : State, IMove2D
         {
             stateMachine.ChangeState(player.DashState);
         }
+        else if(playerData.Check.CanPlungeAttack && inputManager.Input_PlungeAttack)
+        {
+            stateMachine.ChangeState(player.PlungeAttackDiveState);
+        }
     }
 
     public void Move2D()

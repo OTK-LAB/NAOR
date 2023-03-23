@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackState : State
+public class PlayerPlungeAttackLandState : AttackState
 {
-    protected float attackDuration;
-    protected float maxStateTime;
-
-    public AttackState(Ultimate2DPlayer player, PlayerStateMachine stateMachine, Ultimate2DPlayer.StateName animEnum, PlayerData playerData) : base(player, stateMachine, animEnum, playerData)
+    public PlayerPlungeAttackLandState(Ultimate2DPlayer player, PlayerStateMachine stateMachine, Ultimate2DPlayer.StateName animEnum, PlayerData playerData) : base(player, stateMachine, animEnum, playerData)
     {
     }
 
@@ -29,6 +26,10 @@ public class AttackState : State
     public override void PhysicsCheck()
     {
         base.PhysicsCheck();
+        if(localTime > 0.5f)
+        {
+            stateMachine.ChangeState(player.IdleState);
+        }
     }
 
     public override void SwitchStateLogic()
@@ -40,5 +41,4 @@ public class AttackState : State
     {
         base.Update();
     }
-
 }

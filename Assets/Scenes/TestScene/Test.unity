@@ -1926,6 +1926,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.speedUpTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.minYVelocity
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.waitDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.speedUpCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.speedUpCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.speedUpCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.speedUpCurve.m_Curve.Array.data[0].value
+      value: 0.34036255
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.speedUpCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.speedUpCurve.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.AttackState.PlungeAttack.speedUpCurve.m_Curve.Array.data[0].outSlope
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040778, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -9399,7 +9439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4721543476582207590, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4721543476582207597, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: m_RootOrder
@@ -10711,7 +10751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1434250255
 Transform:
   m_ObjectHideFlags: 0
@@ -17612,7 +17652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6684767046887524778, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
