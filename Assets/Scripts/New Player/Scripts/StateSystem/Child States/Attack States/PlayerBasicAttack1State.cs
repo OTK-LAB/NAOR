@@ -11,8 +11,8 @@ public class PlayerBasicAttack1State : AttackState
     public override void Enter()
     {
         base.Enter();
-        attackDuration = playerData.AttackState.BasicAttack1.AttackDuration;
-        maxStateTime = playerData.AttackState.BasicAttack1.MaxStateTime;
+        attackDuration = playerData.Attack.BasicAttack1.AttackDuration;
+        maxStateTime = playerData.Attack.BasicAttack1.MaxStateTime;
         inputManager.Input_Attack = false;
     }
 

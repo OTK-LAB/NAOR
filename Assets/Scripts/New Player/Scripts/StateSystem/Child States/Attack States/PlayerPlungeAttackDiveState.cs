@@ -46,19 +46,19 @@ public class PlayerPlungeAttackDiveState : AttackState, IMove1D
     public void Move1D()
     {
         float _velocity = 0f;
-        float _curveTime = localTime - playerData.AttackState.PlungeAttack.WaitDuration;
-        if (localTime < playerData.AttackState.PlungeAttack.WaitDuration)
+        float _curveTime = localTime - playerData.Attack.PlungeAttack.WaitDuration;
+        if (localTime > playerData.Attack.PlungeAttack.WaitDuration)
         {
-            if (localTime > playerData.AttackState.PlungeAttack.SpeedUpTime)
+            if (localTime > playerData.Attack.PlungeAttack.SpeedUpTime)
             {
-                _velocity = playerData.AttackState.PlungeAttack.SpeedUpCurve.Evaluate(_curveTime / playerData.AttackState.PlungeAttack.SpeedUpTime);
+                _velocity = playerData.Attack.PlungeAttack.SpeedUpCurve.Evaluate(_curveTime / playerData.Attack.PlungeAttack.SpeedUpTime);
             }
             else
             {
-                _velocity = playerData.AttackState.PlungeAttack.SpeedUpCurve.Evaluate(1f);
+                _velocity = playerData.Attack.PlungeAttack.SpeedUpCurve.Evaluate(1f);
             }
         }
-        _velocity *= playerData.AttackState.PlungeAttack.MinYVelocity;
+        _velocity *= playerData.Attack.PlungeAttack.MinYVelocity;
         rigidbody2D.velocity = new Vector2(0, _velocity);
     }
 }

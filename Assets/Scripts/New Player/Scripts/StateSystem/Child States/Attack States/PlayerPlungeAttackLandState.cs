@@ -26,7 +26,7 @@ public class PlayerPlungeAttackLandState : AttackState
     public override void PhysicsCheck()
     {
         base.PhysicsCheck();
-        if(localTime > 0.5f)
+        if(localTime > playerData.Attack.PlungeAttack.LandDuration)
         {
             stateMachine.ChangeState(player.IdleState);
         }

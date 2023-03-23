@@ -134,7 +134,7 @@ public class State
     private bool PlungeAttackCheck()
     {
         float _radius = player.CapsuleCollider2D.bounds.extents.x;
-        RaycastHit2D plungeHit = Physics2D.CircleCast(playerData.Check.GroundCheckPosition, _radius, Vector2.down, playerData.AttackState.PlungeAttack.MinHeight, playerData.Check.GroundLayer);
+        RaycastHit2D plungeHit = Physics2D.CircleCast(playerData.Check.GroundCheckPosition, _radius, Vector2.down, playerData.Attack.PlungeAttack.MinHeight, playerData.Check.GroundLayer);
         if (plungeHit)
         {
             return false;

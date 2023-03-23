@@ -208,12 +208,14 @@ public class PlayerData
             [SerializeField] private float minYVelocity;
             [SerializeField, BoundedCurve, Space(5)] private AnimationCurve speedUpCurve;
             [SerializeField] private float speedUpTime;
+            [SerializeField] private float landDuration;
 
             public float MinHeight => minHeight;
             public float WaitDuration => waitDuration;
             public AnimationCurve SpeedUpCurve => speedUpCurve;
             public float SpeedUpTime => speedUpTime;
             public float MinYVelocity => minYVelocity;
+            public float LandDuration => landDuration;
         }
 
         public BasicAttack1Variables BasicAttack1;
@@ -233,5 +235,5 @@ public class PlayerData
     public DashVariables Dash;
     public CheckVariables Check;
     public MaterialVariables Material;
-    public AttackStateVariables AttackState;
+    public AttackStateVariables Attack;
 }

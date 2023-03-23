@@ -11,8 +11,8 @@ public class PlayerChargeAttackState : AttackState
     public override void Enter()
     {
         base.Enter();
-        attackDuration = playerData.AttackState.ChargeAttack.AttackDuration;
-        maxStateTime = playerData.AttackState.ChargeAttack.MaxStateTime;
+        attackDuration = playerData.Attack.ChargeAttack.AttackDuration;
+        maxStateTime = playerData.Attack.ChargeAttack.MaxStateTime;
     }
 
     public override void Exit()
@@ -34,7 +34,7 @@ public class PlayerChargeAttackState : AttackState
     public override void SwitchStateLogic()
     {
         base.SwitchStateLogic();
-        if (localTime < playerData.AttackState.ChargeAttack.ChargeTimeMaxTime && !inputManager.Input_Attack)
+        if (localTime < playerData.Attack.ChargeAttack.ChargeTimeMaxTime && !inputManager.Input_Attack)
         {
             stateMachine.ChangeState(player.BasicAttack1State);
         }
