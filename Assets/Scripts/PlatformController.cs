@@ -4,13 +4,14 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting.ReorderableList;
+using UnityEditor;
+    
 
 public class PlatformController : MonoBehaviour
 {
     [SerializeField]
     private Platforms platforms = Platforms.None;
     [SerializeField]
-
     public PlayerInputActions inputActions;
     public GameObject TargetObj;
     private bool interaced;
@@ -58,6 +59,24 @@ public class PlatformController : MonoBehaviour
             if(platforms == Platforms.LockedDoor && interaced) 
             {
                 TargetObj.transform.DORotate(new Vector3(0, 90, 0), 4f);
+            }
+            if (platforms== Platforms.MovingPlatformY && !loop)
+            {
+                loop = true;
+
+                Sequence ySequence = DOTween.Sequence();
+                ySequence.Append(TargetObj.transform.DOLocalMoveY(5, 2).SetEase(Ease.InOutSine));
+                ySequence.Append(TargetObj.transform.DOLocalMoveY(0, 2).SetEase(Ease.InOutSine));
+                ySequence.SetLoops(-1, LoopType.Restart);
+            }
+            if (platforms== Platforms.MovingPlatformX && !loop)
+            {
+                loop = true;
+
+                Sequence ySequence = DOTween.Sequence();
+                ySequence.Append(TargetObj.transform.DOLocalMoveX(5, 2).SetEase(Ease.InOutSine));
+                ySequence.Append(TargetObj.transform.DOLocalMoveX(0, 2).SetEase(Ease.InOutSine));
+                ySequence.SetLoops(-1, LoopType.Restart);
             }
         }
     }
