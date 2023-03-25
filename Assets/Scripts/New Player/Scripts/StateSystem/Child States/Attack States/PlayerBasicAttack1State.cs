@@ -11,9 +11,9 @@ public class PlayerBasicAttack1State : AttackState
     public override void Enter()
     {
         base.Enter();
-        attackTime = playerData.AttackState.BasicAttack1.AttackTime;
-        maxStateTime = playerData.AttackState.BasicAttack1.MaxStateTime;
-        inputManager.Input_BasicAttack = false;
+        attackDuration = playerData.Attack.BasicAttack1.AttackDuration;
+        maxStateTime = playerData.Attack.BasicAttack1.MaxStateTime;
+        inputManager.Input_Attack = false;
     }
 
     public override void Exit()
@@ -34,9 +34,9 @@ public class PlayerBasicAttack1State : AttackState
     public override void SwitchStateLogic()
     {
         base.SwitchStateLogic();
-        if (localTime > attackTime)
+        if (localTime > attackDuration)
         {
-            if (localTime < maxStateTime && inputManager.Input_BasicAttack)
+            if (localTime < maxStateTime && inputManager.Input_Attack)
             {
                 stateMachine.ChangeState(player.BasicAttack2State);
             }
