@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Ultimate2DPlayer : MonoBehaviour
 {
-    private PlayerStateMachine _stateMachine;
+    //Private olmalý
+    public PlayerStateMachine _stateMachine;
     [NonEditable, Space(5)] public StateName CurrentState;
     public State IdleState, WalkState, JumpState, LandState, DashState, CrouchState;
     public AttackState BasicAttack1State, BasicAttack2State, BasicAttack3State;
