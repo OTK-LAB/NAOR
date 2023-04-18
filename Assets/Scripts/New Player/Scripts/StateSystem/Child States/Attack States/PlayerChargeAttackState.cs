@@ -34,7 +34,7 @@ public class PlayerChargeAttackState : AttackState
     public override void SwitchStateLogic()
     {
         base.SwitchStateLogic();
-        if (localTime < playerData.Attack.ChargeAttack.ChargeTimeMaxTime && !inputManager.Input_Attack)
+        if (localTime < playerData.Attack.ChargeAttack.AttackDuration && !inputManager.Input_Attack)
         {
             stateMachine.ChangeState(player.BasicAttack1State);
         }
