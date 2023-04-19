@@ -103,8 +103,8 @@ public class PlayerData
     public class DashVariables
     {
         [SerializeField, Space(5)] private float maxHeight;
-        [SerializeField, BoundedCurve(0,-1,1,2)] private AnimationCurve dashHeightCurve;
-        [SerializeField, NonEditable] private AnimationCurve dashYVelovityCurve;
+        [SerializeField, BoundedCurve(0,-1,1,2)] private AnimationCurve heightCurve;
+        [SerializeField, NonEditable] private AnimationCurve yVelovityCurve;
         [SerializeField, Space(5)] private float maxSpeed;
         [SerializeField, BoundedCurve] private AnimationCurve dashXVelocityCurve;
         [SerializeField, Space(5)] private float dashTime;
@@ -112,8 +112,8 @@ public class PlayerData
         [SerializeField] private float manaCost;
 
         public float MaxHeight => maxHeight;
-        public AnimationCurve DashHeightCurve => dashHeightCurve;
-        public AnimationCurve DashYVelocityCurve { get { return dashYVelovityCurve; } set { dashYVelovityCurve = value; } }
+        public AnimationCurve HeightCurve => heightCurve;
+        public AnimationCurve YVelocityCurve { get { return yVelovityCurve; } set { yVelovityCurve = value; } }
         public float MaxSpeed => maxSpeed;
         public AnimationCurve DashXVelocityCurve => dashXVelocityCurve;
         public float DashTime => dashTime;
@@ -133,6 +133,7 @@ public class PlayerData
         [SerializeField] private List<ContactPoint2D> colliderContacs = new();
         [SerializeField, NonEditable] private bool isOnMovableSlope;
         [SerializeField, NonEditable] private Vector2 slopeContactPosition;
+        [SerializeField, NonEditable] private bool canPlungeAttack;
 
         public Vector3 GroundCheckPosition { get { return groundCheckPosition; } set { groundCheckPosition = value; } }
         public LayerMask GroundLayer => groundLayer;
@@ -146,6 +147,7 @@ public class PlayerData
         public List<ContactPoint2D> ColliderContacs { get { return colliderContacs; } set { colliderContacs = value; } }
         public bool IsOnMovableSlope { get { return isOnMovableSlope; } set { isOnMovableSlope = value; } }
         public Vector2 SlopeContactPosition { get { return slopeContactPosition; } set { slopeContactPosition = value; } }
+        public bool CanPlungeAttack { get { return canPlungeAttack; } set { canPlungeAttack = value; } }
     }
 
     [System.Serializable]
@@ -156,42 +158,73 @@ public class PlayerData
         public PhysicsMaterial2D ZeroFriction => zeroFriction;
         public PhysicsMaterial2D InfFriction => infFriction;
     }
-
+    #region Attack Variables
     [System.Serializable]
     public class AttackStateVariables
     {
         [System.Serializable]
         public class BasicAttack1Variables
         {
-            [SerializeField] private float attackTime;
+            [SerializeField] private float attackDuration;
             [SerializeField] private float maxStateTime;
 
-            public float AttackTime => attackTime;
+            public float AttackDuration => attackDuration;
             public float MaxStateTime => maxStateTime;
         }
         [System.Serializable]
         public class BasicAttack2Variables
         {
-            [SerializeField] private float attackTime;
+            [SerializeField] private float attackDuration;
             [SerializeField] private float maxStateTime;
 
-            public float AttackTime => attackTime;
+            public float AttackDuration => attackDuration;
             public float MaxStateTime => maxStateTime;
         }
         [System.Serializable]
         public class BasicAttack3Variables
         {
-            [SerializeField] private float attackTime;
+            [SerializeField] private float attackDuration;
             [SerializeField] private float maxStateTime;
 
-            public float AttackTime => attackTime;
+            public float AttackDuration => attackDuration;
             public float MaxStateTime => maxStateTime;
+        }
+        [System.Serializable]
+        public class ChargeAttackVariables
+        {
+            [SerializeField] private float chargeTimeMaxTime;
+            [SerializeField] private float attackDuration;
+            [SerializeField] private float maxStateTime;
+
+            public float ChargeTimeMaxTime => chargeTimeMaxTime;
+            public float AttackDuration => attackDuration;
+            public float MaxStateTime => maxStateTime;
+        }
+        [System.Serializable]
+        public class PlungeAttackVariables
+        {
+            [SerializeField] private float minHeight;
+            [SerializeField] private float waitDuration;
+            [SerializeField] private float minYVelocity;
+            [SerializeField, BoundedCurve, Space(5)] private AnimationCurve speedUpCurve;
+            [SerializeField] private float speedUpTime;
+            [SerializeField] private float landDuration;
+
+            public float MinHeight => minHeight;
+            public float WaitDuration => waitDuration;
+            public AnimationCurve SpeedUpCurve => speedUpCurve;
+            public float SpeedUpTime => speedUpTime;
+            public float MinYVelocity => minYVelocity;
+            public float LandDuration => landDuration;
         }
 
         public BasicAttack1Variables BasicAttack1;
         public BasicAttack2Variables BasicAttack2;
         public BasicAttack3Variables BasicAttack3;
+        public ChargeAttackVariables ChargeAttack;
+        public PlungeAttackVariables PlungeAttack;
     }
+    #endregion
     #endregion
 
     [Space(7)]
@@ -202,5 +235,5 @@ public class PlayerData
     public DashVariables Dash;
     public CheckVariables Check;
     public MaterialVariables Material;
-    public AttackStateVariables AttackState;
+    public AttackStateVariables Attack;
 }
