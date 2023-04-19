@@ -66,12 +66,12 @@ public class PlayerDashState : State, IMove2D
 
     public void Move2D()
     {
-        Vector2 XVelocity = Vector2.zero;
-        XVelocity.x = playerData.Dash.DashXVelocityCurve.Evaluate(localTime / playerData.Dash.DashTime);
-        XVelocity.x *= playerData.Dash.MaxSpeed * player.transform.localScale.x;
-        XVelocity.y = playerData.Dash.DashYVelocityCurve.Evaluate(localTime / playerData.Dash.DashTime);
-        XVelocity.y *= playerData.Dash.MaxHeight;
+        Vector2 _velocity = Vector2.zero;
+        _velocity.x = playerData.Dash.DashXVelocityCurve.Evaluate(localTime / playerData.Dash.DashTime);
+        _velocity.x *= playerData.Dash.MaxSpeed * player.transform.localScale.x;
+        _velocity.y = playerData.Dash.YVelocityCurve.Evaluate(localTime / playerData.Dash.DashTime);
+        _velocity.y *= playerData.Dash.MaxHeight;
 
-        rigidbody2D.velocity = XVelocity;
+        rigidbody2D.velocity = _velocity;
     }
 }

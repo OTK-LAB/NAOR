@@ -7,8 +7,8 @@ public class Ultimate2DPlayer : MonoBehaviour
     public PlayerStateMachine _stateMachine;
     [NonEditable, Space(5)] public StateName CurrentState;
     public State IdleState, WalkState, JumpState, LandState, DashState, CrouchState;
-    public AttackState BasicAttack1State, BasicAttack2State, BasicAttack3State;
-    public enum StateName { Idle, Walk, Jump, Land, Dash, Crouch, BasicAttack1, BasicAttack2, BasicAttack3 }
+    public AttackState BasicAttack1State, BasicAttack2State, BasicAttack3State, ChargeAttackState, PlungeAttackDiveState, PlungeAttackLandState;
+    public enum StateName { Idle, Walk, Jump, Land, Dash, Crouch, BasicAttack1, BasicAttack2, BasicAttack3, ChargeAttack, PlungeAttackDive, PlungeAttackLand }
 
     [NonSerialized] public Animator Animator;
     [NonSerialized] public Rigidbody2D Rigidbody2D;
@@ -39,6 +39,9 @@ public class Ultimate2DPlayer : MonoBehaviour
         BasicAttack1State = new PlayerBasicAttack1State(this, _stateMachine, StateName.BasicAttack1, PlayerData);
         BasicAttack2State = new PlayerBasicAttack2State(this, _stateMachine, StateName.BasicAttack2, PlayerData);
         BasicAttack3State = new PlayerBasicAttack3State(this, _stateMachine, StateName.BasicAttack3, PlayerData);
+        ChargeAttackState = new PlayerChargeAttackState(this, _stateMachine, StateName.ChargeAttack, PlayerData);
+        PlungeAttackDiveState = new PlayerPlungeAttackDiveState(this, _stateMachine, StateName.PlungeAttackDive, PlayerData);
+        PlungeAttackLandState = new PlayerPlungeAttackLandState(this, _stateMachine, StateName.PlungeAttackLand, PlayerData);
     }
 
     private void Start()
@@ -48,7 +51,7 @@ public class Ultimate2DPlayer : MonoBehaviour
         //derivatives for jump and land curves
         PlayerData.Jump.JumpVelocityCurve = PlayerData.Jump.JumpHeightCurve.Derivative();
         PlayerData.Land.LandVelocityCurve = PlayerData.Land.LandHeightCurve.Derivative();
-        PlayerData.Dash.DashYVelocityCurve = PlayerData.Dash.DashHeightCurve.Derivative();
+        PlayerData.Dash.YVelocityCurve = PlayerData.Dash.HeightCurve.Derivative();
     }
     private void Update()
     {
