@@ -10,5 +10,5 @@ public enum Platforms
     LockedDoor,
     MovingPlatformX,
     MovingPlatformY,
-
+    ElongatedPlatform,
 }
