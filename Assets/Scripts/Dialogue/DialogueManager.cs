@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
             isActive = false;
 	        gameObject.SetActive(false);
             //FIXME:
-	        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Enable();
+	        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Enable();
         }
     }
 

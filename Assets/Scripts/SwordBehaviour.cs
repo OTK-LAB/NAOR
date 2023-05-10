@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SwordBehaviour : MonoBehaviour
 {
-    [SerializeField] private PlayerController _playerController;
+    //[SerializeField] private PlayerController _playerController; //add implemantation for new player
 
     private GameObject Stick;
 
@@ -12,7 +12,7 @@ public class SwordBehaviour : MonoBehaviour
     {
         if(other.gameObject.layer == 8)
         {
-            other.GetComponent<EnemyHealthSystem>().Damage(_playerController.CurrentCombatState.DamageAmount);
+            //other.GetComponent<EnemyHealthSystem>().Damage(_playerController.CurrentCombatState.DamageAmount);
         }
         if (other.gameObject.name == "Rope")
         {

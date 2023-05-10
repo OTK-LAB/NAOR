@@ -46,7 +46,7 @@ public class ShallowGrave : MonoBehaviour
         {
             Player.GetComponent<ManaSoulSystem>().currentMana = Player.GetComponent<ManaSoulSystem>().maxMana;
             Player.GetComponent<HealthSystem>().currentHealth = Player.GetComponent<HealthSystem>().maxHealth;
-            Player.GetComponent<PlayerController>().lastCheckpointPosition = transform.position;
+            //Player.GetComponent<PlayerController>().lastCheckpointPosition = transform.position;
             active = true;
             this.GetComponent<SpriteRenderer>().color = Color.green;
             ManaStop.GetComponent<ManaStop>().isActive = true;
@@ -60,6 +60,6 @@ public class ShallowGrave : MonoBehaviour
         Player.GetComponent<ManaSoulSystem>().currentSoul = 0;
         Currency.GetComponent<CurrencyScript>().currency1 = Currency.GetComponent<CurrencyScript>().currency1 * 3 / 4;
         Currency.GetComponent<CurrencyScript>().currency2 = Currency.GetComponent<CurrencyScript>().currency2 * 3 / 4;
-        Player.transform.position = Player.GetComponent<PlayerController>().lastCheckpointPosition;
+        //Player.transform.position = Player.GetComponent<PlayerController>().lastCheckpointPosition;
     }
 }
