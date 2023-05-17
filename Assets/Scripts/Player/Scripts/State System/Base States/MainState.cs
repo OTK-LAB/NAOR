@@ -61,12 +61,12 @@ namespace UltimateCC
             player.CapsuleCollider2D.GetContacts(playerData.Physics.Contacts);
             EssentialPhysics.GroundCheck(player, playerData);
             EssentialPhysics.WallCheck(player, playerData);
-            if (playerData.Physics.UseCustomZRotations)
+            if (playerData.Physics.UseCustomZRotations && player.CurrentState != PlayerMain.AnimName.Swing)
             {
                 rigidbody2D.freezeRotation = false;
                 EssentialPhysics.ApplyRotationOnSlope(player, playerData);
             }
-            else
+            else if (player.CurrentState != PlayerMain.AnimName.Swing)
             {
                 rigidbody2D.freezeRotation = true;
             }

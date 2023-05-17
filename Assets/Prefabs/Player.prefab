@@ -124,8 +124,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.02, y: 3.07}
+  m_Offset: {x: 0, y: -0.03}
+  m_Size: {x: 0.67, y: 2.95}
   m_Direction: 0
 --- !u!50 &5902648875053040775
 Rigidbody2D:
@@ -172,6 +172,9 @@ MonoBehaviour:
       wallLayerMask:
         serializedVersion: 2
         m_Bits: 8192
+      hingeLayerMask:
+        serializedVersion: 2
+        m_Bits: 1024
       groundCheckPosition: {x: 0, y: 0, z: 0}
       headCheckPosition: {x: 0, y: 0, z: 0}
       walkSpeedDirection: {x: 0, y: 0}
@@ -238,6 +241,7 @@ MonoBehaviour:
       ledgeDetectionDistance: 0
       ledgeHangPosition: {x: 0, y: 0}
       canPlungeAttack: 0
+      connectedHingeJoint: {fileID: 0}
     Walk:
       maxSpeed: 10
       speedUpCurve:
@@ -1119,8 +1123,8 @@ MonoBehaviour:
         maxStateTime: 1
       ChargeAttack:
         chargeTimeMaxTime: 1
-        attackDuration: 0.5
-        maxStateTime: 1.5
+        attackDuration: 0.2
+        maxStateTime: 1.2
       PlungeAttack:
         minHeight: 2
         waitDuration: 0.4

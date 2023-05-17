@@ -81,6 +81,10 @@ namespace UltimateCC
         public override void PhysicsCheck()
         {
             base.PhysicsCheck();
+            if (localTime > 0.2f)
+            {
+                EssentialPhysics.CheckHingeJoint(playerData, player);
+            }
         }
 
         public override void SwitchStateLogic()
@@ -109,6 +113,10 @@ namespace UltimateCC
             else if (playerData.Physics.CanPlungeAttack && inputManager.Input_PlungeAttack)
             {
                 stateMachine.ChangeState(player.PlungeAttackDiveState);
+            }
+            else if (playerData.Physics.ConnectedHingeJoint)
+            {
+                stateMachine.ChangeState(player.SwingState);
             }
         }
 

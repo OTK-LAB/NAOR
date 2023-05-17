@@ -297,5 +297,15 @@ namespace UltimateCC
                 return true;
             }
         }
+
+        public static void CheckHingeJoint(PlayerData playerData, PlayerMain player)
+        {
+            float _radius = player.CapsuleCollider2D.bounds.extents.x + 0.1f;
+            RaycastHit2D hingeHit = Physics2D.CircleCast(playerData.Physics.HeadCheckPosition, _radius, Vector2.up, 0.1f, playerData.Physics.HingeLayerMask);
+            if (hingeHit)
+            {
+                playerData.Physics.ConnectedHingeJoint = hingeHit.rigidbody.gameObject.GetComponent<HingeJoint2D>();
+            }
+        }
     }
 }

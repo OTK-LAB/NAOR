@@ -21,6 +21,7 @@ public class PlayerChargeAttackState : AttackState
 
     public override void FixedUpdate()
     {
+        rigidbody2D.velocity = new(0,0);
         base.FixedUpdate();
     }
 
@@ -36,7 +37,7 @@ public class PlayerChargeAttackState : AttackState
         {
             stateMachine.ChangeState(player.BasicAttack1State);
         }
-        else if (inputManager.Input_Walk != 0)
+        else if (inputManager.Input_Walk != 0 && !inputManager.Input_Attack)
         {
             stateMachine.ChangeState(player.WalkState);
         }

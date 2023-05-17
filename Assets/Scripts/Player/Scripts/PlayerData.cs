@@ -49,6 +49,7 @@ namespace UltimateCC
             [SerializeField] private LayerMask groundLayerMask;
             [SerializeField] private LayerMask headBumpLayerMask;
             [SerializeField] private LayerMask wallLayerMask;
+            [SerializeField] private LayerMask hingeLayerMask;
             [SerializeField, NonEditable] private Vector3 groundCheckPosition;
             [SerializeField, NonEditable] private Vector3 headCheckPosition;
             [SerializeField, NonEditable] private Vector2 walkSpeedDirection;
@@ -70,11 +71,13 @@ namespace UltimateCC
             [SerializeField] private float ledgeDetectionDistance;
             [SerializeField, NonEditable] private Vector2 ledgeHangPosition;
             [SerializeField, NonEditable] private bool canPlungeAttack;
+            [SerializeField, NonEditable] private HingeJoint2D connectedHingeJoint;
 
 
             public LayerMask GroundLayerMask => groundLayerMask;
             public LayerMask HeadBumpLayerMask => headBumpLayerMask;
             public LayerMask WallLayerMask => wallLayerMask;
+            public LayerMask HingeLayerMask => hingeLayerMask;
             public Vector2 GroundCheckPosition { get { return groundCheckPosition; } set { groundCheckPosition = value; } }
             public Vector2 HeadCheckPosition { get { return headCheckPosition; } set { headCheckPosition = value; } }
             public Vector2 WalkSpeedDirection { get { return walkSpeedDirection; } set { walkSpeedDirection = value; } }
@@ -104,11 +107,11 @@ namespace UltimateCC
             public float LedgeDetectionDistance { get { return ledgeDetectionDistance; } }
             public Vector2 LedgeHangPosition { get { return ledgeHangPosition; } set { ledgeHangPosition = value; } }
             public bool CanPlungeAttack { get { return canPlungeAttack; } set { canPlungeAttack = value; } }
+            public HingeJoint2D ConnectedHingeJoint {  get { return connectedHingeJoint; } set { connectedHingeJoint = value; } }
         }
         [System.Serializable]
         public class WalkVariables
         {
-
             [SerializeField] private float maxSpeed;
             [SerializeField, BoundedCurve, Space(5)] private AnimationCurve speedUpCurve;
             [SerializeField] private float speedUpTime;
@@ -252,6 +255,15 @@ namespace UltimateCC
             public float DashCooldown => dashCooldown;
             public float DashCooldownTimer { get { return dashCooldownTimer; } set { dashCooldownTimer = value; } }
             public float Physics2DGravityScale => physics2DGravityScale;
+        }
+        [System.Serializable]
+        public class SwingVariables
+        {
+            [SerializeField] private float drag;
+            [SerializeField] private float gravity;
+
+            public float Drag => drag;
+            public float Gravity => gravity;
         }
         [System.Serializable]
         public class WallMovementVariables
@@ -448,7 +460,10 @@ namespace UltimateCC
         public JumpVariables Jump;
         public LandVariables Land;
         public DashVariables Dash;
-        public WallMovementVariables Walls;
+        public SwingVariables Swing;
         public AttackStateVariables Attack;
+
+
+        public WallMovementVariables Walls;
     }
 }
