@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     public GameObject Image;
     private Item Item;
 
+    public bool interacted;
     void Awake()
     {
         Item = null;
@@ -19,8 +20,19 @@ public class Inventory : MonoBehaviour
         inputActions.UI.Enable();
 
         inputActions.UI.Inventory.started += OnInventoryTriggered;
-    }
 
+    }
+    private void Update()
+    {
+        if (interacted)
+        {
+            if (inventoryMenu.activeSelf)
+                inventoryMenu.SetActive(false);
+            else
+                inventoryMenu.SetActive(true);
+            interacted= false;
+        }
+    }
     public void ShowInfo(Item item)
     {
         Item = item;
@@ -36,11 +48,8 @@ public class Inventory : MonoBehaviour
             Item.isEquiped = false;
     }
 
-    void OnInventoryTriggered(InputAction.CallbackContext context)
+    private void OnInventoryTriggered(InputAction.CallbackContext context)
     {
-        if (inventoryMenu.activeSelf)
-            inventoryMenu.SetActive(false);
-        else
-            inventoryMenu.SetActive(true);
+        interacted = context.ReadValueAsButton();
     }
 }
