@@ -22,7 +22,8 @@ namespace UltimateCC
             {
                 playerData.Physics.FacingDirection = playerData.Physics.IsNextToWall ? -playerData.Physics.WallDirection : (int)Mathf.Sign(player.Rigidbody2D.velocity.x);
             }
-            else if (inputManager.Input_Walk != 0 && Mathf.Sign(inputManager.Input_Walk) != Mathf.Sign(playerData.Physics.FacingDirection))
+            else if (inputManager.Input_Walk != 0 && Mathf.Sign(inputManager.Input_Walk) != Mathf.Sign(playerData.Physics.FacingDirection)
+                    && player.CurrentState != AnimName.Swing && player.CurrentState != AnimName.Hang)
             {
                 playerData.Physics.FacingDirection *= -1;
             }
