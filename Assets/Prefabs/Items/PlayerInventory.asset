@@ -9,15 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32fba27745702fa4389f12d70d9d0543, type: 3}
-  m_Name: Item 1
+  m_Script: {fileID: 11500000, guid: b6710cc03d968e14ea1c91e7643336b6, type: 3}
+  m_Name: PlayerInventory
   m_EditorClassIdentifier: 
-  id: 1
-  itemName: apple
-  value: 0
-  icon: {fileID: 21300000, guid: e7e8b422cae88f741bfee12a7b8449c1, type: 3}
-  itemDescription: Apple
-  isEquiped: 0
-  time: 0
-  number: 0
-  stackSize: 3
+  maxItems: 16
+  items:
+  - {fileID: 11400000, guid: ce99ba486b0481e4d8983756e108b15d, type: 2}

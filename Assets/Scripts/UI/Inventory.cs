@@ -6,16 +6,19 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
+    public InventoryScriptable inventory;
     public GameObject inventoryMenu;
     public PlayerInputActions inputActions;
     public GameObject Text;
     public GameObject Image;
-    private Item Item;
+    public GameObject Grid;
+    public Item item;
 
+    public bool PlayerInventory;
     public bool interacted;
     void Awake()
     {
-        Item = null;
+        item = null;
         inputActions = new PlayerInputActions();
         inputActions.UI.Enable();
 
@@ -24,28 +27,44 @@ public class Inventory : MonoBehaviour
     }
     private void Update()
     {
-        if (interacted)
+        if (interacted && PlayerInventory)
         {
             if (inventoryMenu.activeSelf)
                 inventoryMenu.SetActive(false);
             else
                 inventoryMenu.SetActive(true);
-            interacted= false;
+            interacted = false;
+        }
+        UpdateInfo();
+    }
+    public void UpdateInfo()
+    {
+        for (int i = 0; i < inventory.items.Count; i++)
+        {
+            if (inventory.items[i]!=null)
+                Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
+            // Null ise ne olacak
         }
     }
-    public void ShowInfo(Item item)
+    public void SelectItem(int slot)
     {
-        Item = item;
-        Text.GetComponent<TextMeshProUGUI>().text = item.itemDescription;
-        Image.GetComponent<UnityEngine.UI.Image>().sprite = item.icon;
+        item = inventory.items[slot];
+        
+        Image.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[slot].icon;
+        Text.GetComponent<TextMeshProUGUI>().text = inventory.items[slot].itemDescription;
+      
     }
-
+    public Item GetSelectedItem()
+    {
+        return item;
+    }
+    public void OpenShop()
+    {
+        inventoryMenu.SetActive(true);
+    }
     public void Equip()
     {
-        if(!Item.isEquiped)
-            Item.isEquiped = true;
-        else
-            Item.isEquiped = false;
+      
     }
 
     private void OnInventoryTriggered(InputAction.CallbackContext context)

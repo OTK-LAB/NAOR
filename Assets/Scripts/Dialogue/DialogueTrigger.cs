@@ -42,7 +42,7 @@ public class DialogueTrigger : MonoBehaviour
     public void StartDialogue()
     {
         //FIXME:
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Disable();
+       // GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Disable();
         Destroy(InteractionText);
 	    DialogueBox.SetActive(true);
         FindObjectOfType<DialogueManager>().OpenDialogue(messages, actors);

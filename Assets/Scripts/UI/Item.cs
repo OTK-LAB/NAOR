@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-[CreateAssetMenu (fileName="New Item", menuName ="Item/Create New Item")]
+[CreateAssetMenu (fileName="New Item", menuName ="Inventory/Create New Item")]
 public class Item : ScriptableObject
 {
     public int id;
@@ -10,6 +10,9 @@ public class Item : ScriptableObject
     public Sprite icon;
     public string itemDescription;
     public bool isEquiped;
+    public float time;
+    public int number;
+    public int stackSize;
 
     public Item()
     {
@@ -19,5 +22,7 @@ public class Item : ScriptableObject
         icon = null;
         itemDescription = "";
         isEquiped = false;
+        time = 0;
+        stackSize = 10;
     }
 }
