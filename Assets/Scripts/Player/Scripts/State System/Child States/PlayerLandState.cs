@@ -54,12 +54,17 @@ namespace UltimateCC
         {
             base.PhysicsCheck();
             EssentialPhysics.CheckHingeJoint(playerData, player);
+            EssentialPhysics.LedgeCheck(playerData, player);
         }
 
         public override void SwitchStateLogic()
         {
             base.SwitchStateLogic();
-            if ((((playerData.Physics.IsGrounded && !playerData.Physics.IsOnNotWalkableSlope)) && inputManager.Input_Walk == 0) || playerData.Physics.IsMultipleContactWithNonWalkableSlope)
+           if(playerData.Physics.LedgeHangPosition != Vector2.zero && localTime > 0.3f)
+            {
+                stateMachine.ChangeState(player.HangState);
+            }
+            else if ((((playerData.Physics.IsGrounded && !playerData.Physics.IsOnNotWalkableSlope)) && inputManager.Input_Walk == 0) || playerData.Physics.IsMultipleContactWithNonWalkableSlope)
             {
                 stateMachine.ChangeState(player.IdleState);
             }

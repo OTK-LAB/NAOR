@@ -84,14 +84,18 @@ namespace UltimateCC
             if (localTime > 0.2f)
             {
                 EssentialPhysics.CheckHingeJoint(playerData, player);
+                EssentialPhysics.LedgeCheck(playerData, player);
             }
         }
 
         public override void SwitchStateLogic()
         {
             base.SwitchStateLogic();
-
-            if (localTime >= jumpInfo.JumpTime || (playerData.Physics.IsOnHeadBump && playerData.Physics.CanBumpHead))
+            if(playerData.Physics.LedgeHangPosition != Vector2.zero && localTime > 0.3f)
+            {
+                stateMachine.ChangeState(player.HangState);
+            }
+            else if (localTime >= jumpInfo.JumpTime || (playerData.Physics.IsOnHeadBump && playerData.Physics.CanBumpHead))
             {
                 stateMachine.ChangeState(player.LandState);
             }

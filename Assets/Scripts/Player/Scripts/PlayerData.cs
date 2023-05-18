@@ -72,6 +72,7 @@ namespace UltimateCC
             [SerializeField, NonEditable] private Vector2 ledgeHangPosition;
             [SerializeField, NonEditable] private bool canPlungeAttack;
             [SerializeField, NonEditable] private HingeJoint2D connectedHingeJoint;
+            [HideInInspector]public RaycastHit2D Ledge;
 
 
             public LayerMask GroundLayerMask => groundLayerMask;

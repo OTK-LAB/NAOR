@@ -307,5 +307,14 @@ namespace UltimateCC
                 playerData.Physics.ConnectedHingeJoint = hingeHit.rigidbody.gameObject.GetComponent<HingeJoint2D>();
             }
         }
+        
+        public static void LedgeCheck(PlayerData playerData, PlayerMain player){
+        playerData.Physics.Ledge = Physics2D.Raycast(new Vector2(player.Rigidbody2D.position.x + player.transform.localScale.x * (player.CapsuleCollider2D.bounds.size.x)/2, player.Rigidbody2D.position.y + player.CapsuleCollider2D.bounds.size.y / 2),
+         new Vector2(player.Rigidbody2D.transform.localScale.x, 0), playerData.Physics.LedgeDetectionDistance, playerData.Physics.LedgeLayer);
+        Debug.DrawRay(new Vector2(player.Rigidbody2D.position.x + player.transform.localScale.x * (player.CapsuleCollider2D.bounds.size.x)/2, player.Rigidbody2D.position.y + player.CapsuleCollider2D.bounds.size.y / 2), new Vector2(player.transform.localScale.x,0));
+        if(playerData.Physics.Ledge){
+            playerData.Physics.LedgeHangPosition = new Vector2(playerData.Physics.Ledge.transform.position.x - player.transform.localScale.x * (playerData.Physics.Ledge.collider.bounds.size.x / 2 + player.CapsuleCollider2D.bounds.size.x / 2), playerData.Physics.Ledge.transform.position.y - player.CapsuleCollider2D.bounds.size.y / 2 + (playerData.Physics.Ledge.collider.bounds.size.y/2) + 0.1f);
+        }
+    }
     }
 }
