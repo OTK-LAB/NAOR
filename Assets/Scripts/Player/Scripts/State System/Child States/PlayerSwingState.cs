@@ -10,6 +10,7 @@ public class PlayerSwingState : MainState, IMove1D
     public override void Enter()
     {
         base.Enter();
+        player.transform.position = playerData.Swing.SwingInitialPosition;
         Debug.Log(rigidbody2D.velocity);
         playerData.Physics.ConnectedHingeJoint.connectedBody = rigidbody2D;
     }

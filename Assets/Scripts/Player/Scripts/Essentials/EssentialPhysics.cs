@@ -305,6 +305,7 @@ namespace UltimateCC
             if (hingeHit)
             {
                 playerData.Physics.ConnectedHingeJoint = hingeHit.rigidbody.gameObject.GetComponent<HingeJoint2D>();
+                playerData.Swing.SwingInitialPosition = new Vector2(hingeHit.transform.position.x - player.transform.localScale.x * (hingeHit.collider.bounds.size.x / 2 + player.CapsuleCollider2D.bounds.size.x / 2), hingeHit.transform.position.y - player.CapsuleCollider2D.bounds.size.y / 2 + (hingeHit.collider.bounds.size.y/2) + 0.1f);
             }
         }
         

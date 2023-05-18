@@ -263,6 +263,8 @@ namespace UltimateCC
             [SerializeField] private float drag;
             [SerializeField] private float gravity;
 
+            private Vector2 swingInitialPosition;
+            public Vector2 SwingInitialPosition { get { return swingInitialPosition; } set { swingInitialPosition = value; } }
             public float Drag => drag;
             public float Gravity => gravity;
         }
