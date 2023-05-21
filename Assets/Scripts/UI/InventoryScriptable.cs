@@ -1,39 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory/Create New Inventory")]
 public class InventoryScriptable : ScriptableObject
 {
-    public int maxItems = 16;
+    public int maxItems;
     public List<Item> items = new();
+    public Item nullitem;
+    
+    public InventoryScriptable() { maxItems = 0; } 
+    public void RefreshItems()
+    {
+        for (int i=0; i<maxItems; i++)
+        {
+            if (items.Count < maxItems) 
+            {
+                items.Add(nullitem);
+            }
+        }
+    }
     public bool AddItem(Item itemToAdd)
     {
         // Finds an empty slot if there is one
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i] == itemToAdd&& items[i].number < items[i].stackSize)
+            if (itemToAdd.stack  < itemToAdd.stackSize)
             {
-                items[i].number++;
-                Debug.Log("Add item number");
-                return true;
-            }
-            if (items[i] == null)
-            {
-                items[i] = itemToAdd;
-                Debug.Log("Add item null");
-                return true;
+                if (items[i] == itemToAdd)
+                {
+                    items[i].stack++;
+                    Debug.Log("Add item stack");
+                    return true;
+                }
+                if (items[i] == nullitem)
+                {
+                    items[i] = itemToAdd;
+                    Debug.Log("Add item null");
+                    return true;
+                }
             }
         }
-        // Adds a new item if the inventory has space
-        if (items.Count < maxItems)
-        {
-            items.Add(itemToAdd);
-            Debug.Log("Add item");
-            return true;
-        }
-        Debug.Log("No space in the inventory");
         return false;
     }
     public bool RemoveItem(Item itemToRemove)
@@ -43,7 +52,7 @@ public class InventoryScriptable : ScriptableObject
         {
             if (items[i] == itemToRemove)
             {
-                items[i] = null;
+                items[i] = nullitem;
                 Debug.Log("Remove item");
                 return true;
             }
@@ -51,8 +60,26 @@ public class InventoryScriptable : ScriptableObject
         Debug.Log("No item in the inventory for remove");
         return false;
     }
-    public void ShowItem()
+    public bool Check(Item itemToAdd)
     {
+        for (int i = 0; i < items.Count; i++) 
+        {
+            switch (items[i].type)
+            {
+                case "consumable":
+                    if (items[i] == itemToAdd)
+                    {
+                        items[i].stack++;
+                        Debug.Log("Add item stack");
 
+                    }
+                    return true;
+                    
+                default:
+                    break;
+            }
+
+        }
+        return false;
     }
 }

@@ -11,8 +11,9 @@ public class Item : ScriptableObject
     public string itemDescription;
     public bool isEquiped;
     public float time;
-    public int number;
+    public int stack;
     public int stackSize;
+    public string type;
 
     public Item()
     {
@@ -23,6 +24,8 @@ public class Item : ScriptableObject
         itemDescription = "";
         isEquiped = false;
         time = 0;
-        stackSize = 10;
+        stack = 1;
+        stackSize = 3;
+        type = "";
     }
 }

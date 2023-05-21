@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using Unity.VisualScripting;
 
 public class Inventory : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Inventory : MonoBehaviour
     public bool interacted;
     void Awake()
     {
+        
+        inventory.RefreshItems();
         item = null;
         inputActions = new PlayerInputActions();
         inputActions.UI.Enable();
@@ -41,9 +44,18 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < inventory.items.Count; i++)
         {
-            if (inventory.items[i]!=null)
+            if (inventory.items[i] != inventory.nullitem)
+            {
                 Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
-            // Null ise ne olacak
+                Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inventory.items[i].stack.ToString();
+            }
+            else
+            {
+                Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
+                Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+
+            }
+
         }
     }
     public void SelectItem(int slot)

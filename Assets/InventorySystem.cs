@@ -29,8 +29,9 @@ public class InventorySystem : MonoBehaviour
     public void Buy()
     {
         item = ShopInventoryManager.GetSelectedItem();
-        playerInventory.AddItem(item);
-        shopInventory.RemoveItem(item);
+        if (playerInventory.AddItem(item))
+            shopInventory.RemoveItem(item);
+        
     }
     private void OnConsumableTriggered(InputAction.CallbackContext context)
     {
