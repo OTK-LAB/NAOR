@@ -2008,6 +2008,14 @@ PrefabInstance:
       propertyPath: PlayerData.Check.groundLayer.m_Bits
       value: 1088
       objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.Consume.attackMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.Consume.horizontalSpeedMultiplier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040778, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -13262,177 +13270,10 @@ MonoBehaviour:
   shopInventory: {fileID: 11400000, guid: 26afafaa8aa7ebf4bb2cf028f166ab39, type: 2}
   PlayerInventoryManager: {fileID: 1193159896752092528}
   ShopInventoryManager: {fileID: 1193159897687804052}
-  playerData:
-    Walk:
-      physics2DGravityScale: 0
-      maxSpeed: 0
-      speedUpCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      speedUpTime: 0
-      slowDownCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      slowDownTime: 0
-    Crouch:
-      physics2DGravityScale: 0
-      maxSpeed: 0
-      speedUpCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      speedUpTime: 0
-      slowDownCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      slowDownTime: 0
-    Jump:
-      maxHeight: 0
-      jumpHeightCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      jumpTime: 0
-      jumpVelocityCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      jumpCutPower: 0
-      coyoteTimeMaxTime: 0
-      jumpBufferMaxTime: 0
-      coyoteTimeTimer: 0
-      jumpBufferTimer: 0
-      physics2DGravityScale: 0
-      maxXSpeed: 0
-      xSpeedUpCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      xSpeedUpTime: 0
-      xSlowDownCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      xSlowDownTime: 0
-    Land:
-      landHeightCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      landTime: 0
-      landVelocityCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      minLandSpeed: 0
-      physics2DGravityScale: 0
-      maxXSpeed: 0
-      xSpeedUpCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      xSpeedUpTime: 0
-      xSlowDownCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      xSlowDownTime: 0
-    Dash:
-      maxHeight: 0
-      heightCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      yVelovityCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      maxSpeed: 0
-      dashXVelocityCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      dashTime: 0
-      physics2DGravityScale: 0
-      manaCost: 0
-    Check:
-      groundCheckPosition: {x: 0, y: 0, z: 0}
-      groundLayer:
-        serializedVersion: 2
-        m_Bits: 0
-      isGrounded: 0
-      isOnSlope: 0
-      maxSlopeAngle: 0
-      currentSlopeAngle: 0
-      onSlopeSpeedDirection: {x: 0, y: 0}
-      isOnMovableSlope: 0
-      slopeContactPosition: {x: 0, y: 0}
-      canPlungeAttack: 0
-    Material:
-      zeroFriction: {fileID: 0}
-      infFriction: {fileID: 0}
-    Attack:
-      BasicAttack1:
-        attackDuration: 0
-        maxStateTime: 0
-      BasicAttack2:
-        attackDuration: 0
-        maxStateTime: 0
-      BasicAttack3:
-        attackDuration: 0
-        maxStateTime: 0
-      ChargeAttack:
-        chargeTimeMaxTime: 0
-        attackDuration: 0
-        maxStateTime: 0
-      PlungeAttack:
-        minHeight: 0
-        waitDuration: 0
-        minYVelocity: 0
-        speedUpCurve:
-          serializedVersion: 2
-          m_Curve: []
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        speedUpTime: 0
-        landDuration: 0
-        attackDamage: 0
+  playerData: {fileID: 1653952580}
   consumableInteracted: 0
   selectedItem: {fileID: 0}
+  shopSelectedItem: {fileID: 0}
 --- !u!114 &1653952578 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1391948044445387141, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
@@ -13442,6 +13283,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a25cdde9ff64cba4995d61e34b8efb89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1653952580 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+  m_PrefabInstance: {fileID: 386738272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392055236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58beed3e20d57741af5c6e962a68830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1661110636
