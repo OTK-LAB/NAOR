@@ -15,11 +15,13 @@ public class InventorySystem : MonoBehaviour
     public InventoryScriptable shopInventory;
     public Inventory PlayerInventoryManager;
     public Inventory ShopInventoryManager;
-    public PlayerData playerData;
+    public Ultimate2DPlayer playerData;
 
 
     public bool consumableInteracted;
     public Item selectedItem;
+    public Item shopSelectedItem;
+    
 
     private bool indicator;
     public delegate void myFunciton();
@@ -30,20 +32,33 @@ public class InventorySystem : MonoBehaviour
 
         inputActions.UI.Consumable.started += OnConsumableTriggered;
 
+        shopSelectedItem = playerInventory.nullitem;
         selectedItem = playerInventory.nullitem;
     }
     private void Start()
     {
-        StartCoroutine(DelayCoroutine(0));
     }
-    IEnumerator DelayCoroutine(float time)
+    IEnumerator DelayCoroutine(Item _selectedItem)
     {
         Debug.Log("Coroutine started");
-        yield return new WaitForSeconds(10);
-        Debug.Log("Coroutine resumed after 3 seconds");
+        yield return new WaitForSeconds(_selectedItem.time);
+        Debug.Log("Coroutine resumed after time seconds");
+        if (_selectedItem.id == 2)
+        {
+            HealthSystem.broccoli = false;
+        }
+        else if(_selectedItem.id == 4)
+        {
+            playerData.PlayerData.Consume.HorizontalSpeedMultiplier = 1;
+        }
+        else if(_selectedItem.id == 5)
+        {
+            playerData.PlayerData.Consume.AttackMultiplier= 1;
+        }
     }
     private void Update()
     {
+        shopSelectedItem = ShopInventoryManager.GetSelectedItem();
         selectedItem = PlayerInventoryManager.GetSelectedItem();
         if (consumableInteracted && selectedItem.isEquiped)
         {
@@ -60,13 +75,13 @@ public class InventorySystem : MonoBehaviour
                 Apple(selectedItem);
                 break;
             case 2:
-                Broccoli(selectedItem,true);
+                Broccoli(selectedItem);
                 break;
             case 3:
                 SpringWater(selectedItem);
                 break;
             case 4:
-                EnergyDrink(selectedItem,true);
+                EnergyDrink(selectedItem);
                 break;
             case 5:
                 Spinach(selectedItem);
@@ -81,40 +96,29 @@ public class InventorySystem : MonoBehaviour
     {
         HealthSystem.Heal(_selectedItem.value);
     }
-    public void Broccoli(Item _selectedItem,bool indicator)
+    public void Broccoli(Item _selectedItem)
     {
         HealthSystem.broccoli=true;
-        //  if (indicator)
-        DelayCoroutine(10f);
-        HealthSystem.broccoli=false;
-        Debug.Log("brokk");
-        //DelayCoroutine(_selectedItem.time);
-        //Broccoli(selectedItem, false);
-        //HealthSystem.broccoli = !indicator;
-        
+        StartCoroutine(DelayCoroutine(_selectedItem));
     }
     public void SpringWater(Item _selectedItem)
     {
         ManaSoulSystem.AddMana(33);
     }
-    public void EnergyDrink(Item _selectedItem,bool indicator)
+    public void EnergyDrink(Item _selectedItem)
     {
-        HealthSystem.broccoli = indicator;
-        if (indicator)
-        {
-            DelayCoroutine(_selectedItem.time);
-            EnergyDrink(selectedItem, false);
-        }
+        playerData.PlayerData.Consume.HorizontalSpeedMultiplier = 1.25f;
+        StartCoroutine(DelayCoroutine(_selectedItem));
     }
     public void Spinach(Item _selectedItem)
     {
+        playerData.PlayerData.Consume.AttackMultiplier = 1.25f;
+        StartCoroutine(DelayCoroutine(_selectedItem));
 
     }
     public void Buy()
     {
-        if (playerInventory.AddItem(selectedItem))
-            shopInventory.RemoveItem(selectedItem);
-        
+        playerInventory.AddItem(shopSelectedItem);
     }
     private void OnConsumableTriggered(InputAction.CallbackContext context)
     {

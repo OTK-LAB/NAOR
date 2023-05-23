@@ -17,11 +17,13 @@ public class Inventory : MonoBehaviour
 
     public bool PlayerInventory;
     public bool interacted;
+    private Item lastSelectedItem;
     void Awake()
     {
         
         inventory.RefreshItems();
         selectedItem = inventory.nullitem;
+        lastSelectedItem = inventory.nullitem;
         inputActions = new PlayerInputActions();
         inputActions.UI.Enable();
 
@@ -30,6 +32,7 @@ public class Inventory : MonoBehaviour
     }
     private void Update()
     {
+        
         if (interacted && PlayerInventory)
         {
             if (inventoryMenu.activeSelf)
@@ -58,6 +61,8 @@ public class Inventory : MonoBehaviour
     }
     public void SelectItem(int slot)
     {
+        foreach (Item item in inventory.items) { item.isEquiped = false; }
+
         selectedItem = inventory.items[slot];
         
         Image.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[slot].icon;
@@ -74,10 +79,15 @@ public class Inventory : MonoBehaviour
     }
     public void Equip()
     {
+        
         if (selectedItem.isEquiped)
-            selectedItem.isEquiped = false;
+        {
+            selectedItem.isEquiped =false;
+        }
         else
+        {
             selectedItem.isEquiped = true;
+        }
     }
 
     private void OnInventoryTriggered(InputAction.CallbackContext context)

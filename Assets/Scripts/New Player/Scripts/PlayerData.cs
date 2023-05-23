@@ -227,6 +227,7 @@ public class PlayerData
         public ChargeAttackVariables ChargeAttack;
         public PlungeAttackVariables PlungeAttack;
     }
+    [System.Serializable]
     public class ConsumablesVariables
     {
         [SerializeField] private float attackMultiplier;
@@ -247,4 +248,5 @@ public class PlayerData
     public CheckVariables Check;
     public MaterialVariables Material;
     public AttackStateVariables Attack;
+    public ConsumablesVariables Consume;
 }

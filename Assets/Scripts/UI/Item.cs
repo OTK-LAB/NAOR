@@ -24,7 +24,7 @@ public class Item : ScriptableObject
         itemDescription = "";
         isEquiped = false;
         time = 0;
-        stack = 1;
+        stack = 0;
         stackSize = 3;
         type = "";
     }

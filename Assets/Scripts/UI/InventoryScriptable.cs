@@ -27,21 +27,24 @@ public class InventoryScriptable : ScriptableObject
         // Finds an empty slot if there is one
         for (int i = 0; i < items.Count; i++)
         {
-            if (itemToAdd.stack  < itemToAdd.stackSize)
+            if (items[i] == itemToAdd)
             {
-                if (items[i] == itemToAdd)
+                
+                if (0 < itemToAdd.stack && itemToAdd.stack < itemToAdd.stackSize)
                 {
                     items[i].stack++;
                     Debug.Log("Add stack");
                     return true;
                 }
-                if (items[i] == nullitem)
-                {
-                    items[i] = itemToAdd;
-                    Debug.Log("Add item null");
-                    return true;
-                }
             }
+            if (items[i] == nullitem && itemToAdd.stack==0)
+            {
+                items[i] = itemToAdd;
+                items[i].stack= 1;
+                Debug.Log("Add item null");
+                return true;
+            }
+            
         }
         return false;
     }
