@@ -32,7 +32,7 @@ public class InventoryScriptable : ScriptableObject
                 if (items[i] == itemToAdd)
                 {
                     items[i].stack++;
-                    Debug.Log("Add item stack");
+                    Debug.Log("Add stack");
                     return true;
                 }
                 if (items[i] == nullitem)
@@ -52,12 +52,21 @@ public class InventoryScriptable : ScriptableObject
         {
             if (items[i] == itemToRemove)
             {
-                items[i] = nullitem;
-                Debug.Log("Remove item");
-                return true;
+                if (items[i].stack > 1)
+                {
+                    items[i].stack--;
+                    Debug.Log("Romove stack");
+                    return true;
+                }
+                else 
+                {
+                    items[i] = nullitem;
+                    Debug.Log("Remove item");
+                    return true;
+                }
+                
             }
         }
-        Debug.Log("No item in the inventory for remove");
         return false;
     }
     public bool Check(Item itemToAdd)
@@ -71,10 +80,9 @@ public class InventoryScriptable : ScriptableObject
                     {
                         items[i].stack++;
                         Debug.Log("Add item stack");
-
+                        return true;
                     }
-                    return true;
-                    
+                    break;
                 default:
                     break;
             }

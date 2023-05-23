@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
     public GameObject Text;
     public GameObject Image;
     public GameObject Grid;
-    public Item item;
+    public Item selectedItem;
 
     public bool PlayerInventory;
     public bool interacted;
@@ -21,7 +21,7 @@ public class Inventory : MonoBehaviour
     {
         
         inventory.RefreshItems();
-        item = null;
+        selectedItem = inventory.nullitem;
         inputActions = new PlayerInputActions();
         inputActions.UI.Enable();
 
@@ -53,14 +53,12 @@ public class Inventory : MonoBehaviour
             {
                 Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
                 Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
-
             }
-
         }
     }
     public void SelectItem(int slot)
     {
-        item = inventory.items[slot];
+        selectedItem = inventory.items[slot];
         
         Image.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[slot].icon;
         Text.GetComponent<TextMeshProUGUI>().text = inventory.items[slot].itemDescription;
@@ -68,7 +66,7 @@ public class Inventory : MonoBehaviour
     }
     public Item GetSelectedItem()
     {
-        return item;
+        return selectedItem;
     }
     public void OpenShop()
     {
@@ -76,7 +74,10 @@ public class Inventory : MonoBehaviour
     }
     public void Equip()
     {
-      
+        if (selectedItem.isEquiped)
+            selectedItem.isEquiped = false;
+        else
+            selectedItem.isEquiped = true;
     }
 
     private void OnInventoryTriggered(InputAction.CallbackContext context)

@@ -209,6 +209,7 @@ public class PlayerData
             [SerializeField, BoundedCurve, Space(5)] private AnimationCurve speedUpCurve;
             [SerializeField] private float speedUpTime;
             [SerializeField] private float landDuration;
+            [SerializeField] private float attackDamage;
 
             public float MinHeight => minHeight;
             public float WaitDuration => waitDuration;
@@ -216,6 +217,8 @@ public class PlayerData
             public float SpeedUpTime => speedUpTime;
             public float MinYVelocity => minYVelocity;
             public float LandDuration => landDuration;
+            public float AttackDamage => attackDamage;
+
         }
 
         public BasicAttack1Variables BasicAttack1;
@@ -223,6 +226,14 @@ public class PlayerData
         public BasicAttack3Variables BasicAttack3;
         public ChargeAttackVariables ChargeAttack;
         public PlungeAttackVariables PlungeAttack;
+    }
+    public class ConsumablesVariables
+    {
+        [SerializeField] private float attackMultiplier;
+        [SerializeField] private float horizontalSpeedMultiplier;
+
+        public float AttackMultiplier { get { return attackMultiplier; } set { attackMultiplier = value; } }
+        public float HorizontalSpeedMultiplier { get { return horizontalSpeedMultiplier; } set { horizontalSpeedMultiplier = value; } }
     }
     #endregion
     #endregion
