@@ -73,9 +73,10 @@ namespace UltimateCC
             [SerializeField, NonEditable] private bool canPlungeAttack;
             [SerializeField, NonEditable] private HingeJoint2D connectedHingeJoint;
             [HideInInspector]public RaycastHit2D Ledge;
+            [SerializeField, NonEditable] private GameObject connectedGroundObject;
 
 
-            public LayerMask GroundLayerMask => groundLayerMask;
+            public LayerMask GroundLayerMask { get { return groundLayerMask; } set { groundLayerMask = value; } }
             public LayerMask HeadBumpLayerMask => headBumpLayerMask;
             public LayerMask WallLayerMask => wallLayerMask;
             public LayerMask HingeLayerMask => hingeLayerMask;
@@ -109,6 +110,7 @@ namespace UltimateCC
             public Vector2 LedgeHangPosition { get { return ledgeHangPosition; } set { ledgeHangPosition = value; } }
             public bool CanPlungeAttack { get { return canPlungeAttack; } set { canPlungeAttack = value; } }
             public HingeJoint2D ConnectedHingeJoint {  get { return connectedHingeJoint; } set { connectedHingeJoint = value; } }
+            public GameObject ConnectedGroundObject { get { return connectedGroundObject; } set { connectedGroundObject = value; } }
         }
         [System.Serializable]
         public class WalkVariables

@@ -57,6 +57,7 @@ namespace UltimateCC
         // This function includes essential physics checks that are required for the player state logic to function correctly.
         public virtual void PhysicsCheck()
         {
+            EssentialPhysics.HandlePassablePlatform(player, playerData);
             EssentialPhysics.SetPlayerFacingDirection(inputManager, player, playerData);
             player.CapsuleCollider2D.GetContacts(playerData.Physics.Contacts);
             EssentialPhysics.GroundCheck(player, playerData);

@@ -69,6 +69,7 @@ namespace UltimateCC
             if (_hit)
             {
                 playerData.Physics.IsGrounded = true;
+                playerData.Physics.ConnectedGroundObject = _hit.collider.gameObject;
                 playerData.Physics.WalkSpeedDirection = Vector2.Perpendicular(_hit.normal).normalized;
                 playerData.Physics.ContactPosition = _hit.point;
                 playerData.Physics.Slope.CurrentSlopeAngle = Vector2.Angle(_hit.normal, Vector2.up);
@@ -82,6 +83,7 @@ namespace UltimateCC
             else
             {
                 playerData.Physics.IsGrounded = false;
+                playerData.Physics.ConnectedGroundObject = null;
                 playerData.Physics.WalkSpeedDirection = new Vector2(-1, 0);
                 playerData.Physics.ContactPosition = Vector2.zero;
                 playerData.Physics.Slope.CurrentSlopeAngle = 0f;
@@ -318,5 +320,39 @@ namespace UltimateCC
             playerData.Physics.LedgeHangPosition = new Vector2(playerData.Physics.Ledge.transform.position.x - player.transform.localScale.x * (playerData.Physics.Ledge.collider.bounds.size.x / 2 + player.CapsuleCollider2D.bounds.size.x / 2), playerData.Physics.Ledge.transform.position.y - player.CapsuleCollider2D.bounds.size.y / 2 + (playerData.Physics.Ledge.collider.bounds.size.y/2) + 0.1f);
         }
     }
+
+        public static void HandlePassablePlatform(PlayerMain player, PlayerData playerData)
+        {
+            if (playerData.Physics.ConnectedGroundObject && playerData.Physics.ConnectedGroundObject.layer == 12
+                && player.InputManager.Input_Crouch && playerData.Physics.IsGrounded && IsLayerInMask(playerData.Physics.GroundLayerMask, 12))
+            {
+                playerData.Physics.GroundLayerMask = RemoveLayerFromMask(playerData.Physics.GroundLayerMask, 12);
+                playerData.Physics.IsGrounded = false;
+                Physics2D.IgnoreLayerCollision(3, 12, true);
+            }
+            else if (playerData.Physics.IsGrounded && !IsLayerInMask(playerData.Physics.GroundLayerMask, 12))
+            {
+                playerData.Physics.GroundLayerMask = AddLayerToMask(playerData.Physics.GroundLayerMask, 12);
+                Physics2D.IgnoreLayerCollision(3, 12, false);
+            }
+        }
+
+        private static LayerMask RemoveLayerFromMask(LayerMask mask, int layer)
+        {
+            mask &= ~(1 << layer);
+            return mask;
+        }
+
+        private static LayerMask AddLayerToMask(LayerMask mask, int layer)
+        {
+            mask |= (1 << layer);
+            return mask;
+        }
+
+        private static bool IsLayerInMask(LayerMask mask, int layer)
+        {
+            return mask == (mask | (1 << layer));
+        }
+
     }
 }
