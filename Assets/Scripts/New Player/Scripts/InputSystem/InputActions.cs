@@ -216,6 +216,34 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Interaction"",
+            ""id"": ""24e00d5a-03b3-4cea-9203-96b555dfe349"",
+            ""actions"": [
+                {
+                    ""name"": ""NpcInteraction"",
+                    ""type"": ""Button"",
+                    ""id"": ""07d9b960-92bc-4f55-986d-b365a9ad47be"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b113201e-8f14-4225-b8ee-72e6bfc9bf57"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NpcInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -240,6 +268,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_PlungeAttack = m_Player.FindAction("PlungeAttack", throwIfNotFound: true);
+        // Interaction
+        m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
+        m_Interaction_NpcInteraction = m_Interaction.FindAction("NpcInteraction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -368,6 +399,39 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Interaction
+    private readonly InputActionMap m_Interaction;
+    private IInteractionActions m_InteractionActionsCallbackInterface;
+    private readonly InputAction m_Interaction_NpcInteraction;
+    public struct InteractionActions
+    {
+        private @InputActions m_Wrapper;
+        public InteractionActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NpcInteraction => m_Wrapper.m_Interaction_NpcInteraction;
+        public InputActionMap Get() { return m_Wrapper.m_Interaction; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InteractionActions set) { return set.Get(); }
+        public void SetCallbacks(IInteractionActions instance)
+        {
+            if (m_Wrapper.m_InteractionActionsCallbackInterface != null)
+            {
+                @NpcInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+                @NpcInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+                @NpcInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+            }
+            m_Wrapper.m_InteractionActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @NpcInteraction.started += instance.OnNpcInteraction;
+                @NpcInteraction.performed += instance.OnNpcInteraction;
+                @NpcInteraction.canceled += instance.OnNpcInteraction;
+            }
+        }
+    }
+    public InteractionActions @Interaction => new InteractionActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -385,5 +449,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnPlungeAttack(InputAction.CallbackContext context);
+    }
+    public interface IInteractionActions
+    {
+        void OnNpcInteraction(InputAction.CallbackContext context);
     }
 }

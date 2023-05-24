@@ -22,12 +22,20 @@ public class CurrencyScript : MonoBehaviour
         currency2Text.text = currency2.ToString();
     }
 
-    private void SpendMoney(int amount, int type)
+    private bool SpendMoney(int amount, int type)
     {
         if (type == 1 && amount <= currency1)
+        {
             currency1 -= amount;
+            return true;
+        }
+
         else if (type == 2 && amount <= currency2)
+        {
             currency2 -= amount;
+            return true;
+        }
+        return false;
     }
 
     private void EarnMoney(int amount, int type)
