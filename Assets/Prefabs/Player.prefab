@@ -198,7 +198,7 @@ MonoBehaviour:
       canWallJump: 0
       collidedMovingRigidbody: {fileID: 0}
       localVelocity: {x: 0, y: 0}
-      useCustomZRotations: 0
+      useCustomZRotations: 1
       Slope:
         maxSlopeAngle: 59
         currentSlopeAngle: 0
@@ -755,8 +755,8 @@ MonoBehaviour:
       dashCooldownTimer: 0
       physics2DGravityScale: 0
     Swing:
-      drag: 0
-      gravity: 0
+      drag: 1
+      gravity: 3
     Attack:
       BasicAttack1:
         attackDuration: 0.3
