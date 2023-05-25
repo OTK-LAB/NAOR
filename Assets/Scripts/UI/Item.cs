@@ -14,6 +14,7 @@ public class Item : ScriptableObject
     public int stack;
     public int stackSize;
     public string type;
+    public int price;
 
     public Item()
     {
@@ -27,5 +28,6 @@ public class Item : ScriptableObject
         stack = 0;
         stackSize = 3;
         type = "";
+        price = 0;
     }
 }

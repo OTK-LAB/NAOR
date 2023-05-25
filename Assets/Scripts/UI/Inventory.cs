@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -14,9 +15,11 @@ public class Inventory : MonoBehaviour
     public GameObject Image;
     public GameObject Grid;
     public Item selectedItem;
+    public GameObject SelectedImage;
 
     public bool PlayerInventory;
     public bool interacted;
+
     private Item lastSelectedItem;
     void Awake()
     {
@@ -32,7 +35,6 @@ public class Inventory : MonoBehaviour
     }
     private void Update()
     {
-        
         if (interacted && PlayerInventory)
         {
             if (inventoryMenu.activeSelf)
@@ -50,11 +52,13 @@ public class Inventory : MonoBehaviour
             if (inventory.items[i] != inventory.nullitem)
             {
                 Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
+                SelectedImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
                 Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inventory.items[i].stack.ToString();
             }
             else
             {
                 Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
+                SelectedImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
                 Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
             }
         }
@@ -76,6 +80,10 @@ public class Inventory : MonoBehaviour
     public void OpenShop()
     {
         inventoryMenu.SetActive(true);
+    }
+    public void CloseShop()
+    {
+        inventoryMenu.SetActive(false);
     }
     public void Equip()
     {

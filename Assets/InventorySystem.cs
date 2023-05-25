@@ -16,14 +16,12 @@ public class InventorySystem : MonoBehaviour
     public Inventory PlayerInventoryManager;
     public Inventory ShopInventoryManager;
     public Ultimate2DPlayer playerData;
-
+    public CurrencyScript Currency;
 
     public bool consumableInteracted;
     public Item selectedItem;
     public Item shopSelectedItem;
-    
 
-    private bool indicator;
     public delegate void myFunciton();
     void Awake()
     {
@@ -65,6 +63,7 @@ public class InventorySystem : MonoBehaviour
             Consume();
         }
     }
+    
     public void Consume()
     {
         consumableInteracted = false;
@@ -116,9 +115,12 @@ public class InventorySystem : MonoBehaviour
         StartCoroutine(DelayCoroutine(_selectedItem));
 
     }
-    public void Buy()
+    public void Buy() 
     {
-        playerInventory.AddItem(shopSelectedItem);
+        if (Currency.SpendMoney(shopSelectedItem.price,2))
+        {
+            playerInventory.AddItem(shopSelectedItem);
+        }
     }
     private void OnConsumableTriggered(InputAction.CallbackContext context)
     {

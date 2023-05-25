@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering.Universal;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory/Create New Inventory")]
@@ -10,8 +12,8 @@ public class InventoryScriptable : ScriptableObject
     public int maxItems;
     public List<Item> items = new();
     public Item nullitem;
-    
-    public InventoryScriptable() { maxItems = 0; } 
+    public int consumableMaxCount;
+    public InventoryScriptable() { maxItems = 0; consumableMaxCount = 3; } 
     public void RefreshItems()
     {
         for (int i=0; i<maxItems; i++)
@@ -29,7 +31,6 @@ public class InventoryScriptable : ScriptableObject
         {
             if (items[i] == itemToAdd)
             {
-                
                 if (0 < itemToAdd.stack && itemToAdd.stack < itemToAdd.stackSize)
                 {
                     items[i].stack++;
@@ -39,10 +40,23 @@ public class InventoryScriptable : ScriptableObject
             }
             if (items[i] == nullitem && itemToAdd.stack==0)
             {
-                items[i] = itemToAdd;
-                items[i].stack= 1;
-                Debug.Log("Add item null");
-                return true;
+                if (itemToAdd.type == "consumable")
+                {
+                    if (ConsumableCount() < consumableMaxCount)
+                    {
+                        items[i] = itemToAdd;
+                        items[i].stack = 1;
+                        Debug.Log("Add item null");
+                        return true;
+                    }
+                }
+                else
+                {
+                    items[i] = itemToAdd;
+                    items[i].stack = 1;
+                    Debug.Log("Add item null");
+                    return true;
+                }
             }
             
         }
@@ -63,6 +77,7 @@ public class InventoryScriptable : ScriptableObject
                 }
                 else 
                 {
+                    items[i].stack--;
                     items[i] = nullitem;
                     Debug.Log("Remove item");
                     return true;
@@ -72,25 +87,16 @@ public class InventoryScriptable : ScriptableObject
         }
         return false;
     }
-    public bool Check(Item itemToAdd)
+    public int ConsumableCount()
     {
+        int count = 0;
         for (int i = 0; i < items.Count; i++) 
         {
-            switch (items[i].type)
+            if (items[i].type == "consumable")
             {
-                case "consumable":
-                    if (items[i] == itemToAdd)
-                    {
-                        items[i].stack++;
-                        Debug.Log("Add item stack");
-                        return true;
-                    }
-                    break;
-                default:
-                    break;
+                count++;
             }
-
         }
-        return false;
+        return count;
     }
 }
