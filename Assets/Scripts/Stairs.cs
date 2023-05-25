@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 
 public class Stairs : MonoBehaviour
 {
-    public BoxCollider2D boxCollider;
+    public GameObject boxCollider;
     public PlayerInputActions inputActions;
-    bool downCalled = false;
+    bool inRange = false;
     void Awake()
     {
         // Get the BoxCollider2D component of the stairs object
@@ -21,38 +21,42 @@ public class Stairs : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
+        {/*
             // Check if the player is jumping (by checking the y velocity)
             if (collision.gameObject.GetComponent<Rigidbody2D>().velocity.y < 0 && !downCalled)
             {
                 // Activate the box collider when the player jumps on the stairs
-                boxCollider.enabled = true;
+                boxCollider.SetActive(true);
             }
             else
             {
                 // Deactivate the box collider when the player is walking normally
-                boxCollider.enabled = false;
+                boxCollider.SetActive(false);
             }
+            */
+            inRange = true;
         }
-    }
 
+    }
+    
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             // Deactivate the box collider when the player leaves the stairs
-            boxCollider.enabled = false;
-            downCalled = false;
+            boxCollider.SetActive(true);
+            inRange = false;
         }
     }
-
+    
    void OnDownStarted(InputAction.CallbackContext context)
     {
         Debug.Log("OnDownStarted() called");
-        if(boxCollider.enabled)
-            downCalled = true;
+        if(boxCollider && inRange)
+            boxCollider.SetActive(false);
         // Disable the box collider when the player presses the down arrow key
-        //boxCollider.enabled = false;
- 
+
+
+
     }
 }

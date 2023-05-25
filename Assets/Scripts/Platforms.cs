@@ -8,5 +8,7 @@ public enum Platforms
     CrushingTrap,
     MovingBridge,
     LockedDoor,
-
+    MovingPlatformX,
+    MovingPlatformY,
+    ElongatedPlatform,
 }

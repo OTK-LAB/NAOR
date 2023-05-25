@@ -6,7 +6,7 @@ public class PlayerPlungeAttackDiveState : AttackState, IMove1D
     public PlayerPlungeAttackDiveState(PlayerMain player, PlayerStateMachine stateMachine, PlayerMain.AnimName animEnum, PlayerData playerData) : base(player, stateMachine, animEnum, playerData)
     {
     }
-
+    RaycastHit2D breakableCheck;
     public override void Enter()
     {
         base.Enter();
@@ -26,6 +26,7 @@ public class PlayerPlungeAttackDiveState : AttackState, IMove1D
     public override void PhysicsCheck()
     {
         base.PhysicsCheck();
+        
     }
 
     public override void SwitchStateLogic()
@@ -40,6 +41,14 @@ public class PlayerPlungeAttackDiveState : AttackState, IMove1D
     public override void Update()
     {
         base.Update();
+        breakableCheck = Physics2D.Raycast(player.Rigidbody2D.position, new Vector2(0, -1), 2f,playerData.Check.GroundLayer);
+        if (breakableCheck.collider != null)
+        {
+            if (breakableCheck.collider.CompareTag("Breakable"))
+            {
+                breakableCheck.collider.gameObject.SetActive(false);
+            }
+        }
     }
 
     public void Move1D()
