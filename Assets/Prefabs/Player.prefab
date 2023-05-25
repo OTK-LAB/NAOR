@@ -242,6 +242,7 @@ MonoBehaviour:
       ledgeHangPosition: {x: 0, y: 0}
       canPlungeAttack: 0
       connectedHingeJoint: {fileID: 0}
+      connectedGroundObject: {fileID: 0}
     Walk:
       maxSpeed: 10
       speedUpCurve:
@@ -753,6 +754,53 @@ MonoBehaviour:
       dashCooldown: 1
       dashCooldownTimer: 0
       physics2DGravityScale: 0
+    Swing:
+      drag: 0
+      gravity: 0
+    Attack:
+      BasicAttack1:
+        attackDuration: 0.3
+        maxStateTime: 1
+      BasicAttack2:
+        attackDuration: 0.3
+        maxStateTime: 1
+      BasicAttack3:
+        attackDuration: 0.3
+        maxStateTime: 1
+      ChargeAttack:
+        chargeTimeMaxTime: 1
+        attackDuration: 0.2
+        maxStateTime: 1.2
+      PlungeAttack:
+        minHeight: 2
+        waitDuration: 0.4
+        minYVelocity: -35
+        speedUpCurve:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 2
+            outSlope: 2
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        speedUpTime: 0.3
+        landDuration: 0.2
     Walls:
       WallSlide:
         facingDirectionWhenSliding: -1
@@ -1111,50 +1159,6 @@ MonoBehaviour:
       staminaRegenPerSec: 50
       allowJumpWhenExhausted: 1
       physics2DGravityScale: 0
-    Attack:
-      BasicAttack1:
-        attackDuration: 0.3
-        maxStateTime: 1
-      BasicAttack2:
-        attackDuration: 0.3
-        maxStateTime: 1
-      BasicAttack3:
-        attackDuration: 0.3
-        maxStateTime: 1
-      ChargeAttack:
-        chargeTimeMaxTime: 1
-        attackDuration: 0.2
-        maxStateTime: 1.2
-      PlungeAttack:
-        minHeight: 2
-        waitDuration: 0.4
-        minYVelocity: -35
-        speedUpCurve:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0
-            inSlope: 2
-            outSlope: 2
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 1
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        speedUpTime: 0.3
-        landDuration: 0.2
 --- !u!114 &5902648875053040769
 MonoBehaviour:
   m_ObjectHideFlags: 0

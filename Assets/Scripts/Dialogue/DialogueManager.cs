@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+
 public class DialogueManager : MonoBehaviour
 {
     
@@ -65,9 +66,7 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("Conversation ended");
             isActive = false;
 	        gameObject.SetActive(false);
-            //FIXME:
-	        //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Enable();
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputManager>().playerControls.Enable();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<UltimateCC.PlayerInputManager>().playerControls.Enable();
         }
     }
 

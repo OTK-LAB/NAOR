@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 public class DialogueTrigger : MonoBehaviour
 {
     public Message[] messages;
     public Actor[] actors;
     public GameObject DialogueBox;
     public GameObject InteractionText;
+    public GameObject Player;
     public Animator animator;
     public PlayerInputActions inputActions;
     public bool inRange = false;
@@ -41,8 +43,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void StartDialogue()
     {
-        //FIXME:
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInputManager>().playerControls.Disable();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<UltimateCC.PlayerInputManager>().playerControls.Disable();
         if (!reinterractable)
             Destroy(InteractionText);
         else
