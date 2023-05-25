@@ -41,7 +41,7 @@ public class PlayerPlungeAttackDiveState : AttackState, IMove1D
     public override void Update()
     {
         base.Update();
-        breakableCheck = Physics2D.Raycast(player.Rigidbody2D.position, new Vector2(0, -1), 2f,playerData.Check.GroundLayer);
+        breakableCheck = Physics2D.Raycast(player.Rigidbody2D.position, new Vector2(0, -1), 2f,playerData.Physics.GroundLayerMask);
         if (breakableCheck.collider != null)
         {
             if (breakableCheck.collider.CompareTag("Breakable"))
