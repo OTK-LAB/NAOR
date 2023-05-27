@@ -20,13 +20,11 @@ public class Inventory : MonoBehaviour
     public bool PlayerInventory;
     public bool interacted;
 
-    private Item lastSelectedItem;
     void Awake()
     {
         
         inventory.RefreshItems();
         selectedItem = inventory.nullitem;
-        lastSelectedItem = inventory.nullitem;
         inputActions = new PlayerInputActions();
         inputActions.UI.Enable();
 
@@ -52,23 +50,18 @@ public class Inventory : MonoBehaviour
             if (inventory.items[i] != inventory.nullitem)
             {
                 Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
-                SelectedImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
                 Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inventory.items[i].stack.ToString();
             }
             else
             {
                 Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
-                SelectedImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
                 Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
             }
         }
     }
     public void SelectItem(int slot)
     {
-        foreach (Item item in inventory.items) { item.isEquiped = false; }
-
         selectedItem = inventory.items[slot];
-        
         Image.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[slot].icon;
         Text.GetComponent<TextMeshProUGUI>().text = inventory.items[slot].itemDescription;
       
@@ -87,14 +80,19 @@ public class Inventory : MonoBehaviour
     }
     public void Equip()
     {
-        
         if (selectedItem.isEquiped)
         {
+            foreach (Item item in inventory.items) { item.isEquiped = false; }
             selectedItem.isEquiped =false;
+            SelectedImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
+
         }
         else
         {
+            foreach (Item item in inventory.items) { item.isEquiped = false; }
             selectedItem.isEquiped = true;
+            SelectedImage.GetComponent<UnityEngine.UI.Image>().sprite = selectedItem.icon;
+
         }
     }
 

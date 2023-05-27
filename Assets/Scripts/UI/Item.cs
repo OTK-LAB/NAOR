@@ -1,4 +1,5 @@
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu (fileName="New Item", menuName ="Inventory/Create New Item")]
@@ -10,7 +11,9 @@ public class Item : ScriptableObject
     public Sprite icon;
     public string itemDescription;
     public bool isEquiped;
-    public float time;
+    public bool inDelay;
+    public float effectTime;
+    public float delayTime;
     public int stack;
     public int stackSize;
     public string type;
@@ -24,7 +27,9 @@ public class Item : ScriptableObject
         icon = null;
         itemDescription = "";
         isEquiped = false;
-        time = 0;
+        inDelay = false;
+        effectTime = 0;
+        delayTime= 0;
         stack = 0;
         stackSize = 3;
         type = "";
