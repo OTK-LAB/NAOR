@@ -98,6 +98,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Necromancers Blade"",
+                    ""type"": ""Button"",
+                    ""id"": ""045a160c-cd7c-4f46-835b-18d6dcf2db66"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -364,6 +373,17 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Plunge Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35e754d2-48d1-4d17-ae9f-ef5f0f73edf2"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Necromancers Blade"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -420,6 +440,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_WallClimb = m_Player.FindAction("WallClimb", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_PlungeAttack = m_Player.FindAction("Plunge Attack", throwIfNotFound: true);
+        m_Player_NecromancersBlade = m_Player.FindAction("Necromancers Blade", throwIfNotFound: true);
         // Interaction
         m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
         m_Interaction_NpcInteraction = m_Interaction.FindAction("NpcInteraction", throwIfNotFound: true);
@@ -490,6 +511,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_WallClimb;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_PlungeAttack;
+    private readonly InputAction m_Player_NecromancersBlade;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -502,6 +524,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @WallClimb => m_Wrapper.m_Player_WallClimb;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @PlungeAttack => m_Wrapper.m_Player_PlungeAttack;
+        public InputAction @NecromancersBlade => m_Wrapper.m_Player_NecromancersBlade;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -535,6 +558,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @PlungeAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlungeAttack;
                 @PlungeAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlungeAttack;
                 @PlungeAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPlungeAttack;
+                @NecromancersBlade.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNecromancersBlade;
+                @NecromancersBlade.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNecromancersBlade;
+                @NecromancersBlade.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNecromancersBlade;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -563,6 +589,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @PlungeAttack.started += instance.OnPlungeAttack;
                 @PlungeAttack.performed += instance.OnPlungeAttack;
                 @PlungeAttack.canceled += instance.OnPlungeAttack;
+                @NecromancersBlade.started += instance.OnNecromancersBlade;
+                @NecromancersBlade.performed += instance.OnNecromancersBlade;
+                @NecromancersBlade.canceled += instance.OnNecromancersBlade;
             }
         }
     }
@@ -619,6 +648,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnWallClimb(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnPlungeAttack(InputAction.CallbackContext context);
+        void OnNecromancersBlade(InputAction.CallbackContext context);
     }
     public interface IInteractionActions
     {

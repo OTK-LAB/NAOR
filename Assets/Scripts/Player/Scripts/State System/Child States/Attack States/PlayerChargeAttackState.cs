@@ -1,4 +1,5 @@
 using UltimateCC;
+using UnityEngine;
 
 public class PlayerChargeAttackState : AttackState
 {
@@ -19,6 +20,11 @@ public class PlayerChargeAttackState : AttackState
         inputManager.Input_Attack = false;
     }
 
+    public override void Update()
+    {
+        base.Update();
+    }
+
     public override void FixedUpdate()
     {
         rigidbody2D.velocity = new(0,0);
@@ -33,7 +39,7 @@ public class PlayerChargeAttackState : AttackState
     public override void SwitchStateLogic()
     {
         base.SwitchStateLogic();
-        if (localTime < playerData.Attack.ChargeAttack.AttackDuration && !inputManager.Input_Attack)
+        if (localTime < playerData.Attack.ChargeAttack.ChargeTimeMaxTime && !inputManager.Input_Attack)
         {
             stateMachine.ChangeState(player.BasicAttack1State);
         }
@@ -51,16 +57,11 @@ public class PlayerChargeAttackState : AttackState
         }
         else if (inputManager.Input_Crouch)
         {
-           stateMachine.ChangeState(player.CrouchIdleState);
+            stateMachine.ChangeState(player.CrouchIdleState);
         }
         else if (localTime > maxStateTime)
         {
             stateMachine.ChangeState(player.IdleState);
         }
-    }
-
-    public override void Update()
-    {
-        base.Update();
     }
 }

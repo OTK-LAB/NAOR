@@ -9,6 +9,7 @@ namespace UltimateCC
         // Declaration of necessary references
         private PlayerMain player;
         private PlayerData playerData;
+        public AbilityManager abilityManager;
         public InputActions playerControls;
 
         // Variables to store input
@@ -44,6 +45,7 @@ namespace UltimateCC
             playerControls = new InputActions(); // Initialize InputActions object to use input map of new input system
             player = GetComponent<PlayerMain>(); // Reference for Ultimate2DPlayer component where all of content come up together
             playerData = player.PlayerData; // Reference for Ultimate2DPlayer.PlayerData component where all variables stored
+            abilityManager = GetComponent<AbilityManager>();
         }
 
         private void OnEnable()
@@ -67,6 +69,8 @@ namespace UltimateCC
             playerControls.Player.PlungeAttack.started += OnPlungeAttack;
             playerControls.Player.PlungeAttack.performed += OnPlungeAttack;
             playerControls.Player.PlungeAttack.canceled += OnPlungeAttack;
+            playerControls.Player.NecromancersBlade.started += OnNecromancersBlade;
+            playerControls.Player.NecromancersBlade.canceled += OnNecromancersBlade;
         }
 
         private void FixedUpdate()
@@ -153,6 +157,20 @@ namespace UltimateCC
         private void OnPlungeAttack(InputAction.CallbackContext context)
         {
             input_PlungeAttack = context.ReadValueAsButton();
+        }
+        private void OnNecromancersBlade(InputAction.CallbackContext context)
+        {
+            if (context.ReadValueAsButton())
+            {
+                if (abilityManager.NecromancersBlade.phase == AbilityManager.Phase.Off)
+                {
+                    abilityManager.NecromancersBlade.phase = AbilityManager.Phase.Enter;
+                }
+                else if (abilityManager.NecromancersBlade.phase == AbilityManager.Phase.On)
+                {
+                    abilityManager.NecromancersBlade.phase = AbilityManager.Phase.Exit;
+                }
+            }
         }
         #endregion
     }

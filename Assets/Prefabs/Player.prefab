@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5902648875053040769}
   - component: {fileID: 1391948044445387141}
   - component: {fileID: 2348788264557028454}
+  - component: {fileID: 6991794146673489783}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1171,6 +1172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f68b522c39350442af03c4f4fd577f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityManager: {fileID: 0}
   input_Walk: 0
   input_Jump: 0
   input_Dash: 0
@@ -1215,3 +1217,23 @@ MonoBehaviour:
   soulBar: {fileID: 0}
   healthSystem: {fileID: 1391948044445387141}
   smoothing: 5
+--- !u!114 &6991794146673489783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5902648875053040768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c66e7d0d4c89e48b133d70d4e488c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NecromancersBlade:
+    ManaCost: 35
+    AttackMultiplier: 1.5
+    MaxSoul: 3
+    MaxUpgradedAttacks: 3
+    phase: 0
+    StoredSoul: 0
+    CurrentUpgradedAttack: 0
