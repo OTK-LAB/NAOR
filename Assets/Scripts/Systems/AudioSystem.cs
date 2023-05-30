@@ -27,28 +27,26 @@ public static class AudioSystem
     }
 
     /// <summary>
-    /// Plays Audioclips which are restored in ResourceManger and type of AudioManager.Audio.SFX, AudioManager.Audio.VoiceLine, AudioManager.Audio.Soundtrack
+    /// Plays Audioclips which are restored in ResourceManger and type of AudioManager.Audio.SFX, AudioManager.Audio.VoiceLine, AudioManager.Audio.Soundtrack and returns AudioSource attached.
     /// </summary>
-    /// <param audio="audio2"></param>
-    /// <returns></returns>
     public static AudioSource Play<T>(T audio, float volume = 1f, float pitch = 1f, AudioSource audioSource = default, bool isOneShot = default, bool destroyAtFinish = default, Vector3 point = default, Transform parent = default) where T : struct, IConvertible
     {
         string name = "";
-        ResourceManager.AudioClips<T>[] clips = null;
+        ResourceSystem.AudioClips<T>[] clips = null;
         if (typeof(T) == typeof(Audio.SFX))
         {
             name = "SFXAudio";
-            clips = ResourceManager.i.sfx as ResourceManager.AudioClips<T>[];
+            clips = ResourceSystem.I.Audios.SFX as ResourceSystem.AudioClips<T>[];
         }
         else if (typeof(T) == typeof(Audio.VoiceLine))
         {
             name = "VoiceLineAudio";
-            clips = ResourceManager.i.voiceLine as ResourceManager.AudioClips<T>[];
+            clips = ResourceSystem.I.Audios.VoiceLine as ResourceSystem.AudioClips<T>[];
         }
         else if (typeof(T) == typeof(Audio.Soundtrack))
         {
             name = "SoundtrackAudio";
-            clips = ResourceManager.i.soundtrack as ResourceManager.AudioClips<T>[];
+            clips = ResourceSystem.I.Audios.Soundtrack as ResourceSystem.AudioClips<T>[];
         }
         else
         {
@@ -56,11 +54,11 @@ public static class AudioSystem
             return null;
         }
 
-        if (Array.Exists<ResourceManager.AudioClips<T>>(clips, x => x.clip.Equals(audio)))
+        if (Array.Exists<ResourceSystem.AudioClips<T>>(clips, x => x.clip.Equals(audio)))
         {
             if (audioSource == null) audioSource = AddObjectWithAudioSource(name, parent, point);
             audioSource.pitch = pitch;
-            AudioClip audioClip = Array.Find<ResourceManager.AudioClips<T>>(clips, x => x.clip.Equals(audio)).audio;
+            AudioClip audioClip = Array.Find<ResourceSystem.AudioClips<T>>(clips, x => x.clip.Equals(audio)).audio;
             if (isOneShot) audioSource.PlayOneShot(audioClip, volume);
             else
             {

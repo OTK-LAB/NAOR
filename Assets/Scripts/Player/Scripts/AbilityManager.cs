@@ -71,7 +71,6 @@ public class AbilityManager : MonoBehaviour
     private void SpawnCreature(int number)
     {
         // instantiate of creature number times
-        Instantiate(ResourceManager.i.particle[0].prefab);
     }
 
     // Soul walk Handler Function Declaration

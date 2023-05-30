@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3743983999395096744}
   - component: {fileID: -181266577534246170}
   m_Layer: 0
-  m_Name: ResourceManager
+  m_Name: ResourceSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,20 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cf0b74cd4710304cb4f6821aa535504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfx: []
-  voiceLine: []
-  soundtrack: []
-  particle:
-  - name: 0
-    prefab: {fileID: 0}
-  - name: 1
-    prefab: {fileID: 0}
-  - name: 2
-    prefab: {fileID: 0}
-  - name: 0
-    prefab: {fileID: 0}
-  - name: 0
-    prefab: {fileID: 0}
-  - name: 0
-    prefab: {fileID: 0}
-  vfxGraph: []
+  Audios:
+    SFX: []
+    VoiceLine: []
+    Soundtrack: []
+  Visuals:
+    Particle: []
+    VFXGraph: []
+  Prefabs: []
