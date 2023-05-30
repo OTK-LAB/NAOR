@@ -49,11 +49,11 @@ public class InventorySystem : MonoBehaviour
         }
         else if(_selectedItem.id == 4)
         {
-            playerData.PlayerData.Consume.HorizontalSpeedMultiplier = 1;
+            playerData.PlayerData.Shop.HorizontalSpeedMultiplier = 1;
         }
         else if(_selectedItem.id == 5)
         {
-            playerData.PlayerData.Consume.AttackMultiplier= 1;
+            playerData.PlayerData.Shop.AttackMultiplier= 1;
         }
     }
     IEnumerator DelayCoroutine(Item _selectedItem)
@@ -70,13 +70,17 @@ public class InventorySystem : MonoBehaviour
         selectedItem = PlayerInventoryManager.GetSelectedItem();
         if (consumableInteracted && selectedItem.isEquiped && !selectedItem.inDelay)
         {
-            Consume();
+            Consume(selectedItem);
+        }
+        if (shopSelectedItem.type == "permanent" && shopSelectedItem.stack==1)
+        {
+            Consume(shopSelectedItem);
+            shopSelectedItem.stack = 2;
         }
     }
     
-    public void Consume()
+    public void Consume(Item selectedItem)
     {
-        consumableInteracted = false;
 
         switch (selectedItem.id)
         {
@@ -95,10 +99,20 @@ public class InventorySystem : MonoBehaviour
             case 5:
                 Spinach(selectedItem);
                 break;
+            case 6:
+                HpBoost(selectedItem);
+                break;
+            case 7:
+                ManaBoost(selectedItem);
+                break;
+            case 8:
+                AbilityPowerBoost(selectedItem);
+                break;
             default:
                 break;
         }
         playerInventory.RemoveItem(selectedItem);
+
 
     }
     public void Apple(Item _selectedItem)
@@ -117,21 +131,39 @@ public class InventorySystem : MonoBehaviour
     }
     public void EnergyDrink(Item _selectedItem)
     {
-        playerData.PlayerData.Consume.HorizontalSpeedMultiplier = 1.25f;
+        playerData.PlayerData.Shop.HorizontalSpeedMultiplier = _selectedItem.value;
         StartCoroutine(EffectCoroutine(_selectedItem));
         StartCoroutine(DelayCoroutine(_selectedItem));
     }
     public void Spinach(Item _selectedItem)
     {
-        playerData.PlayerData.Consume.AttackMultiplier = 1.25f;
+        playerData.PlayerData.Shop.AttackMultiplier =_selectedItem.value;
         StartCoroutine(EffectCoroutine(_selectedItem));
         StartCoroutine(DelayCoroutine(_selectedItem));
     }
+    public void HpBoost(Item _selectedItem)
+    {
+        HealthSystem.maxHealth+=_selectedItem.value;
+        HealthSystem.healthBar.SetMaxValue(HealthSystem.maxHealth);
+    }
+    public void ManaBoost(Item _selectedItem)
+    {
+        ManaSoulSystem.maxMana+=_selectedItem.value;
+        ManaSoulSystem.manaBar.SetMaxValue(ManaSoulSystem.maxMana);
+
+    }
+    public void AbilityPowerBoost(Item _selectedItem)
+    {
+        playerData.PlayerData.Shop.AbilityPowerMultiplier= _selectedItem.value;
+    }
     public void Buy() 
     {
-        if (Currency.SpendMoney(shopSelectedItem.price,2))
+        if (playerInventory.CanBuy(shopSelectedItem))
         {
-            playerInventory.AddItem(shopSelectedItem);
+            if (Currency.SpendMoney(shopSelectedItem.price, 2))
+            {
+                    playerInventory.AddItem(shopSelectedItem);
+            }
         }
     }
     private void OnConsumableTriggered(InputAction.CallbackContext context)

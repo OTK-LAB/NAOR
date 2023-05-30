@@ -1978,7 +1978,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1391948044445387141, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: currentHealth
-      value: 700
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: manaBar
@@ -1990,7 +1990,7 @@ PrefabInstance:
       objectReference: {fileID: 939756897}
     - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: currentMana
-      value: 25
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040768, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: m_Name
@@ -1999,6 +1999,10 @@ PrefabInstance:
     - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: PlayerData.Dash.manaCost
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.Shop.attackMultiplier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: PlayerData.Attack.attackMultiplier
@@ -2010,6 +2014,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: PlayerData.Consume.attackMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.Shop.abilityPowerMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.Shop.horizontalSpeedMultiplier
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -13,6 +14,7 @@ public class InventoryScriptable : ScriptableObject
     public List<Item> items = new();
     public Item nullitem;
     public int consumableMaxCount;
+    public int permanentMaxCount;
     public InventoryScriptable() { maxItems = 0; consumableMaxCount = 3; } 
     public void RefreshItems()
     {
@@ -23,6 +25,37 @@ public class InventoryScriptable : ScriptableObject
                 items.Add(nullitem);
             }
         }
+    }
+    public bool CanBuy(Item itemToAdd)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i] == itemToAdd)
+            {
+                if (0 < itemToAdd.stack && itemToAdd.stack < itemToAdd.stackSize)
+                {
+                    return true;
+                }
+            }
+            if (items[i] == nullitem && itemToAdd.stack == 0)
+            {
+                if (itemToAdd.type == "consumable")
+                {
+                    if (Count(itemToAdd.type) < consumableMaxCount)
+                    {
+                        return true;
+                    }
+                }
+                else if (itemToAdd.type == "permanent")
+                {
+                    if (Count(itemToAdd.type) < permanentMaxCount)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     public bool AddItem(Item itemToAdd)
     {
@@ -42,23 +75,26 @@ public class InventoryScriptable : ScriptableObject
             {
                 if (itemToAdd.type == "consumable")
                 {
-                    if (ConsumableCount() < consumableMaxCount)
+                    if (Count(itemToAdd.type) < consumableMaxCount)
                     {
+                        Debug.Log("cons " + Count(itemToAdd.type.ToString()));
                         items[i] = itemToAdd;
                         items[i].stack = 1;
                         Debug.Log("Add item null");
                         return true;
                     }
                 }
-                else
+                else if (itemToAdd.type == "permanent")
                 {
-                    items[i] = itemToAdd;
-                    items[i].stack = 1;
-                    Debug.Log("Add item null");
-                    return true;
+                    if (Count(itemToAdd.type) < consumableMaxCount)
+                    {
+                        Debug.Log("perm " + Count(itemToAdd.type.ToString()));
+                        itemToAdd.stack= 1;
+                        Debug.Log("Add item null");
+                        return true;
+                    }
                 }
             }
-            
         }
         return false;
     }
@@ -87,16 +123,17 @@ public class InventoryScriptable : ScriptableObject
         }
         return false;
     }
-    public int ConsumableCount()
+    public int Count(string itemType)
     {
         int count = 0;
         for (int i = 0; i < items.Count; i++) 
         {
-            if (items[i].type == "consumable")
+            if (items[i].type == itemType)
             {
                 count++;
             }
         }
         return count;
     }
+   
 }
