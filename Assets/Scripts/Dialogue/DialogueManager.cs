@@ -31,6 +31,16 @@ public class DialogueManager : MonoBehaviour
        startingMessage = newStartingMessage;
     }
 
+    public void SetButtonId(int newButtonId)
+    {
+        buttonId = newButtonId;
+    }
+
+    public void SetFinalMessage(int newFinalMessage)
+    {
+        finalMessage = newFinalMessage;
+    }
+
     public void OpenDialogue(Message[] messages, Actor[] actors)
     {
         currentMessages = messages;
