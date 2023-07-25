@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -64,6 +65,19 @@ public class ResourceSystem : MonoBehaviour
     public VisualEffects Visuals;
     public PrefabsWithCategory[] Prefabs;
 
+    /// <summary>
+    /// Returns GameObject prefab of given category and name stored in Resource System, returns error if not any.
+    /// </summary>
+    public GameObject GetPrefab(string category, string name)
+    {
+        GameObject prefab;
+        prefab = Array.Find(Array.Find(Prefabs, x => x.category == category).prefabs, x => x.name == name).prefab;
+        if (prefab == null)
+        {
+            Debug.LogError($"Couldn't find match for a prefab stored at category: {category} and named: {name}");
+        }
+        return prefab;
+    }
 }
 
 public class ResourceSystemEditor : EditorWindow
@@ -111,7 +125,10 @@ public class ResourceSystemEditor : EditorWindow
 
         EditorGUILayout.BeginVertical();
 
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Space(3);
         propPrefabs.isExpanded = EditorGUILayout.Foldout(propPrefabs.isExpanded, "Prefabs");
+        EditorGUILayout.EndHorizontal();
         if (propPrefabs.isExpanded)
         {
             EditorGUI.indentLevel++;
@@ -126,6 +143,7 @@ public class ResourceSystemEditor : EditorWindow
                 SerializedProperty prefabsProp = categoryProp.FindPropertyRelative("prefabs");
 
                 EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(3);
                 categoryNameProp.isExpanded = EditorGUILayout.Foldout(categoryNameProp.isExpanded, categoryNameProp.stringValue);
                 if (i == categoryIndexToEdit && isEditingCategory)
                 {
