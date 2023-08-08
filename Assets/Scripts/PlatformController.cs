@@ -19,11 +19,17 @@ public class PlatformController : MonoBehaviour
     private bool loop;
 
     [SerializeField]
-    public float CTDownSpeed;
+    /*
+     public float CTDownSpeed;
     public float CTUpSpeed;
     public float MTSpeed;
+    */
+    public float firstDestination;
+    public float firstDuration;
+    public float secondDestination;
+    public float secondDuration;
     
-
+    
 
     void Awake()
     {
@@ -46,7 +52,7 @@ public class PlatformController : MonoBehaviour
             
             if (platforms == Platforms.MovingBridge && interaced)
             {
-                TargetObj.transform.DORotate(new Vector3(0, 0, 0), MTSpeed);
+                TargetObj.transform.DORotate(new Vector3(0, 0, 0), 3f);
             }
             if(platforms == Platforms.LockedDoor && interaced) 
             {
@@ -59,16 +65,16 @@ public class PlatformController : MonoBehaviour
         {
             loop = true;
             Sequence mySequence = DOTween.Sequence();
-            mySequence.Append(TargetObj.transform.DOScaleY(3f, 3f));
-            mySequence.Append(TargetObj.transform.DOScaleY(1f, 3f));
+            mySequence.Append(TargetObj.transform.DOScaleY(firstDestination, firstDuration));//3,3
+            mySequence.Append(TargetObj.transform.DOScaleY(secondDestination, secondDuration));//1,3
             mySequence.SetLoops(-1, LoopType.Restart);
         }
         if (platforms == Platforms.CrushingTrap && !loop)
         {
             loop = true;
             Sequence mySequence = DOTween.Sequence();
-            mySequence.Append(TargetObj.transform.DOLocalMoveY(-2, CTDownSpeed).SetEase(Ease.InBack));
-            mySequence.Append(TargetObj.transform.DOLocalMoveY(0, CTUpSpeed).SetEase(Ease.InQuad));
+            mySequence.Append(TargetObj.transform.DOLocalMoveY(firstDestination, firstDuration).SetEase(Ease.InBack));//-1.5f,0.5f
+            mySequence.Append(TargetObj.transform.DOLocalMoveY(secondDestination, secondDuration).SetEase(Ease.InQuad));//0,3
             mySequence.SetLoops(-1, LoopType.Restart);
         }
         if (platforms == Platforms.MovingPlatformY && !loop)
@@ -76,8 +82,8 @@ public class PlatformController : MonoBehaviour
             loop = true;
 
             Sequence mySequence = DOTween.Sequence();
-            mySequence.Append(TargetObj.transform.DOLocalMoveY(5, 2).SetEase(Ease.InOutSine));
-            mySequence.Append(TargetObj.transform.DOLocalMoveY(0, 2).SetEase(Ease.InOutSine));
+            mySequence.Append(TargetObj.transform.DOLocalMoveY(firstDestination, firstDuration).SetEase(Ease.InOutSine));//5,2
+            mySequence.Append(TargetObj.transform.DOLocalMoveY(secondDestination, secondDuration).SetEase(Ease.InOutSine));//0,2
             mySequence.SetLoops(-1, LoopType.Restart);
         }
         if (platforms == Platforms.MovingPlatformX && !loop)
@@ -85,8 +91,8 @@ public class PlatformController : MonoBehaviour
             loop = true;
 
             Sequence mySequence = DOTween.Sequence();
-            mySequence.Append(TargetObj.transform.DOLocalMoveX(5, 2).SetEase(Ease.InOutSine));
-            mySequence.Append(TargetObj.transform.DOLocalMoveX(0, 2).SetEase(Ease.InOutSine));
+            mySequence.Append(TargetObj.transform.DOLocalMoveX(firstDestination, firstDuration).SetEase(Ease.InOutSine));//5,2
+            mySequence.Append(TargetObj.transform.DOLocalMoveX(secondDestination, secondDuration).SetEase(Ease.InOutSine));//0,2
             mySequence.SetLoops(-1, LoopType.Restart);
         }
     }

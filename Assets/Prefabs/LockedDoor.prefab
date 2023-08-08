@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4894150111937374495}
   m_Layer: 0
-  m_Name: TargerObj
+  m_Name: TargetObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,6 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platforms: 3
   TargetObj: {fileID: 4894150111937374496}
-  CTDownSpeed: 0
-  CTUpSpeed: 0
-  MTSpeed: 0
+  firstDestination: 0
+  firstDuration: 0
+  secondDestination: 0
+  secondDuration: 0

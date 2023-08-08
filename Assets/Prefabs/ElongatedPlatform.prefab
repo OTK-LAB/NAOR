@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 6170958045806266411}
   - component: {fileID: 2089242107963414956}
   m_Layer: 6
-  m_Name: Object
+  m_Name: TargetObj
   m_TagString: Ground_1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,6 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platforms: 6
   TargetObj: {fileID: 6170958044719408312}
-  CTDownSpeed: 0
-  CTUpSpeed: 0
-  MTSpeed: 0
+  firstDestination: 3
+  firstDuration: 3
+  secondDestination: 1
+  secondDuration: 3
