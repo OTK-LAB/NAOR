@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
+
 public class DialogueManager : MonoBehaviour
 {
     
@@ -20,15 +21,21 @@ public class DialogueManager : MonoBehaviour
     public int buttonId;
     public int finalMessage;
 
-    int activeMessage = 0;
+    int activeMessage;
+    int startingMessage;
     public static bool isActive = false;
     private Coroutine displayLineCoroutine;
+
+    public void SetStartingMessage(int newStartingMessage)
+    {
+       startingMessage = newStartingMessage;
+    }
 
     public void OpenDialogue(Message[] messages, Actor[] actors)
     {
         currentMessages = messages;
         currentActors = actors;
-        activeMessage = 0;
+        activeMessage = startingMessage;
         isActive = true;
         Debug.Log("Started Conversation Loaded Messages: " + messages.Length);
         DisplayMessage();
@@ -41,6 +48,8 @@ public class DialogueManager : MonoBehaviour
         actorName.text = actorToDisplay.name;
         actorImage.sprite = actorToDisplay.sprite;
         displayLineCoroutine = StartCoroutine(DisplayLine(messageToDisplay.message));
+        if (buttonId == activeMessage)
+            Buttons.SetActive(true);
     }
 
     public void NextMessage(int messageId)
@@ -49,16 +58,15 @@ public class DialogueManager : MonoBehaviour
         if(activeMessage < currentMessages.Length)
         {
             DisplayMessage();
-            if (buttonId == activeMessage)
-                Buttons.SetActive(true);
+            //if (buttonId == activeMessage)
+               // Buttons.SetActive(true);
         }
         else
         {
             Debug.Log("Conversation ended");
             isActive = false;
 	        gameObject.SetActive(false);
-            //FIXME:
-	        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Enable();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<UltimateCC.PlayerInputManager>().playerControls.Enable();
         }
     }
 
@@ -90,10 +98,13 @@ public class DialogueManager : MonoBehaviour
             }
             else
             {
-                if (activeMessage == finalMessage)
-                    NextMessage(currentMessages.Length);
-                else if(activeMessage != buttonId)
-                    NextMessage(activeMessage + 1);
+                if (activeMessage != buttonId && !Buttons.activeInHierarchy)
+                {
+                    if (activeMessage == finalMessage)
+                        NextMessage(currentMessages.Length);
+                    else
+                        NextMessage(activeMessage + 1);
+                }
             }
         }
 

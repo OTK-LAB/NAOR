@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 public class DialogueTrigger : MonoBehaviour
 {
     public Message[] messages;
     public Actor[] actors;
     public GameObject DialogueBox;
     public GameObject InteractionText;
+    public GameObject Player;
     public Animator animator;
     public PlayerInputActions inputActions;
     public bool inRange = false;
-
+    public bool reinterractable;
     void Awake()
     {
         inputActions = new PlayerInputActions();
@@ -22,7 +24,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-	    if (collider.CompareTag("Player"))
+	    if (collider.CompareTag("Player") && InteractionText != null)
 	    {   
             inRange = true;
 	        InteractionText.SetActive(true);
@@ -31,7 +33,7 @@ public class DialogueTrigger : MonoBehaviour
     
      private void OnTriggerExit2D(Collider2D collider)
      {
-        if (collider.CompareTag("Player"))
+        if (collider.CompareTag("Player") && InteractionText != null)
         {
             inRange = false;
             InteractionText.SetActive(false);
@@ -41,9 +43,13 @@ public class DialogueTrigger : MonoBehaviour
 
     public void StartDialogue()
     {
-        //FIXME:
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Disable();
-	    DialogueBox.SetActive(true);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<UltimateCC.PlayerInputManager>().playerControls.Disable();
+        if (!reinterractable)
+            Destroy(InteractionText);
+        else
+            InteractionText.SetActive(false);
+        if (DialogueBox != null)
+	        DialogueBox.SetActive(true);
         FindObjectOfType<DialogueManager>().OpenDialogue(messages, actors);
 	    inputActions.Interaction.Disable();
     }
