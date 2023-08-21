@@ -77,6 +77,7 @@ public class InventorySystem : MonoBehaviour
             Consume(shopSelectedItem);
             shopSelectedItem.stack = 2;
         }
+        consumableInteracted = false;
     }
     
     public void Consume(Item selectedItem)

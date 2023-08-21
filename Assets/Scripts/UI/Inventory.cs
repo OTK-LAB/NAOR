@@ -29,6 +29,7 @@ public class Inventory : MonoBehaviour
         inputActions.UI.Enable();
 
         inputActions.UI.Inventory.started += OnInventoryTriggered;
+        DefaultValues();
 
     }
     private void Update()
@@ -43,6 +44,18 @@ public class Inventory : MonoBehaviour
         }
         UpdateInfo();
     }
+    public void DefaultValues()
+    {
+        for (int i = 0; i < inventory.items.Count; i++)
+        {
+            if (inventory.items[i] != inventory.nullitem)
+            {
+                inventory.items[i].isEquiped = false;
+                inventory.items[i].inDelay = false;
+            }
+        }
+    }
+
     public void UpdateInfo()
     {
         for (int i = 0; i < inventory.items.Count; i++)
