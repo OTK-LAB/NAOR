@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 2509572642430713041}
   - component: {fileID: -4700802491834200776}
   - component: {fileID: 1323419808605738781}
-  - component: {fileID: 2622833971585780664}
+  - component: {fileID: 6353708892306600923}
   m_Layer: 14
   m_Name: Soul
   m_TagString: Untagged
@@ -346,7 +346,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2622833971585780664
+--- !u!114 &6353708892306600923
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -360,10 +360,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   startVelocity: {x: 0, y: 0}
-  speed: 9
+  speed: 0
   CollectableLayer:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 0
 --- !u!1 &4334009381521196361
 GameObject:
   m_ObjectHideFlags: 0

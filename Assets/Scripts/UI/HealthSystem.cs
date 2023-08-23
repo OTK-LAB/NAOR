@@ -12,7 +12,8 @@ public class HealthSystem : MonoBehaviour
     public float maxHealth;
     float smoothing = 5;
 
-    public event EventHandler OnHit;
+    public delegate void DamageHandler(float amount);
+    public event DamageHandler OnHit;
     public event EventHandler OnDead;
 
     public bool Invincible { set { invincible = value; } }
@@ -26,8 +27,9 @@ public class HealthSystem : MonoBehaviour
 
     private void Update()
     {
-        if (currentHealth != healthBar.slider.value)
+        /*if (currentHealth != healthBar.slider.value)
             healthBar.SetValue(Mathf.Lerp(healthBar.slider.value, currentHealth, smoothing * Time.deltaTime));
+        */
     }
     public float GetHealth()
     {
@@ -40,13 +42,11 @@ public class HealthSystem : MonoBehaviour
         if (!invincible)
         {
             currentHealth -= damageAmount;
-            OnHit?.Invoke(this, EventArgs.Empty); //BATU & ZEYNEP bunu unutma ! hasar animasyonunu oynatýp hasar almamasýný istiyorsak bunu if dýþýna çýkartalým ama düþmanlarý da ona göre düzenleyelim
             if (currentHealth <= 0 )
             {
                 currentHealth = 0;
-                OnDead?.Invoke(this, EventArgs.Empty);             
             }
-
+            OnHit(currentHealth);
         }
         //healthBar.SetValue(currentHealth);
     }

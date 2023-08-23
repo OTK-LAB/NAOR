@@ -9,7 +9,11 @@ public class ProgressBar : MonoBehaviour
 	public Slider slider;
 	public Gradient gradient;
 	public Image fill;
+	public HealthSystem playerHealth;
 
+	private void Start() {
+		playerHealth.OnHit += SetValue;
+	}
 	public void SetMaxValue(float value)
 	{
 		slider.maxValue = value;
