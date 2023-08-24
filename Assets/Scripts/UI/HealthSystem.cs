@@ -60,6 +60,7 @@ public class HealthSystem : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        OnHit(currentHealth);
         //healthBar.SetValue(currentHealth);
     }
 }
