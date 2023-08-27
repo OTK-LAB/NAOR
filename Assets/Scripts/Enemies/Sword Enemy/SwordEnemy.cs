@@ -21,13 +21,13 @@ public class SwordEnemy : MonoBehaviour
     //Animations
     private Animator animator;
     private string currentState;
-    const string idle = "cooldown";
-    const string hit = "hit";
-    const string attack = "attack";
-    const string death = "dead";
-    const string follow = "following";
-    const string notdamage = "notdamage";
-    const string startingmove = "startingmove";
+    const string idle = "Cooldown1";
+    const string hit = "Hit1";
+    const string attack = "Attack1";
+    const string death = "Dead1";
+    const string follow = "Run";
+    const string notdamage = "Notdamage1";
+    const string startingmove = "Startingmove1";
 
     public Material material;
 
@@ -49,7 +49,7 @@ public class SwordEnemy : MonoBehaviour
     [SerializeField]  public GameObject attackPoint;
     [SerializeField]  public float attackRange;
     [SerializeField]  public float damageamount;
-    bool attackable = true;
+    public bool attackable = true;
     int random_nd; //random_notdamage
     bool IsDead = false;
     bool isHit = false;
@@ -155,7 +155,7 @@ public class SwordEnemy : MonoBehaviour
     {
         if (Vector2.Distance(transform.position, playerPos.position) < distance)
         {
-            if (Vector2.Distance(transform.position, playerPos.position) <= 1)
+            if (Vector2.Distance(transform.position, playerPos.position) <= 1.5f)
                 state = State.STATE_ATTACK;
             else
                 state = State.STATE_FOLLOWING;

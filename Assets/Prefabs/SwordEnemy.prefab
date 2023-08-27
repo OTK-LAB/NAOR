@@ -454,7 +454,7 @@ Transform:
   m_GameObject: {fileID: 2140491267603617481}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -58.17, y: -7.96, z: -0.4609922}
-  m_LocalScale: {x: 3.7879374, y: 3.9534562, z: 0.9742136}
+  m_LocalScale: {x: 5.400841, y: 5.6368375, z: 1.3890337}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2140491268245304635}
@@ -527,6 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124ba8c33db3a6a48a5fa26f43e0323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 0}
   distance: 5
   speedEnemy: 5
   wall: {fileID: 0}
@@ -545,7 +546,7 @@ Animator:
   m_GameObject: {fileID: 2140491267603617481}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7998c4052ac8c504fa46fb9c62cd216e, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -616,6 +617,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 200
+  onShield: 0
+  shieldProtection: 0
 --- !u!114 &128264813129202752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,7 +626,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140491267603617481}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 620be2aac8989304aadb84a7e54b9104, type: 3}
   m_Name: 
