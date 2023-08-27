@@ -535,6 +535,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2140491268245304628}
   attackRange: 0.8
   damageamount: 50
+  attackable: 1
   soul: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
 --- !u!95 &2140491267603617480
 Animator:
@@ -546,7 +547,7 @@ Animator:
   m_GameObject: {fileID: 2140491267603617481}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bfad354a23906a141a156cc0a07d4fd6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

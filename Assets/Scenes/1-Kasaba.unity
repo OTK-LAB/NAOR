@@ -117074,6 +117074,10 @@ PrefabInstance:
       value: SwordEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 2140491267603617481, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2140491267603617481, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
       propertyPath: m_TagString
       value: shield
       objectReference: {fileID: 0}
@@ -121208,16 +121212,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4328218889407126170, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328218889407126170, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6684767046887524771, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: soul
+      value: 
+      objectReference: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
+    - target: {fileID: 6684767046887524771, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: wall
+      value: 
+      objectReference: {fileID: 1650531362}
+    - target: {fileID: 6684767046887524771, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: wall2
+      value: 
+      objectReference: {fileID: 1600248558}
     - target: {fileID: 6684767046887524772, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6684767046887524772, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 149.30225
+      value: 154.49
       objectReference: {fileID: 0}
     - target: {fileID: 6684767046887524772, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -121255,15 +121275,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6684767046887524774, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5750fd5eec5042f4c8000aad46e687cf, type: 2}
+    - target: {fileID: 6684767046887524775, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6684767046887524778, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
       propertyPath: m_Name
       value: ArcherEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 6684767046887524778, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2318248176834665253, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
 --- !u!1 &1431597454
 GameObject:

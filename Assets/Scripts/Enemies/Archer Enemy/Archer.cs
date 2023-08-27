@@ -18,10 +18,10 @@ public class Archer : MonoBehaviour
     //Animations
     private Animator animator;
     private string currentState;
-    const string cooldown = "cooldown";
-    const string hit = "hit";
-    const string attack = "attack";
-    const string death = "death";
+    const string cooldown = "cooldown1";
+    const string hit = "hit1";
+    const string attack = "attack1";
+    const string death = "death1";
     const string startingmove = "run";
 
     public Material material;
@@ -91,7 +91,10 @@ public class Archer : MonoBehaviour
                 break;
             case State.STATE_ATTACK:
                 if (attackable)
+                {
                     ChangeAnimationState(attack);
+                    ArrowMechanism();
+                }
                 break;
             case State.STATE_COOLDOWN:
                 ChangeAnimationState(cooldown);
