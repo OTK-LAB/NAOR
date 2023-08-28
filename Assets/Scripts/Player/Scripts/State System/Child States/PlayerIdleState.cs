@@ -83,7 +83,7 @@ namespace UltimateCC
             }
             else if (inputManager.Input_Attack)
             {
-                stateMachine.ChangeState(player.ChargeAttackState);
+                stateMachine.ChangeState(player.BasicAttack1State);
             }
         }
     }
