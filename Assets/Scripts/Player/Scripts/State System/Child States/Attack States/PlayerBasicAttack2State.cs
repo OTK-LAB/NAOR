@@ -35,11 +35,11 @@ public class PlayerBasicAttack2State : AttackState
         base.SwitchStateLogic();
         if (localTime > attackDuration)
         {
-            if (localTime < maxStateTime && inputManager.Input_Attack)
+            /*if (localTime < maxStateTime && inputManager.Input_Attack)
             {
                 stateMachine.ChangeState(player.BasicAttack3State);
             }
-            else if (localTime > maxStateTime)
+            else */if (localTime > maxStateTime)
             {
                 stateMachine.ChangeState(player.IdleState);
             }
