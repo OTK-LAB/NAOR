@@ -10,15 +10,21 @@ public class DashGiver : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
-            player.PlayerData.Dash.CanDash = true;
-            Time.timeScale = 0;
-            dashUI.SetActive(true);
-            //WAIT 3 SECONDS
-            dashUI.SetActive(false);
-            Time.timeScale = 1;
-            Destroy(gameObject);
+            StartCoroutine(DashGive());
         }
+    }
+
+    IEnumerator DashGive()
+    {
+        dashUI.SetActive(true);
+        Debug.Log("Before");
+        Time.timeScale = 0.1f;
+        yield return new WaitForSeconds(0.3f);
+        Time.timeScale = 1f;
+        Debug.Log("After");
+        dashUI.SetActive(false);
+        Destroy(gameObject);
     }
 }
