@@ -9,6 +9,7 @@ public class ElevatorController : MonoBehaviour
     public Transform UpTrigger;
     public Transform DownTrigger;
     public GameObject Platform;
+    public GameObject Barrier;
     public float time;
 
     private bool canTrigger=true;
@@ -28,7 +29,20 @@ public class ElevatorController : MonoBehaviour
 
     void Update()
     {
-        
+        if (inRange && canTrigger)
+        {
+            if (direction)
+            {
+                LeanTween.moveY(Platform, UpTrigger.position.y, time);
+                StartCoroutine(CanTrigger(time));
+            }
+            else if (!direction)
+            {
+                LeanTween.moveY(Platform, DownTrigger.position.y, time);
+                StartCoroutine(CanTrigger(time));
+            }
+            Barrier.gameObject.SetActive(true);
+        }
     }
    
     private void OnTriggerEnter2D(Collider2D collider)
@@ -50,19 +64,7 @@ public class ElevatorController : MonoBehaviour
 
     void Interacted(InputAction.CallbackContext context)
     {
-        if (inRange&& canTrigger)
-        {
-            if(direction)
-            {
-                LeanTween.moveY(Platform, UpTrigger.position.y, time).setEaseInCubic();
-                StartCoroutine(CanTrigger(time));
-            }
-            else if(!direction)
-            {
-                LeanTween.moveY(Platform, DownTrigger.position.y, time).setEaseInCubic();
-                StartCoroutine(CanTrigger(time));
-            }
-        }
+      
     }
     IEnumerator CanTrigger(float time)
     {
