@@ -51,7 +51,7 @@ public class PlayerBasicAttack2State : AttackState
             {
                 stateMachine.ChangeState(player.JumpState);
             }
-            else if (inputManager.Input_Dash)
+            else if (inputManager.Input_Dash && playerData.Dash.CanDash)
             {
                 stateMachine.ChangeState(player.DashState);
             }

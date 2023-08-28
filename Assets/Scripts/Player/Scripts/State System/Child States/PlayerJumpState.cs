@@ -99,7 +99,7 @@ namespace UltimateCC
             {
                 stateMachine.ChangeState(player.LandState);
             }
-            else if (inputManager.Input_Dash && playerData.Dash.DashCooldownTimer <= 0f)
+            else if (inputManager.Input_Dash && playerData.Dash.DashCooldownTimer <= 0f && playerData.Dash.CanDash)
             {
                 stateMachine.ChangeState(player.DashState);
             }

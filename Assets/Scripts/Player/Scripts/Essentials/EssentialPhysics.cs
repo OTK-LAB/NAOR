@@ -324,7 +324,7 @@ namespace UltimateCC
         public static void HandlePassablePlatform(PlayerMain player, PlayerData playerData)
         {
             if (playerData.Physics.ConnectedGroundObject && playerData.Physics.ConnectedGroundObject.layer == 12
-                && player.InputManager.Input_Crouch && playerData.Physics.IsGrounded && IsLayerInMask(playerData.Physics.GroundLayerMask, 12))
+                /*&& player.InputManager.Input_Crouch*/ && playerData.Physics.IsGrounded && IsLayerInMask(playerData.Physics.GroundLayerMask, 12))
             {
                 playerData.Physics.GroundLayerMask = RemoveLayerFromMask(playerData.Physics.GroundLayerMask, 12);
                 playerData.Physics.IsGrounded = false;

@@ -239,6 +239,7 @@ namespace UltimateCC
         [System.Serializable]
         public class DashVariables
         {
+            [SerializeField] private bool _canDash;
             [SerializeField, Space(5)] private float maxHeight;
             [SerializeField, BoundedCurve(0, -1, 1, 2)] private AnimationCurve dashHeightCurve;
             [SerializeField, NonEditable] private AnimationCurve dashYVelovityCurve;
@@ -257,6 +258,7 @@ namespace UltimateCC
             public float DashTime => dashTime;
             public float DashCooldown => dashCooldown;
             public float DashCooldownTimer { get { return dashCooldownTimer; } set { dashCooldownTimer = value; } }
+            public bool CanDash { get { return _canDash;} set { _canDash = value; } }
             public float Physics2DGravityScale => physics2DGravityScale;
         }
         [System.Serializable]
