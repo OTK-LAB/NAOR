@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UltimateCC;
 
 public class InventorySystem : MonoBehaviour
 {
-    public GameObject player;
     public HealthSystem HealthSystem;
     public ManaSoulSystem ManaSoulSystem;
     public PlayerInputActions inputActions;
@@ -15,7 +15,7 @@ public class InventorySystem : MonoBehaviour
     public InventoryScriptable shopInventory;
     public Inventory PlayerInventoryManager;
     public Inventory ShopInventoryManager;
-    public Ultimate2DPlayer playerData;
+    public PlayerMain player;
     public CurrencyScript Currency;
 
     public bool consumableInteracted;
@@ -49,11 +49,11 @@ public class InventorySystem : MonoBehaviour
         }
         else if(_selectedItem.id == 4)
         {
-            playerData.PlayerData.Shop.HorizontalSpeedMultiplier = 1;
+            player.PlayerData.Shop.HorizontalSpeedMultiplier = 1;
         }
         else if(_selectedItem.id == 5)
         {
-            playerData.PlayerData.Shop.AttackMultiplier= 1;
+            player.PlayerData.Shop.AttackMultiplier= 1;
         }
     }
     IEnumerator DelayCoroutine(Item _selectedItem)
@@ -132,13 +132,13 @@ public class InventorySystem : MonoBehaviour
     }
     public void EnergyDrink(Item _selectedItem)
     {
-        playerData.PlayerData.Shop.HorizontalSpeedMultiplier = _selectedItem.value;
+        player.PlayerData.Shop.HorizontalSpeedMultiplier = _selectedItem.value;
         StartCoroutine(EffectCoroutine(_selectedItem));
         StartCoroutine(DelayCoroutine(_selectedItem));
     }
     public void Spinach(Item _selectedItem)
     {
-        playerData.PlayerData.Shop.AttackMultiplier =_selectedItem.value;
+        player.PlayerData.Shop.AttackMultiplier =_selectedItem.value;
         StartCoroutine(EffectCoroutine(_selectedItem));
         StartCoroutine(DelayCoroutine(_selectedItem));
     }
@@ -155,7 +155,7 @@ public class InventorySystem : MonoBehaviour
     }
     public void AbilityPowerBoost(Item _selectedItem)
     {
-        playerData.PlayerData.Shop.AbilityPowerMultiplier= _selectedItem.value;
+        player.PlayerData.Shop.AbilityPowerMultiplier= _selectedItem.value;
     }
     public void Buy() 
     {
