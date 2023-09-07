@@ -22,7 +22,7 @@ public class CurrencyScript : MonoBehaviour
         currency2Text.text = currency2.ToString();
     }
 
-    public bool SpendMoney(int amount, int type)
+    private bool SpendMoney(int amount, int type)
     {
         if (type == 1 && amount <= currency1)
         {
@@ -38,7 +38,7 @@ public class CurrencyScript : MonoBehaviour
         return false;
     }
 
-    public void EarnMoney(int amount, int type)
+    private void EarnMoney(int amount, int type)
     {
         if (type == 1)
             currency1 += amount;
@@ -63,7 +63,7 @@ public class CurrencyScript : MonoBehaviour
             currency1 += amount / 10;
         }
     }
-
+    
     // Buttonlarla kolayca test etmek için kullanýlacak olan fonksiyonlar onunn dýþýnda kullanmayýz
     public void SpendCurrency1(int amount)
     {

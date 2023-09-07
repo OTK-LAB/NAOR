@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 public class DialogueTrigger : MonoBehaviour
 {
     public Message[] messages;
     public Actor[] actors;
     public GameObject DialogueBox;
     public GameObject InteractionText;
+    public GameObject Player;
     public Animator animator;
     public PlayerInputActions inputActions;
     public bool inRange = false;
-
+    public bool reinterractable;
     void Awake()
     {
         inputActions = new PlayerInputActions();
@@ -41,10 +43,13 @@ public class DialogueTrigger : MonoBehaviour
 
     public void StartDialogue()
     {
-        //FIXME:
-       // GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerInputActions.Disable();
-        Destroy(InteractionText);
-	    DialogueBox.SetActive(true);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<UltimateCC.PlayerInputManager>().playerControls.Disable();
+        if (!reinterractable)
+            Destroy(InteractionText);
+        else
+            InteractionText.SetActive(false);
+        if (DialogueBox != null)
+	        DialogueBox.SetActive(true);
         FindObjectOfType<DialogueManager>().OpenDialogue(messages, actors);
 	    inputActions.Interaction.Disable();
     }
