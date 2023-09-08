@@ -4475,7 +4475,7 @@ GameObject:
   - component: {fileID: 648979500}
   - component: {fileID: 648979499}
   m_Layer: 5
-  m_Name: EquipedItem
+  m_Name: EquipedItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13297,7 +13297,7 @@ MonoBehaviour:
   shopInventory: {fileID: 11400000, guid: 26afafaa8aa7ebf4bb2cf028f166ab39, type: 2}
   PlayerInventoryManager: {fileID: 1193159896752092528}
   ShopInventoryManager: {fileID: 1193159897687804052}
-  player: {fileID: 392055236}
+  player: {fileID: 1653952580}
   Currency: {fileID: 1720270745}
   consumableInteracted: 0
   selectedItem: {fileID: 0}
@@ -13311,6 +13311,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a25cdde9ff64cba4995d61e34b8efb89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1653952580 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+  m_PrefabInstance: {fileID: 386738272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 392055236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6b998c27e145394681709518387b450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1656952804 stripped
@@ -18894,6 +18905,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689684806553545664, guid: fdda71637b4e6d54895ea9067bffe4fc, type: 3}
       propertyPath: SelectedImage
+      value: 
+      objectReference: {fileID: 648979497}
+    - target: {fileID: 4689684806553545664, guid: fdda71637b4e6d54895ea9067bffe4fc, type: 3}
+      propertyPath: EquipedItemImage
       value: 
       objectReference: {fileID: 648979497}
     - target: {fileID: 5362237509458837388, guid: fdda71637b4e6d54895ea9067bffe4fc, type: 3}
@@ -34320,5 +34335,9 @@ PrefabInstance:
       propertyPath: SelectedImage
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8989690433009966476, guid: 2b496575b6c607145a3c80d4001e26f7, type: 3}
+      propertyPath: EquipedItemImage
+      value: 
+      objectReference: {fileID: 648979497}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b496575b6c607145a3c80d4001e26f7, type: 3}

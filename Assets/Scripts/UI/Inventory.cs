@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
     public GameObject Image;
     public GameObject Grid;
     public Item selectedItem;
-    public GameObject SelectedImage;
+    public GameObject EquipedItemImage;
 
     public bool PlayerInventory;
     public bool interacted;
@@ -62,8 +62,17 @@ public class Inventory : MonoBehaviour
         {
             if (inventory.items[i] != inventory.nullitem)
             {
-                Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
-                Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inventory.items[i].stack.ToString();
+                if (PlayerInventory)
+                {
+                    Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
+                    Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inventory.items[i].stack.ToString();
+                }
+                else
+                {
+                    Grid.transform.GetChild(i).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
+                    Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inventory.items[i].shopStack.ToString();
+                }
+                    
             }
             else
             {
@@ -77,7 +86,13 @@ public class Inventory : MonoBehaviour
         selectedItem = inventory.items[slot];
         Image.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[slot].icon;
         Text.GetComponent<TextMeshProUGUI>().text = inventory.items[slot].itemDescription;
-      
+    }
+    public void WhenRemoved()
+    {
+        selectedItem = inventory.nullitem;
+        Image.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
+        Text.GetComponent<TextMeshProUGUI>().text = inventory.nullitem.itemDescription;
+        EquipedItemImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
     }
     public Item GetSelectedItem()
     {
@@ -97,14 +112,14 @@ public class Inventory : MonoBehaviour
         {
             foreach (Item item in inventory.items) { item.isEquiped = false; }
             selectedItem.isEquiped =false;
-            SelectedImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
-
+            EquipedItemImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
+            
         }
         else
         {
             foreach (Item item in inventory.items) { item.isEquiped = false; }
             selectedItem.isEquiped = true;
-            SelectedImage.GetComponent<UnityEngine.UI.Image>().sprite = selectedItem.icon;
+            EquipedItemImage.GetComponent<UnityEngine.UI.Image>().sprite = selectedItem.icon;
 
         }
     }

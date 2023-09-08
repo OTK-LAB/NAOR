@@ -30,6 +30,10 @@ public class InventoryScriptable : ScriptableObject
     {
         for (int i = 0; i < items.Count; i++)
         {
+            if (itemToAdd.shopStack <= 0)
+            {
+                return false;
+            }
             if (items[i] == itemToAdd)
             {
                 if (0 < itemToAdd.stack && itemToAdd.stack < itemToAdd.stackSize)
@@ -89,7 +93,7 @@ public class InventoryScriptable : ScriptableObject
                     if (Count(itemToAdd.type) < consumableMaxCount)
                     {
                         Debug.Log("perm " + Count(itemToAdd.type.ToString()));
-                        itemToAdd.stack= 1;
+                        //itemToAdd.stack++;
                         Debug.Log("Add item null");
                         return true;
                     }
@@ -114,6 +118,7 @@ public class InventoryScriptable : ScriptableObject
                 else 
                 {
                     items[i].stack--;
+                    items[i].isEquiped = false;
                     items[i] = nullitem;
                     Debug.Log("Remove item");
                     return true;

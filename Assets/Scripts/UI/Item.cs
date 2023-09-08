@@ -15,6 +15,7 @@ public class Item : ScriptableObject
     public float effectTime;
     public float delayTime;
     public int stack;
+    public int shopStack;
     public int stackSize;
     public string type;
     public int price;
@@ -31,6 +32,7 @@ public class Item : ScriptableObject
         effectTime = 0;
         delayTime= 0;
         stack = 0;
+        shopStack = 5;
         stackSize = 3;
         type = "";
         price = 0;

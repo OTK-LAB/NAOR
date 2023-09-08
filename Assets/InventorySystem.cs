@@ -72,14 +72,9 @@ public class InventorySystem : MonoBehaviour
         {
             Consume(selectedItem);
         }
-        if (shopSelectedItem.type == "permanent" && shopSelectedItem.stack==1)
-        {
-            Consume(shopSelectedItem);
-            shopSelectedItem.stack = 2;
-        }
         consumableInteracted = false;
     }
-    
+
     public void Consume(Item selectedItem)
     {
 
@@ -100,6 +95,17 @@ public class InventorySystem : MonoBehaviour
             case 5:
                 Spinach(selectedItem);
                 break;
+
+            default: break;
+        }
+        playerInventory.RemoveItem(selectedItem);
+        if (selectedItem.stack == 0) { PlayerInventoryManager.WhenRemoved(); }
+
+    }
+    public void PermanentConsume(Item selectedItem)
+    {
+        switch (selectedItem.id) 
+        { 
             case 6:
                 HpBoost(selectedItem);
                 break;
@@ -109,13 +115,12 @@ public class InventorySystem : MonoBehaviour
             case 8:
                 AbilityPowerBoost(selectedItem);
                 break;
-            default:
-                break;
+
+            default: break;
         }
         playerInventory.RemoveItem(selectedItem);
-
-
     }
+
     public void Apple(Item _selectedItem)
     {
         HealthSystem.Heal(_selectedItem.value);
@@ -138,7 +143,8 @@ public class InventorySystem : MonoBehaviour
     }
     public void Spinach(Item _selectedItem)
     {
-        player.PlayerData.Shop.AttackMultiplier =_selectedItem.value;
+        float value = _selectedItem.value;
+        player.PlayerData.Shop.AttackMultiplier = value;
         StartCoroutine(EffectCoroutine(_selectedItem));
         StartCoroutine(DelayCoroutine(_selectedItem));
     }
@@ -163,7 +169,12 @@ public class InventorySystem : MonoBehaviour
         {
             if (Currency.SpendMoney(shopSelectedItem.price, 2))
             {
-                    playerInventory.AddItem(shopSelectedItem);
+                playerInventory.AddItem(shopSelectedItem);
+                shopSelectedItem.shopStack--;
+                if (shopSelectedItem.type == "permanent")
+                {
+                    PermanentConsume(shopSelectedItem);
+                }
             }
         }
     }
