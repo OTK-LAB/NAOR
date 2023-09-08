@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UltimateCC;
+using System.Collections.Concurrent;
 
 public class InventorySystem : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class InventorySystem : MonoBehaviour
     public CurrencyScript Currency;
 
     public bool consumableInteracted;
+    public Item equipedItem;
     public Item selectedItem;
     public Item shopSelectedItem;
 
@@ -34,6 +36,7 @@ public class InventorySystem : MonoBehaviour
 
         shopSelectedItem = playerInventory.nullitem;
         selectedItem = playerInventory.nullitem;
+        
     }
     private void Start()
     {
@@ -66,87 +69,102 @@ public class InventorySystem : MonoBehaviour
     }
     private void Update()
     {
+        equipedItem = PlayerInventoryManager.GetEquipedItem();
         shopSelectedItem = ShopInventoryManager.GetSelectedItem();
         selectedItem = PlayerInventoryManager.GetSelectedItem();
-        if (consumableInteracted && selectedItem.isEquiped && !selectedItem.inDelay)
+        if (consumableInteracted && equipedItem != playerInventory.nullitem && !equipedItem.inDelay)
         {
-            Consume(selectedItem);
+            RemovePlayerItem(Consume(equipedItem));
         }
         consumableInteracted = false;
     }
-
-    public void Consume(Item selectedItem)
+    public void RemovePlayerItem(bool result)
+    {
+        if (result)
+        {
+            playerInventory.RemoveItem(equipedItem);
+            if (equipedItem.stack == 0) { PlayerInventoryManager.WhenRemoved(); }
+        }
+    }
+    public bool Consume(Item _equipedItem)
     {
 
-        switch (selectedItem.id)
+        switch (_equipedItem.id)
         {
             case 1:
-                Apple(selectedItem);
-                break;
+                return Apple(_equipedItem);
             case 2:
-                Broccoli(selectedItem);
-                break;
+                return Broccoli(_equipedItem);
             case 3:
-                SpringWater(selectedItem);
-                break;
+                return SpringWater(_equipedItem);
             case 4:
-                EnergyDrink(selectedItem);
-                break;
+                return EnergyDrink(_equipedItem);
             case 5:
-                Spinach(selectedItem);
-                break;
+                return Spinach(_equipedItem);
 
             default: break;
         }
-        playerInventory.RemoveItem(selectedItem);
-        if (selectedItem.stack == 0) { PlayerInventoryManager.WhenRemoved(); }
-
+        return false;
     }
-    public void PermanentConsume(Item selectedItem)
+    public void PermanentConsume(Item _shopSelectedItem)
     {
-        switch (selectedItem.id) 
+        switch (_shopSelectedItem.id) 
         { 
             case 6:
-                HpBoost(selectedItem);
+                HpBoost(_shopSelectedItem);
                 break;
             case 7:
-                ManaBoost(selectedItem);
+                ManaBoost(_shopSelectedItem);
                 break;
             case 8:
-                AbilityPowerBoost(selectedItem);
+                AbilityPowerBoost(_shopSelectedItem);
                 break;
 
             default: break;
         }
-        playerInventory.RemoveItem(selectedItem);
+        playerInventory.RemoveItem(_shopSelectedItem);
     }
 
-    public void Apple(Item _selectedItem)
+    public bool Apple(Item _selectedItem)
     {
-        HealthSystem.Heal(_selectedItem.value);
+        if (HealthSystem.currentHealth < HealthSystem.maxHealth)
+        {
+            HealthSystem.Heal(_selectedItem.value);
+            return true;
+        }
+        return false;
     }
-    public void Broccoli(Item _selectedItem)
+    public bool Broccoli(Item _selectedItem)
     {
         HealthSystem.broccoli=true;
         StartCoroutine(EffectCoroutine(_selectedItem));
         StartCoroutine(DelayCoroutine(_selectedItem));
+        return true;
+
     }
-    public void SpringWater(Item _selectedItem)
+    public bool SpringWater(Item _selectedItem)
     {
-        ManaSoulSystem.AddMana(33);
+        if (ManaSoulSystem.currentMana < ManaSoulSystem.maxMana)
+        {
+            ManaSoulSystem.AddMana(33);
+            return true;
+        }
+        return false;
     }
-    public void EnergyDrink(Item _selectedItem)
+    public bool EnergyDrink(Item _selectedItem)
     {
         player.PlayerData.Shop.HorizontalSpeedMultiplier = _selectedItem.value;
         StartCoroutine(EffectCoroutine(_selectedItem));
         StartCoroutine(DelayCoroutine(_selectedItem));
+        return true;
     }
-    public void Spinach(Item _selectedItem)
+    public bool Spinach(Item _selectedItem)
     {
         float value = _selectedItem.value;
         player.PlayerData.Shop.AttackMultiplier = value;
         StartCoroutine(EffectCoroutine(_selectedItem));
         StartCoroutine(DelayCoroutine(_selectedItem));
+        return true;
     }
     public void HpBoost(Item _selectedItem)
     {

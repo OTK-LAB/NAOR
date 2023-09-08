@@ -15,10 +15,11 @@ public class Inventory : MonoBehaviour
     public GameObject Image;
     public GameObject Grid;
     public Item selectedItem;
-    public GameObject EquipedItemImage;
+    public GameObject equipedItemImage;
 
     public bool PlayerInventory;
     public bool interacted;
+    public Item equipedItem;
 
     void Awake()
     {
@@ -27,7 +28,7 @@ public class Inventory : MonoBehaviour
         selectedItem = inventory.nullitem;
         inputActions = new PlayerInputActions();
         inputActions.UI.Enable();
-
+        equipedItem= inventory.nullitem;
         inputActions.UI.Inventory.started += OnInventoryTriggered;
         DefaultValues();
 
@@ -43,6 +44,7 @@ public class Inventory : MonoBehaviour
             interacted = false;
         }
         UpdateInfo();
+        
     }
     public void DefaultValues()
     {
@@ -80,6 +82,11 @@ public class Inventory : MonoBehaviour
                 Grid.transform.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
             }
         }
+        if (PlayerInventory)
+        {
+            equipedItemImage.GetComponent<UnityEngine.UI.Image>().sprite = equipedItem.icon;
+            equipedItemImage.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = equipedItem.stack.ToString();
+        }
     }
     public void SelectItem(int slot)
     {
@@ -89,14 +96,17 @@ public class Inventory : MonoBehaviour
     }
     public void WhenRemoved()
     {
-        selectedItem = inventory.nullitem;
+        equipedItem = inventory.nullitem;
         Image.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
         Text.GetComponent<TextMeshProUGUI>().text = inventory.nullitem.itemDescription;
-        EquipedItemImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
     }
     public Item GetSelectedItem()
     {
         return selectedItem;
+    }
+    public Item GetEquipedItem()
+    {
+        return equipedItem;
     }
     public void OpenShop()
     {
@@ -111,16 +121,15 @@ public class Inventory : MonoBehaviour
         if (selectedItem.isEquiped)
         {
             foreach (Item item in inventory.items) { item.isEquiped = false; }
-            selectedItem.isEquiped =false;
-            EquipedItemImage.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
-            
+            equipedItem= inventory.nullitem;
+            equipedItem.isEquiped =false;
         }
         else
         {
             foreach (Item item in inventory.items) { item.isEquiped = false; }
-            selectedItem.isEquiped = true;
-            EquipedItemImage.GetComponent<UnityEngine.UI.Image>().sprite = selectedItem.icon;
-
+            equipedItem = selectedItem;
+            equipedItem.isEquiped=true;
+            Debug.Log("naberknk");
         }
     }
 

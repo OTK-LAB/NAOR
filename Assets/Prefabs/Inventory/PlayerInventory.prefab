@@ -55,9 +55,11 @@ MonoBehaviour:
   Text: {fileID: 4890467758088799996}
   Image: {fileID: 8177002703167405824}
   Grid: {fileID: 1048401674550294503}
-  item: {fileID: 0}
+  selectedItem: {fileID: 0}
+  equipedItemImage: {fileID: 0}
   PlayerInventory: 1
   interacted: 0
+  equipedItem: {fileID: 0}
 --- !u!1 &1048401674550294503
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +312,7 @@ MonoBehaviour:
   m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2264,7 +2266,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4412120681317059312, guid: 825a1051c4bf9e3468cd596da8785ae4, type: 3}
       propertyPath: m_fontSize
-      value: 24
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412120681317059312, guid: 825a1051c4bf9e3468cd596da8785ae4, type: 3}
+      propertyPath: m_fontSizeMin
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4412120681317059312, guid: 825a1051c4bf9e3468cd596da8785ae4, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4412120681317059312, guid: 825a1051c4bf9e3468cd596da8785ae4, type: 3}
       propertyPath: m_enableAutoSizing
