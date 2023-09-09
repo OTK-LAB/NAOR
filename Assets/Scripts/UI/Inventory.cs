@@ -129,7 +129,6 @@ public class Inventory : MonoBehaviour
             foreach (Item item in inventory.items) { item.isEquiped = false; }
             equipedItem = selectedItem;
             equipedItem.isEquiped=true;
-            Debug.Log("naberknk");
         }
     }
 
