@@ -18,5 +18,9 @@ public class Detector : MonoBehaviour
             boss1Manager.canAttack = true;
         }
 
+        if (collision.tag == "wall")
+        {
+            boss1Manager.stunned = true;
+        }
     }
 }

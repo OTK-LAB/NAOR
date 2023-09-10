@@ -6,16 +6,25 @@ public class Boss1Manager : MonoBehaviour
 {
     [HideInInspector] public GameObject Player;
     private Animator anim;
+    private Rigidbody2D rigid;
 
+    public float moveSpeed;
     private bool notDead;
     public bool canAttack;
     private bool InAnimation;
+    [HideInInspector] public bool stunned;
 
+    public float setmeleeWaitTime;
+    private float meleeWaitTime;
     public float meleerange;
+
+    //disable attack hitbox if non damage move
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody2D>();
+
 
 
         notDead = true;
@@ -25,16 +34,19 @@ public class Boss1Manager : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D hit)
+
+    private void FixedUpdate()
     {
-        if (hit.tag == "Player")
+        if (canAttack && Player.transform.position.x - transform.position.x < 0)
+            GetComponent<SpriteRenderer>().flipX = true;
+        else
+            GetComponent<SpriteRenderer>().flipX = false;
+
+        if (meleeWaitTime > 0)
         {
-            canAttack = true;
+            meleeWaitTime -= Time.deltaTime;
         }
     }
-
-
-
 
 
 
@@ -42,8 +54,54 @@ public class Boss1Manager : MonoBehaviour
     {
         if (notDead)
         {
+
+            if (stunned)
+            {
+
+            }
+
+
+
             if (canAttack)
             {
+                //how far is the player
+
+                float distance = Vector2.Distance(Player.transform.position, transform.position);
+
+                //moveset
+
+                if (distance < meleerange)
+                {
+                    if (meleeWaitTime <= 0)
+                    {
+                        //attackup/down
+                        anim.Play("attackup");
+                        meleeWaitTime = setmeleeWaitTime;
+                    }
+                    else if (!InAnimation)
+                    {
+                        anim.Play("idle");       //this can be placed with another move so he doesnt wait on our head
+                    }
+                }
+                else if (distance > meleerange)
+                {
+
+
+
+
+
+
+
+                        //if else en sonu
+                        
+                        anim.Play("move");
+
+                        Vector2 direction = Player.transform.position - transform.position;
+                        rigid.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
+                }
+
+
+
 
 
 
@@ -55,5 +113,14 @@ public class Boss1Manager : MonoBehaviour
                 anim.Play("idle");
             }
         }
+    }
+
+    public void AnimationTime(int answer)
+    {
+        if (answer > 0)
+            InAnimation = true;
+        else
+            InAnimation = false;
+            
     }
 }
