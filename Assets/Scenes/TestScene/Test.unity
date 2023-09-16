@@ -1792,6 +1792,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 660650116708454890, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
   m_PrefabInstance: {fileID: 660650116874444906}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &371552641 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 660650116708454891, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
+  m_PrefabInstance: {fileID: 660650116874444906}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &374022290
 GameObject:
   m_ObjectHideFlags: 0
@@ -12531,6 +12536,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 660650115634906808, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
   m_PrefabInstance: {fileID: 660650116874444906}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1445095123 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 660650115634906809, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
+  m_PrefabInstance: {fileID: 660650116874444906}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1452148343
 GameObject:
   m_ObjectHideFlags: 0
@@ -12693,6 +12703,11 @@ MonoBehaviour:
   moneyRequired: 10
   moneyType: 1
   Currency: {fileID: 1720270743}
+--- !u!1 &1470640110 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2140491268245304628, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
+  m_PrefabInstance: {fileID: 1720489349}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1471721227
 GameObject:
   m_ObjectHideFlags: 0
@@ -16227,6 +16242,30 @@ PrefabInstance:
       propertyPath: wall2
       value: 
       objectReference: {fileID: 371552640}
+    - target: {fileID: 2140491267603617523, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899261127157780532, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1653952568}
+    - target: {fileID: 3899261127157780532, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
+      propertyPath: attackPoint
+      value: 
+      objectReference: {fileID: 1470640110}
+    - target: {fileID: 3899261127157780532, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
+      propertyPath: movePoints.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3899261127157780532, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
+      propertyPath: movePoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1445095123}
+    - target: {fileID: 3899261127157780532, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
+      propertyPath: movePoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 371552641}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffac3c361b327bf459a40a240e22d049, type: 3}
 --- !u!4 &1720489350 stripped
