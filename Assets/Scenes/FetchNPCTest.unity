@@ -568,11 +568,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.594162, y: 21.498549}
   m_EdgeRadius: 0
---- !u!1 &119032075 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6165462529407105780, guid: d2d0369580064c54e967a0d582954480, type: 3}
-  m_PrefabInstance: {fileID: 6165462529357313023}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &125435269 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3715018480598392731, guid: ea8e008f9e1cb7e46a46c3f86aafa1bf, type: 3}
@@ -11302,6 +11297,7 @@ MonoBehaviour:
   Buttons: {fileID: 921648932}
   buttonId: 0
   finalMessage: 2
+  activeMessage: 0
 --- !u!114 &1254583652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11904,6 +11900,7 @@ MonoBehaviour:
   Buttons: {fileID: 1647301628}
   buttonId: 0
   finalMessage: 2
+  activeMessage: 0
 --- !u!114 &1341954709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15912,6 +15909,7 @@ MonoBehaviour:
   Buttons: {fileID: 1106008186}
   buttonId: 1
   finalMessage: 3
+  activeMessage: 0
 --- !u!114 &1690769661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20691,7 +20689,11 @@ PrefabInstance:
       propertyPath: DialogueBox
       value: 
       objectReference: {fileID: 1230451311}
-    - target: {fileID: 6165462529407105776, guid: d2d0369580064c54e967a0d582954480, type: 3}
+    - target: {fileID: 6165462529357313025, guid: d2d0369580064c54e967a0d582954480, type: 3}
+      propertyPath: DialogueBox
+      value: 
+      objectReference: {fileID: 1230451311}
+    - target: {fileID: 6165462529357313025, guid: d2d0369580064c54e967a0d582954480, type: 3}
       propertyPath: FetchObject
       value: 
       objectReference: {fileID: 1400702249}
@@ -20707,52 +20709,8 @@ PrefabInstance:
       propertyPath: DialogueBox
       value: 
       objectReference: {fileID: 1230451311}
-    - target: {fileID: 6165462529407105777, guid: d2d0369580064c54e967a0d582954480, type: 3}
-      propertyPath: reinterractable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6165462529407105777, guid: d2d0369580064c54e967a0d582954480, type: 3}
-      propertyPath: actors.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6165462529407105777, guid: d2d0369580064c54e967a0d582954480, type: 3}
-      propertyPath: messages.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6165462529407105777, guid: d2d0369580064c54e967a0d582954480, type: 3}
-      propertyPath: messages.Array.data[1].message
-      value: Noooooo
-      objectReference: {fileID: 0}
-    - target: {fileID: 6165462529407105777, guid: d2d0369580064c54e967a0d582954480, type: 3}
-      propertyPath: messages.Array.data[2].message
-      value: Noooooo
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6165462529407105776, guid: d2d0369580064c54e967a0d582954480, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2d0369580064c54e967a0d582954480, type: 3}
---- !u!1 &6165462529357313024 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3949940394117309258, guid: d2d0369580064c54e967a0d582954480, type: 3}
-  m_PrefabInstance: {fileID: 6165462529357313023}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6165462529357313025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6165462529357313024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12924156838052b4ab6afebeae955cd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FetchObject: {fileID: 1400702249}
-  OldDialogue: {fileID: 7951658000491051055}
-  NewDialogue: {fileID: 119032075}
-  DialogueBox: {fileID: 1230451311}
-  finalText: 0
-  buttonId: -1
 --- !u!1001 &6170958045633489239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35458,11 +35416,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce85be00d49842f4394b3d7f9dc4cf0b, type: 3}
---- !u!1 &7951658000491051055 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4308231063345007568, guid: d2d0369580064c54e967a0d582954480, type: 3}
-  m_PrefabInstance: {fileID: 6165462529357313023}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8363303179645328836
 PrefabInstance:
   m_ObjectHideFlags: 0
