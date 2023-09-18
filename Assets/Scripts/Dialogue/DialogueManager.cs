@@ -21,7 +21,8 @@ public class DialogueManager : MonoBehaviour
     public int buttonId;
     public int finalMessage;
 
-    int activeMessage;
+    
+    public int activeMessage;
     int startingMessage;
     public static bool isActive = false;
     private Coroutine displayLineCoroutine;
@@ -58,7 +59,7 @@ public class DialogueManager : MonoBehaviour
         actorName.text = actorToDisplay.name;
         actorImage.sprite = actorToDisplay.sprite;
         displayLineCoroutine = StartCoroutine(DisplayLine(messageToDisplay.message));
-        if (buttonId == activeMessage)
+        if (buttonId != -1 && buttonId == activeMessage)
             Buttons.SetActive(true);
     }
 

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FetchObjectScript : MonoBehaviour
 {
     public GameObject Button;
-    bool isFetched = false;
+    public bool isFetched = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,7 +14,7 @@ public class FetchObjectScript : MonoBehaviour
         {
             Button.GetComponent<Button>().interactable = true;
             isFetched = true;
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }
