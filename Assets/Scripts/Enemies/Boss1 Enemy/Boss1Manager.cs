@@ -21,6 +21,7 @@ public class Boss1Manager : MonoBehaviour
     public float setmeleeWaitTime;
     private float meleeWaitTime;
     public float meleerange;
+    public float jumpRange;
 
     //[Header("Skills")]
 
@@ -31,7 +32,15 @@ public class Boss1Manager : MonoBehaviour
     [HideInInspector] public bool backingUpTimer;
     private Vector2 chargingDir;
 
+    public float setjumpSkillTime;
+    private float jumpSkillTime;
+    public float jumpForce;
+    private bool onAir;
+    private bool gettingHigh;
+    private Vector2 directionJump;
+
     //disable attack hitbox if non damage move
+
 
     void Start()
     {
@@ -72,20 +81,23 @@ public class Boss1Manager : MonoBehaviour
         //timers
 
         if (meleeWaitTime > 0)
-        {
             meleeWaitTime -= Time.deltaTime;
-        }
 
         if (chargeSkillTime > 0)
-        {
             chargeSkillTime -= Time.deltaTime;
-        }
+
+        if (jumpSkillTime > 0)
+            jumpSkillTime -= Time.deltaTime;
     }
 
 
 
     void Update()
     {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, jumpRange);
+        Collider2D[] colliders1 = Physics2D.OverlapCircleAll(transform.position, meleerange);
+
+
         if (notDead && !stunned)
         {
 
@@ -96,7 +108,15 @@ public class Boss1Manager : MonoBehaviour
                 if (backingUpTimer)
                 {
                     Vector2 directionTarget = Target.position - transform.position;
-                    rigid.MovePosition((Vector2)transform.position + (directionTarget * moveSpeed * 7 * Time.deltaTime));
+                    rigid.MovePosition((Vector2)transform.position + (directionTarget * moveSpeed * 20 * Time.deltaTime));
+                }
+
+                if (onAir)
+                {
+                    if (gettingHigh)
+                        rigid.MovePosition((Vector2)transform.position + ((Vector2)rigid.transform.up * jumpForce * 15 * Time.deltaTime));
+                    else
+                        rigid.MovePosition((Vector2)transform.position + (directionJump * moveSpeed * 5 * Time.deltaTime));
                 }
 
                 if (charging)
@@ -119,7 +139,10 @@ public class Boss1Manager : MonoBehaviour
 
                     float distance = Vector2.Distance(Player.transform.position, transform.position);
 
-                    if (distance < meleerange)
+
+                    if (Player.GetComponent<HealthSystem>().currentHealth <= 0)         // for short Boss will be in a special scene so if player dies they restart the battle(SCENE)
+                        anim.Play("flex");                                              // so no need to restart boss's AI
+                    else if (distance < meleerange)
                     {
                         if (meleeWaitTime <= 0)
                         {
@@ -132,9 +155,13 @@ public class Boss1Manager : MonoBehaviour
                             anim.Play("idle");       //this can be placed with another move so he doesnt wait on our head
                         }
                     }
+                    else if (jumpRange < distance && !InAnimation && jumpSkillTime <= 0)
+                    {
+                        StartCoroutine(Jump());
+                        jumpSkillTime = setjumpSkillTime;
+                    }
                     else if (distance > meleerange && !InAnimation)
                     {
-
                         if (!InAnimation && (chargeSkillTime <= 0))
                         {
                             StartCoroutine(Charge());
@@ -147,15 +174,8 @@ public class Boss1Manager : MonoBehaviour
                             Vector2 direction = Player.transform.position - transform.position;
                             rigid.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
                         }
-
-
-
-
-
                     }
 
-                    if (Player.GetComponent<HealthSystem>().currentHealth <= 0)        // for short Boss will be in a special scene so if player dies they restart the battle(SCENE)
-                        anim.Play("flex");                                             // so no need to restart boss's AI
                 }
 
             }
@@ -187,6 +207,39 @@ public class Boss1Manager : MonoBehaviour
         chargingDir = Player.transform.position - transform.position;
         charging = true;
         anim.Play("charge");
+    }
+
+    IEnumerator Jump()
+    {
+        inSkillUse = true;
+        anim.Play("willjump");
+        yield return new WaitForSeconds(1.5f);
+
+        anim.Play("attackjump");
+
+        rigid.constraints -= RigidbodyConstraints2D.FreezePositionY;
+
+        rigid.AddForce(transform.up * jumpForce);
+
+        directionJump = new Vector3(Player.transform.position.x, Player.transform.position.y - 10, Player.transform.position.z) - transform.position;
+        onAir = true;
+        gettingHigh = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        gettingHigh = false;
+
+        yield return new WaitForSeconds(1.3f);
+
+        rigid.velocity = Vector3.zero;
+
+
+        onAir = false;
+        rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        rigid.constraints -= RigidbodyConstraints2D.FreezePositionX;
+
+        chargeSkillTime += 5f;
+        inSkillUse = false;
     }
 
     public IEnumerator Stun()

@@ -10,6 +10,9 @@ public class Detector : MonoBehaviour
     public Boss1Manager boss1Manager;
 
     public bool playerDetector;
+    public bool left;
+    public bool right;
+
     void Start()
     {
         if (boss1Manager == null)
@@ -41,14 +44,23 @@ public class Detector : MonoBehaviour
         
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Update()
     {
-        if (playerDetector)
+        if (left && boss1Manager.gameObject.GetComponent<SpriteRenderer>().flipX && boss1Manager.inSkillUse && !boss1Manager.backingUpTimer)
         {
-            if (collision.tag == "Player" && boss1Manager.inSkillUse && !boss1Manager.backingUpTimer)
-            {
-                boss1Manager.Target = OtherBossCharge.transform;
-            }
+            boss1Manager.Target = OtherBossCharge.transform;
+        }
+        if (left && !boss1Manager.gameObject.GetComponent<SpriteRenderer>().flipX && boss1Manager.inSkillUse && !boss1Manager.backingUpTimer)
+        {
+            boss1Manager.Target = gameObject.transform;
+        }
+        if (right && !boss1Manager.gameObject.GetComponent<SpriteRenderer>().flipX && boss1Manager.inSkillUse && !boss1Manager.backingUpTimer)
+        {
+            boss1Manager.Target = OtherBossCharge.transform;
+        }
+        if (right && boss1Manager.gameObject.GetComponent<SpriteRenderer>().flipX && boss1Manager.inSkillUse && !boss1Manager.backingUpTimer)
+        {
+            boss1Manager.Target = gameObject.transform;
         }
 
     }
