@@ -27,23 +27,23 @@ public class SwordEnemy : MonoBehaviour
     const string death = "Dead1";
     const string follow = "Run";
     const string notdamage = "Notdamage1";
-    const string startingmove = "Startingmove1";
+    const string startingmove = "StartingMove1";
 
     public Material material;
 
-    //Move
-    Vector3 movement;
+    //Movement
     bool Moveright = true;
     public int moveDirection = 1;
     float moveDirectionX;
+    public GameObject wall;
+    public GameObject wall2;
+
     //Following & CoolDown
     private GameObject player;
     private Transform playerPos;
     private Vector2 currentPlayerPos;
     public float distance;
-    public float moveSpeed = 2f;
-    public GameObject wall;
-    public GameObject wall2;
+    public float moveSpeed;
     float timer;
 
     //Attack
@@ -54,6 +54,7 @@ public class SwordEnemy : MonoBehaviour
     int random_nd; //random_notdamage
     bool IsDead = false;
     bool isHit = false;
+    float verticalTolerance = 0.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
 
     //Hit
     Vector2 temp;
@@ -117,7 +118,7 @@ public class SwordEnemy : MonoBehaviour
     }
     void startingMove()
     {
-        moveSpeed = 3f;
+        moveSpeed = 3f; // baþlangýç hareket hýzý
         float moveDirectionX = moveDirection;
         float step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
@@ -149,9 +150,12 @@ public class SwordEnemy : MonoBehaviour
 
     void checkPlayer()
     {
-        float distanceToPlayer = Vector2.Distance(rb.position, playerPos.position);
+        //float distanceToPlayer = Vector2.Distance(rb.position, playerPos.position);
+        Vector2 enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
+        Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
 
-        if (distanceToPlayer < distance)
+        float distanceToPlayer = Vector2.Distance(enemyPosition, playerPosition);
+        if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPosition.y) < verticalTolerance)
         {
             if (distanceToPlayer <= 1)
                 state = State.STATE_ATTACK;
@@ -161,6 +165,8 @@ public class SwordEnemy : MonoBehaviour
         else
         {
             state = State.STATE_STARTINGMOVE;
+            wall.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
+            wall2.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
         }
 
     }
@@ -170,6 +176,9 @@ public class SwordEnemy : MonoBehaviour
         moveSpeed = 5f;
         Vector2 currentPlayerPos = new Vector2(playerPos.position.x, rb.position.y);
         rb.velocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
+        wall.transform.parent = transform;
+        wall2.transform.parent = transform;
+
     }
     void attacktoPlayer()
     {
@@ -271,6 +280,7 @@ public class SwordEnemy : MonoBehaviour
             {
                 transform.Rotate(0f, 180f, 0f);
                 Moveright = true;
+                moveDirection *= -1;
             }
         }
         else
@@ -279,6 +289,7 @@ public class SwordEnemy : MonoBehaviour
             {
                 transform.Rotate(0f, 180f, 0f);
                 Moveright = false;
+                moveDirection *= -1;
             }
         }
     }
