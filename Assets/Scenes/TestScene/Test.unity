@@ -11036,13 +11036,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1434250255}
     m_Modifications:
+    - target: {fileID: 4721543476582207587, guid: 15a931a353af7a3499d46505a033d657, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721543476582207587, guid: 15a931a353af7a3499d46505a033d657, type: 3}
+      propertyPath: m_Constraints
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721543476582207587, guid: 15a931a353af7a3499d46505a033d657, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721543476582207587, guid: 15a931a353af7a3499d46505a033d657, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4721543476582207590, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: m_Name
       value: ShieldEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 4721543476582207590, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4721543476582207597, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: m_RootOrder
@@ -11096,6 +11112,10 @@ PrefabInstance:
       propertyPath: wall2
       value: 
       objectReference: {fileID: 1935999064}
+    - target: {fileID: 4721543476582207598, guid: 15a931a353af7a3499d46505a033d657, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15a931a353af7a3499d46505a033d657, type: 3}
 --- !u!4 &1247098117 stripped
