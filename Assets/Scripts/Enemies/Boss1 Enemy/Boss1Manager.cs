@@ -39,12 +39,15 @@ public class Boss1Manager : MonoBehaviour
 
 
     //jump
+    public float setCount;
+    private float count;
     public float setjumpSkillTime;
     private float jumpSkillTime;
     public float jumpForce;
     private bool onAir;
     private bool gettingHigh;
     private Vector2 directionJump;
+    private Vector2 controlPoint;
 
 
     //throw
@@ -57,6 +60,7 @@ public class Boss1Manager : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
+        healthSystem = GetComponent<EnemyHealthSystem>();
 
 
 
@@ -131,6 +135,19 @@ public class Boss1Manager : MonoBehaviour
 
                 if (onAir)
                 {
+                    if (count < setCount)
+                    {
+                        count += Time.deltaTime;
+
+                        Vector3 m1 = Vector3.Lerp(transform.position, controlPoint, count);
+                        Vector3 m2 = Vector3.Lerp(controlPoint, directionJump, count);
+                        rigid.MovePosition(Vector3.Lerp(m1, m2, count));
+                    }
+
+
+
+
+                    /*
                     if (gettingHigh)
                     {
                         rigid.MovePosition((Vector2)transform.position + ((Vector2)rigid.transform.up * jumpForce * 15 * Time.deltaTime));
@@ -139,7 +156,7 @@ public class Boss1Manager : MonoBehaviour
                     {
                         rigid.MovePosition((Vector2)transform.position + (directionJump * moveSpeed * 5 * Time.deltaTime));
                     }
-
+                    */
                 }
 
                 if (charging)
@@ -246,7 +263,19 @@ public class Boss1Manager : MonoBehaviour
 
         rigid.AddForce(transform.up * jumpForce);
 
-        directionJump = new Vector3(Player.transform.position.x, Player.transform.position.y - 10, Player.transform.position.z) - transform.position;
+        //directionJump = new Vector3(Player.transform.position.x, Player.transform.position.y - 10, Player.transform.position.z) - transform.position;
+        directionJump = new Vector2(Player.transform.position.x, Player.transform.position.y - 10f);
+
+        if (GetComponent<SpriteRenderer>().flipX)
+        {
+            controlPoint = new Vector2(transform.position.x - 7f, transform.position.y + 9f);
+        }
+        else
+        {
+            controlPoint = new Vector2(transform.position.x + 7f, transform.position.y + 9f);
+        }
+
+        count = 0f;
         onAir = true;
         gettingHigh = true;
 
