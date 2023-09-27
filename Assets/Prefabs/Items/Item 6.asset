@@ -10,11 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32fba27745702fa4389f12d70d9d0543, type: 3}
-  m_Name: Item0 3
+  m_Name: Item 6
   m_EditorClassIdentifier: 
-  id: 2
-  itemName: 
-  value: 0
-  icon: {fileID: -201474532, guid: 850987ef9b278ee4383e632db8ceb2a4, type: 3}
-  itemDescription: Description3
+  id: 6
+  itemName: hpboost
+  value: 250
+  icon: {fileID: 21300000, guid: b26ae95183c512a4294dc7cacadfa258, type: 3}
+  itemDescription: Hp Boost
   isEquiped: 0
+  inDelay: 0
+  effectTime: 0
+  delayTime: 0
+  stack: 0
+  shopStack: 0
+  stackSize: 3
+  type: permanent
+  price: 10

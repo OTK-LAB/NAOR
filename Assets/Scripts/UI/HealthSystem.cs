@@ -15,6 +15,7 @@ public class HealthSystem : MonoBehaviour
     public event EventHandler OnHit;
     public event EventHandler OnDead;
 
+    public bool broccoli;
     public bool Invincible { set { invincible = value; } }
 
     public ProgressBar healthBar;
@@ -39,6 +40,7 @@ public class HealthSystem : MonoBehaviour
         smoothing = 10;
         if (!invincible)
         {
+            if (broccoli) { damageAmount %= 75; }
             currentHealth -= damageAmount;
             OnHit?.Invoke(this, EventArgs.Empty); //BATU & ZEYNEP bunu unutma ! hasar animasyonunu oynatýp hasar almamasýný istiyorsak bunu if dýþýna çýkartalým ama düþmanlarý da ona göre düzenleyelim
             if (currentHealth <= 0 )
@@ -50,7 +52,7 @@ public class HealthSystem : MonoBehaviour
         }
         //healthBar.SetValue(currentHealth);
     }
-
+   
     public void Heal(float healAmount)
     {
         smoothing = 5;

@@ -26,7 +26,7 @@ public class MoneyCheck : MonoBehaviour
             else
                 GetComponent<Button>().interactable = true;
         }
-            
+
     }
     private void Update()
     {

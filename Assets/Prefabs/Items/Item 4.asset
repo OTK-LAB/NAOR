@@ -10,11 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32fba27745702fa4389f12d70d9d0543, type: 3}
-  m_Name: Item0 2
+  m_Name: Item 4
   m_EditorClassIdentifier: 
-  id: 1
-  itemName: 
-  value: 0
-  icon: {fileID: 21300000, guid: e4aace504018e284aabc9db3d22f6d84, type: 3}
-  itemDescription: Description2
+  id: 4
+  itemName: EnergyDrink
+  value: 1.25
+  icon: {fileID: 21300000, guid: 2c422968d607b944fbbf5517be2f28be, type: 3}
+  itemDescription: Energy Drink
   isEquiped: 0
+  inDelay: 0
+  effectTime: 5
+  delayTime: 6
+  stack: 0
+  shopStack: 9
+  stackSize: 3
+  type: consumable
+  price: 5
