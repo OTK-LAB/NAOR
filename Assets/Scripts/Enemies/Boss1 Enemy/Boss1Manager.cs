@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss1Manager : MonoBehaviour
 {
     [HideInInspector] public GameObject Player;
     [HideInInspector] public Transform Target;
+    private EnemyHealthSystem healthSystem;
     private Animator anim;
     private Rigidbody2D rigid;
     public GameObject dashSmoke;
@@ -23,21 +25,30 @@ public class Boss1Manager : MonoBehaviour
     public float meleerange;
     public float jumpRange;
 
-    //[Header("Skills")]
+    [Header("Skills")]
 
     [HideInInspector] public bool inSkillUse;
 
+    public int rageStatus;
+
+    //charge
     public float setchargeSkillTime;
     private float chargeSkillTime;
     [HideInInspector] public bool backingUpTimer;
     private Vector2 chargingDir;
 
+
+    //jump
     public float setjumpSkillTime;
     private float jumpSkillTime;
     public float jumpForce;
     private bool onAir;
     private bool gettingHigh;
     private Vector2 directionJump;
+
+
+    //throw
+    private GameObject willThrow;
 
     //disable attack hitbox if non damage move
 
@@ -56,9 +67,12 @@ public class Boss1Manager : MonoBehaviour
         inSkillUse = false;
         backingUpTimer = false;
 
+        rageStatus = 0;
+
         chargeSkillTime = setchargeSkillTime;
         meleeWaitTime = setmeleeWaitTime;
     }
+
 
 
     private void FixedUpdate()
@@ -76,6 +90,15 @@ public class Boss1Manager : MonoBehaviour
                 GetComponent<SpriteRenderer>().flipX = false;
             }
         }
+                  
+        //                               %70                                                       %50                                                         %32
+        if (((healthSystem.currentHealth <= 42000f && rageStatus < 0) || (healthSystem.currentHealth <= 30000f && rageStatus < 1) || (healthSystem.currentHealth <= 18000f && rageStatus < 2)) && rageStatus >= 2 )
+        {
+            rageStatus += 1;
+            WhatToThrow();
+        }
+
+
 
 
         //timers
@@ -91,17 +114,12 @@ public class Boss1Manager : MonoBehaviour
     }
 
 
-
     void Update()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, jumpRange);
-        Collider2D[] colliders1 = Physics2D.OverlapCircleAll(transform.position, meleerange);
-
-
         if (notDead && !stunned)
         {
 
-            if (canAttack)
+            if (canAttack)  //player in range
             {
                 //skill stuff
 
@@ -114,9 +132,14 @@ public class Boss1Manager : MonoBehaviour
                 if (onAir)
                 {
                     if (gettingHigh)
+                    {
                         rigid.MovePosition((Vector2)transform.position + ((Vector2)rigid.transform.up * jumpForce * 15 * Time.deltaTime));
+                    }
                     else
+                    {
                         rigid.MovePosition((Vector2)transform.position + (directionJump * moveSpeed * 5 * Time.deltaTime));
+                    }
+
                 }
 
                 if (charging)
@@ -148,7 +171,7 @@ public class Boss1Manager : MonoBehaviour
                         {
                             //attackup/down
                             anim.Play("attackup");
-                            meleeWaitTime = setmeleeWaitTime + 5f;
+                            meleeWaitTime = setmeleeWaitTime;
                         }
                         else if (!InAnimation)
                         {
@@ -187,6 +210,7 @@ public class Boss1Manager : MonoBehaviour
         }
     }
 
+
     IEnumerator Charge()
     {
         inSkillUse = true;
@@ -209,6 +233,7 @@ public class Boss1Manager : MonoBehaviour
         anim.Play("charge");
     }
 
+    
     IEnumerator Jump()
     {
         inSkillUse = true;
@@ -229,7 +254,7 @@ public class Boss1Manager : MonoBehaviour
 
         gettingHigh = false;
 
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(0.7f); //do it better 
 
         rigid.velocity = Vector3.zero;
 
@@ -239,7 +264,35 @@ public class Boss1Manager : MonoBehaviour
         rigid.constraints -= RigidbodyConstraints2D.FreezePositionX;
 
         chargeSkillTime += 5f;
+
+        yield return new WaitForSeconds(1.5f); //do it better 
         inSkillUse = false;
+    }
+
+    void WhatToThrow()
+    {
+        switch (rageStatus)
+        {
+            case 1:
+
+
+                break;
+
+            case 2:
+
+
+                break;
+
+            case 3:
+
+
+                break;
+        }
+    }
+
+    public IEnumerator Throwing()
+    {
+        yield return new WaitForSeconds(1f);
     }
 
     public IEnumerator Stun()
@@ -261,5 +314,10 @@ public class Boss1Manager : MonoBehaviour
         else
             InAnimation = false;
             
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, jumpRange);
+        Gizmos.DrawWireSphere(transform.position, meleerange);
     }
 }
