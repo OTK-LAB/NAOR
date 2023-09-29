@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Item 6
   m_EditorClassIdentifier: 
   id: 6
-  itemName: hpboost
-  value: 250
-  icon: {fileID: 21300000, guid: b26ae95183c512a4294dc7cacadfa258, type: 3}
-  itemDescription: Hp Boost
+  itemName: bomb
+  value: 0
+  icon: {fileID: 504969009, guid: 151ab764dd47c474faf5abe52b9515ca, type: 3}
+  itemDescription: Bomb
   isEquiped: 0
   inDelay: 0
   effectTime: 0
   delayTime: 0
   stack: 0
-  shopStack: 1
+  shopStack: 20
   stackSize: 3
-  type: permanent
-  price: 10
+  type: throwable
+  price: 5

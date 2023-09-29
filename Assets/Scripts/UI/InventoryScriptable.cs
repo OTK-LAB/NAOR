@@ -15,6 +15,7 @@ public class InventoryScriptable : ScriptableObject
     public Item nullitem;
     public int consumableMaxCount;
     public int permanentMaxCount;
+    public int throwableMaxCount;
     public InventoryScriptable() { maxItems = 0; consumableMaxCount = 3; } 
     public void RefreshItems()
     {
@@ -57,6 +58,13 @@ public class InventoryScriptable : ScriptableObject
                         return true;
                     }
                 }
+                else if (itemToAdd.type == "throwable")
+                {
+                    if (Count(itemToAdd.type) < throwableMaxCount)
+                    {
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -90,10 +98,21 @@ public class InventoryScriptable : ScriptableObject
                 }
                 else if (itemToAdd.type == "permanent")
                 {
-                    if (Count(itemToAdd.type) < consumableMaxCount)
+                    if (Count(itemToAdd.type) < permanentMaxCount)
                     {
                         Debug.Log("perm " + Count(itemToAdd.type.ToString()));
                         //itemToAdd.stack++;
+                        Debug.Log("Add item null");
+                        return true;
+                    }
+                }
+                else if (itemToAdd.type == "throwable")
+                {
+                    if(Count(itemToAdd.type)< throwableMaxCount)
+                    {
+                        Debug.Log("throw " + Count(itemToAdd.type.ToString()));
+                        items[i] = itemToAdd;
+                        items[i].stack = 1;
                         Debug.Log("Add item null");
                         return true;
                     }

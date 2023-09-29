@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32fba27745702fa4389f12d70d9d0543, type: 3}
-  m_Name: Item 7
+  m_Name: Item 15
   m_EditorClassIdentifier: 
-  id: 6
-  itemName: bomb
-  value: 0
-  icon: {fileID: 504969009, guid: 151ab764dd47c474faf5abe52b9515ca, type: 3}
-  itemDescription: Bomb
+  id: 15
+  itemName: abilitypowerboost
+  value: 1.25
+  icon: {fileID: 21300000, guid: 73c353fc8666c534590cb0b9c6806f53, type: 3}
+  itemDescription: Ability Power Boost
   isEquiped: 0
   inDelay: 0
   effectTime: 0
   delayTime: 0
   stack: 0
-  shopStack: 20
+  shopStack: 1
   stackSize: 3
-  type: throwable
-  price: 5
+  type: permanent
+  price: 10
