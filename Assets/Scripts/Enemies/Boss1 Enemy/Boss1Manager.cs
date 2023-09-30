@@ -12,6 +12,10 @@ public class Boss1Manager : MonoBehaviour
     private Rigidbody2D rigid;
     public GameObject dashSmoke;
 
+    public GameObject smallThrowable;
+    public GameObject middleThrowable;
+    public GameObject bigThrowable;
+
 
     public float moveSpeed;
     private bool notDead;
@@ -45,16 +49,18 @@ public class Boss1Manager : MonoBehaviour
     private float jumpSkillTime;
     public float jumpForce;
     private bool onAir;
-    private bool gettingHigh;
     private Vector2 directionJump;
     private Vector2 controlPoint;
+    
 
 
     //throw
     private GameObject willThrow;
+    private bool gotoItem;
 
     //disable attack hitbox if non damage move
 
+    public bool TEST;
 
     void Start()
     {
@@ -62,7 +68,7 @@ public class Boss1Manager : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         healthSystem = GetComponent<EnemyHealthSystem>();
 
-
+        TEST = false;
 
         notDead = true;
         canAttack = false;
@@ -70,6 +76,7 @@ public class Boss1Manager : MonoBehaviour
         charging = false;
         inSkillUse = false;
         backingUpTimer = false;
+        gotoItem = false;
 
         rageStatus = 0;
 
@@ -81,7 +88,7 @@ public class Boss1Manager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!stunned && !charging)
+        if (!stunned && !charging && !gotoItem)
         {
             if (canAttack && Player.transform.position.x - transform.position.x < 0)
             {
@@ -96,8 +103,10 @@ public class Boss1Manager : MonoBehaviour
         }
                   
         //                               %70                                                       %50                                                         %32
-        if (((healthSystem.currentHealth <= 42000f && rageStatus < 0) || (healthSystem.currentHealth <= 30000f && rageStatus < 1) || (healthSystem.currentHealth <= 18000f && rageStatus < 2)) && rageStatus >= 2 )
+        if (((((healthSystem.currentHealth <= 42000f && rageStatus < 0) || (healthSystem.currentHealth <= 30000f && rageStatus < 1) || (healthSystem.currentHealth <= 18000f && rageStatus < 2)) && rageStatus <= 3) || TEST) && !inSkillUse)
         {
+            inSkillUse = true;
+            TEST = false;
             rageStatus += 1;
             WhatToThrow();
         }
@@ -132,6 +141,13 @@ public class Boss1Manager : MonoBehaviour
                     Vector2 directionTarget = Target.position - transform.position;
                     rigid.MovePosition((Vector2)transform.position + (directionTarget * moveSpeed * 20 * Time.deltaTime));
                 }
+
+                if (gotoItem)
+                {
+                    Vector2 directionItem = willThrow.transform.position - transform.position;
+                    rigid.MovePosition((Vector2)transform.position + (directionItem * 3 * moveSpeed * Time.deltaTime));
+                }
+
 
                 if (onAir)
                 {
@@ -264,8 +280,12 @@ public class Boss1Manager : MonoBehaviour
         rigid.AddForce(transform.up * jumpForce);
 
         //directionJump = new Vector3(Player.transform.position.x, Player.transform.position.y - 10, Player.transform.position.z) - transform.position;
-        directionJump = new Vector2(Player.transform.position.x, Player.transform.position.y - 10f);
+        directionJump = new Vector2(Player.transform.position.x, Player.transform.position.y - 5f);
 
+
+        controlPoint = ((transform.position + Player.transform.position) / 2f) + new Vector3(0f,15f,0f);
+
+        /*
         if (GetComponent<SpriteRenderer>().flipX)
         {
             controlPoint = new Vector2(transform.position.x - 7f, transform.position.y + 9f);
@@ -274,16 +294,12 @@ public class Boss1Manager : MonoBehaviour
         {
             controlPoint = new Vector2(transform.position.x + 7f, transform.position.y + 9f);
         }
+        */
 
         count = 0f;
         onAir = true;
-        gettingHigh = true;
 
-        yield return new WaitForSeconds(0.5f);
-
-        gettingHigh = false;
-
-        yield return new WaitForSeconds(0.7f); //do it better 
+        yield return new WaitForSeconds(1.2f); //do it better 
 
         rigid.velocity = Vector3.zero;
 
@@ -303,25 +319,41 @@ public class Boss1Manager : MonoBehaviour
         switch (rageStatus)
         {
             case 1:
-
-
+                willThrow = smallThrowable;
                 break;
 
             case 2:
-
-
+                willThrow = middleThrowable;
                 break;
 
             case 3:
-
-
+                willThrow = bigThrowable;
                 break;
         }
+        StartCoroutine(Throwing());
     }
 
     public IEnumerator Throwing()
     {
+
+        yield return new WaitForSeconds(1f);  //for calculating idk
+
+        gotoItem = true;
+
+        yield return new WaitUntil(() => (transform.position.x - willThrow.transform.position.x) < 1f);
+
+        gotoItem = false;
+
+        //animator pick up item
+        anim.Play("flex");
         yield return new WaitForSeconds(1f);
+
+        //animator throw item
+
+        willThrow.GetComponent<BossThrowableObject>().ThrowItem(Player);
+
+        yield return new WaitForSeconds(2f);
+        inSkillUse = false;
     }
 
     public IEnumerator Stun()
