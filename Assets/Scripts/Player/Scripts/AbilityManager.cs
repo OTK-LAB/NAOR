@@ -1,11 +1,13 @@
+using System.Collections;
 using UltimateCC;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AbilityManager : MonoBehaviour
 {
-    PlayerData playerData;
+    private PlayerData playerData;
 
-    public enum Phase { Off, Enter, Exit, On }
+    public enum Phase { Off, Start, End, Active }
     [System.Serializable]
     public class NecromancersBladeVariables
     {
@@ -16,24 +18,47 @@ public class AbilityManager : MonoBehaviour
         [NonEditable] public Phase phase;
         [NonEditable] public int StoredSoul;
         [NonEditable] public float CurrentUpgradedAttack;
+        public GameObject creaturePrefab;
         NecromancersBladeVariables()
         {
             phase = Phase.Off;
         }
     }
-    // Soul Walk Variables
+
+    [System.Serializable]
+    public class SoulWalkVariables
+    {
+        public float ManaDrainPerSecond;
+        public bool CanDash;
+        [NonEditable] public bool IsInvisible;
+        public float walkMultiplier;
+        [NonEditable] public Phase phase;
+    }
 
     public NecromancersBladeVariables NecromancersBlade;
+    public SoulWalkVariables SoulWalk;
 
     private void Awake()
     {
         playerData = GetComponent<PlayerMain>().PlayerData;
     }
 
+    private void Start()
+    {
+        AttackState.OnEnemyKilled += () =>
+        {
+            if (NecromancersBlade.phase == Phase.Active)
+            {
+                NecromancersBlade.StoredSoul++;
+            }
+        };
+    }
+
     private void Update()
     {
         HandleNecromancersBlade();
-        //Soul Walk Handler Function
+
+        HandleSoulWalk();
     }
 
     public void HandleNecromancersBlade()
@@ -42,27 +67,28 @@ public class AbilityManager : MonoBehaviour
         {
             return;
         }
-        else if (NecromancersBlade.phase == Phase.On)
+        else if (NecromancersBlade.phase == Phase.Active)
         {
             if (NecromancersBlade.CurrentUpgradedAttack == 0)
             {
-                NecromancersBlade.phase = Phase.Exit;
+                NecromancersBlade.phase = Phase.End;
             }
         }
 
-        if (NecromancersBlade.phase == Phase.Enter)
+        if (NecromancersBlade.phase == Phase.Start)
         {
             // increase attack multiplier (at playerData) by NecromancersBlade.AttackMultiplier
             NecromancersBlade.CurrentUpgradedAttack = NecromancersBlade.MaxUpgradedAttacks;
-            NecromancersBlade.phase = Phase.On;
+            NecromancersBlade.StoredSoul = 0;
+            NecromancersBlade.phase = Phase.Active;
         }
-        else if (NecromancersBlade.phase == Phase.Exit)
+        else if (NecromancersBlade.phase == Phase.End)
         {
             // decrease attack multiplier (at playerData) by NecromancersBlade.AttackMultiplier
-            NecromancersBlade.CurrentUpgradedAttack = 0;
             if (NecromancersBlade.StoredSoul > 0)
             {
                 SpawnCreature(NecromancersBlade.StoredSoul);
+                NecromancersBlade.StoredSoul = 0;
             }
             NecromancersBlade.phase = Phase.Off;
         }
@@ -70,9 +96,38 @@ public class AbilityManager : MonoBehaviour
 
     private void SpawnCreature(int number)
     {
-        // instantiate of creature number times
+        StartCoroutine(HandleCreatureSpawn(number));
     }
 
-    // Soul walk Handler Function Declaration
+    IEnumerator HandleCreatureSpawn(int number)
+    {
+        for (int i = 1; i <= number; i++)
+        {
+            Instantiate(NecromancersBlade.creaturePrefab, transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(0.25f);
+        }
+        yield return null;
+    }
 
+    public void HandleSoulWalk()
+    {
+        if (SoulWalk.phase == Phase.Off)
+        {
+            return;
+        }
+        else if (SoulWalk.phase == Phase.Active)
+        {
+            // Handle Mana Drain
+            // if mana 0, phase = Phase.End
+        }
+
+        if (SoulWalk.phase == Phase.Start)
+        {
+            SoulWalk.phase = Phase.Active;
+        }
+        else if (SoulWalk.phase == Phase.End)
+        {
+            SoulWalk.phase = Phase.Off;
+        }
+    }
 }

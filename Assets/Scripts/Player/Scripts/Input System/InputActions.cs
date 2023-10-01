@@ -107,6 +107,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SoulWalk"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd9c385c-8513-470e-b63d-123459c726e5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -384,6 +393,17 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Necromancers Blade"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a3f57b4-a5c1-4e1f-ab21-9b4e09fa8703"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SoulWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -441,6 +461,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_PlungeAttack = m_Player.FindAction("Plunge Attack", throwIfNotFound: true);
         m_Player_NecromancersBlade = m_Player.FindAction("Necromancers Blade", throwIfNotFound: true);
+        m_Player_SoulWalk = m_Player.FindAction("SoulWalk", throwIfNotFound: true);
         // Interaction
         m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
         m_Interaction_NpcInteraction = m_Interaction.FindAction("NpcInteraction", throwIfNotFound: true);
@@ -512,6 +533,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_PlungeAttack;
     private readonly InputAction m_Player_NecromancersBlade;
+    private readonly InputAction m_Player_SoulWalk;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -525,6 +547,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @PlungeAttack => m_Wrapper.m_Player_PlungeAttack;
         public InputAction @NecromancersBlade => m_Wrapper.m_Player_NecromancersBlade;
+        public InputAction @SoulWalk => m_Wrapper.m_Player_SoulWalk;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -561,6 +584,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @NecromancersBlade.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNecromancersBlade;
                 @NecromancersBlade.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNecromancersBlade;
                 @NecromancersBlade.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnNecromancersBlade;
+                @SoulWalk.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSoulWalk;
+                @SoulWalk.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSoulWalk;
+                @SoulWalk.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSoulWalk;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -592,6 +618,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @NecromancersBlade.started += instance.OnNecromancersBlade;
                 @NecromancersBlade.performed += instance.OnNecromancersBlade;
                 @NecromancersBlade.canceled += instance.OnNecromancersBlade;
+                @SoulWalk.started += instance.OnSoulWalk;
+                @SoulWalk.performed += instance.OnSoulWalk;
+                @SoulWalk.canceled += instance.OnSoulWalk;
             }
         }
     }
@@ -649,6 +678,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnPlungeAttack(InputAction.CallbackContext context);
         void OnNecromancersBlade(InputAction.CallbackContext context);
+        void OnSoulWalk(InputAction.CallbackContext context);
     }
     public interface IInteractionActions
     {

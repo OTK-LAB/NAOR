@@ -50,6 +50,7 @@ namespace UltimateCC
             [SerializeField] private LayerMask headBumpLayerMask;
             [SerializeField] private LayerMask wallLayerMask;
             [SerializeField] private LayerMask hingeLayerMask;
+            [SerializeField] private LayerMask enemyLayerMask;
             [SerializeField, NonEditable] private Vector3 groundCheckPosition;
             [SerializeField, NonEditable] private Vector3 headCheckPosition;
             [SerializeField, NonEditable] private Vector2 walkSpeedDirection;
@@ -80,6 +81,7 @@ namespace UltimateCC
             public LayerMask HeadBumpLayerMask => headBumpLayerMask;
             public LayerMask WallLayerMask => wallLayerMask;
             public LayerMask HingeLayerMask => hingeLayerMask;
+            public LayerMask EnemyLayerMask => enemyLayerMask;
             public Vector2 GroundCheckPosition { get { return groundCheckPosition; } set { groundCheckPosition = value; } }
             public Vector2 HeadCheckPosition { get { return headCheckPosition; } set { headCheckPosition = value; } }
             public Vector2 WalkSpeedDirection { get { return walkSpeedDirection; } set { walkSpeedDirection = value; } }

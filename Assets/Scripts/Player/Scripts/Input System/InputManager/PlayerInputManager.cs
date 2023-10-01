@@ -70,7 +70,7 @@ namespace UltimateCC
             playerControls.Player.PlungeAttack.performed += OnPlungeAttack;
             playerControls.Player.PlungeAttack.canceled += OnPlungeAttack;
             playerControls.Player.NecromancersBlade.started += OnNecromancersBlade;
-            playerControls.Player.NecromancersBlade.canceled += OnNecromancersBlade;
+            playerControls.Player.SoulWalk.started += OnSoulWalk;
         }
 
         private void FixedUpdate()
@@ -164,11 +164,25 @@ namespace UltimateCC
             {
                 if (abilityManager.NecromancersBlade.phase == AbilityManager.Phase.Off)
                 {
-                    abilityManager.NecromancersBlade.phase = AbilityManager.Phase.Enter;
+                    abilityManager.NecromancersBlade.phase = AbilityManager.Phase.Start;
                 }
-                else if (abilityManager.NecromancersBlade.phase == AbilityManager.Phase.On)
+                else if (abilityManager.NecromancersBlade.phase == AbilityManager.Phase.Active)
                 {
-                    abilityManager.NecromancersBlade.phase = AbilityManager.Phase.Exit;
+                    abilityManager.NecromancersBlade.phase = AbilityManager.Phase.End;
+                }
+            }
+        }
+        private void OnSoulWalk(InputAction.CallbackContext context)
+        {
+            if (context.ReadValueAsButton())
+            {
+                if (abilityManager.SoulWalk.phase == AbilityManager.Phase.Off)
+                {
+                    abilityManager.SoulWalk.phase = AbilityManager.Phase.Start;
+                }
+                else if (abilityManager.SoulWalk.phase == AbilityManager.Phase.Active)
+                {
+                    abilityManager.SoulWalk.phase = AbilityManager.Phase.End;
                 }
             }
         }
