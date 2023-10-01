@@ -1929,10 +1929,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2339822266297304748, guid: 0f4992b869febab46856b081a7f5f640, type: 3}
-      propertyPath: m_SpriteSortPoint
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5494546934422563349, guid: 0f4992b869febab46856b081a7f5f640, type: 3}
       propertyPath: m_Name
       value: Bomb
@@ -1940,18 +1936,6 @@ PrefabInstance:
     - target: {fileID: 7428079709635384753, guid: 0f4992b869febab46856b081a7f5f640, type: 3}
       propertyPath: m_RootOrder
       value: 26
-      objectReference: {fileID: 0}
-    - target: {fileID: 7428079709635384753, guid: 0f4992b869febab46856b081a7f5f640, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7428079709635384753, guid: 0f4992b869febab46856b081a7f5f640, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7428079709635384753, guid: 0f4992b869febab46856b081a7f5f640, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7428079709635384753, guid: 0f4992b869febab46856b081a7f5f640, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18370,7 +18354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1732032363500577978, guid: 48c00bf589ebd924ebc6e0fc84f8aa01, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1732032363500577979, guid: 48c00bf589ebd924ebc6e0fc84f8aa01, type: 3}
       propertyPath: m_RootOrder
@@ -18508,7 +18492,8 @@ PrefabInstance:
       propertyPath: soulBar
       value: 
       objectReference: {fileID: 939756897}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5439940299861185402, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
 --- !u!1001 &5880557512621416112
 PrefabInstance:

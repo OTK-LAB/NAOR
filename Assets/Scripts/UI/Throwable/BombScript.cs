@@ -4,7 +4,7 @@ using UltimateCC;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class ThrowableMovement : MonoBehaviour
+public class BombScript : MonoBehaviour
 {
     public float speed;
     public Vector3 LaunchOffset;
@@ -41,13 +41,6 @@ public class ThrowableMovement : MonoBehaviour
 
     void Update()
     {
-
-        //  if (!thrown)
-        //  {
-        //      var direction = -transform.right;
-        //      gameObject.GetComponent<Rigidbody2D>().AddForce(direction * speed, ForceMode2D.Force);
-        //
-        //  }
     }
 
     private void OnCollisionEnter2D(Collision2D col)

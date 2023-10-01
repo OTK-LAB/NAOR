@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosionScriptTest : MonoBehaviour
+public class ExplosionScript : MonoBehaviour
 {
     public float ExplosionDamage;
     public bool Destroyed = false;
