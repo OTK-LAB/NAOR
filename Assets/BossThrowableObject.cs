@@ -78,7 +78,7 @@ public class BossThrowableObject : MonoBehaviour
         {
 
             count = 0f;
-            controlPointThrow = ((transform.position + toWhere.transform.position) / 2f) + new Vector3(0f, 7f, 0f);
+            controlPointThrow = ((transform.position + toWhere.transform.position) / 2f) + new Vector3(0f, 10f, 0f);
             directionPlayer = new Vector2(toWhere.transform.position.x, toWhere.transform.position.y - 5f);
 
             curveThrow = true;

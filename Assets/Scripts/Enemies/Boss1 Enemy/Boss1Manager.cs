@@ -57,6 +57,7 @@ public class Boss1Manager : MonoBehaviour
     //throw
     private GameObject willThrow;
     private bool gotoItem;
+    private float calculation;
 
     //disable attack hitbox if non damage move
 
@@ -88,44 +89,47 @@ public class Boss1Manager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!stunned && !charging && !gotoItem)
+        if (notDead)
         {
-            if (canAttack && Player.transform.position.x - transform.position.x < 0)
+            if (!stunned && !charging && !gotoItem)
             {
-                dashSmoke.GetComponent<SpriteRenderer>().flipX = false;
-                GetComponent<SpriteRenderer>().flipX = true;
+                if (canAttack && Player.transform.position.x - transform.position.x < 0)
+                {
+                    dashSmoke.GetComponent<SpriteRenderer>().flipX = false;
+                    GetComponent<SpriteRenderer>().flipX = true;
+                }
+                else
+                {
+                    dashSmoke.GetComponent<SpriteRenderer>().flipX = true;
+                    GetComponent<SpriteRenderer>().flipX = false;
+                }
             }
-            else
+
+            //                               %70                                                         %50                                                         %32
+            if (((((healthSystem.currentHealth <= 42000f && rageStatus < 0) || (healthSystem.currentHealth <= 30000f && rageStatus < 1) || (healthSystem.currentHealth <= 18000f && rageStatus < 2)) && rageStatus <= 3) || TEST) && !inSkillUse && !InAnimation && !stunned)
             {
-                dashSmoke.GetComponent<SpriteRenderer>().flipX = true;
-                GetComponent<SpriteRenderer>().flipX = false;
+                inSkillUse = true;
+                TEST = false;
+                rageStatus += 1;
+                WhatToThrow();
             }
-        }
-                  
-        //                               %70                                                       %50                                                         %32
-        if (((((healthSystem.currentHealth <= 42000f && rageStatus < 0) || (healthSystem.currentHealth <= 30000f && rageStatus < 1) || (healthSystem.currentHealth <= 18000f && rageStatus < 2)) && rageStatus <= 3) || TEST) && !inSkillUse)
-        {
-            inSkillUse = true;
-            TEST = false;
-            rageStatus += 1;
-            WhatToThrow();
-        }
 
 
 
 
-        //timers
+            //timers
 
-        if (meleeWaitTime > 0)
-            meleeWaitTime -= Time.deltaTime;
+            if (meleeWaitTime > 0)
+                meleeWaitTime -= Time.deltaTime;
 
-        if (chargeSkillTime > 0)
-            chargeSkillTime -= Time.deltaTime;
+            if (chargeSkillTime > 0)
+                chargeSkillTime -= Time.deltaTime;
 
-        if (jumpSkillTime > 0)
-            jumpSkillTime -= Time.deltaTime;
+            if (jumpSkillTime > 0)
+                jumpSkillTime -= Time.deltaTime;
+
     }
-
+}
 
     void Update()
     {
@@ -142,13 +146,6 @@ public class Boss1Manager : MonoBehaviour
                     rigid.MovePosition((Vector2)transform.position + (directionTarget * moveSpeed * 20 * Time.deltaTime));
                 }
 
-                if (gotoItem)
-                {
-                    Vector2 directionItem = willThrow.transform.position - transform.position;
-                    rigid.MovePosition((Vector2)transform.position + (directionItem * 3 * moveSpeed * Time.deltaTime));
-                }
-
-
                 if (onAir)
                 {
                     if (count < setCount)
@@ -159,21 +156,17 @@ public class Boss1Manager : MonoBehaviour
                         Vector3 m2 = Vector3.Lerp(controlPoint, directionJump, count);
                         rigid.MovePosition(Vector3.Lerp(m1, m2, count));
                     }
-
-
-
-
-                    /*
-                    if (gettingHigh)
-                    {
-                        rigid.MovePosition((Vector2)transform.position + ((Vector2)rigid.transform.up * jumpForce * 15 * Time.deltaTime));
-                    }
-                    else
-                    {
-                        rigid.MovePosition((Vector2)transform.position + (directionJump * moveSpeed * 5 * Time.deltaTime));
-                    }
-                    */
                 }
+
+                if (gotoItem)
+                {
+                    calculation = Mathf.Abs(Vector2.Distance(willThrow.transform.position, transform.position));
+
+                    Vector2 directionItem = willThrow.transform.position - transform.position;
+                    rigid.MovePosition((Vector2)transform.position + (directionItem * 3.5f * moveSpeed * Time.deltaTime));
+                }
+
+
 
                 if (charging)
                 {
@@ -189,7 +182,7 @@ public class Boss1Manager : MonoBehaviour
 
                 //moveset
 
-                if (!inSkillUse)
+                if (!inSkillUse && !TEST)
                 {
                     //how far is the player
 
@@ -330,17 +323,26 @@ public class Boss1Manager : MonoBehaviour
                 willThrow = bigThrowable;
                 break;
         }
+
         StartCoroutine(Throwing());
     }
 
     public IEnumerator Throwing()
     {
 
-        yield return new WaitForSeconds(1f);  //for calculating idk
+        yield return new WaitForSeconds(0.5f);  //for calculating idk
 
         gotoItem = true;
+        anim.Play("move");
 
-        yield return new WaitUntil(() => (transform.position.x - willThrow.transform.position.x) < 1f);
+        yield return new WaitUntil(() => calculation < 3.5f);
+
+        if (calculation >= 3.5f)
+        {
+            StartCoroutine(Throwing());
+            Debug.Log("hmm");
+            yield break;
+        }
 
         gotoItem = false;
 
@@ -351,8 +353,10 @@ public class Boss1Manager : MonoBehaviour
         //animator throw item
 
         willThrow.GetComponent<BossThrowableObject>().ThrowItem(Player);
+        willThrow = null;
 
         yield return new WaitForSeconds(2f);
+
         inSkillUse = false;
     }
 
