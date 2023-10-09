@@ -23,6 +23,7 @@ public class InventorySystem : MonoBehaviour
     public bool consumableInteracted;
     public bool throwableInteracted;
     public GameObject bomb;
+    public GameObject slowBomb;
     public Item equipedItem;
     public Item selectedItem;
     public Item shopSelectedItem;
@@ -142,6 +143,8 @@ public class InventorySystem : MonoBehaviour
         {
             case 6:
                 return Bomb(_equipedItem);
+            case 7:
+                return SlowBomb(_equipedItem);
 
             default: break;
         }
@@ -195,6 +198,11 @@ public class InventorySystem : MonoBehaviour
     public bool Bomb(Item _selectedItem)
     {
         Instantiate(bomb, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
+        return true;
+    }
+    public bool SlowBomb(Item _selectedItem)
+    {
+        Instantiate(slowBomb, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
         return true;
     }
 

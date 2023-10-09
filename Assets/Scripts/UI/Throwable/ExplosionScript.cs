@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class ExplosionScript : MonoBehaviour
 {
-    public float ExplosionDamage;
     public bool Destroyed = false;
+    public Item item;
 
     private bool damaged=false;
     private bool damaged2=false;
+    private float explosionDamage;
+
+    private void Awake()
+    {
+        explosionDamage = item.value;
+    }
     void Start()
     {
         
@@ -23,16 +29,16 @@ public class ExplosionScript : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.gameObject.layer == 8 && !damaged)
+        if(col.gameObject.layer == LayerMask.NameToLayer("Enemy") && !damaged)
         {
             Debug.Log("enemyBoom");
-            col.gameObject.GetComponent<EnemyHealthSystem>().Damage(ExplosionDamage);
+            col.gameObject.GetComponent<EnemyHealthSystem>().Damage(explosionDamage);
             damaged = true; 
         }
-        else if(col.gameObject.layer == 3 && !damaged2)
+        else if(col.gameObject.layer == LayerMask.NameToLayer("Player") && !damaged2)
         {
             Debug.Log("playerBoom");
-            col.gameObject.GetComponent<HealthSystem>().Damage(ExplosionDamage);
+            col.gameObject.GetComponent<HealthSystem>().Damage(explosionDamage);
             damaged2 = true;
         }
         
