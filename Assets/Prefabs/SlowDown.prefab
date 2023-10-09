@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2741478192501803672}
   - component: {fileID: 9212577953769860751}
   - component: {fileID: 2158289305109610780}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: SlowDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2741478192501803677}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 7790a866693d7b64ea793e788806d32e, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -126,3 +126,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Destroyed: 0
   item: {fileID: 11400000, guid: 1b7fbc908072a614a900b6d9505fb44f, type: 2}
+  isWind: 0

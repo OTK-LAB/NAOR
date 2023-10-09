@@ -5,17 +5,13 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class SlowBombScript : MonoBehaviour
+public class EffectiveBombScript : MonoBehaviour
 {
     public float speed;
     public Vector3 LaunchOffset;
-    public PlayerInputActions inputActions;
-    public bool thrown;
-    public int direction;
-    public GameObject Slowdown;
+    public GameObject effectObj;
 
-
-    private GameObject player;
+    public bool isWind;
 
 
     private void Awake()
@@ -58,7 +54,7 @@ public class SlowBombScript : MonoBehaviour
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            Instantiate(Slowdown, new Vector3(gameObject.transform.position.x,col.collider.bounds.max.y,gameObject.transform.position.z), Quaternion.identity);
+            Instantiate(effectObj, new Vector3(gameObject.transform.position.x,col.collider.bounds.max.y,gameObject.transform.position.z), Quaternion.identity);
             Destroy(gameObject);
         }
     }

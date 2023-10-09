@@ -8,13 +8,9 @@ public class BombScript : MonoBehaviour
 {
     public float speed;
     public Vector3 LaunchOffset;
-    public PlayerInputActions inputActions;
-    public bool thrown;
-    public int direction;
     public GameObject Explosion;
 
 
-    private GameObject player;
     
 
     private void Awake()

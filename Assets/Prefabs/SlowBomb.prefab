@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 5136174290463882020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.05}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.033333335}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -123,7 +123,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
 --- !u!114 &2841293666945564663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +138,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   LaunchOffset: {x: 1, y: 1, z: 0}
-  thrown: 0
-  direction: 0
-  Slowdown: {fileID: 2741478192501803677, guid: 83a1cf77db492e5418acdc28bfbc8124, type: 3}
+  effectObj: {fileID: 2741478192501803677, guid: 83a1cf77db492e5418acdc28bfbc8124, type: 3}
+  isWind: 0
