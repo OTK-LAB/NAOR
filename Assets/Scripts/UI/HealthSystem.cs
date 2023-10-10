@@ -3,65 +3,78 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthSystem : MonoBehaviour
+public class HealthSystem
 {
+    public HealthSystem(){
+        CurrentHealth = maxHealth;
+    }
+    public HealthSystem(float maxHealth){
+        MaxHealth = maxHealth;
+        CurrentHealth = maxHealth;
+    }
     private bool invincible = false;
-    [SerializeField]
-    public float currentHealth;
-    [SerializeField]
-    public float maxHealth;
-    float smoothing = 5;
+    [SerializeField] private float currentHealth;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float damageMultiplier;
+    //float smoothing = 5;
 
-    public event EventHandler OnHit;
-    public event EventHandler OnDead;
-
-    public bool broccoli;
+    public delegate void HealthHandler(float amount);
+    public delegate void DeathHandler();
+    public event HealthHandler OnHealthChanged;
+    public event HealthHandler OnMaxHealthChanged;
+    public event DeathHandler OnDied;
     public bool Invincible { set { invincible = value; } }
-
-    public ProgressBar healthBar;
-    void Start()
+    public float CurrentHealth
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxValue(maxHealth);
+        get
+        {
+            return currentHealth;
+        }
+        set
+        {
+            currentHealth = value;
+            OnHealthChanged(value);
+        }
+    }
+    public float MaxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+        set
+        {
+            maxHealth = value;
+            OnMaxHealthChanged(value);
+        }
     }
 
-    private void Update()
-    {
-        if (currentHealth != healthBar.slider.value)
-            healthBar.SetValue(Mathf.Lerp(healthBar.slider.value, currentHealth, smoothing * Time.deltaTime));
-    }
-    public float GetHealth()
-    {
-        return currentHealth;
-    }
+    public float DamageMultiplier { get { return damageMultiplier; } set { damageMultiplier = value; } }
 
     public void Damage(float damageAmount)
     {
-        smoothing = 10;
         if (!invincible)
         {
-            if (broccoli) { damageAmount %= 75; }
-            currentHealth -= damageAmount;
-            OnHit?.Invoke(this, EventArgs.Empty); //BATU & ZEYNEP bunu unutma ! hasar animasyonunu oynatýp hasar almamasýný istiyorsak bunu if dýþýna çýkartalým ama düþmanlarý da ona göre düzenleyelim
+            currentHealth -= damageAmount * damageMultiplier;
             if (currentHealth <= 0 )
             {
                 currentHealth = 0;
-                OnDead?.Invoke(this, EventArgs.Empty);             
+                OnDied();
             }
-
+            OnHealthChanged(currentHealth);
         }
         //healthBar.SetValue(currentHealth);
     }
-   
+
     public void Heal(float healAmount)
     {
-        smoothing = 5;
         currentHealth += healAmount;
 
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
+        OnHealthChanged(currentHealth);
         //healthBar.SetValue(currentHealth);
     }
 }

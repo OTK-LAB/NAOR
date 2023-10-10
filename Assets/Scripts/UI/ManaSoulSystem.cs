@@ -60,7 +60,7 @@ public class ManaSoulSystem : MonoBehaviour
     public void UseMana(float manaAmount)
     {
         smoothing = 10;
-        if (currentMana < manaAmount) // Önce mana barý bitiriliyor sonra soul barý harcanýyor
+        if (currentMana < manaAmount) // ï¿½nce mana barï¿½ bitiriliyor sonra soul barï¿½ harcanï¿½yor
         {
             if (currentSoul + currentMana >= manaAmount)
             {
@@ -105,7 +105,7 @@ public class ManaSoulSystem : MonoBehaviour
     public void HealWithSoul(float healAmount)
     {
         smoothing = 5;
-        if (currentSoul >= healAmount && healthSystem.currentHealth < healthSystem.maxHealth)
+        if (currentSoul >= healAmount && healthSystem.CurrentHealth < healthSystem.MaxHealth)
         {
             healthSystem.Heal(healAmount);
             UseSoul(healAmount);

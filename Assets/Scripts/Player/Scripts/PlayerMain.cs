@@ -6,6 +6,7 @@ namespace UltimateCC
 {
     public class PlayerMain : MonoBehaviour
     {
+        public HealthSystem playerHealthSystem;
         public PlayerStateMachine _stateMachine; // State Machine declaration where we change current state
         [NonEditable, Space(5)] public AnimName CurrentState; // Variable to display the current state in the Unity inspector for debugging purposes.
         public MainState IdleState, WalkState, JumpState, LandState, DashState, CrouchIdleState, CrouchWalkState, SwingState
@@ -32,6 +33,8 @@ namespace UltimateCC
             Rigidbody2D = GetComponent<Rigidbody2D>();
             InputManager = GetComponent<PlayerInputManager>();
             CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
+
+            playerHealthSystem = new HealthSystem();
 
             // In this section, we assign all states
             _stateMachine = new PlayerStateMachine();

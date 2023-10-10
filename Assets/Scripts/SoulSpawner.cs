@@ -16,7 +16,7 @@ public class SoulSpawner : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (parent.GetComponent<HealthSystem>().currentHealth == 0f && toggle)
+        if (parent.GetComponent<HealthSystem>().CurrentHealth == 0f && toggle)
         {
             //StartCoroutine(spawnSoul(0.8f));
             toggle = false;
