@@ -1976,18 +1976,34 @@ PrefabInstance:
     - target: {fileID: 1391948044445387141, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 1327499562}
+      objectReference: {fileID: 0}
     - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: manaBar
       value: 
-      objectReference: {fileID: 1984868702}
+      objectReference: {fileID: 0}
     - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: soulBar
       value: 
-      objectReference: {fileID: 939756897}
+      objectReference: {fileID: 0}
+    - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040768, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: playerHealthSystem.maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: playerHealthSystem.currentHealth
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: playerHealthSystem.damageMultiplier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040778, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: m_RootOrder
@@ -8185,7 +8201,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 939756894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129149fd9fcb0a64ea50bc328e9cd485, type: 3}
+  m_Script: {fileID: 11500000, guid: c1d29326f2cc3f541a19b1b734b72408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 939756896}
@@ -11667,7 +11683,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1327499559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129149fd9fcb0a64ea50bc328e9cd485, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e4458593ceef184283a5e9b19c5d739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1327499561}
@@ -11701,6 +11717,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   fill: {fileID: 1375976371}
+  player: {fileID: 0}
 --- !u!1 &1341954706
 GameObject:
   m_ObjectHideFlags: 0
@@ -18822,7 +18839,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1984868699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129149fd9fcb0a64ea50bc328e9cd485, type: 3}
+  m_Script: {fileID: 11500000, guid: c82816ad742903b49bfdf55b9d5c1f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1984868701}
@@ -19278,7 +19295,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 2.6171227, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

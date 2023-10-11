@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace UltimateCC
 {
-    public class PlayerMain : MonoBehaviour
+    public class PlayerMain : Singleton<PlayerMain>
     {
-        public HealthSystem playerHealthSystem;
+        
         public PlayerStateMachine _stateMachine; // State Machine declaration where we change current state
         [NonEditable, Space(5)] public AnimName CurrentState; // Variable to display the current state in the Unity inspector for debugging purposes.
         public MainState IdleState, WalkState, JumpState, LandState, DashState, CrouchIdleState, CrouchWalkState, SwingState
@@ -19,11 +19,12 @@ namespace UltimateCC
         [NonSerialized] public Rigidbody2D Rigidbody2D; // The Rigidbody2D is used to control movement based on velocity vector.
         [NonSerialized] public PlayerInputManager InputManager; // The PlayerInputManager handles all user input and sends it to the state machine.
         [NonSerialized] public CapsuleCollider2D CapsuleCollider2D; // CapsuleCollider2D is used to handle slopes and define the ground check position in the base state class: "State.cs".
-
+        public HealthSystem playerHealthSystem;
         public PlayerData PlayerData; // All player movement and action data is stored in the PlayerData object.
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             // Declaration of necessary components:
             // Animator for controlling character animations,
             // Rigidbody2D for physics simulation,
@@ -33,8 +34,6 @@ namespace UltimateCC
             Rigidbody2D = GetComponent<Rigidbody2D>();
             InputManager = GetComponent<PlayerInputManager>();
             CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
-
-            playerHealthSystem = new HealthSystem();
 
             // In this section, we assign all states
             _stateMachine = new PlayerStateMachine();

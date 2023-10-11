@@ -2,16 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[Serializable]
 public class HealthSystem
 {
-    public HealthSystem(){
-        CurrentHealth = maxHealth;
-    }
-    public HealthSystem(float maxHealth){
-        MaxHealth = maxHealth;
-        CurrentHealth = maxHealth;
-    }
     private bool invincible = false;
     [SerializeField] private float currentHealth;
     [SerializeField] private float maxHealth;
