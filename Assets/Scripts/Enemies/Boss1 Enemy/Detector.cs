@@ -34,6 +34,20 @@ public class Detector : MonoBehaviour
             {
                 boss1Manager.Player = collision.gameObject;
                 boss1Manager.canAttack = true;
+
+                if (boss1Manager.charging)
+                {
+                    if (boss1Manager.rageStatus == 4)
+                    {
+                        boss1Manager.QTEIndicator.SetActive(true);
+                        //clash swords animation
+                    }
+                    else
+                    {
+                        StartCoroutine(boss1Manager.ChargeOk());
+                    }
+
+                }
             }
 
             if (collision.tag == "wall" && boss1Manager.charging)
@@ -48,19 +62,19 @@ public class Detector : MonoBehaviour
     {
         if (left && boss1Manager.gameObject.GetComponent<SpriteRenderer>().flipX && boss1Manager.inSkillUse && !boss1Manager.backingUpTimer)
         {
-            boss1Manager.Target = OtherBossCharge.transform;
+            boss1Manager.Target = OtherBossCharge.transform; //boss sola gidiyor
         }
         if (left && !boss1Manager.gameObject.GetComponent<SpriteRenderer>().flipX && boss1Manager.inSkillUse && !boss1Manager.backingUpTimer)
         {
-            boss1Manager.Target = gameObject.transform;
+            boss1Manager.Target = gameObject.transform;      //boss saða gidiyor
         }
         if (right && !boss1Manager.gameObject.GetComponent<SpriteRenderer>().flipX && boss1Manager.inSkillUse && !boss1Manager.backingUpTimer)
         {
-            boss1Manager.Target = OtherBossCharge.transform;
+            boss1Manager.Target = OtherBossCharge.transform;  //boss saða bakýyor
         }
         if (right && boss1Manager.gameObject.GetComponent<SpriteRenderer>().flipX && boss1Manager.inSkillUse && !boss1Manager.backingUpTimer)
         {
-            boss1Manager.Target = gameObject.transform;
+            boss1Manager.Target = gameObject.transform;     //boss sola bakýyor
         }
 
     }

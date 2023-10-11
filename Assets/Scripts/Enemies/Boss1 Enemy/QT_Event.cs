@@ -9,30 +9,37 @@ public class QT_Event : MonoBehaviour
     public Boss1Manager boss;
     private Image image;
 
-    public float pressAmount = 0;
-    public float timeThreashold;
-    
+    private float pressAmount = 0;
+    public float settimeThreashold;
+    private float timeThreashold;
+
+
     void Start()
     {
         image = GetComponent<Image>();
         pressAmount = 0;
+        timeThreashold = settimeThreashold;
     }
 
 
     void Update()
     {
         image.fillAmount = pressAmount;
-        timeThreashold += Time.deltaTime;
+
+        if(timeThreashold > 0)
+            timeThreashold -= Time.deltaTime;
+        else
+            //player looses but idk how to do this mike
 
         if (pressAmount >= 1)
         {
-            //event success
+            boss.notDead = false;
         }
     }
 
     public void PlayerPressed()
     {
-        if (pressAmount < 1f)
+        if (pressAmount < 1f && timeThreashold > 0)
         {
             Debug.Log("PRESSTO");
             pressAmount += 0.0144f;

@@ -18,7 +18,7 @@ public class Boss1Manager : MonoBehaviour
 
 
     public float moveSpeed;
-    private bool notDead;
+    [HideInInspector] public bool notDead;
     public bool canAttack;
     private bool InAnimation;
     [HideInInspector] public bool stunned;
@@ -36,6 +36,7 @@ public class Boss1Manager : MonoBehaviour
     public int rageStatus;
 
     //charge
+    public float chargeKnockbackForce;
     public float setchargeSkillTime;
     private float chargeSkillTime;
     [HideInInspector] public bool backingUpTimer;
@@ -43,6 +44,7 @@ public class Boss1Manager : MonoBehaviour
 
 
     //jump
+    public GameObject explosionEffect;
     public float setCount;
     private float count;
     public float setjumpSkillTime;
@@ -58,6 +60,10 @@ public class Boss1Manager : MonoBehaviour
     private GameObject willThrow;
     private bool gotoItem;
     private float calculation;
+
+
+    //rage
+    public GameObject QTEIndicator;
 
     //disable attack hitbox if non damage move
 
@@ -105,8 +111,8 @@ public class Boss1Manager : MonoBehaviour
                 }
             }
 
-            //                               %70                                                         %50                                                         %32
-            if (((((healthSystem.currentHealth <= 42000f && rageStatus < 0) || (healthSystem.currentHealth <= 30000f && rageStatus < 1) || (healthSystem.currentHealth <= 18000f && rageStatus < 2)) && rageStatus <= 3) || TEST) && !inSkillUse && !InAnimation && !stunned)
+            //                                %70                                                         %50                                                         %32                                                          %5
+            if (((((healthSystem.currentHealth <= 42000f && rageStatus < 0) || (healthSystem.currentHealth <= 30000f && rageStatus < 1) || (healthSystem.currentHealth <= 18000f && rageStatus < 2) || (healthSystem.currentHealth <= 3000f)) && rageStatus <= 4) || TEST) && !inSkillUse && !InAnimation && !stunned)
             {
                 inSkillUse = true;
                 TEST = false;
@@ -129,6 +135,11 @@ public class Boss1Manager : MonoBehaviour
                 jumpSkillTime -= Time.deltaTime;
 
     }
+    else //is dead
+    {
+            anim.Play("chargefail"); //temp
+    }
+
 }
 
     void Update()
@@ -193,7 +204,12 @@ public class Boss1Manager : MonoBehaviour
                         anim.Play("flex");                                              // so no need to restart boss's AI
                     else if (distance < meleerange)
                     {
-                        if (meleeWaitTime <= 0)
+                        if (!InAnimation && (chargeSkillTime <= 0) && rageStatus >= 2)
+                        {
+                            StartCoroutine(Charge());
+                            chargeSkillTime = setchargeSkillTime;
+                        }
+                        else if (meleeWaitTime <= 0)
                         {
                             //attackup/down
                             anim.Play("attackup");
@@ -203,6 +219,7 @@ public class Boss1Manager : MonoBehaviour
                         {
                             anim.Play("idle");       //this can be placed with another move so he doesnt wait on our head
                         }
+
                     }
                     else if (jumpRange < distance && !InAnimation && jumpSkillTime <= 0)
                     {
@@ -233,6 +250,16 @@ public class Boss1Manager : MonoBehaviour
                 anim.Play("idle");
             }
 
+        } else if (stunned)
+        {
+            if (rageStatus >= 2)
+            {
+                float distance = Vector2.Distance(Player.transform.position, transform.position);
+                if (distance < meleerange)
+                {
+                    anim.Play("attackback");
+                }
+            }
         }
     }
 
@@ -296,6 +323,8 @@ public class Boss1Manager : MonoBehaviour
 
         rigid.velocity = Vector3.zero;
 
+        explosionEffect.SetActive(true);
+
 
         onAir = false;
         rigid.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -304,6 +333,9 @@ public class Boss1Manager : MonoBehaviour
         chargeSkillTime += 5f;
 
         yield return new WaitForSeconds(1.5f); //do it better 
+
+        explosionEffect.SetActive(false);
+
         inSkillUse = false;
     }
 
@@ -321,6 +353,10 @@ public class Boss1Manager : MonoBehaviour
 
             case 3:
                 willThrow = bigThrowable;
+                break;
+
+            case 4: //qte
+                StartCoroutine(Charge());
                 break;
         }
 
@@ -366,10 +402,34 @@ public class Boss1Manager : MonoBehaviour
         stunned = true;
 
         anim.Play("chargefail");
-        yield return new WaitForSeconds(4f);
+
+        if (rageStatus >= 2)
+            yield return new WaitForSeconds(2f);
+        else
+            yield return new WaitForSeconds(4f);
+
         inSkillUse = false;
         meleeWaitTime = setmeleeWaitTime;
         stunned = false;
+    }
+
+    public IEnumerator ChargeOk()
+    {
+        charging = false;
+
+        anim.Play("flex");
+
+        //hasar player here
+
+        if(GetComponent<SpriteRenderer>().flipX) // saða bakan boss
+            Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(chargeKnockbackForce, 0f));
+        else
+            Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-chargeKnockbackForce, 0f));
+
+        yield return new WaitForSeconds(1f);
+
+        inSkillUse = false;
+        meleeWaitTime = setmeleeWaitTime;
     }
 
     public void AnimationTime(int answer)
