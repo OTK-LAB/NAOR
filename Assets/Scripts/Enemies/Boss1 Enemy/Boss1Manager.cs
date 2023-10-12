@@ -319,11 +319,15 @@ public class Boss1Manager : MonoBehaviour
         count = 0f;
         onAir = true;
 
-        yield return new WaitForSeconds(1.2f); //do it better 
+        yield return new WaitForSeconds(0.85f); //do it better  no
+
+        explosionEffect.SetActive(true);
+
+        yield return new WaitForSeconds(0.4f);
 
         rigid.velocity = Vector3.zero;
 
-        explosionEffect.SetActive(true);
+
 
 
         onAir = false;
@@ -345,22 +349,23 @@ public class Boss1Manager : MonoBehaviour
         {
             case 1:
                 willThrow = smallThrowable;
+                StartCoroutine(Throwing());
                 break;
 
             case 2:
                 willThrow = middleThrowable;
+                StartCoroutine(Throwing());
                 break;
 
             case 3:
                 willThrow = bigThrowable;
+                StartCoroutine(Throwing());
                 break;
 
             case 4: //qte
                 StartCoroutine(Charge());
                 break;
         }
-
-        StartCoroutine(Throwing());
     }
 
     public IEnumerator Throwing()
@@ -376,7 +381,6 @@ public class Boss1Manager : MonoBehaviour
         if (calculation >= 3.5f)
         {
             StartCoroutine(Throwing());
-            Debug.Log("hmm");
             yield break;
         }
 
@@ -411,6 +415,9 @@ public class Boss1Manager : MonoBehaviour
         inSkillUse = false;
         meleeWaitTime = setmeleeWaitTime;
         stunned = false;
+
+        if(rageStatus >= 4)
+            StartCoroutine(Charge());
     }
 
     public IEnumerator ChargeOk()
@@ -428,7 +435,9 @@ public class Boss1Manager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        inSkillUse = false;
+
+        if (rageStatus < 4)
+            inSkillUse = false;
         meleeWaitTime = setmeleeWaitTime;
     }
 

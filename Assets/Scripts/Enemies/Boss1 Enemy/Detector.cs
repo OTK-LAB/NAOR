@@ -41,6 +41,7 @@ public class Detector : MonoBehaviour
                     {
                         boss1Manager.QTEIndicator.SetActive(true);
                         //clash swords animation
+                        StartCoroutine(boss1Manager.ChargeOk());
                     }
                     else
                     {
