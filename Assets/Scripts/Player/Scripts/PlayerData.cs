@@ -71,7 +71,8 @@ namespace UltimateCC
             [SerializeField] private LayerMask ledgeLayer;
             [SerializeField] private float ledgeDetectionDistance;
             [SerializeField, NonEditable] private Vector2 ledgeHangPosition;
-            [SerializeField, NonEditable] private bool canPlungeAttack;
+            [SerializeField, NonEditable] private bool canPlungeAttackByHeight;
+            [SerializeField, NonEditable] private bool canGlideByHeight;
             [SerializeField, NonEditable] private HingeJoint2D connectedHingeJoint;
             [HideInInspector]public RaycastHit2D Ledge;
             [SerializeField, NonEditable] private GameObject connectedGroundObject;
@@ -110,7 +111,8 @@ namespace UltimateCC
             public LayerMask LedgeLayer => ledgeLayer;
             public float LedgeDetectionDistance { get { return ledgeDetectionDistance; } }
             public Vector2 LedgeHangPosition { get { return ledgeHangPosition; } set { ledgeHangPosition = value; } }
-            public bool CanPlungeAttack { get { return canPlungeAttack; } set { canPlungeAttack = value; } }
+            public bool CanPlungeAttack { get { return canPlungeAttackByHeight; } set { canPlungeAttackByHeight = value; } }
+            public bool CanGlideByHeight { get { return canGlideByHeight; } set { canGlideByHeight = value; } }
             public HingeJoint2D ConnectedHingeJoint {  get { return connectedHingeJoint; } set { connectedHingeJoint = value; } }
             public GameObject ConnectedGroundObject { get { return connectedGroundObject; } set { connectedGroundObject = value; } }
         }
@@ -271,6 +273,21 @@ namespace UltimateCC
             public Vector2 SwingInitialPosition { get { return swingInitialPosition; } set { swingInitialPosition = value; } }
             public float Drag => drag;
             public float Gravity => gravity;
+        }
+        [System.Serializable]
+        public class GlideVariables
+        {
+            [SerializeField] private float minHeight;
+            [SerializeField] private float manaDrainPerSecond;
+            [SerializeField] private float fallSpeedMultiplier;
+            [SerializeField] private float glideBufferTime;
+            [SerializeField] private float glideBufferMaxTime;
+
+            public float MinHeight => minHeight;
+            public float ManaDrainPerSecond => manaDrainPerSecond;
+            public float FallSpeedMultiplier => fallSpeedMultiplier;
+            public float GlideBufferTimer { get { return glideBufferTime; } set { glideBufferTime = value; } }
+            public float GlideBufferMaxTime => glideBufferMaxTime;
         }
         [System.Serializable]
         public class WallMovementVariables
@@ -468,6 +485,7 @@ namespace UltimateCC
         public LandVariables Land;
         public DashVariables Dash;
         public SwingVariables Swing;
+        public GlideVariables Glide;
         public AttackStateVariables Attack;
 
 

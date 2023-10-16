@@ -18,6 +18,7 @@ namespace UltimateCC
         public override void Enter()
         {
             base.Enter();
+            if (playerData.Jump.Jumps.Count <= 1) playerData.Jump.NextJumpInt = 1;
             switch (playerData.Jump.NextJumpInt)
             {
                 case 1:
@@ -121,6 +122,10 @@ namespace UltimateCC
             else if (playerData.Physics.ConnectedHingeJoint)
             {
                 stateMachine.ChangeState(player.SwingState);
+            }
+            else if(playerData.Physics.CanGlideByHeight && inputManager.Input_Jump && playerData.Glide.GlideBufferTimer > 0f)
+            {
+                stateMachine.ChangeState(player.GlideState);
             }
         }
 

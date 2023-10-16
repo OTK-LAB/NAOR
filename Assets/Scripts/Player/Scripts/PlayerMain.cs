@@ -8,11 +8,11 @@ namespace UltimateCC
     {
         public PlayerStateMachine _stateMachine; // State Machine declaration where we change current state
         [NonEditable, Space(5)] public AnimName CurrentState; // Variable to display the current state in the Unity inspector for debugging purposes.
-        public MainState IdleState, WalkState, JumpState, LandState, DashState, CrouchIdleState, CrouchWalkState, SwingState
+        public MainState IdleState, WalkState, JumpState, LandState, DashState, CrouchIdleState, CrouchWalkState, SwingState, GlideState
                             ,HangState, WallGrabState, WallClimbState, WallJumpState, WallSlideState; // State declarations
         public AttackState BasicAttack1State, BasicAttack2State, BasicAttack3State, ChargeAttackState, PlungeAttackDiveState, PlungeAttackLandState;
         public enum AnimName { Idle, Walk, Jump, ExtraJump1, ExtraJump2, Land, Dash, CrouchIdle, CrouchWalk, WallGrab, WallClimb, WallJump, WallSlide
-                            , Hang, Swing, BasicAttack1, BasicAttack2, BasicAttack3, ChargeAttack, PlungeAttackDive, PlungeAttackLand } // Enum declaration of state names as animator parameters
+                            , Hang, Swing, Glide, BasicAttack1, BasicAttack2, BasicAttack3, ChargeAttack, PlungeAttackDive, PlungeAttackLand } // Enum declaration of state names as animator parameters
 
         [NonSerialized] public Animator Animator; // The Animator is used to control the player's animations based on their current state.
         [NonSerialized] public Rigidbody2D Rigidbody2D; // The Rigidbody2D is used to control movement based on velocity vector.
@@ -42,8 +42,9 @@ namespace UltimateCC
             DashState = new PlayerDashState(this, _stateMachine, AnimName.Dash, PlayerData);
             CrouchIdleState = new PlayerCrouchIdleState(this, _stateMachine, AnimName.CrouchIdle, PlayerData);
             CrouchWalkState = new PlayerCrouchWalkState(this, _stateMachine, AnimName.CrouchWalk, PlayerData);
-            SwingState = new PlayerSwingState(this, _stateMachine, AnimName.Swing, PlayerData);
             HangState = new PlayerHangState(this, _stateMachine, AnimName.Hang, PlayerData);
+            SwingState = new PlayerSwingState(this, _stateMachine, AnimName.Swing, PlayerData);
+            GlideState = new PlayerGlideState(this, _stateMachine, AnimName.Glide, PlayerData);
 
             BasicAttack1State = new PlayerBasicAttack1State(this, _stateMachine, AnimName.BasicAttack1, PlayerData);
             BasicAttack2State = new PlayerBasicAttack2State(this, _stateMachine, AnimName.BasicAttack2, PlayerData);

@@ -166,16 +166,19 @@ MonoBehaviour:
     Physics:
       groundLayerMask:
         serializedVersion: 2
-        m_Bits: 13376
+        m_Bits: 5184
       headBumpLayerMask:
         serializedVersion: 2
         m_Bits: 64
       wallLayerMask:
         serializedVersion: 2
-        m_Bits: 8192
+        m_Bits: 0
       hingeLayerMask:
         serializedVersion: 2
         m_Bits: 1024
+      enemyLayerMask:
+        serializedVersion: 2
+        m_Bits: 256
       groundCheckPosition: {x: 0, y: 0, z: 0}
       headCheckPosition: {x: 0, y: 0, z: 0}
       walkSpeedDirection: {x: 0, y: 0}
@@ -241,7 +244,8 @@ MonoBehaviour:
         m_Bits: 0
       ledgeDetectionDistance: 0
       ledgeHangPosition: {x: 0, y: 0}
-      canPlungeAttack: 0
+      canPlungeAttackByHeight: 0
+      canGlideByHeight: 0
       connectedHingeJoint: {fileID: 0}
       connectedGroundObject: {fileID: 0}
     Walk:
@@ -758,6 +762,12 @@ MonoBehaviour:
     Swing:
       drag: 1
       gravity: 3
+    Glide:
+      minHeight: 2
+      manaDrainPerSecond: 0
+      fallSpeedMultiplier: 0.2
+      glideBufferTime: 0
+      glideBufferMaxTime: 0.1
     Attack:
       BasicAttack1:
         attackDuration: 0.3
@@ -770,8 +780,8 @@ MonoBehaviour:
         maxStateTime: 1
       ChargeAttack:
         chargeTimeMaxTime: 1
-        attackDuration: 0.2
-        maxStateTime: 1.2
+        attackDuration: 0.5
+        maxStateTime: 1.5
       PlungeAttack:
         minHeight: 2
         waitDuration: 0.4
@@ -1188,7 +1198,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5902648875053040768}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a25cdde9ff64cba4995d61e34b8efb89, type: 3}
   m_Name: 
@@ -1203,7 +1213,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5902648875053040768}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 624a8dff047139b42aac6a7a2bb02305, type: 3}
   m_Name: 
@@ -1237,3 +1247,10 @@ MonoBehaviour:
     phase: 0
     StoredSoul: 0
     CurrentUpgradedAttack: 0
+    creaturePrefab: {fileID: 8695163776529619104, guid: fe710923fa2bdcf45a289b2dd90a3a50, type: 3}
+  SoulWalk:
+    ManaDrainPerSecond: 8
+    CanDash: 0
+    IsInvisible: 0
+    walkMultiplier: 1
+    phase: 0

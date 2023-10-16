@@ -104,6 +104,7 @@ namespace UltimateCC
             playerData.Dash.DashCooldownTimer = playerData.Dash.DashCooldownTimer > 0f ? playerData.Dash.DashCooldownTimer - Time.deltaTime : 0f;
             playerData.Walls.WallJump.JumpBufferTimer = playerData.Walls.WallJump.JumpBufferTimer > 0f ? playerData.Walls.WallJump.JumpBufferTimer - Time.deltaTime : 0f;
             playerData.Walls.WallJump.CoyoteTimeTimer = playerData.Walls.WallJump.CoyoteTimeTimer > 0f ? playerData.Walls.WallJump.CoyoteTimeTimer - Time.deltaTime : 0f;
+            playerData.Glide.GlideBufferTimer = playerData.Glide.GlideBufferTimer > 0f ? playerData.Glide.GlideBufferTimer - Time.deltaTime : 0f;
         }
 
         // all input based events
@@ -112,11 +113,13 @@ namespace UltimateCC
         {
             input_Jump = context.ReadValueAsButton();
             playerData.Jump.JumpBufferTimer = playerData.Jump.JumpBufferMaxTime;
-            playerData.Walls.WallJump.JumpBufferTimer = playerData.Walls.WallJump.JumpBufferMaxTime;
             playerData.Jump.NewJump = player.CurrentState != AnimName.WallGrab
                                     && player.CurrentState != AnimName.WallSlide
                                     && player.CurrentState != AnimName.WallClimb
                                     && playerData.Walls.WallJump.CoyoteTimeTimer == 0;
+
+            playerData.Walls.WallJump.JumpBufferTimer = playerData.Walls.WallJump.JumpBufferMaxTime;
+            playerData.Glide.GlideBufferTimer = playerData.Glide.GlideBufferMaxTime;
         }
 
         private void OnJumpCanceled(InputAction.CallbackContext context)
