@@ -54,6 +54,7 @@ public class ShieldEnemy : MonoBehaviour
     // bool isHit = false;
     // bool isShield = false;
     float verticalTolerance = 1.7f; 
+
     //Hit
     Vector2 temp;
     Rigidbody2D rb;
@@ -133,8 +134,6 @@ public class ShieldEnemy : MonoBehaviour
         Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
 
         float distanceToPlayer = Vector2.Distance(enemyPosition, playerPosition);
-      
-        Debug.Log(distanceToPlayer);
         if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPosition.y) < verticalTolerance)
         {
             if (distanceToPlayer <= 2.5f)

@@ -27,6 +27,7 @@ public class ArchersArrow : MonoBehaviour
     private Transform damagePosition;
     void Start()
     {
+        Debug.Log("oluþtum");
         player = GameObject.FindGameObjectWithTag("Player");
         PlayerPosition = player.transform;
         target = new Vector2(PlayerPosition.position.x - transform.position.x, PlayerPosition.position.y - transform.position.y);

@@ -26,7 +26,6 @@ public class SwordEnemy : MonoBehaviour
     const string attack = "Attack1";
     const string death = "Dead1";
     const string follow = "Run";
-    const string notdamage = "Notdamage1";
     const string startingmove = "StartingMove1";
 
     public Material material;
@@ -51,7 +50,7 @@ public class SwordEnemy : MonoBehaviour
     [SerializeField] public float attackRange;
     [SerializeField] public float damageamount;
     bool attackable = true;
-    int random_nd; //random_notdamage
+
     bool IsDead = false;
     bool isHit = false;
     float verticalTolerance = 0.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
@@ -111,9 +110,6 @@ public class SwordEnemy : MonoBehaviour
             case State.STATE_HIT:
                 hitState();
                 break;
-            case State.STATE_NOTDAMAGE:
-                nDamage();
-                break;
         }
     }
     void startingMove()
@@ -122,14 +118,6 @@ public class SwordEnemy : MonoBehaviour
         float moveDirectionX = moveDirection;
         float step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
-    }
-    void nDamage()
-    {
-        isHit = false;
-        _healthSystem.Invincible = true;
-        attackable = true;
-        ChangeAnimationState(notdamage);
-        coolDown(2);
     }
     void hitState()
     {
@@ -182,7 +170,6 @@ public class SwordEnemy : MonoBehaviour
     }
     void attacktoPlayer()
     {
-        random_nd = UnityEngine.Random.Range(0, 100);
         if (attackable && !isHit)
         {
             ChangeAnimationState(attack);
@@ -202,12 +189,6 @@ public class SwordEnemy : MonoBehaviour
         if (!isHit)
         {
             yield return new WaitForSeconds(0.01f);
-            if (random_nd <= 15)
-            {
-                _healthSystem.Invincible = true;
-                state = State.STATE_NOTDAMAGE;
-            }
-            else
                 state = State.STATE_COOLDOWN;
         }
         else
@@ -222,7 +203,6 @@ public class SwordEnemy : MonoBehaviour
             timer = 0;
             _healthSystem.Invincible = false;
             checkPlayer();
-
         }
     }
 
