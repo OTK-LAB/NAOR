@@ -43,6 +43,7 @@ public class SwordEnemy : MonoBehaviour
     private Vector2 currentPlayerPos;
     public float distance;
     public float moveSpeed;
+    float firstmoveSpeed;
     float timer;
 
     //Attack
@@ -78,6 +79,7 @@ public class SwordEnemy : MonoBehaviour
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindGameObjectWithTag("Player");
         attackPoint = GameObject.FindGameObjectWithTag("sword");
+        firstmoveSpeed = moveSpeed;
 
     }
 
@@ -114,7 +116,7 @@ public class SwordEnemy : MonoBehaviour
     }
     void startingMove()
     {
-        moveSpeed = 3f; // baþlangýç hareket hýzý
+        moveSpeed = firstmoveSpeed; // baþlangýç hareket hýzý
         float moveDirectionX = moveDirection;
         float step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
@@ -161,7 +163,7 @@ public class SwordEnemy : MonoBehaviour
     void following()
     {
         flip();
-        moveSpeed = 5f;
+        moveSpeed = firstmoveSpeed + 2;
         Vector2 currentPlayerPos = new Vector2(playerPos.position.x, rb.position.y);
         rb.velocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
         wall.transform.parent = transform;
