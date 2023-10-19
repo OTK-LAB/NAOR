@@ -9,7 +9,7 @@ using System.Collections.Concurrent;
 
 public class InventorySystem : MonoBehaviour
 {
-    public HealthSystem HealthSystem;
+    //public HealthSystem HealthSystem;
     public ManaSoulSystem ManaSoulSystem;
     public PlayerInputActions inputActions;
     public InventoryScriptable playerInventory;
@@ -60,7 +60,7 @@ public class InventorySystem : MonoBehaviour
         Debug.Log("Effect Coroutine resumed after" + _selectedItem.effectTime +" seconds");
         if (_selectedItem.id == 2)
         {
-            HealthSystem.broccoli = false;
+            //HealthSystem.broccoli = false;
         }
         else if(_selectedItem.id == 4)
         {
@@ -108,7 +108,7 @@ public class InventorySystem : MonoBehaviour
             case 1:
                 return Apple(_equipedItem);
             case 2:
-                return Broccoli(_equipedItem);
+                //return Broccoli(_equipedItem);
             case 3:
                 return SpringWater(_equipedItem);
             case 4:
@@ -158,7 +158,7 @@ public class InventorySystem : MonoBehaviour
 
     public bool Apple(Item _equipedItem)
     {
-        if (HealthSystem.currentHealth < HealthSystem.maxHealth)
+        if (HealthSystem.CurrentHealth < HealthSystem.MaxHealth)
         {
             HealthSystem.Heal(_equipedItem.value);
             return true;
@@ -167,7 +167,7 @@ public class InventorySystem : MonoBehaviour
     }
     public bool Broccoli(Item _equipedItem)
     {
-        HealthSystem.broccoli=true;
+        //HealthSystem.broccoli=true;
         StartCoroutine(EffectCoroutine(_equipedItem));
         StartCoroutine(DelayCoroutine(_equipedItem));
         return true;
@@ -216,8 +216,7 @@ public class InventorySystem : MonoBehaviour
 
     public void HpBoost(Item _selectedItem)
     {
-        HealthSystem.maxHealth+=_selectedItem.value;
-        HealthSystem.healthBar.SetMaxValue(HealthSystem.maxHealth);
+        //HealthSystem.MaxHealth+=_selectedItem.value;
     }
     public void ManaBoost(Item _selectedItem)
     {
