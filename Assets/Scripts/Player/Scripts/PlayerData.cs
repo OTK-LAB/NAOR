@@ -455,6 +455,17 @@ namespace UltimateCC
             public ChargeAttackVariables ChargeAttack;
             public PlungeAttackVariables PlungeAttack;
         }
+    [System.Serializable]
+    public class ShopVariables
+    {
+        [SerializeField] private float attackMultiplier;
+        [SerializeField] private float horizontalSpeedMultiplier;
+        [SerializeField] private float abilityPowerMultiplier;
+
+        public float AttackMultiplier { get { return attackMultiplier; } set { attackMultiplier = value; } }
+        public float HorizontalSpeedMultiplier { get { return horizontalSpeedMultiplier; } set { horizontalSpeedMultiplier = value; } }
+        public float AbilityPowerMultiplier { get { return abilityPowerMultiplier; } set { abilityPowerMultiplier = value; } }
+    }
         #endregion
         #endregion
 
@@ -467,8 +478,7 @@ namespace UltimateCC
         public DashVariables Dash;
         public SwingVariables Swing;
         public AttackStateVariables Attack;
-
-
+        public ShopVariables Shop;
         public WallMovementVariables Walls;
     }
 }
