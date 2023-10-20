@@ -326,6 +326,24 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Consumable"",
+                    ""type"": ""Button"",
+                    ""id"": ""3fe8b46d-f398-418d-9506-41c3f1ccb827"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Throwable"",
+                    ""type"": ""Button"",
+                    ""id"": ""abae5148-17d2-4cff-a434-9042c153834e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -337,6 +355,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b75e6d81-b49d-448d-af67-b6f4fa098964"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Consumable"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7937c491-f5b5-42d4-97fa-556c37bd1617"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throwable"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -363,6 +403,8 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Inventory = m_UI.FindAction("Inventory", throwIfNotFound: true);
+        m_UI_Consumable = m_UI.FindAction("Consumable", throwIfNotFound: true);
+        m_UI_Throwable = m_UI.FindAction("Throwable", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -561,11 +603,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private IUIActions m_UIActionsCallbackInterface;
     private readonly InputAction m_UI_Inventory;
+    private readonly InputAction m_UI_Consumable;
+    private readonly InputAction m_UI_Throwable;
     public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
         public UIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Inventory => m_Wrapper.m_UI_Inventory;
+        public InputAction @Consumable => m_Wrapper.m_UI_Consumable;
+        public InputAction @Throwable => m_Wrapper.m_UI_Throwable;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -578,6 +624,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Inventory.started -= m_Wrapper.m_UIActionsCallbackInterface.OnInventory;
                 @Inventory.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnInventory;
                 @Inventory.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnInventory;
+                @Consumable.started -= m_Wrapper.m_UIActionsCallbackInterface.OnConsumable;
+                @Consumable.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnConsumable;
+                @Consumable.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnConsumable;
+                @Throwable.started -= m_Wrapper.m_UIActionsCallbackInterface.OnThrowable;
+                @Throwable.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnThrowable;
+                @Throwable.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnThrowable;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -585,6 +637,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
+                @Consumable.started += instance.OnConsumable;
+                @Consumable.performed += instance.OnConsumable;
+                @Consumable.canceled += instance.OnConsumable;
+                @Throwable.started += instance.OnThrowable;
+                @Throwable.performed += instance.OnThrowable;
+                @Throwable.canceled += instance.OnThrowable;
             }
         }
     }
@@ -609,5 +667,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnInventory(InputAction.CallbackContext context);
+        void OnConsumable(InputAction.CallbackContext context);
+        void OnThrowable(InputAction.CallbackContext context);
     }
 }

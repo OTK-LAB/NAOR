@@ -174,8 +174,7 @@ GameObject:
   - component: {fileID: 6684767046887524775}
   - component: {fileID: 6684767046887524776}
   - component: {fileID: 6684767046887524771}
-  - component: {fileID: 2318248176834665253}
-  - component: {fileID: 4328218889407126170}
+  - component: {fileID: 5994280907347239757}
   m_Layer: 8
   m_Name: ArcherEnemy
   m_TagString: Passable
@@ -340,7 +339,7 @@ MonoBehaviour:
   LaunchForce: 40
   attackPoint: {fileID: 6684767046903314987}
   soul: {fileID: 0}
---- !u!114 &2318248176834665253
+--- !u!114 &5994280907347239757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,33 +348,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6684767046887524778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a25cdde9ff64cba4995d61e34b8efb89, type: 3}
+  m_Script: {fileID: 11500000, guid: 85acc288d0036904cbe8c76f21ec15e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 150
-  healthBar: {fileID: 0}
---- !u!114 &4328218889407126170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6684767046887524778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 620be2aac8989304aadb84a7e54b9104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WalkSounds: []
-  JumpSounds: []
-  SwordSounds:
-  - {fileID: 5029899971459866737}
-  PS: []
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  groundCheck: {fileID: 0}
+  maxHealth: 100
+  onShield: 0
+  shieldProtection: 0
 --- !u!1 &6684767046903314987
 GameObject:
   m_ObjectHideFlags: 0

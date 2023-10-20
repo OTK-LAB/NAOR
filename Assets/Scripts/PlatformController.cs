@@ -59,7 +59,7 @@ public class PlatformController : MonoBehaviour
         {
             loop = true;
             Sequence mySequence = DOTween.Sequence();
-            mySequence.Append(TargetObj.transform.DOScaleY(2f, 3f));
+            mySequence.Append(TargetObj.transform.DOScaleY(3f, 3f));
             mySequence.Append(TargetObj.transform.DOScaleY(1f, 3f));
             mySequence.SetLoops(-1, LoopType.Restart);
         }

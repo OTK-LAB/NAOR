@@ -432,6 +432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2140491267603617486}
   - component: {fileID: 2140491267603617487}
+  - component: {fileID: 3899261127157780532}
   - component: {fileID: 2140491267603617523}
   - component: {fileID: 2140491267603617480}
   - component: {fileID: 2140491267603617484}
@@ -515,7 +516,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2140491267603617523
+--- !u!114 &3899261127157780532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -524,9 +525,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 2140491267603617481}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b145c74a9e1dafc4bab94bf0664c36ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2140491267603617523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140491267603617481}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 124ba8c33db3a6a48a5fa26f43e0323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 0}
   distance: 5
   speedEnemy: 5
   wall: {fileID: 0}
@@ -616,6 +630,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 200
+  onShield: 0
+  shieldProtection: 0
 --- !u!114 &128264813129202752
 MonoBehaviour:
   m_ObjectHideFlags: 0
