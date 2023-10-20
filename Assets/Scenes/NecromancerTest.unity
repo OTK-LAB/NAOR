@@ -863,10 +863,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
-      propertyPath: PlayerData.Glide.minHeight
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040778, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1156,9 +1152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e33d9c15e2ac264f890e0badfc83b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyRequired: 1
-  moneyType: 2
-  Currency: {fileID: 0}
 --- !u!1 &429079162
 GameObject:
   m_ObjectHideFlags: 0
@@ -4219,9 +4212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e33d9c15e2ac264f890e0badfc83b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyRequired: 5
-  moneyType: 1
-  Currency: {fileID: 0}
 --- !u!1 &1241353835
 GameObject:
   m_ObjectHideFlags: 0
@@ -4361,6 +4351,7 @@ MonoBehaviour:
   Buttons: {fileID: 921648932}
   buttonId: 0
   finalMessage: 2
+  activeMessage: 0
 --- !u!114 &1254583652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4563,6 +4554,7 @@ MonoBehaviour:
   Buttons: {fileID: 1647301628}
   buttonId: 0
   finalMessage: 2
+  activeMessage: 0
 --- !u!114 &1341954709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5233,9 +5225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e33d9c15e2ac264f890e0badfc83b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyRequired: 10
-  moneyType: 1
-  Currency: {fileID: 0}
 --- !u!1 &1515507720
 GameObject:
   m_ObjectHideFlags: 0
@@ -7185,6 +7174,7 @@ MonoBehaviour:
   Buttons: {fileID: 1106008186}
   buttonId: 1
   finalMessage: 3
+  activeMessage: 0
 --- !u!114 &1690769661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8144,7 +8134,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.0996976, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
