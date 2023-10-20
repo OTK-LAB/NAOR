@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UltimateCC;
 
 public class ManaSoulSystem : MonoBehaviour
 {
@@ -15,11 +16,16 @@ public class ManaSoulSystem : MonoBehaviour
     public float currentSoul;
     [SerializeField]
     public float maxSoul;
-
+    
+    public delegate void ValueHandler(float value);
+    public static event ValueHandler OnManaChanged;
+    public static event ValueHandler OnMaxManaChanged;
+    public static event ValueHandler OnSoulChanged;
+    public static event ValueHandler OnMaxSoulChanged;
     public ProgressBar manaBar;
     public ProgressBar soulBar;
 
-    public HealthSystem healthSystem;
+    private PlayerMain player;
 
     private float elapsed = 0f;
     private float regenDelay = 1.0f;
@@ -27,12 +33,13 @@ public class ManaSoulSystem : MonoBehaviour
 
     void Start()
     { 
-        currentMana = maxMana;
-        manaBar.SetMaxValue(maxMana);
+        player = PlayerMain.Instance;
+        OnMaxManaChanged(maxMana);
+        OnManaChanged(maxMana);
 
         currentSoul = 0;
-        soulBar.SetMaxValue(maxSoul);
-        soulBar.SetValue(currentSoul);
+        OnMaxSoulChanged(maxSoul);
+        OnSoulChanged(currentSoul);
     }
 
     void Update()
@@ -45,12 +52,6 @@ public class ManaSoulSystem : MonoBehaviour
         }
         elapsed += Time.deltaTime;
         //StartCoroutine(Wait(1));
-        
-        if (currentMana != manaBar.slider.value)
-            manaBar.SetValue(Mathf.Lerp(manaBar.slider.value, currentMana, smoothing * Time.deltaTime));
-        if (currentSoul != soulBar.slider.value)
-            soulBar.SetValue(Mathf.Lerp(soulBar.slider.value, currentSoul, smoothing * Time.deltaTime));
-
     }
     IEnumerator Wait(float second)
     {
@@ -60,7 +61,7 @@ public class ManaSoulSystem : MonoBehaviour
     public void UseMana(float manaAmount)
     {
         smoothing = 10;
-        if (currentMana < manaAmount) // Önce mana barý bitiriliyor sonra soul barý harcanýyor
+        if (currentMana < manaAmount) // ï¿½nce mana barï¿½ bitiriliyor sonra soul barï¿½ harcanï¿½yor
         {
             if (currentSoul + currentMana >= manaAmount)
             {
@@ -73,6 +74,7 @@ public class ManaSoulSystem : MonoBehaviour
         else
             currentMana -= manaAmount;
         //manaBar.SetValue(currentMana);
+        OnManaChanged(currentMana);
     }
 
     public void AddMana(float manaAmount)
@@ -82,6 +84,7 @@ public class ManaSoulSystem : MonoBehaviour
         if (currentMana > maxMana)
             currentMana = maxMana;
         //manaBar.SetValue(currentMana);
+        OnManaChanged(currentMana);
     }
 
     public void AddSoul (float soulAmount)
@@ -91,6 +94,7 @@ public class ManaSoulSystem : MonoBehaviour
         if (currentSoul > maxSoul)
             currentSoul = maxSoul;
         //soulBar.SetValue(currentSoul);
+        OnSoulChanged(currentSoul);
     }
 
     public void UseSoul (float soulAmount)
@@ -98,16 +102,16 @@ public class ManaSoulSystem : MonoBehaviour
         smoothing = 10;
         if (soulAmount <= currentSoul)
             currentSoul -= soulAmount;
-
-       // soulBar.SetValue(currentSoul);  
+       // soulBar.SetValue(currentSoul);
+        OnSoulChanged(currentSoul);  
     }
 
     public void HealWithSoul(float healAmount)
     {
         smoothing = 5;
-        if (currentSoul >= healAmount && healthSystem.currentHealth < healthSystem.maxHealth)
+        if (currentSoul >= healAmount)
         {
-            healthSystem.Heal(healAmount);
+            player.playerHealthSystem.Heal(healAmount);
             UseSoul(healAmount);
         }
     }

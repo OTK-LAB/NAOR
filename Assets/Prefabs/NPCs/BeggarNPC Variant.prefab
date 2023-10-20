@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4920417518510360475
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1230345730026293204, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_Name
+      value: BeggarNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.083366
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293206, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730026293207, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b2539e804f17f3c4ba8395d5d9db1162, type: 3}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: DialogueBox
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: reinterractable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: actors.Array.data[0].name
+      value: Beggar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: actors.Array.data[1].name
+      value: Kid
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: actors.Array.data[0].sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b2539e804f17f3c4ba8395d5d9db1162, type: 3}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: actors.Array.data[1].sprite
+      value: 
+      objectReference: {fileID: 1906866549, guid: 89a50664a055fdc47bae8bbcb53c3a48, type: 3}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[0].message
+      value: Give me money!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[1].actorId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[1].message
+      value: No way Bum!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[2].actorId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[2].message
+      value: LoreLoreLore
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[3].message
+      value: Your loss kid...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[4].actorId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[4].message
+      value: Your loss kid...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[5].message
+      value: Your loss kid...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[6].message
+      value: Your loss kid...
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230345730156249328, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: messages.Array.data[7].message
+      value: Your loss kid...
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589023002345709580, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589023002345709581, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8135d2cb4724a8a478756a0ae4999f0e, type: 3}
