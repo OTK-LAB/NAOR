@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoulBar : ProgressBar
 {
-	private void Start() {
+	private void Awake() {
 		ManaSoulSystem.OnMaxSoulChanged += SetMaxValue;
 		ManaSoulSystem.OnSoulChanged += SetValue;
 	}
