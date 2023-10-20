@@ -20688,7 +20688,9 @@ PrefabInstance:
       propertyPath: boss1Manager
       value: 
       objectReference: {fileID: 1599324531}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1059181751017878259, guid: f348c6b6a8f96f44d908e5247f917a0e, type: 3}
+    - {fileID: 1059181751069613638, guid: f348c6b6a8f96f44d908e5247f917a0e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f348c6b6a8f96f44d908e5247f917a0e, type: 3}
 --- !u!1001 &4057090678361444679
 PrefabInstance:
@@ -20989,8 +20991,12 @@ PrefabInstance:
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429943, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
+      propertyPath: setchargeSkillTime
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282609412925429943, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: chargeKnockbackForce
-      value: 10000
+      value: 20000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69abd87143d31664ab949644ebfa827c, type: 3}

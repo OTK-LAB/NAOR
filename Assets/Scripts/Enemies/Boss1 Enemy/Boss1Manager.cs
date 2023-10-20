@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UltimateCC;
 
 public class Boss1Manager : MonoBehaviour
 {
     [HideInInspector] public GameObject Player;
     [HideInInspector] public Transform Target;
+    [HideInInspector] public PlayerMain playerMain;
     private EnemyHealthSystem healthSystem;
     private Animator anim;
     private Rigidbody2D rigid;
@@ -33,7 +35,7 @@ public class Boss1Manager : MonoBehaviour
 
     [HideInInspector] public bool inSkillUse;
 
-    public int rageStatus;
+    [HideInInspector] public int rageStatus;
 
     //charge
     public float chargeKnockbackForce;
@@ -74,6 +76,8 @@ public class Boss1Manager : MonoBehaviour
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         healthSystem = GetComponent<EnemyHealthSystem>();
+        //playerMain = PlayerMain.Instance;
+        
 
         TEST = false;
 
@@ -124,23 +128,26 @@ public class Boss1Manager : MonoBehaviour
 
 
             //timers
+            
+            if (canAttack)
+            {
+                if (meleeWaitTime > 0)
+                    meleeWaitTime -= Time.deltaTime;
 
-            if (meleeWaitTime > 0)
-                meleeWaitTime -= Time.deltaTime;
+                if (chargeSkillTime > 0)
+                    chargeSkillTime -= Time.deltaTime;
 
-            if (chargeSkillTime > 0)
-                chargeSkillTime -= Time.deltaTime;
+                if (jumpSkillTime > 0)
+                    jumpSkillTime -= Time.deltaTime;
+            }
 
-            if (jumpSkillTime > 0)
-                jumpSkillTime -= Time.deltaTime;
-
-    }
-    else //is dead
-    {
-            anim.Play("chargefail"); //temp
-    }
-
+        }
 }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
 
     void Update()
     {
@@ -250,16 +257,22 @@ public class Boss1Manager : MonoBehaviour
                 anim.Play("idle");
             }
 
-        } else if (stunned)
+        }
+        else if (stunned)
         {
-            if (rageStatus >= 2)
+            /*if (rageStatus >= 2)
             {
                 float distance = Vector2.Distance(Player.transform.position, transform.position);
                 if (distance < meleerange)
                 {
-                    anim.Play("attackback");
+                anim.Play("attackback");
                 }
-            }
+            }*/
+        }else //is dead
+        {
+            InAnimation = false;
+            inSkillUse = false;
+            anim.Play("backstep");
         }
     }
 
@@ -408,7 +421,11 @@ public class Boss1Manager : MonoBehaviour
         anim.Play("chargefail");
 
         if (rageStatus >= 2)
-            yield return new WaitForSeconds(2f);
+        {
+            yield return new WaitForSeconds(1f);
+            anim.Play("attackback");
+            yield return new WaitForSeconds(1f);
+        }
         else
             yield return new WaitForSeconds(4f);
 
@@ -428,10 +445,10 @@ public class Boss1Manager : MonoBehaviour
 
         //hasar player here
 
-        if(GetComponent<SpriteRenderer>().flipX) // saða bakan boss
-            Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(chargeKnockbackForce, 0f));
+        if(!GetComponent<SpriteRenderer>().flipX) // sola bakan boss
+            Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(chargeKnockbackForce, 1000f));
         else
-            Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-chargeKnockbackForce, 0f));
+            Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-chargeKnockbackForce, 1000f));
 
         yield return new WaitForSeconds(1f);
 
