@@ -158,9 +158,15 @@ public class InventorySystem : MonoBehaviour
 
     public bool Apple(Item _equipedItem)
     {
+<<<<<<< HEAD
         if (/*HealthSystem.CurrentHealth < HealthSystem.MaxHealth*/true)
         {
             //HealthSystem.Heal(_equipedItem.value);
+=======
+        if (PlayerMain.Instance.playerHealthSystem.CurrentHealth < PlayerMain.Instance.playerHealthSystem.MaxHealth)
+        {
+            PlayerMain.Instance.playerHealthSystem.Heal(_equipedItem.value);
+>>>>>>> feature/SwordEnemyRework_NAOR-102
             return true;
         }
         return false;
