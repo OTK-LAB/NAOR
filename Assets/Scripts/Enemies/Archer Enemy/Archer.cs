@@ -43,7 +43,7 @@ public class Archer : MonoBehaviour
     public GameObject Arrow;
     public float LaunchForce;
     public GameObject attackPoint;
-    float verticalTolerance = 1f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
+    float verticalTolerance = 1.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
 
     //Move
     Vector3 movement;
