@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 5902648875053040775}
   - component: {fileID: 5902648875053040774}
   - component: {fileID: 5902648875053040769}
-  - component: {fileID: 1391948044445387141}
   - component: {fileID: 2348788264557028454}
   m_Layer: 3
   m_Name: Player
@@ -801,6 +800,10 @@ MonoBehaviour:
           m_RotationOrder: 4
         speedUpTime: 0.3
         landDuration: 0.2
+    Shop:
+      attackMultiplier: 0
+      horizontalSpeedMultiplier: 0
+      abilityPowerMultiplier: 0
     Walls:
       WallSlide:
         facingDirectionWhenSliding: -1
@@ -1179,21 +1182,6 @@ MonoBehaviour:
   input_WallClimb: 0
   input_Attack: 0
   input_PlungeAttack: 0
---- !u!114 &1391948044445387141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5902648875053040768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a25cdde9ff64cba4995d61e34b8efb89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentHealth: 50
-  maxHealth: 100
-  healthBar: {fileID: 0}
 --- !u!114 &2348788264557028454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1213,5 +1201,4 @@ MonoBehaviour:
   maxSoul: 50
   manaBar: {fileID: 0}
   soulBar: {fileID: 0}
-  healthSystem: {fileID: 1391948044445387141}
   smoothing: 5
