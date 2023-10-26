@@ -54,7 +54,7 @@ public class HealthSystem
                 currentHealth = 0;
                 OnDied();
             }
-            OnHealthChanged(currentHealth);
+            OnHealthChanged?.Invoke(currentHealth);
         }
         //healthBar.SetValue(currentHealth);
     }
@@ -67,7 +67,7 @@ public class HealthSystem
         {
             currentHealth = maxHealth;
         }
-        OnHealthChanged(currentHealth);
+        OnHealthChanged?.Invoke(currentHealth);
         //healthBar.SetValue(currentHealth);
     }
 }

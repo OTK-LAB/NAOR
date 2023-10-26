@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UltimateCC;
 
 public class BossThrowableObject : MonoBehaviour
 {
     Rigidbody2D rigid;
 
 
-
+    public float damage;
     public float setCount;
     public float throwSpeed;
 
@@ -65,7 +66,7 @@ public class BossThrowableObject : MonoBehaviour
 
         if (collision.tag == "player")
         {
-            //DAMAGE PLAYER YES
+            PlayerMain.Instance.playerHealthSystem.Damage(damage);
             Hit();
         }
     }

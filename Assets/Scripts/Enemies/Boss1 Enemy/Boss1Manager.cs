@@ -12,6 +12,8 @@ public class Boss1Manager : MonoBehaviour
     private EnemyHealthSystem healthSystem;
     private Animator anim;
     private Rigidbody2D rigid;
+    public GameObject bossAttackBox;
+    private BossAttackBox bossAttack;
     public GameObject dashSmoke;
 
     public GameObject smallThrowable;
@@ -76,6 +78,7 @@ public class Boss1Manager : MonoBehaviour
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
         healthSystem = GetComponent<EnemyHealthSystem>();
+        bossAttack = GetComponent<BossAttackBox>();
         //playerMain = PlayerMain.Instance;
         
 
@@ -144,10 +147,7 @@ public class Boss1Manager : MonoBehaviour
         }
 }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-    }
+
 
     void Update()
     {
@@ -188,10 +188,11 @@ public class Boss1Manager : MonoBehaviour
 
                 if (charging)
                 {
-                    float testingIfDamaged = Player.GetComponent<HealthSystem>().currentHealth;
-                    if (testingIfDamaged > Player.GetComponent<HealthSystem>().currentHealth)
+                    float testingIfDamaged = PlayerMain.Instance.playerHealthSystem.CurrentHealth;
+                    if (testingIfDamaged > PlayerMain.Instance.playerHealthSystem.CurrentHealth)
                     {
                         anim.Play("flex");
+                        bossAttackBox.GetComponent<Animator>().Play("flex");
                         charging = false;
                     }
 
@@ -207,9 +208,10 @@ public class Boss1Manager : MonoBehaviour
                     float distance = Vector2.Distance(Player.transform.position, transform.position);
 
 
-                    if (Player.GetComponent<HealthSystem>().currentHealth <= 0)         // for short Boss will be in a special scene so if player dies they restart the battle(SCENE)
-                        anim.Play("flex");                                              // so no need to restart boss's AI
-                    else if (distance < meleerange)
+                    /*if (PlayerMain.Instance.playerHealthSystem.CurrentHealth <= 0)         // for short Boss will be in a special scene so if player dies they restart the battle(SCENE)
+                        anim.Play("flex");                                              // so no need to restart boss's AI              
+                    else */
+                    if (distance < meleerange)
                     {
                         if (!InAnimation && (chargeSkillTime <= 0) && rageStatus >= 2)
                         {
@@ -220,11 +222,13 @@ public class Boss1Manager : MonoBehaviour
                         {
                             //attackup/down
                             anim.Play("attackup");
+                            bossAttackBox.GetComponent<Animator>().Play("attackup");
                             meleeWaitTime = setmeleeWaitTime;
                         }
                         else if (!InAnimation)
                         {
                             anim.Play("idle");       //this can be placed with another move so he doesnt wait on our head
+                            bossAttackBox.GetComponent<Animator>().Play("idle");
                         }
 
                     }
@@ -243,6 +247,7 @@ public class Boss1Manager : MonoBehaviour
                         else
                         {
                             anim.Play("move");
+                            bossAttackBox.GetComponent<Animator>().Play("move");
 
                             Vector2 direction = Player.transform.position - transform.position;
                             rigid.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
@@ -255,6 +260,7 @@ public class Boss1Manager : MonoBehaviour
             else      //not able to attack
             {
                 anim.Play("idle");
+                bossAttackBox.GetComponent<Animator>().Play("idle");
             }
 
         }
@@ -273,6 +279,7 @@ public class Boss1Manager : MonoBehaviour
             InAnimation = false;
             inSkillUse = false;
             anim.Play("backstep");
+            bossAttackBox.GetComponent<Animator>().Play("backstep");
         }
     }
 
@@ -281,6 +288,7 @@ public class Boss1Manager : MonoBehaviour
     {
         inSkillUse = true;
         anim.Play("backstep");
+        bossAttackBox.GetComponent<Animator>().Play("backstep");
         dashSmoke.SetActive(true);
 
         yield return new WaitForSeconds(0.1f);   //giving time for the target set for boss
@@ -290,6 +298,7 @@ public class Boss1Manager : MonoBehaviour
 
         backingUpTimer = false;
         anim.Play("willcharge");
+        bossAttackBox.GetComponent<Animator>().Play("willcharge");
 
         yield return new WaitForSeconds(1.5f);
 
@@ -297,6 +306,7 @@ public class Boss1Manager : MonoBehaviour
         chargingDir = Player.transform.position - transform.position;
         charging = true;
         anim.Play("charge");
+        bossAttackBox.GetComponent<Animator>().Play("charge");
     }
 
     
@@ -304,9 +314,11 @@ public class Boss1Manager : MonoBehaviour
     {
         inSkillUse = true;
         anim.Play("willjump");
+        bossAttackBox.GetComponent<Animator>().Play("willcharge");
         yield return new WaitForSeconds(1.5f);
 
         anim.Play("attackjump");
+        bossAttackBox.GetComponent<Animator>().Play("attackjump");
 
         rigid.constraints -= RigidbodyConstraints2D.FreezePositionY;
 
@@ -388,6 +400,7 @@ public class Boss1Manager : MonoBehaviour
 
         gotoItem = true;
         anim.Play("move");
+        bossAttackBox.GetComponent<Animator>().Play("move");
 
         yield return new WaitUntil(() => calculation < 3.5f);
 
@@ -401,6 +414,7 @@ public class Boss1Manager : MonoBehaviour
 
         //animator pick up item
         anim.Play("flex");
+        bossAttackBox.GetComponent<Animator>().Play("flex");
         yield return new WaitForSeconds(1f);
 
         //animator throw item
@@ -419,11 +433,13 @@ public class Boss1Manager : MonoBehaviour
         stunned = true;
 
         anim.Play("chargefail");
+        bossAttackBox.GetComponent<Animator>().Play("chargefail");
 
         if (rageStatus >= 2)
         {
             yield return new WaitForSeconds(1f);
             anim.Play("attackback");
+            bossAttackBox.GetComponent<Animator>().Play("attackback");
             yield return new WaitForSeconds(1f);
         }
         else
@@ -442,10 +458,11 @@ public class Boss1Manager : MonoBehaviour
         charging = false;
 
         anim.Play("flex");
+        bossAttackBox.GetComponent<Animator>().Play("flex");
 
         //hasar player here
 
-        if(!GetComponent<SpriteRenderer>().flipX) // sola bakan boss
+        if (!GetComponent<SpriteRenderer>().flipX) // sola bakan boss
             Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(chargeKnockbackForce, 1000f));
         else
             Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-chargeKnockbackForce, 1000f));
