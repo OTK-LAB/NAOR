@@ -467,7 +467,18 @@ namespace UltimateCC
                 public float MinYVelocity => minYVelocity;
                 public float LandDuration => landDuration;
             }
+            public enum AttackType { Basic1, Basic2, Basic3, Heavy, Plunge }
+            [System.Serializable]
+            public class AttackCollider
+            {
+                [SerializeField] private Collider2D collider;
+                [SerializeField] private AttackType type;
 
+                public Collider2D Collider => collider;
+                public AttackType Type => type;
+            }
+
+            public List<AttackCollider> AttackColliders;
             public BasicAttack1Variables BasicAttack1;
             public BasicAttack2Variables BasicAttack2;
             public BasicAttack3Variables BasicAttack3;
