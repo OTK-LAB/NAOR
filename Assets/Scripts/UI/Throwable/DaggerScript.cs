@@ -6,15 +6,18 @@ using UnityEngine;
 
 public class DaggerScript : MonoBehaviour
 {
+    public bool Destroyed = false;
+    public Item item;
     public float speed;
-    public Vector3 LaunchOffset;
-    public GameObject Explosion;
-
-
+    
+    private float daggerDamage;
 
 
     private void Awake()
     {
+        daggerDamage = item.value;
+
+
         Vector3 directionVector;
         if (GameObject.Find("NewPlayer").transform.localScale.x > 0)
         {
@@ -35,7 +38,6 @@ public class DaggerScript : MonoBehaviour
         }
 
         gameObject.GetComponent<Rigidbody2D>().AddForce(directionVector * speed, ForceMode2D.Impulse);
-        transform.Translate(LaunchOffset);
 
     }
     void Start()
@@ -45,11 +47,19 @@ public class DaggerScript : MonoBehaviour
 
     void Update()
     {
+        if (Destroyed)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        Instantiate(Explosion, gameObject.transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            Debug.Log("enemyBoom");
+            col.gameObject.GetComponent<EnemyHealthSystem>().Damage(daggerDamage);
+            Destroyed=true;
+        }
     }
 }
