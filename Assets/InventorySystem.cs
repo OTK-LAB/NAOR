@@ -158,9 +158,9 @@ public class InventorySystem : MonoBehaviour
 
     public bool Apple(Item _equipedItem)
     {
-        if (HealthSystem.CurrentHealth < HealthSystem.MaxHealth)
+        if (PlayerMain.Instance.playerHealthSystem.CurrentHealth < PlayerMain.Instance.playerHealthSystem.MaxHealth)
         {
-            HealthSystem.Heal(_equipedItem.value);
+            PlayerMain.Instance.playerHealthSystem.Heal(_equipedItem.value);
             return true;
         }
         return false;
@@ -216,7 +216,7 @@ public class InventorySystem : MonoBehaviour
 
     public void HpBoost(Item _selectedItem)
     {
-        //HealthSystem.MaxHealth+=_selectedItem.value;
+        //PlayerMain.Instance.playerHealthSystem.MaxHealth+=_selectedItem.value;
     }
     public void ManaBoost(Item _selectedItem)
     {

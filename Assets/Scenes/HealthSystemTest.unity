@@ -1973,37 +1973,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1391948044445387141, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
-      propertyPath: healthBar
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
-      propertyPath: manaBar
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
-      propertyPath: soulBar
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040768, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
-      propertyPath: playerHealthSystem.maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
-      propertyPath: playerHealthSystem.currentHealth
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
-      propertyPath: playerHealthSystem.damageMultiplier
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040778, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: m_RootOrder
@@ -2049,8 +2021,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1391948044445387141, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
 --- !u!1 &390749171
 GameObject:
@@ -5659,6 +5630,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 11400000, guid: ce99ba486b0481e4d8983756e108b15d, type: 2}
+    - target: {fileID: 1193159896054960057, guid: 962cd7ff975566c499cb4656990ecc4f, type: 3}
+      propertyPath: Grid
+      value: 
+      objectReference: {fileID: 1562506753}
+    - target: {fileID: 1193159896054960057, guid: 962cd7ff975566c499cb4656990ecc4f, type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 11400000, guid: 549c465d42643b8459d07bd89cc277bd, type: 2}
     - target: {fileID: 1909985174028190847, guid: 962cd7ff975566c499cb4656990ecc4f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -8240,6 +8219,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   fill: {fileID: 535371992}
+  easingDuration: 0.5
 --- !u!1 &946069658
 GameObject:
   m_ObjectHideFlags: 0
@@ -11742,6 +11722,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   fill: {fileID: 1375976371}
+  easingDuration: 0.5
   player: {fileID: 0}
 --- !u!1 &1341954706
 GameObject:
@@ -13484,6 +13465,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553955633}
   m_CullTransparentMesh: 1
+--- !u!1 &1562506753 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6852020271672202142, guid: 962cd7ff975566c499cb4656990ecc4f, type: 3}
+  m_PrefabInstance: {fileID: 717191881}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1562790639
 GameObject:
   m_ObjectHideFlags: 0
@@ -18910,6 +18896,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   fill: {fileID: 2102647920}
+  easingDuration: 0.5
 --- !u!1 &1992811867
 GameObject:
   m_ObjectHideFlags: 0

@@ -160,6 +160,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentState: 0
+  playerHealthSystem:
+    currentHealth: 50
+    maxHealth: 100
+    damageMultiplier: 1
   PlayerData:
     Physics:
       groundLayerMask:
