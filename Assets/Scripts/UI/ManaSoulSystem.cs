@@ -111,7 +111,7 @@ public class ManaSoulSystem : MonoBehaviour
         smoothing = 5;
         if (currentSoul >= healAmount)
         {
-            player.playerHealthSystem.Heal(healAmount);
+            player.PlayerData.healthSystem.Heal(healAmount);
             UseSoul(healAmount);
         }
     }

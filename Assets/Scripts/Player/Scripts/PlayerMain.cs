@@ -6,6 +6,8 @@ namespace UltimateCC
 {
     public class PlayerMain : Singleton<PlayerMain>
     {
+        public bool savePlayerData;
+        public bool loadPlayerData;
         
         public PlayerStateMachine _stateMachine; // State Machine declaration where we change current state
         [NonEditable, Space(5)] public AnimName CurrentState; // Variable to display the current state in the Unity inspector for debugging purposes.
@@ -19,7 +21,7 @@ namespace UltimateCC
         [NonSerialized] public Rigidbody2D Rigidbody2D; // The Rigidbody2D is used to control movement based on velocity vector.
         [NonSerialized] public PlayerInputManager InputManager; // The PlayerInputManager handles all user input and sends it to the state machine.
         [NonSerialized] public CapsuleCollider2D CapsuleCollider2D; // CapsuleCollider2D is used to handle slopes and define the ground check position in the base state class: "State.cs".
-        public HealthSystem playerHealthSystem;
+        //public HealthSystem playerHealthSystem;
         public PlayerData PlayerData; // All player movement and action data is stored in the PlayerData object.
 
         protected override void Awake()
@@ -82,6 +84,17 @@ namespace UltimateCC
         private void Update()
         {
             _stateMachine.CurrentState.Update(); // Update method of current state at runtime
+            //FIXME delete these temporary test variables and if-else structure
+            if(savePlayerData)
+            {
+                savePlayerData = false;
+                PlayerSaver.SavePlayerData();
+            }
+            else if(loadPlayerData)
+            {
+                loadPlayerData = false;
+                PlayerSaver.LoadPlayerData();
+            }
         }
 
         private void FixedUpdate()
