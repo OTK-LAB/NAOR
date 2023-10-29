@@ -32,9 +32,8 @@ public class Archer : MonoBehaviour
     float timer;
     private GameObject player;
     private Transform playerPos;
-    private Vector2 currentPlayerPos;
     public float distance;
-    public float moveSpeed;
+
 
     //Attack
     bool attackable = true;
@@ -46,11 +45,9 @@ public class Archer : MonoBehaviour
     float verticalTolerance = 1.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
 
     //Move
-    Vector3 movement;
     bool Moveright = true;
-    float moveDirectionX;
     public int moveDirection = 1;
-
+    public float moveSpeed;
 
     //Hit
     Vector2 temp;
@@ -110,7 +107,6 @@ public class Archer : MonoBehaviour
     }
     void startingMove()
     {
-        // moveSpeed = 3f; // baþlangýç hareket hýzý
         float moveDirectionX = moveDirection;
         float step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
@@ -118,7 +114,6 @@ public class Archer : MonoBehaviour
 
     void checkPlayer()
     {
-        //float distanceToPlayer = Vector2.Distance(rb.position, playerPos.position);
         Vector2 enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
         Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
 

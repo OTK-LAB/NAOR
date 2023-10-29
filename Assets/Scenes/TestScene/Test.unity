@@ -10049,7 +10049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6789813143233222933, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.319565
+      value: -56.51
       objectReference: {fileID: 0}
     - target: {fileID: 6789813143233222933, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16868,7 +16868,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 660650115951852348, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -41.49
+      value: -72.72
       objectReference: {fileID: 0}
     - target: {fileID: 660650115951852348, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16909,6 +16909,10 @@ PrefabInstance:
     - target: {fileID: 660650115951852351, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
       propertyPath: m_Name
       value: Walls (Archer)
+      objectReference: {fileID: 0}
+    - target: {fileID: 660650115951852351, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
@@ -18238,7 +18242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 660650115951852348, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.759834
+      value: -47.680164
       objectReference: {fileID: 0}
     - target: {fileID: 660650115951852348, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -20290,7 +20294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 660650115951852348, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -71.88
+      value: -51.539997
       objectReference: {fileID: 0}
     - target: {fileID: 660650115951852348, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -20331,6 +20335,10 @@ PrefabInstance:
     - target: {fileID: 660650115951852351, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
       propertyPath: m_Name
       value: Walls (Melee)
+      objectReference: {fileID: 0}
+    - target: {fileID: 660650115951852351, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 660650116708454891, guid: 3526643a76591cb4c81ed8f0ff15f7b4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20566,6 +20574,7 @@ MonoBehaviour:
   attackPoint: {fileID: 2140491268033780381}
   attackRange: 0.8
   damageamount: 50
+  knockbackDistance: 0
   soul: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
 --- !u!1 &2140491267316545888
 GameObject:
@@ -26018,9 +26027,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3632289972206299033, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3632289972206299038, guid: b9e428a617a036049b5240a568340881, type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299038, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -57.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299038, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.92
       objectReference: {fileID: 0}
     - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
       propertyPath: wall
@@ -26098,6 +26119,10 @@ PrefabInstance:
     - target: {fileID: 5997636777266006083, guid: 7d095cae7ecf1d042b44d6ac6ae611ad, type: 3}
       propertyPath: m_Name
       value: ArcherEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5997636777266006083, guid: 7d095cae7ecf1d042b44d6ac6ae611ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5997636777266006085, guid: 7d095cae7ecf1d042b44d6ac6ae611ad, type: 3}
       propertyPath: wall
@@ -26188,7 +26213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6170958044719408295, guid: ab5ee76efee51a1499de74e8d13e28ca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.64
+      value: -6.13
       objectReference: {fileID: 0}
     - target: {fileID: 6170958044719408295, guid: ab5ee76efee51a1499de74e8d13e28ca, type: 3}
       propertyPath: m_LocalPosition.z

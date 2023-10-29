@@ -13,7 +13,8 @@ public class SwordEnemy : MonoBehaviour
         STATE_ATTACK,
         STATE_COOLDOWN,
         STATE_NOTDAMAGE,
-        STATE_HIT
+        STATE_HIT,
+        STATE_BACKTOWALL
     };
 
     State state = State.STATE_STARTINGMOVE;
@@ -33,20 +34,26 @@ public class SwordEnemy : MonoBehaviour
     //Movement
     bool Moveright = true;
     public int moveDirection = 1;
-    float moveDirectionX;
+    [Header("Left Wall")]
     public GameObject wall;
+    [Header("Right Wall")]
     public GameObject wall2;
+    Vector3 startPoint;
+    bool isBetweenWalls;
+    float moveDirectionX;
+    float step;
 
     //Following & CoolDown
     private GameObject player;
     private Transform playerPos;
-    private Vector2 currentPlayerPos;
     public float distance;
+    float distanceToPlayer;
     public float moveSpeed;
     float firstmoveSpeed;
     float timer;
 
     //Attack
+    Vector2 enemyPosition;
     [SerializeField] public GameObject attackPoint;
     [SerializeField] public float attackRange;
     [SerializeField] public float damageamount;
@@ -58,12 +65,13 @@ public class SwordEnemy : MonoBehaviour
 
     //Hit
     Vector2 temp;
+    public float knockbackDistance; //geri sekmesi
     Rigidbody2D rb;
     LayerMask enemyLayers;
     EnemyHealthSystem _healthSystem;
 
     public GameObject soul;
-
+    private bool hasTurned = false;
 
     void Awake()
     {
@@ -78,7 +86,7 @@ public class SwordEnemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindGameObjectWithTag("Player");
-        attackPoint = GameObject.FindGameObjectWithTag("sword");
+        startPoint = transform.position;
         firstmoveSpeed = moveSpeed;
 
     }
@@ -112,24 +120,34 @@ public class SwordEnemy : MonoBehaviour
             case State.STATE_HIT:
                 hitState();
                 break;
+            case State.STATE_BACKTOWALL:
+                ChangeAnimationState(startingmove);
+                backtoWall();
+                break;
+
         }
     }
     void startingMove()
     {
         moveSpeed = firstmoveSpeed; // baþlangýç hareket hýzý
-        float moveDirectionX = moveDirection;
-        float step = moveSpeed * moveDirectionX;
+        moveDirectionX = moveDirection;
+        step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
     }
     void hitState()
     {
         if (isHit)
         {
+            /*
             temp = new Vector2((rb.position.x + 2), rb.position.y);
             if (Moveright)
                 rb.MovePosition((Vector2)rb.position + (temp * moveSpeed * Time.deltaTime));
             else
                 rb.MovePosition((Vector2)rb.position - (temp * moveSpeed * Time.deltaTime));
+            */
+            knockbackDistance = -2f;
+            Vector2 knockbackVector = Moveright ? Vector2.right : Vector2.left;
+            rb.MovePosition(rb.position + knockbackVector * knockbackDistance);
 
             ChangeAnimationState(hit);
             isHit = false;
@@ -140,25 +158,23 @@ public class SwordEnemy : MonoBehaviour
 
     void checkPlayer()
     {
-        //float distanceToPlayer = Vector2.Distance(rb.position, playerPos.position);
-        Vector2 enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
-        Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
+        enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
+     //   Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
+        distanceToPlayer = Vector2.Distance(enemyPosition, playerPos.position);
+        isBetweenWalls = transform.position.x >= wall.transform.position.x && transform.position.x <= wall2.transform.position.x;
 
-        float distanceToPlayer = Vector2.Distance(enemyPosition, playerPosition);
-        if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPosition.y) < verticalTolerance)
+        if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPos.position.y) < verticalTolerance)
         {
+            hasTurned = false;
             if (distanceToPlayer <= 1)
                 state = State.STATE_ATTACK;
             else
                 state = State.STATE_FOLLOWING;
         }
-        else
-        {
+        else if (isBetweenWalls)
             state = State.STATE_STARTINGMOVE;
-            wall.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
-            wall2.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
-        }
-
+           else
+            state = State.STATE_BACKTOWALL;
     }
     void following()
     {
@@ -166,8 +182,29 @@ public class SwordEnemy : MonoBehaviour
         moveSpeed = firstmoveSpeed + 2;
         Vector2 currentPlayerPos = new Vector2(playerPos.position.x, rb.position.y);
         rb.velocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
-        wall.transform.parent = transform;
-        wall2.transform.parent = transform;
+    }
+    
+    void backtoWall()
+    {
+        moveSpeed = firstmoveSpeed;
+        Vector2 startDirection = startPoint - transform.position;
+        if (!hasTurned && Vector3.Dot(startDirection, transform.right) < 0f)
+        {
+            hasTurned = true;
+            if (Moveright) Moveright = false;
+            else Moveright = true;
+            moveDirection *= -1;
+            transform.Rotate(0f, 180f, 0f);
+        }
+        rb.velocity = startDirection.normalized * moveSpeed ;
+        checkPlayer();
+        // Baþlangýç konumuna ulaþtýðýnda, Walking state'ine geç
+        if (Vector2.Distance(transform.position, startPoint) < 0.1f)
+        {
+            hasTurned = false;
+            state = State.STATE_STARTINGMOVE;
+        }
+
 
     }
     void attacktoPlayer()
@@ -179,10 +216,9 @@ public class SwordEnemy : MonoBehaviour
             Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange);
             foreach (Collider2D enemy in hitPlayer)
             {
-                if (enemy.tag == "Player")
-                    player.GetComponent<HealthSystem>().Damage(damageamount);
+               // if (enemy.tag == "Player")
+                    //player.GetComponent<HealthSystem>().Damage(damageamount);
             }
-            // StartCoroutine(backtoCoolDown());
         }
 
     }
@@ -203,7 +239,6 @@ public class SwordEnemy : MonoBehaviour
         {
             attackable = true;
             timer = 0;
-            _healthSystem.Invincible = false;
             checkPlayer();
         }
     }
