@@ -9,11 +9,13 @@ public class PlayerPlungeAttackLandState : AttackState
     public override void Enter()
     {
         base.Enter();
+        playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Plunge).Collider.enabled = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+        playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Plunge).Collider.enabled = false;
     }
 
     public override void FixedUpdate()

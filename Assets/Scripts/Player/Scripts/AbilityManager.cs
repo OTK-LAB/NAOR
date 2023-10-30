@@ -45,7 +45,7 @@ public class AbilityManager : MonoBehaviour
 
     private void Start()
     {
-        AttackState.OnEnemyKilled += () =>
+        PlayerAttackCollider.OnEnemyKilled += () =>
         {
             if (NecromancersBlade.phase == Phase.Active)
             {

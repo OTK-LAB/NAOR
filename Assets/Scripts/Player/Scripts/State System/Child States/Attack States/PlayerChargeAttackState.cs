@@ -18,6 +18,7 @@ public class PlayerChargeAttackState : AttackState
     {
         base.Exit();
         inputManager.Input_Attack = false;
+        playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Heavy).Collider.enabled = false;
     }
 
     public override void Update()
@@ -34,6 +35,10 @@ public class PlayerChargeAttackState : AttackState
     public override void PhysicsCheck()
     {
         base.PhysicsCheck();
+        if (localTime > playerData.Attack.ChargeAttack.ChargeTimeMaxTime)
+        {
+            playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Heavy).Collider.enabled = true;
+        }
     }
 
     public override void SwitchStateLogic()
