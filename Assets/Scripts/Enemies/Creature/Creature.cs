@@ -3,6 +3,7 @@ using UltimateCC;
 
 public class Creature : MonoBehaviour
 {
+    private Animator animator;
     [SerializeField] private Transform enemy;
     [SerializeField] private Rigidbody2D rb;
     public float speed;
@@ -19,6 +20,7 @@ public class Creature : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         dashYVelocityCurve = dashHeightCurve.Derivative();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
