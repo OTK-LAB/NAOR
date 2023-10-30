@@ -14,7 +14,8 @@ public class ShieldEnemy : MonoBehaviour
         STATE_SHIELD,
         STATE_ATTACK,
         STATE_COOLDOWN,
-        STATE_HIT
+        STATE_HIT,
+        STATE_BACKTOWALL
     };
 
 
@@ -32,43 +33,52 @@ public class ShieldEnemy : MonoBehaviour
     //Following & CoolDown
     private GameObject player;
     private Transform playerPos;
+    float distanceToPlayer;
     private Vector2 currentPlayerPos;
     [SerializeField] public float distance;
     [SerializeField] public float moveSpeed;
-    [SerializeField] public GameObject wall;
-    [SerializeField] public GameObject wall2;
+
 
     //Move
-    Vector3 movement;
-    bool Moveright = true;
+    [Header("Left Wall")]
+    public GameObject wall;
+    [Header("Right Wall")]
+    public GameObject wall2;
+    Vector3 startPoint;
+    bool isBetweenWalls;
     float moveDirectionX;
+    float step;
+        float firstmoveSpeed;
+    bool Moveright = true;
     public int moveDirection = 1;
 
     //Attack
+    Vector2 enemyPosition;
     public GameObject attackPoint;
     [SerializeField] public float attackRange;
     [SerializeField] public float damageamount;
     float timer;
     bool IsDead = false;
-    bool detected=false;
-    // bool isHit = false;
+    bool isHit = false;
+    bool attackable = true;
     // bool isShield = false;
-    float verticalTolerance = 1.7f; 
+    float verticalTolerance = 2f; 
 
     //Hit
-    Vector2 temp;
+    public float knockbackDistance; //geri sekmesi
     Rigidbody2D rb;
     LayerMask enemyLayers;
     EnemyHealthSystem _healthSystem;
     bool isBehind = false;
+    private bool hasTurned = false;
 
     State state = State.STATE_STARTINGMOVE;
    
     void Awake()
     {
         _healthSystem = GetComponent<EnemyHealthSystem>();
-
-       _healthSystem.OnHit += OnHit;
+        animator = GetComponent<Animator>();
+        _healthSystem.OnHit += OnHit;
        _healthSystem.OnDead += OnDead;
        _healthSystem.OnShield += OnShield;
 
@@ -77,9 +87,10 @@ public class ShieldEnemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindGameObjectWithTag("Player");
+        startPoint = transform.position;
+        firstmoveSpeed = moveSpeed;
     }
 
 
@@ -110,91 +121,130 @@ public class ShieldEnemy : MonoBehaviour
                 coolDown(2);
                 break;
             case State.STATE_HIT:
-                ChangeAnimationState(hit);
-                //   hitState();
+                hitState();
                 break;
             case State.STATE_SHIELD:
                 ChangeAnimationState(shield);
+                break;
+            case State.STATE_BACKTOWALL:
+                ChangeAnimationState(startingmove);
+                backtoWall();
                 break;
 
         }
     }
     void startingMove()
     {
-        moveSpeed = 3f; // baþlangýç hareket hýzý
-        float moveDirectionX = moveDirection;
-        float step = moveSpeed * moveDirectionX;
+        moveSpeed = firstmoveSpeed; // baþlangýç hareket hýzý
+        moveDirectionX = moveDirection;
+        step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
     }
 
     void checkPlayer()
     {
-        //float distanceToPlayer = Vector2.Distance(rb.position, playerPos.position);
-        Vector2 enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
-        Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
-
-        float distanceToPlayer = Vector2.Distance(enemyPosition, playerPosition);
-        if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPosition.y) < verticalTolerance)
+        enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
+     //   Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
+        distanceToPlayer = Vector2.Distance(enemyPosition, playerPos.position);
+        isBetweenWalls = transform.position.x >= wall.transform.position.x && transform.position.x <= wall2.transform.position.x;
+        if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPos.position.y) < verticalTolerance)
         {
-            if (distanceToPlayer <= 2.5f)
+            hasTurned = false;
+            if (distanceToPlayer <= 2)
                 state = State.STATE_ATTACK;
             else
                 state = State.STATE_FOLLOWING;
         }
-        else
-        {
+        else if (isBetweenWalls)
             state = State.STATE_STARTINGMOVE;
-            wall.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
-            wall2.transform.parent = GameObject.FindGameObjectWithTag("parent").transform;
-        }
-
+        else
+            state = State.STATE_BACKTOWALL;
     }
     void following()
     {
         flip();
-        moveSpeed = 5f;
+        moveSpeed = firstmoveSpeed + 2;
         Vector2 currentPlayerPos = new Vector2(playerPos.position.x, rb.position.y);
         rb.velocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
-        wall.transform.parent = transform;
-        wall2.transform.parent = transform;
+    }
+    void backtoWall()
+    {
+        moveSpeed = firstmoveSpeed;
+        Vector2 startDirection = startPoint - transform.position;
+        if (!hasTurned && Vector3.Dot(startDirection, transform.right) < 0f)
+        {
+            hasTurned = true;
+            if (Moveright) Moveright = false;
+            else Moveright = true;
+            moveDirection *= -1;
+            transform.Rotate(0f, 180f, 0f);
+        }
+        rb.velocity = startDirection.normalized * moveSpeed;
+        checkPlayer();
+        // Baþlangýç konumuna ulaþtýðýnda, Walking state'ine geç
+        if (Vector2.Distance(transform.position, startPoint) < 0.1f)
+        {
+            hasTurned = false;
+            state = State.STATE_STARTINGMOVE;
+        }
+
 
     }
-    void detection(int i )
+    void hitState()
     {
-        timer += Time.deltaTime;
-        if (timer >= i)
+        if (isHit)
         {
-            timer = 0;
-            detected = true;
+            /*
+            temp = new Vector2((rb.position.x + 2), rb.position.y);
+            if (Moveright)
+                rb.MovePosition((Vector2)rb.position + (temp * moveSpeed * Time.deltaTime));
+            else
+                rb.MovePosition((Vector2)rb.position - (temp * moveSpeed * Time.deltaTime));
+            */
+            knockbackDistance = -2f;
+            Vector2 knockbackVector = Moveright ? Vector2.right : Vector2.left;
+            rb.MovePosition(rb.position + knockbackVector * knockbackDistance);
 
+            ChangeAnimationState(hit);
+            isHit = false;
+            attackable = true;
         }
     }
+
     void attacktoPlayer()
     {
-        ChangeAnimationState(attack);
-
-        Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange);
+        if (attackable && !isHit)
+        {
+            ChangeAnimationState(attack);
+            attackable = false;
+            Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange);
             foreach (Collider2D enemy in hitPlayer)
             {
-                if (enemy.tag == "Player")
+              /*  if (enemy.tag == "Player")
                 {
                     player.GetComponent<HealthSystem>().Damage(damageamount);
-                }
+                }*/
             }
-
+        }
     }
-    public void setCoolDown()
+    IEnumerator backtoCoolDown()
     {
-        state = State.STATE_COOLDOWN;
+        if (!isHit)
+        {
+            yield return new WaitForSeconds(0.01f);
+            state = State.STATE_COOLDOWN;
+        }
+        else
+            state = State.STATE_HIT;
     }
     public void coolDown(float i)
     {
         timer += Time.deltaTime;
         if (timer >= i)
         {
+            attackable = true;
             timer = 0;
             checkPlayer();
-
         }
     }
     void flip()
@@ -230,7 +280,7 @@ public class ShieldEnemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D trig)
     {
-        if (trig.CompareTag("wall"))
+        if (trig.CompareTag("wall") && state == State.STATE_STARTINGMOVE)
             turn();
 
     }
@@ -250,7 +300,7 @@ public class ShieldEnemy : MonoBehaviour
         if (!IsDead)
         {
             state = State.STATE_HIT;
-           // isHit = true;
+            isHit = true;
         }
     }
     void OnShield(object sender, EventArgs e )
