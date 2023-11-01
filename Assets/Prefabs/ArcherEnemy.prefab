@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 5997636777266006087}
   - component: {fileID: 5997636777266006084}
   - component: {fileID: 5997636777266006085}
+  - component: {fileID: 3641673869897223887}
   - component: {fileID: 5997636777266006082}
   m_Layer: 8
   m_Name: ArcherEnemy
@@ -365,12 +366,25 @@ MonoBehaviour:
   wall: {fileID: 0}
   wall2: {fileID: 0}
   distance: 15
-  moveSpeed: 3
   Arrow: {fileID: 440562133715720225, guid: 4cf06fc5f25081444bbf7d89b59811a4, type: 3}
   LaunchForce: 40
   attackPoint: {fileID: 5997636776245411477}
   moveDirection: 1
+  moveSpeed: 3
   soul: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
+--- !u!114 &3641673869897223887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5997636777266006083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d0e0a5dbe520944a7e46117f9842c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reduction_num: 2
 --- !u!114 &5997636777266006082
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -65,8 +65,8 @@ public class ArchersArrow : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
-            //playerHealthSystem.Damage(ArrowDamage);
-            player.GetComponent<HealthSystem>().Damage(ArrowDamage);
+            playerHealthSystem.Damage(ArrowDamage);
+            //player.GetComponent<HealthSystem>().Damage(ArrowDamage);
         }
         if (collision.gameObject.layer == 6)
         {

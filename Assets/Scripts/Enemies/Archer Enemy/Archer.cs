@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class Archer : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Archer : MonoBehaviour
         STATE_STARTINGMOVE,
         STATE_ATTACK,
         STATE_COOLDOWN,
+        STATE_FROZEN,
         STATE_HIT
     };
 
@@ -48,7 +50,9 @@ public class Archer : MonoBehaviour
     bool Moveright = true;
     public int moveDirection = 1;
     public float moveSpeed;
-
+    float tempMoveSpeed;
+    float firstmoveSpeed;
+    bool slow = false;
     //Hit
     Vector2 temp;
     Rigidbody2D rb;
@@ -64,6 +68,7 @@ public class Archer : MonoBehaviour
         animator = GetComponent<Animator>();
         _healthSystem.OnHit += OnHit;
         _healthSystem.OnDead += OnDead;
+        firstmoveSpeed = moveSpeed;
 
     }
 
@@ -100,6 +105,11 @@ public class Archer : MonoBehaviour
                 ChangeAnimationState(cooldown);
                 coolDown(2);
                 break;
+            case State.STATE_FROZEN:
+                ChangeAnimationState(cooldown);
+                rb.velocity = Vector2.zero;
+                coolDown(5);
+                break;
             case State.STATE_HIT:
                 hitState();
                 break;
@@ -111,7 +121,21 @@ public class Archer : MonoBehaviour
         float step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
     }
-
+    public void speedReduction(int i)
+    {
+        slow = true;
+        tempMoveSpeed = moveSpeed - i;
+        moveSpeed = tempMoveSpeed;
+    }
+    public void speedFix()
+    {
+        slow = false;
+        moveSpeed = firstmoveSpeed;
+    }
+    public void setFrozenState()
+    {
+        state = State.STATE_FROZEN;
+    }
     void checkPlayer()
     {
         Vector2 enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
@@ -129,6 +153,7 @@ public class Archer : MonoBehaviour
         }
 
     }
+
     public void ArrowMechanism()
     {
         GameObject ArrowIns = Instantiate(Arrow, attackPoint.transform.position, attackPoint.transform.rotation);

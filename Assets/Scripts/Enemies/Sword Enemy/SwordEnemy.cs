@@ -14,6 +14,7 @@ public class SwordEnemy : MonoBehaviour
         STATE_COOLDOWN,
         STATE_NOTDAMAGE,
         STATE_HIT,
+        STATE_FROZEN,
         STATE_BACKTOWALL
     };
 
@@ -51,6 +52,7 @@ public class SwordEnemy : MonoBehaviour
     public float moveSpeed;
     float firstmoveSpeed;
     float timer;
+    float tempMoveSpeed;
 
     //Attack
     Vector2 enemyPosition;
@@ -62,7 +64,7 @@ public class SwordEnemy : MonoBehaviour
     bool IsDead = false;
     bool isHit = false;
     float verticalTolerance = 0.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
-
+    bool slow = false;
     //Hit
     Vector2 temp;
     public float knockbackDistance; //geri sekmesi
@@ -120,6 +122,11 @@ public class SwordEnemy : MonoBehaviour
             case State.STATE_HIT:
                 hitState();
                 break;
+            case State.STATE_FROZEN:
+                ChangeAnimationState(idle);
+                rb.velocity = Vector2.zero;
+                coolDown(5);
+                break;
             case State.STATE_BACKTOWALL:
                 ChangeAnimationState(startingmove);
                 backtoWall();
@@ -129,7 +136,8 @@ public class SwordEnemy : MonoBehaviour
     }
     void startingMove()
     {
-        moveSpeed = firstmoveSpeed; // baþlangýç hareket hýzý
+        if(!slow)
+            moveSpeed = firstmoveSpeed; // baþlangýç hareket hýzý
         moveDirectionX = moveDirection;
         step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
@@ -204,8 +212,6 @@ public class SwordEnemy : MonoBehaviour
             hasTurned = false;
             state = State.STATE_STARTINGMOVE;
         }
-
-
     }
     void attacktoPlayer()
     {
@@ -221,6 +227,22 @@ public class SwordEnemy : MonoBehaviour
             }
         }
 
+    }
+    public void speedReduction(int i)
+    {
+        slow = true;
+        tempMoveSpeed = moveSpeed-i;
+        Debug.Log(tempMoveSpeed);
+        moveSpeed = tempMoveSpeed;
+    }
+    public void speedFix()
+    {
+        slow = false;
+        moveSpeed = firstmoveSpeed;
+    }
+    public void setFrozenState()
+    {
+        state = State.STATE_FROZEN;
     }
     IEnumerator backtoCoolDown()
     {
