@@ -15,6 +15,7 @@ public class ShieldEnemy : MonoBehaviour
         STATE_ATTACK,
         STATE_COOLDOWN,
         STATE_HIT,
+        STATE_FROZEN,
         STATE_BACKTOWALL
     };
 
@@ -51,6 +52,7 @@ public class ShieldEnemy : MonoBehaviour
         float firstmoveSpeed;
     bool Moveright = true;
     public int moveDirection = 1;
+    bool slow = false;
 
     //Attack
     Vector2 enemyPosition;
@@ -62,8 +64,8 @@ public class ShieldEnemy : MonoBehaviour
     bool isHit = false;
     bool attackable = true;
     // bool isShield = false;
-    float verticalTolerance = 2f; 
-
+    float verticalTolerance = 2f;
+    float tempMoveSpeed;
     //Hit
     public float knockbackDistance; //geri sekmesi
     Rigidbody2D rb;
@@ -71,6 +73,7 @@ public class ShieldEnemy : MonoBehaviour
     EnemyHealthSystem _healthSystem;
     bool isBehind = false;
     private bool hasTurned = false;
+
 
     State state = State.STATE_STARTINGMOVE;
    
@@ -126,6 +129,11 @@ public class ShieldEnemy : MonoBehaviour
             case State.STATE_SHIELD:
                 ChangeAnimationState(shield);
                 break;
+            case State.STATE_FROZEN:
+                ChangeAnimationState(cooldown);
+                rb.velocity = Vector2.zero;
+                coolDown(5);
+                break;
             case State.STATE_BACKTOWALL:
                 ChangeAnimationState(startingmove);
                 backtoWall();
@@ -135,7 +143,8 @@ public class ShieldEnemy : MonoBehaviour
     }
     void startingMove()
     {
-        moveSpeed = firstmoveSpeed; // baþlangýç hareket hýzý
+        if (!slow)
+            moveSpeed = firstmoveSpeed; // baþlangýç hareket hýzý
         moveDirectionX = moveDirection;
         step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
@@ -189,6 +198,21 @@ public class ShieldEnemy : MonoBehaviour
         }
 
 
+    }
+    public void speedReduction(int i)
+    {
+        slow = true;
+        tempMoveSpeed = moveSpeed - i;
+        moveSpeed = tempMoveSpeed;
+    }
+    public void speedFix()
+    {
+        slow = false;
+        moveSpeed = firstmoveSpeed;
+    }
+    public void setFrozenState()
+    {
+        state = State.STATE_FROZEN;
     }
     void hitState()
     {

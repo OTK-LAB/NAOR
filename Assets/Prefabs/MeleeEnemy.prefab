@@ -495,6 +495,7 @@ GameObject:
   - component: {fileID: 3632289972206299038}
   - component: {fileID: 3632289972206299039}
   - component: {fileID: 3632289972206299043}
+  - component: {fileID: 4622677265926225968}
   - component: {fileID: 3632289972206299032}
   - component: {fileID: 3632289972206299036}
   - component: {fileID: 3632289972206299037}
@@ -598,7 +599,21 @@ MonoBehaviour:
   attackPoint: {fileID: 3632289971497403492}
   attackRange: 0.8
   damageamount: 50
+  knockbackDistance: 0
   soul: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
+--- !u!114 &4622677265926225968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3632289972206299033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d0e0a5dbe520944a7e46117f9842c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reduction_num: 2
 --- !u!95 &3632289972206299032
 Animator:
   serializedVersion: 4
