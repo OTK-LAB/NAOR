@@ -14,8 +14,7 @@ public class EnemyController : MonoBehaviour
         else if (enemy.GetComponent<Archer>() != null)
             enemy.GetComponent<Archer>().speedReduction(reduction_num);
      }
-    //public void frozenState(Collider2D enemy)
-    private void OnTriggerEnter2D(Collider2D enemy)
+    public void frozenState(Collider2D enemy)
     {
         if (enemy.GetComponent<ShieldEnemy>() != null)
             enemy.GetComponent<ShieldEnemy>().setFrozenState();
