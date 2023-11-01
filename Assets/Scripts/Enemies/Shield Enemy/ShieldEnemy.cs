@@ -172,7 +172,8 @@ public class ShieldEnemy : MonoBehaviour
     void following()
     {
         flip();
-        moveSpeed = firstmoveSpeed + 2;
+        if (!slow)
+            moveSpeed = firstmoveSpeed + 2;
         Vector2 currentPlayerPos = new Vector2(playerPos.position.x, rb.position.y);
         rb.velocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
     }
