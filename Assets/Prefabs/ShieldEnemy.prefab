@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d0e0a5dbe520944a7e46117f9842c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reduction_num: 2
+  reduction_time: 4
 --- !u!114 &6789813142486697876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,6 +235,7 @@ MonoBehaviour:
   wall: {fileID: 0}
   wall2: {fileID: 0}
   moveDirection: 1
+  slowRate: 60
   attackPoint: {fileID: 6789813142002604719}
   attackRange: 1.2
   damageamount: 50

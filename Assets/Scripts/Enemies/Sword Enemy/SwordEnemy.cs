@@ -51,8 +51,12 @@ public class SwordEnemy : MonoBehaviour
     float distanceToPlayer;
     public float moveSpeed;
     float firstmoveSpeed;
-    float timer;
-    float tempMoveSpeed;
+    
+    //Slow
+    public float slowRate;
+    float slowSpeed;
+    bool slow = false;
+    float slowTime;
 
     //Attack
     Vector2 enemyPosition;
@@ -64,7 +68,7 @@ public class SwordEnemy : MonoBehaviour
     bool IsDead = false;
     bool isHit = false;
     float verticalTolerance = 0.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
-    bool slow = false;
+    float timer;
     //Hit
     Vector2 temp;
     public float knockbackDistance; //geri sekmesi
@@ -90,12 +94,14 @@ public class SwordEnemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         startPoint = transform.position;
         firstmoveSpeed = moveSpeed;
+        slowSpeed = (firstmoveSpeed/100)*(100-slowRate);
 
     }
 
     void Update()
     {
         checkState();
+        slowTimer();
     }
     void checkState()
     {
@@ -229,17 +235,25 @@ public class SwordEnemy : MonoBehaviour
         }
 
     }
-    public void speedReduction(int i)
+    public void slowTimer()
     {
+        slowTime -= Time.deltaTime;
+        if (slowTime <= 0f)
+        {
+            slowTime = 0f;
+            speedFix();
+        }
+    }
+    public void speedReduction(float time)
+    {
+        slowTime = time;
+        moveSpeed = slowSpeed;
         slow = true;
-        tempMoveSpeed = moveSpeed-i;
-        Debug.Log(tempMoveSpeed);
-        moveSpeed = tempMoveSpeed;
     }
     public void speedFix()
     {
-        slow = false;
         moveSpeed = firstmoveSpeed;
+        slow = false;
     }
     public void setFrozenState()
     {

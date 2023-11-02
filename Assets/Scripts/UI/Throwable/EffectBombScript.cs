@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class EffectBombScript : MonoBehaviour
@@ -7,37 +8,29 @@ public class EffectBombScript : MonoBehaviour
     public bool Destroyed = false;
     public Item item;
 
-    public bool isWind=false;
-
+    private float timer;
     private void Awake()
     {
     }
     void Start()
     {
-
+        timer = 6;
     }
     void Update()
     {
-        if (Destroyed)
+        timer -= Time.deltaTime;
+        if(timer<=0)
         {
             Destroy(gameObject);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerStay2D(Collider2D col)
     {
-        if (isWind)
-        {
-            
-        }
-        else
-        {
             if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 //slow down enemy movoment speed and attack speed
+                col.GetComponent<EnemyController>().speedReduction(col);
             }
-
-        }
-        
     }
 }

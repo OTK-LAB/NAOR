@@ -49,10 +49,15 @@ public class ShieldEnemy : MonoBehaviour
     bool isBetweenWalls;
     float moveDirectionX;
     float step;
-        float firstmoveSpeed;
+    float firstmoveSpeed;
     bool Moveright = true;
     public int moveDirection = 1;
+
+    //Slow
+    public float slowRate;
+    float slowSpeed;
     bool slow = false;
+    float slowTime;
 
     //Attack
     Vector2 enemyPosition;
@@ -94,12 +99,14 @@ public class ShieldEnemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         startPoint = transform.position;
         firstmoveSpeed = moveSpeed;
+        slowSpeed = (firstmoveSpeed / 100) * (100 - slowRate);
     }
 
 
     void Update()
     {
         checkState();
+        slowTimer();
     }
     void checkState()
     {
@@ -200,16 +207,25 @@ public class ShieldEnemy : MonoBehaviour
 
 
     }
-    public void speedReduction(int i)
+    public void slowTimer()
     {
+        slowTime -= Time.deltaTime;
+        if (slowTime <= 0f)
+        {
+            slowTime = 0f;
+            speedFix();
+        }
+    }
+    public void speedReduction(float time)
+    {
+        slowTime = time;
+        moveSpeed = slowSpeed;
         slow = true;
-        tempMoveSpeed = moveSpeed - i;
-        moveSpeed = tempMoveSpeed;
     }
     public void speedFix()
     {
-        slow = false;
         moveSpeed = firstmoveSpeed;
+        slow = false;
     }
     public void setFrozenState()
     {

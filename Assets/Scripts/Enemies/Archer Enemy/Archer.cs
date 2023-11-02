@@ -52,7 +52,13 @@ public class Archer : MonoBehaviour
     public float moveSpeed;
     float tempMoveSpeed;
     float firstmoveSpeed;
+
+    //Slow
+    public float slowRate;
+    float slowSpeed;
     bool slow = false;
+    float slowTime;
+
     //Hit
     Vector2 temp;
     Rigidbody2D rb;
@@ -64,11 +70,13 @@ public class Archer : MonoBehaviour
     State state = State.STATE_STARTINGMOVE;
     void Awake()
     {
+        slowSpeed = firstmoveSpeed % (100 - slowRate);
         _healthSystem = GetComponent<EnemyHealthSystem>();
         animator = GetComponent<Animator>();
         _healthSystem.OnHit += OnHit;
         _healthSystem.OnDead += OnDead;
         firstmoveSpeed = moveSpeed;
+        slowSpeed = (firstmoveSpeed / 100) * (100 - slowRate);
 
     }
 
@@ -83,6 +91,7 @@ public class Archer : MonoBehaviour
     void Update()
     {
         checkState();
+        slowTimer();
     }
 
     void checkState()
@@ -121,16 +130,25 @@ public class Archer : MonoBehaviour
         float step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
     }
-    public void speedReduction(int i)
+    public void slowTimer()
     {
+        slowTime -= Time.deltaTime;
+        if (slowTime <= 0f)
+        {
+            slowTime = 0f;
+            speedFix();
+        }
+    }
+    public void speedReduction(float time)
+    {
+        slowTime = time;
+        moveSpeed = slowSpeed;
         slow = true;
-        tempMoveSpeed = moveSpeed - i;
-        moveSpeed = tempMoveSpeed;
     }
     public void speedFix()
     {
-        slow = false;
         moveSpeed = firstmoveSpeed;
+        slow = false;
     }
     public void setFrozenState()
     {
