@@ -473,9 +473,11 @@ namespace UltimateCC
             {
                 [SerializeField] private Collider2D collider;
                 [SerializeField] private AttackType type;
+                [SerializeField] private float damage;
 
                 public Collider2D Collider => collider;
                 public AttackType Type => type;
+                public float Damage => damage;
             }
 
             public List<AttackCollider> AttackColliders;

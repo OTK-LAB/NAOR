@@ -33,6 +33,7 @@ public class AbilityManager : MonoBehaviour
         [NonEditable] public bool IsInvisible;
         public float walkMultiplier;
         [NonEditable] public Phase phase;
+        public ManaSoulSystem manaSoulSystem;
     }
 
     public NecromancersBladeVariables NecromancersBlade;
@@ -41,11 +42,12 @@ public class AbilityManager : MonoBehaviour
     private void Awake()
     {
         playerData = GetComponent<PlayerMain>().PlayerData;
+        SoulWalk.manaSoulSystem = GetComponent<ManaSoulSystem>();
     }
 
     private void Start()
     {
-        AttackState.OnEnemyKilled += () =>
+        PlayerAttackCollider.OnEnemyKilled += () =>
         {
             if (NecromancersBlade.phase == Phase.Active)
             {
@@ -117,8 +119,11 @@ public class AbilityManager : MonoBehaviour
         }
         else if (SoulWalk.phase == Phase.Active)
         {
-            // Handle Mana Drain
-            // if mana 0, phase = Phase.End
+            SoulWalk.manaSoulSystem.UseMana(SoulWalk.ManaDrainPerSecond * Time.deltaTime);
+            if (SoulWalk.manaSoulSystem.currentMana <= 0)
+            {
+                SoulWalk.phase = Phase.End;
+            }
         }
 
         if (SoulWalk.phase == Phase.Start)
