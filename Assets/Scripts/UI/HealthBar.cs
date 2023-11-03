@@ -6,7 +6,7 @@ using UltimateCC;
 public class HealthBar : ProgressBar
 {
 	public PlayerMain player;
-	private void Start() {
+	private void Awake() {
 		player = PlayerMain.Instance;
 		SetMaxValue(player.PlayerData.healthSystem.MaxHealth);
 		SetValue(player.PlayerData.healthSystem.CurrentHealth);
