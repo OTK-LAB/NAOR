@@ -16,7 +16,7 @@ public class BombScript : MonoBehaviour
     private void Awake()
     {
         Vector3 directionVector;
-        if (GameObject.Find("NewPlayer").transform.localScale.x > 0)
+        if (GameObject.Find("Player").transform.localScale.x > 0)
         {
             directionVector = transform.right + Vector3.up * 2 / 3;
             
