@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2065682504560963370}
   - component: {fileID: 4300143273492797638}
+  - component: {fileID: 750587560}
   m_Layer: 0
   m_Name: Basic2
   m_TagString: Untagged
@@ -39,10 +40,10 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1394195674639473877}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -59,9 +60,21 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.10451245, y: 1.6793325}
       - {x: 0.14632672, y: -0.94513535}
-      - {x: 4.324311, y: -0.99191415}
-      - {x: 3.7231655, y: 1.046083}
-      - {x: 1.787158, y: 1.9550922}
+      - {x: 4.602554, y: -0.99191415}
+      - {x: 4.148713, y: 1.3243256}
+      - {x: 2.1636038, y: 2.642515}
+--- !u!114 &750587560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394195674639473877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1626911941956402332
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4219498741992440899}
   - component: {fileID: 6273336274137746500}
+  - component: {fileID: 1669818811}
   m_Layer: 0
   m_Name: Basic1
   m_TagString: Untagged
@@ -137,10 +151,10 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2044937968863593661}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -160,6 +174,18 @@ PolygonCollider2D:
       - {x: 4.324311, y: -0.99191415}
       - {x: 3.7231655, y: 1.046083}
       - {x: 1.787158, y: 1.9550922}
+--- !u!114 &1669818811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044937968863593661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2776361869097782017
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,6 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2498705126956435990}
   - component: {fileID: 432534856221847296}
+  - component: {fileID: 1220183770}
   m_Layer: 0
   m_Name: Basic3
   m_TagString: Untagged
@@ -199,10 +226,10 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2776361869097782017}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -219,9 +246,21 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.10451245, y: 1.6793325}
       - {x: 0.14632672, y: -0.94513535}
-      - {x: 4.324311, y: -0.99191415}
-      - {x: 3.7231655, y: 1.046083}
-      - {x: 1.787158, y: 1.9550922}
+      - {x: 3.80056, y: -0.07534969}
+      - {x: 3.7395325, y: 0.6205349}
+      - {x: 1.476181, y: 1.3495054}
+--- !u!114 &1220183770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2776361869097782017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4305966854962295623
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5515683423805162395}
   - component: {fileID: 1642488432582581424}
+  - component: {fileID: 546172688}
   m_Layer: 0
   m_Name: Plunge
   m_TagString: Untagged
@@ -261,10 +301,10 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4305966854962295623}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -287,6 +327,18 @@ PolygonCollider2D:
       - {x: 1.8419373, y: -1.514477}
       - {x: 3.0990984, y: -0.9087229}
       - {x: 2.8322845, y: 0.3612737}
+--- !u!114 &546172688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305966854962295623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5902648875053040768
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,12 +500,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6b998c27e145394681709518387b450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  savePlayerData: 0
+  loadPlayerData: 0
   CurrentState: 0
-  playerHealthSystem:
-    currentHealth: 0
-    maxHealth: 0
-    damageMultiplier: 0
   PlayerData:
+    healthSystem:
+      currentHealth: 1000
+      maxHealth: 1000
+      damageMultiplier: 1
     Physics:
       groundLayerMask:
         serializedVersion: 2
@@ -493,7 +547,7 @@ MonoBehaviour:
       canWallJump: 0
       collidedMovingRigidbody: {fileID: 0}
       localVelocity: {x: 0, y: 0}
-      useCustomZRotations: 1
+      useCustomZRotations: 0
       Slope:
         maxSlopeAngle: 59
         currentSlopeAngle: 0
@@ -1063,14 +1117,19 @@ MonoBehaviour:
       AttackColliders:
       - collider: {fileID: 6273336274137746500}
         type: 0
+        damage: 20
       - collider: {fileID: 4300143273492797638}
         type: 1
+        damage: 25
       - collider: {fileID: 432534856221847296}
         type: 2
+        damage: 25
       - collider: {fileID: 2882353074547578359}
         type: 3
+        damage: 75
       - collider: {fileID: 1642488432582581424}
         type: 4
+        damage: 75
       BasicAttack1:
         attackDuration: 0.3
         maxStateTime: 1
@@ -1514,8 +1573,6 @@ MonoBehaviour:
   maxMana: 100
   currentSoul: 25
   maxSoul: 50
-  manaBar: {fileID: 0}
-  soulBar: {fileID: 0}
   smoothing: 5
 --- !u!114 &6991794146673489783
 MonoBehaviour:
@@ -1544,6 +1601,7 @@ MonoBehaviour:
     IsInvisible: 0
     walkMultiplier: 1
     phase: 0
+    manaSoulSystem: {fileID: 0}
 --- !u!1 &6656173122321637891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1554,6 +1612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2542752631861733166}
   - component: {fileID: 2882353074547578359}
+  - component: {fileID: 921132910}
   m_Layer: 0
   m_Name: Heavy
   m_TagString: Untagged
@@ -1583,10 +1642,10 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6656173122321637891}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1606,3 +1665,15 @@ PolygonCollider2D:
       - {x: 4.324311, y: -0.99191415}
       - {x: 3.7231655, y: 1.046083}
       - {x: 1.787158, y: 1.9550922}
+--- !u!114 &921132910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656173122321637891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
