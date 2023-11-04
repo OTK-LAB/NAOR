@@ -22,8 +22,6 @@ public class ManaSoulSystem : MonoBehaviour
     public static event ValueHandler OnMaxManaChanged;
     public static event ValueHandler OnSoulChanged;
     public static event ValueHandler OnMaxSoulChanged;
-    public ProgressBar manaBar;
-    public ProgressBar soulBar;
 
     private PlayerMain player;
 
@@ -68,7 +66,7 @@ public class ManaSoulSystem : MonoBehaviour
                 manaAmount -= currentMana;
                 currentMana = 0;
                 currentSoul -= manaAmount;
-               // soulBar.SetValue(currentSoul);
+                OnSoulChanged?.Invoke(currentSoul);
             }
         }
         else
@@ -111,7 +109,7 @@ public class ManaSoulSystem : MonoBehaviour
         smoothing = 5;
         if (currentSoul >= healAmount)
         {
-            player.playerHealthSystem.Heal(healAmount);
+            player.PlayerData.healthSystem.Heal(healAmount);
             UseSoul(healAmount);
         }
     }

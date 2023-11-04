@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UltimateCC;
 
 public class ExplosionScript : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class ExplosionScript : MonoBehaviour
         else if(col.gameObject.layer == LayerMask.NameToLayer("Player") && !damaged2)
         {
             Debug.Log("playerBoom");
-            col.gameObject.GetComponent<HealthSystem>().Damage(explosionDamage);
+            PlayerMain.Instance.PlayerData.healthSystem.Damage(explosionDamage);
             damaged2 = true;
         }
         

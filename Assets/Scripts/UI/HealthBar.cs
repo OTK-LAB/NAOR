@@ -5,12 +5,11 @@ using UltimateCC;
 
 public class HealthBar : ProgressBar
 {
-	public PlayerMain player;
-	private void Awake() {
-		player = PlayerMain.Instance;
-		SetMaxValue(player.playerHealthSystem.MaxHealth);
-		SetValue(player.playerHealthSystem.CurrentHealth);
-		player.playerHealthSystem.OnMaxHealthChanged += SetMaxValue;
-		player.playerHealthSystem.OnHealthChanged += SetValue;
+	private void Start() 
+	{
+		SetMaxValue(PlayerMain.Instance.PlayerData.healthSystem.MaxHealth);
+		SetValue(PlayerMain.Instance.PlayerData.healthSystem.CurrentHealth);
+		PlayerMain.Instance.PlayerData.healthSystem.OnMaxHealthChanged += SetMaxValue;
+		PlayerMain.Instance.PlayerData.healthSystem.OnHealthChanged += SetValue;
 	}
 }

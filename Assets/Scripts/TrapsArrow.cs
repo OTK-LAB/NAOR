@@ -33,7 +33,7 @@ public class TrapsArrow : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
-            player.GetComponent<HealthSystem>().Damage(ArrowDamage);
+           // player.GetComponent<HealthSystem>().Damage(ArrowDamage);
         }
         if (collision.gameObject.layer == 6)
         {

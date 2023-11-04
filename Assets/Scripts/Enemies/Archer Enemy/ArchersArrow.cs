@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UltimateCC;
 
 public class ArchersArrow : MonoBehaviour
 {
@@ -25,11 +26,14 @@ public class ArchersArrow : MonoBehaviour
     private float damageRadius;
     [SerializeField]
     private Transform damagePosition;
+
+    private HealthSystem playerHealthSystem;
+
     void Start()
     {
-        Debug.Log("oluþtum");
         player = GameObject.FindGameObjectWithTag("Player");
         PlayerPosition = player.transform;
+        playerHealthSystem = PlayerMain.Instance.PlayerData.healthSystem;
         target = new Vector2(PlayerPosition.position.x - transform.position.x, PlayerPosition.position.y - transform.position.y);
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(target * archer.GetComponent<Archer>().LaunchForce);
@@ -61,7 +65,8 @@ public class ArchersArrow : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
-            player.GetComponent<HealthSystem>().Damage(ArrowDamage);
+            playerHealthSystem.Damage(ArrowDamage);
+            //player.GetComponent<HealthSystem>().Damage(ArrowDamage);
         }
         if (collision.gameObject.layer == 6)
         {

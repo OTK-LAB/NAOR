@@ -19,11 +19,16 @@ public class BombScript : MonoBehaviour
         if (GameObject.Find("NewPlayer").transform.localScale.x > 0)
         {
             directionVector = transform.right + Vector3.up * 2 / 3;
+            
         }
         else
         {
             directionVector = -transform.right + Vector3.up * 2 / 3;
-            transform.Translate(-2, 0, 0);
+            
+            //transform.Translate(-2, 0, 0);
+            Quaternion target = Quaternion.Euler(0, -180, 0);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target, 1);
+
         }
 
         gameObject.GetComponent<Rigidbody2D>().AddForce(directionVector * speed , ForceMode2D.Impulse);

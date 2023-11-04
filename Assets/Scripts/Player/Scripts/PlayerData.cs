@@ -502,6 +502,8 @@ namespace UltimateCC
         #endregion
 
         [Space(7)]
+
+        public HealthSystem healthSystem;
         public PhysicsVariables Physics;
         public WalkVariables Walk;
         public CrouchVariables Crouch;
