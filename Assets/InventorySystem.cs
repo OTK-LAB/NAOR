@@ -221,7 +221,6 @@ public class InventorySystem : MonoBehaviour
     public void ManaBoost(Item _selectedItem)
     {
         ManaSoulSystem.maxMana+=_selectedItem.value;
-        ManaSoulSystem.manaBar.SetMaxValue(ManaSoulSystem.maxMana);
     }
     public void AbilityPowerBoost(Item _selectedItem)
     {
