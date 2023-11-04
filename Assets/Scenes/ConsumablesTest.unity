@@ -7301,7 +7301,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 939756894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129149fd9fcb0a64ea50bc328e9cd485, type: 3}
+  m_Script: {fileID: 11500000, guid: c1d29326f2cc3f541a19b1b734b72408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 939756896}
@@ -9932,7 +9932,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1327499559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129149fd9fcb0a64ea50bc328e9cd485, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e4458593ceef184283a5e9b19c5d739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1327499561}
@@ -16521,7 +16521,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1984868699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129149fd9fcb0a64ea50bc328e9cd485, type: 3}
+  m_Script: {fileID: 11500000, guid: c82816ad742903b49bfdf55b9d5c1f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1984868701}
@@ -18099,15 +18099,15 @@ PrefabInstance:
     - target: {fileID: 1818349271552359819, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 1327499562}
+      objectReference: {fileID: 0}
     - target: {fileID: 3095573983912218728, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
       propertyPath: manaBar
       value: 
-      objectReference: {fileID: 1984868702}
+      objectReference: {fileID: 0}
     - target: {fileID: 3095573983912218728, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
       propertyPath: soulBar
       value: 
-      objectReference: {fileID: 939756897}
+      objectReference: {fileID: 0}
     - target: {fileID: 6595321236109471876, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -18151,6 +18151,18 @@ PrefabInstance:
     - target: {fileID: 6595321236109471876, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595321236109471880, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
+      propertyPath: PlayerData.healthSystem.maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595321236109471880, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
+      propertyPath: PlayerData.healthSystem.currentHealth
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6595321236109471880, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
+      propertyPath: PlayerData.healthSystem.damageMultiplier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6595321236109471886, guid: 6e443cab8c41be24b93d5df052df8971, type: 3}
       propertyPath: m_Name

@@ -6,9 +6,9 @@ using UnityEngine;
 public class HealthSystem
 {
     private bool invincible = false;
-    [SerializeField] private float currentHealth;
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float damageMultiplier;
+    [SerializeField] private float currentHealth = 1000;
+    [SerializeField] private float maxHealth = 1000;
+    [SerializeField] private float damageMultiplier = 1;
     //float smoothing = 5;
 
     public delegate void HealthHandler(float amount);
@@ -26,7 +26,7 @@ public class HealthSystem
         set
         {
             currentHealth = value;
-            OnHealthChanged(value);
+            OnHealthChanged?.Invoke(value);
         }
     }
     public float MaxHealth
@@ -38,7 +38,7 @@ public class HealthSystem
         set
         {
             maxHealth = value;
-            OnMaxHealthChanged(value);
+            OnMaxHealthChanged?.Invoke(value);
         }
     }
 
@@ -52,9 +52,9 @@ public class HealthSystem
             if (currentHealth <= 0 )
             {
                 currentHealth = 0;
-                OnDied();
+                OnDied?.Invoke();
             }
-            OnHealthChanged(currentHealth);
+            OnHealthChanged?.Invoke(currentHealth);
         }
         //healthBar.SetValue(currentHealth);
     }
@@ -67,7 +67,7 @@ public class HealthSystem
         {
             currentHealth = maxHealth;
         }
-        OnHealthChanged(currentHealth);
+        OnHealthChanged?.Invoke(currentHealth);
         //healthBar.SetValue(currentHealth);
     }
 }
