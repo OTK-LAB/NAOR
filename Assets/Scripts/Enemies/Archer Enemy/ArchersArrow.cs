@@ -33,7 +33,7 @@ public class ArchersArrow : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         PlayerPosition = player.transform;
-        playerHealthSystem = PlayerMain.Instance.playerHealthSystem;
+        playerHealthSystem = PlayerMain.Instance.PlayerData.healthSystem;
         target = new Vector2(PlayerPosition.position.x - transform.position.x, PlayerPosition.position.y - transform.position.y);
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(target * archer.GetComponent<Archer>().LaunchForce);
