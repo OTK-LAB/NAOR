@@ -237,7 +237,7 @@ public class Boss1Manager : MonoBehaviour
                         StartCoroutine(Jump());
                         jumpSkillTime = setjumpSkillTime;
                     }
-                    else if (distance > meleerange && !InAnimation)
+                    else if (distance > (meleerange + 5f) && !InAnimation)
                     {
                         if (!InAnimation && (chargeSkillTime <= 0))
                         {
