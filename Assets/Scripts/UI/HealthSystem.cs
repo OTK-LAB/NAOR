@@ -48,7 +48,7 @@ public class HealthSystem
     {
         if (!invincible)
         {
-            currentHealth -= damageAmount * damageMultiplier;
+            CurrentHealth -= damageAmount * damageMultiplier;
             if (currentHealth <= 0 )
             {
                 currentHealth = 0;
