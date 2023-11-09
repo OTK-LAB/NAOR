@@ -24,7 +24,7 @@ public class InventorySystem : MonoBehaviour
     public bool throwableInteracted;
     public GameObject bomb;
     public GameObject slowBomb;
-    public GameObject windBomb;
+    public GameObject dagger;
     public Item equipedItem;
     public Item selectedItem;
     public Item shopSelectedItem;
@@ -147,7 +147,7 @@ public class InventorySystem : MonoBehaviour
             case 7:
                 return SlowBomb(_equipedItem);
             case 8:
-                return WindBomb(_equipedItem);
+                return Dagger(_equipedItem);
 
             default: break;
         }
@@ -158,9 +158,9 @@ public class InventorySystem : MonoBehaviour
 
     public bool Apple(Item _equipedItem)
     {
-        if (PlayerMain.Instance.playerHealthSystem.CurrentHealth < PlayerMain.Instance.playerHealthSystem.MaxHealth)
+        if (PlayerMain.Instance.PlayerData.healthSystem.CurrentHealth < PlayerMain.Instance.PlayerData.healthSystem.MaxHealth)
         {
-            PlayerMain.Instance.playerHealthSystem.Heal(_equipedItem.value);
+            PlayerMain.Instance.PlayerData.healthSystem.Heal(_equipedItem.value);
             return true;
         }
         return false;
@@ -208,20 +208,19 @@ public class InventorySystem : MonoBehaviour
         Instantiate(slowBomb, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
         return true;
     }
-    public bool WindBomb(Item _selectedItem)
+    public bool Dagger(Item _selectedItem)
     {
-        Instantiate(windBomb, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
+        Instantiate(dagger, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
         return true;
     }
 
     public void HpBoost(Item _selectedItem)
     {
-        //HealthSystem.MaxHealth+=_selectedItem.value;
+        //PlayerMain.Instance.playerHealthSystem.MaxHealth+=_selectedItem.value;
     }
     public void ManaBoost(Item _selectedItem)
     {
         ManaSoulSystem.maxMana+=_selectedItem.value;
-        ManaSoulSystem.manaBar.SetMaxValue(ManaSoulSystem.maxMana);
     }
     public void AbilityPowerBoost(Item _selectedItem)
     {

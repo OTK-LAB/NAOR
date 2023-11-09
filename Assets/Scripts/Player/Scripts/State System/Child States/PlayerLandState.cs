@@ -103,6 +103,10 @@ namespace UltimateCC
             {
                 stateMachine.ChangeState(player.SwingState);
             }
+            else if (playerData.Physics.CanGlideByHeight && inputManager.Input_Jump && playerData.Glide.GlideBufferTimer > 0f)
+            {
+                stateMachine.ChangeState(player.GlideState);
+            }
         }
 
         public void Move2D()

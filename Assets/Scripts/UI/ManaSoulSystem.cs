@@ -22,8 +22,6 @@ public class ManaSoulSystem : MonoBehaviour
     public static event ValueHandler OnMaxManaChanged;
     public static event ValueHandler OnSoulChanged;
     public static event ValueHandler OnMaxSoulChanged;
-    public ProgressBar manaBar;
-    public ProgressBar soulBar;
 
     private PlayerMain player;
 
@@ -34,12 +32,12 @@ public class ManaSoulSystem : MonoBehaviour
     void Start()
     { 
         player = PlayerMain.Instance;
-        OnMaxManaChanged(maxMana);
-        OnManaChanged(maxMana);
+        OnMaxManaChanged?.Invoke(maxMana);
+        OnManaChanged?.Invoke(maxMana);
 
         currentSoul = 0;
-        OnMaxSoulChanged(maxSoul);
-        OnSoulChanged(currentSoul);
+        OnMaxSoulChanged?.Invoke(maxSoul);
+        OnSoulChanged?.Invoke(currentSoul);
     }
 
     void Update()
@@ -68,13 +66,13 @@ public class ManaSoulSystem : MonoBehaviour
                 manaAmount -= currentMana;
                 currentMana = 0;
                 currentSoul -= manaAmount;
-               // soulBar.SetValue(currentSoul);
+                OnSoulChanged?.Invoke(currentSoul);
             }
         }
         else
             currentMana -= manaAmount;
         //manaBar.SetValue(currentMana);
-        OnManaChanged(currentMana);
+        OnManaChanged?.Invoke(currentMana);
     }
 
     public void AddMana(float manaAmount)
@@ -84,7 +82,7 @@ public class ManaSoulSystem : MonoBehaviour
         if (currentMana > maxMana)
             currentMana = maxMana;
         //manaBar.SetValue(currentMana);
-        OnManaChanged(currentMana);
+        OnManaChanged?.Invoke(currentMana);
     }
 
     public void AddSoul (float soulAmount)
@@ -94,7 +92,7 @@ public class ManaSoulSystem : MonoBehaviour
         if (currentSoul > maxSoul)
             currentSoul = maxSoul;
         //soulBar.SetValue(currentSoul);
-        OnSoulChanged(currentSoul);
+        OnSoulChanged?.Invoke(currentSoul);
     }
 
     public void UseSoul (float soulAmount)
@@ -103,7 +101,7 @@ public class ManaSoulSystem : MonoBehaviour
         if (soulAmount <= currentSoul)
             currentSoul -= soulAmount;
        // soulBar.SetValue(currentSoul);
-        OnSoulChanged(currentSoul);  
+        OnSoulChanged?.Invoke(currentSoul);  
     }
 
     public void HealWithSoul(float healAmount)
@@ -111,7 +109,7 @@ public class ManaSoulSystem : MonoBehaviour
         smoothing = 5;
         if (currentSoul >= healAmount)
         {
-            player.playerHealthSystem.Heal(healAmount);
+            player.PlayerData.healthSystem.Heal(healAmount);
             UseSoul(healAmount);
         }
     }
