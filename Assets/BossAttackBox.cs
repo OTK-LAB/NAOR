@@ -30,12 +30,12 @@ public class BossAttackBox : MonoBehaviour
         {
             if (!boss.inSkillUse)
             {
-                PlayerMain.Instance.playerHealthSystem.Damage(200);
+                PlayerMain.Instance.PlayerData.healthSystem.Damage(200);
                 Debug.Log("200 damage");
             }
             else if (boss.charging)
             {
-                PlayerMain.Instance.playerHealthSystem.Damage(300);
+                PlayerMain.Instance.PlayerData.healthSystem.Damage(300);
                 Debug.Log("300 damage");
             }
         }

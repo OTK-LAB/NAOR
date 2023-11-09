@@ -188,8 +188,8 @@ public class Boss1Manager : MonoBehaviour
 
                 if (charging)
                 {
-                    float testingIfDamaged = PlayerMain.Instance.playerHealthSystem.CurrentHealth;
-                    if (testingIfDamaged > PlayerMain.Instance.playerHealthSystem.CurrentHealth)
+                    float testingIfDamaged = PlayerMain.Instance.PlayerData.healthSystem.CurrentHealth;
+                    if (testingIfDamaged > PlayerMain.Instance.PlayerData.healthSystem.CurrentHealth)
                     {
                         anim.Play("flex");
                         bossAttackBox.GetComponent<Animator>().Play("flex");
@@ -208,7 +208,7 @@ public class Boss1Manager : MonoBehaviour
                     float distance = Vector2.Distance(Player.transform.position, transform.position);
 
 
-                    /*if (PlayerMain.Instance.playerHealthSystem.CurrentHealth <= 0)         // for short Boss will be in a special scene so if player dies they restart the battle(SCENE)
+                    /*if (PlayerMain.Instance.PlayerData.healthSystem.CurrentHealth <= 0)         // for short Boss will be in a special scene so if player dies they restart the battle(SCENE)
                         anim.Play("flex");                                              // so no need to restart boss's AI              
                     else */
                     if (distance < meleerange)

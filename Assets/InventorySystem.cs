@@ -216,7 +216,7 @@ public class InventorySystem : MonoBehaviour
 
     public void HpBoost(Item _selectedItem)
     {
-        //PlayerMain.Instance.playerHealthSystem.MaxHealth+=_selectedItem.value;
+        //PlayerMain.Instance.PlayerData.healthSystem.MaxHealth+=_selectedItem.value;
     }
     public void ManaBoost(Item _selectedItem)
     {

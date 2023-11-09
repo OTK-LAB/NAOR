@@ -66,7 +66,7 @@ public class BossThrowableObject : MonoBehaviour
 
         if (collision.tag == "player")
         {
-            PlayerMain.Instance.playerHealthSystem.Damage(damage);
+            PlayerMain.Instance.PlayerData.healthSystem.Damage(damage);
             Hit();
         }
     }
