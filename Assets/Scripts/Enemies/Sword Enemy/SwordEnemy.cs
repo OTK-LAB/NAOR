@@ -67,6 +67,7 @@ public class SwordEnemy : MonoBehaviour
 
     bool IsDead = false;
     bool isHit = false;
+    bool isFrozen = false;
     float verticalTolerance = 0.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
     float timer;
     //Hit
@@ -85,6 +86,7 @@ public class SwordEnemy : MonoBehaviour
         animator = GetComponent<Animator>();
         _healthSystem.OnHit += OnHit;
         _healthSystem.OnDead += OnDead;
+        _healthSystem.OnFreeze += OnFreeze;
 
     }
     void Start()
@@ -131,7 +133,7 @@ public class SwordEnemy : MonoBehaviour
             case State.STATE_FROZEN:
                 ChangeAnimationState(idle);
                 rb.velocity = Vector2.zero;
-                coolDown(5);
+                FreezeCoolDown(5);
                 break;
             case State.STATE_BACKTOWALL:
                 ChangeAnimationState(startingmove);
@@ -164,6 +166,7 @@ public class SwordEnemy : MonoBehaviour
             rb.MovePosition(rb.position + knockbackVector * knockbackDistance);
 
             ChangeAnimationState(hit);
+            isFrozen= false;
             isHit = false;
             attackable = true;
         }
@@ -257,6 +260,7 @@ public class SwordEnemy : MonoBehaviour
     }
     public void setFrozenState()
     {
+        isFrozen = true;
         state = State.STATE_FROZEN;
     }
     IEnumerator backtoCoolDown()
@@ -276,6 +280,17 @@ public class SwordEnemy : MonoBehaviour
         {
             attackable = true;
             timer = 0;
+            checkPlayer();
+        }
+    }
+    public void FreezeCoolDown(float i)
+    {
+        timer += Time.deltaTime;
+        if (timer >= i)
+        {
+            attackable = true;
+            timer = 0;
+            isFrozen = false;
             checkPlayer();
         }
     }
@@ -304,6 +319,13 @@ public class SwordEnemy : MonoBehaviour
         {
             state = State.STATE_HIT;
             isHit = true;
+        }
+    }
+    void OnFreeze(object sender, EventArgs e)
+    {
+        if (isFrozen)
+        {
+            gameObject.GetComponent<EnemyHealthSystem>().onFreeze = true;
         }
     }
     void OnDead(object sender, EventArgs e)

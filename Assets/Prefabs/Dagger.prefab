@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fbc149e4203b1c94bba0b4e9d376e32f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6b8aecddfea4afb45a2dcf9c220327f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 22.000002, y: 31.11602}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -126,7 +126,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 22.000002, y: 31.11602}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 22.000002, y: 31.11602}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -146,5 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2c6cea1d2ff544eb1b45f024ed9055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 5902648875053040768, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
   item: {fileID: 11400000, guid: 3a64ec572e34cfd4cb7798783e719f90, type: 2}
   speed: 15
+  iceDagger: 0
+  deathTime: 1
+  daggerDamage: 70

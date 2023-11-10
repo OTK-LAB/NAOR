@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5902648875053040774}
   - component: {fileID: 5902648875053040769}
   - component: {fileID: 2348788264557028454}
+  - component: {fileID: 983960878}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -76,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1289085443
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 56a05a79fe6384e4387d617192a5b93b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -159,12 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6b998c27e145394681709518387b450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  savePlayerData: 0
+  loadPlayerData: 0
   CurrentState: 0
-  playerHealthSystem:
-    currentHealth: 50
-    maxHealth: 100
-    damageMultiplier: 1
   PlayerData:
+    healthSystem:
+      currentHealth: 1000
+      maxHealth: 1000
+      damageMultiplier: 1
     Physics:
       groundLayerMask:
         serializedVersion: 2
@@ -1203,6 +1206,32 @@ MonoBehaviour:
   maxMana: 100
   currentSoul: 25
   maxSoul: 50
-  manaBar: {fileID: 0}
-  soulBar: {fileID: 0}
   smoothing: 5
+--- !u!114 &983960878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5902648875053040768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22ed2164ca580ef438ff662c55e9c14a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ManaSoulSystem: {fileID: 2348788264557028454}
+  playerInventory: {fileID: 11400000, guid: 549c465d42643b8459d07bd89cc277bd, type: 2}
+  shopInventory: {fileID: 11400000, guid: 26afafaa8aa7ebf4bb2cf028f166ab39, type: 2}
+  PlayerInventoryManager: {fileID: 0}
+  ShopInventoryManager: {fileID: 0}
+  player: {fileID: 5902648875053040774}
+  Currency: {fileID: 0}
+  consumableInteracted: 0
+  throwableInteracted: 0
+  bomb: {fileID: 5494546934422563349, guid: 0f4992b869febab46856b081a7f5f640, type: 3}
+  slowBomb: {fileID: 5136174290463882020, guid: 5a995954aa12b364187e56532edf59c1, type: 3}
+  dagger: {fileID: 3380722144906280335, guid: 6bf40ce627f44bd479cd6ea98fb55bdf, type: 3}
+  iceDagger: {fileID: 31772485594993301, guid: e9d9539d105c14344b5363169362acde, type: 3}
+  equipedItem: {fileID: 0}
+  selectedItem: {fileID: 0}
+  shopSelectedItem: {fileID: 0}

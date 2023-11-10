@@ -6,11 +6,13 @@ using UnityEngine;
 
 public class DaggerScript : MonoBehaviour
 {
-    public bool Destroyed = false;
     public Item item;
     public float speed;
-    
-    private float daggerDamage;
+    public bool iceDagger;
+
+    public float deathTime =1;
+    public float daggerDamage;
+    private bool Destroyed = false;
 
 
     private void Awake()
@@ -19,7 +21,7 @@ public class DaggerScript : MonoBehaviour
 
 
         Vector3 directionVector;
-        if (GameObject.Find("NewPlayer").transform.localScale.x > 0)
+        if (GameObject.Find("Player").transform.localScale.x > 0)
         {
             directionVector = transform.right ;
             transform.Translate(2, 0, 0);
@@ -47,6 +49,11 @@ public class DaggerScript : MonoBehaviour
 
     void Update()
     {
+        deathTime -= Time.deltaTime;
+        if (deathTime <= 0)
+        {
+            Destroyed= true;
+        }
         if (Destroyed)
         {
             Destroy(gameObject);
@@ -57,9 +64,17 @@ public class DaggerScript : MonoBehaviour
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            Debug.Log("enemyBoom");
-            col.gameObject.GetComponent<EnemyHealthSystem>().Damage(daggerDamage);
-            Destroyed=true;
+            if (iceDagger)
+            {
+                col.GetComponent<EnemyController>().frozenState(col);
+                Destroyed = true;
+            }
+            else
+            {
+                Debug.Log("enemyBoom");
+                col.gameObject.GetComponent<EnemyHealthSystem>().Damage(daggerDamage);
+                Destroyed = true;
+            }
         }
     }
 }

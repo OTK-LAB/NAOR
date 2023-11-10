@@ -14,8 +14,10 @@ public class EnemyHealthSystem : MonoBehaviour
     public event EventHandler OnHit;
     public event EventHandler OnShield;
     public event EventHandler OnDead;
+    public event EventHandler OnFreeze;
     float newDamageAmount;
     [HideInInspector] public bool onShield = false;
+    [HideInInspector] public bool onFreeze = false;
     public float shieldProtection;
 
     public bool Invincible { set { invincible = value; } }
@@ -40,12 +42,16 @@ public class EnemyHealthSystem : MonoBehaviour
                 OnShield?.Invoke(this, EventArgs.Empty);
                 if(onShield)
                 {
-                    damageAmount = 100; // silinebilir
+                   // damageAmount = 100; // silinebilir
                     damageAmount = damageAmount - shieldProtection;
                 }
             }
-
+           
+            OnFreeze?.Invoke(this, EventArgs.Empty);
+            if(onFreeze) { damageAmount += 15; }
+           
             currentHealth -= damageAmount;
+            
             if (!onShield)
                 OnHit?.Invoke(this, EventArgs.Empty);
   
@@ -55,6 +61,7 @@ public class EnemyHealthSystem : MonoBehaviour
                 OnDead?.Invoke(this, EventArgs.Empty);
             }
             onShield = false;
+            onFreeze= false;
         }
     }
 

@@ -10,16 +10,15 @@ public class BombScript : MonoBehaviour
     public Vector3 LaunchOffset;
     public GameObject Explosion;
 
-
+    private float timer = 2;
     
 
     private void Awake()
     {
         Vector3 directionVector;
-        if (GameObject.Find("NewPlayer").transform.localScale.x > 0)
+        if (GameObject.Find("Player").transform.localScale.x > 0)
         {
             directionVector = transform.right + Vector3.up * 2 / 3;
-            
         }
         else
         {
@@ -42,6 +41,11 @@ public class BombScript : MonoBehaviour
 
     void Update()
     {
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D col)

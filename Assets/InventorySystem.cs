@@ -25,6 +25,7 @@ public class InventorySystem : MonoBehaviour
     public GameObject bomb;
     public GameObject slowBomb;
     public GameObject dagger;
+    public GameObject iceDagger;
     public Item equipedItem;
     public Item selectedItem;
     public Item shopSelectedItem;
@@ -148,6 +149,8 @@ public class InventorySystem : MonoBehaviour
                 return SlowBomb(_equipedItem);
             case 8:
                 return Dagger(_equipedItem);
+            case 9:
+                return IceDagger(_equipedItem);
 
             default: break;
         }
@@ -211,6 +214,11 @@ public class InventorySystem : MonoBehaviour
     public bool Dagger(Item _selectedItem)
     {
         Instantiate(dagger, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
+        return true;
+    }
+    public bool IceDagger(Item _selectedItem)
+    {
+        Instantiate(iceDagger, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
         return true;
     }
 

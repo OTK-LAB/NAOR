@@ -160,12 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6b998c27e145394681709518387b450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  savePlayerData: 0
+  loadPlayerData: 0
   CurrentState: 0
-  playerHealthSystem:
-    currentHealth: 0
-    maxHealth: 0
-    damageMultiplier: 0
   PlayerData:
+    healthSystem:
+      currentHealth: 1000
+      maxHealth: 1000
+      damageMultiplier: 1
     Physics:
       groundLayerMask:
         serializedVersion: 2
@@ -1204,8 +1206,6 @@ MonoBehaviour:
   maxMana: 100
   currentSoul: 25
   maxSoul: 50
-  manaBar: {fileID: 0}
-  soulBar: {fileID: 0}
   smoothing: 5
 --- !u!114 &751294474781985839
 MonoBehaviour:
@@ -1230,7 +1230,8 @@ MonoBehaviour:
   throwableInteracted: 0
   bomb: {fileID: 5494546934422563349, guid: 0f4992b869febab46856b081a7f5f640, type: 3}
   slowBomb: {fileID: 5136174290463882020, guid: 5a995954aa12b364187e56532edf59c1, type: 3}
-  dagger: {fileID: 0}
+  dagger: {fileID: 3380722144906280335, guid: 6bf40ce627f44bd479cd6ea98fb55bdf, type: 3}
+  iceDagger: {fileID: 31772485594993301, guid: e9d9539d105c14344b5363169362acde, type: 3}
   equipedItem: {fileID: 0}
   selectedItem: {fileID: 0}
   shopSelectedItem: {fileID: 0}
