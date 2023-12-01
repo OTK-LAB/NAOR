@@ -176,6 +176,11 @@ public class ShieldEnemy : MonoBehaviour
         else
             state = State.STATE_BACKTOWALL;
     }
+    public void setState()
+    {
+        state = State.STATE_STARTINGMOVE;
+    }
+
     void following()
     {
         flip();
@@ -242,7 +247,7 @@ public class ShieldEnemy : MonoBehaviour
             else
                 rb.MovePosition((Vector2)rb.position - (temp * moveSpeed * Time.deltaTime));
             */
-            knockbackDistance = -2f;
+            knockbackDistance = -0.5f;
             Vector2 knockbackVector = Moveright ? Vector2.right : Vector2.left;
             rb.MovePosition(rb.position + knockbackVector * knockbackDistance);
 

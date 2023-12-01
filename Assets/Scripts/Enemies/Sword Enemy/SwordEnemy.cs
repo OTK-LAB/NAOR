@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Rendering;
 
 public class SwordEnemy : MonoBehaviour
 {
@@ -78,7 +79,7 @@ public class SwordEnemy : MonoBehaviour
 
     public GameObject soul;
     private bool hasTurned = false;
-
+    bool check;
     void Awake()
     {
         _healthSystem = GetComponent<EnemyHealthSystem>();
@@ -152,14 +153,7 @@ public class SwordEnemy : MonoBehaviour
     {
         if (isHit)
         {
-            /*
-            temp = new Vector2((rb.position.x + 2), rb.position.y);
-            if (Moveright)
-                rb.MovePosition((Vector2)rb.position + (temp * moveSpeed * Time.deltaTime));
-            else
-                rb.MovePosition((Vector2)rb.position - (temp * moveSpeed * Time.deltaTime));
-            */
-            knockbackDistance = -2f;
+            knockbackDistance = -0.5f;
             Vector2 knockbackVector = Moveright ? Vector2.right : Vector2.left;
             rb.MovePosition(rb.position + knockbackVector * knockbackDistance);
 
@@ -168,7 +162,10 @@ public class SwordEnemy : MonoBehaviour
             attackable = true;
         }
     }
-
+    public void setState()
+    {
+        state = State.STATE_STARTINGMOVE;
+    }
 
     void checkPlayer()
     {
@@ -188,7 +185,10 @@ public class SwordEnemy : MonoBehaviour
         else if (isBetweenWalls)
             state = State.STATE_STARTINGMOVE;
            else
+           {
             state = State.STATE_BACKTOWALL;
+           }
+            
     }
     void following()
     {
@@ -269,15 +269,24 @@ public class SwordEnemy : MonoBehaviour
         else
             state = State.STATE_HIT;
     }
-    void coolDown(int i)
+
+    void coolDown(float i)
+    {
+     
+        check = WaitForSeconds(i);
+        if(check)
+            checkPlayer();
+    }
+    private bool WaitForSeconds(float i)
     {
         timer += Time.deltaTime;
         if (timer >= i)
         {
             attackable = true;
             timer = 0;
-            checkPlayer();
+            return true;
         }
+        return false;
     }
 
     void ChangeAnimationState(string newState)
@@ -310,7 +319,7 @@ public class SwordEnemy : MonoBehaviour
     {
         if (!IsDead)
         {
-            StartCoroutine(SpawnSoul(0.8f));
+       //     StartCoroutine(SpawnSoul(0.8f)); ?????????????????
             IsDead = true;
             ChangeAnimationState(death);
             GetComponent<Collider2D>().enabled = false;
