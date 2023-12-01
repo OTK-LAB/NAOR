@@ -135,8 +135,10 @@ public class SwordEnemy : MonoBehaviour
                 coolDown(5);
                 break;
             case State.STATE_BACKTOWALL:
-                ChangeAnimationState(startingmove);
-                backtoWall();
+                if(check)
+                    backtoWall();
+                else
+                     lookhim();
                 break;
 
         }
@@ -183,13 +185,14 @@ public class SwordEnemy : MonoBehaviour
                 state = State.STATE_FOLLOWING;
         }
         else if (isBetweenWalls)
+        {
+            check = false;
             state = State.STATE_STARTINGMOVE;
-           else
-           {
+        }
+        else
             state = State.STATE_BACKTOWALL;
-           }
-            
     }
+
     void following()
     {
         flip();
@@ -198,9 +201,20 @@ public class SwordEnemy : MonoBehaviour
         Vector2 currentPlayerPos = new Vector2(playerPos.position.x, rb.position.y);
         rb.velocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
     }
+
+    void lookhim()
+    {
+        ChangeAnimationState(idle);
+        rb.velocity = Vector2.zero;
+        check = WaitForSeconds(1f);
+        if (check)
+            backtoWall();
+    }
     
     void backtoWall()
     {
+        Debug.Log("geldim");
+        ChangeAnimationState(startingmove);
         moveSpeed = firstmoveSpeed;
         Vector2 startDirection = startPoint - transform.position;
         if (!hasTurned && Vector3.Dot(startDirection, transform.right) < 0f)
@@ -276,6 +290,7 @@ public class SwordEnemy : MonoBehaviour
         check = WaitForSeconds(i);
         if(check)
             checkPlayer();
+        check = false;
     }
     private bool WaitForSeconds(float i)
     {
