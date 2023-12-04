@@ -65,6 +65,7 @@ public class ShieldEnemy : MonoBehaviour
     [SerializeField] public float attackRange;
     [SerializeField] public float damageamount;
     float timer;
+    public GameObject ice;
     bool IsDead = false;
     bool isHit = false;
     bool isFrozen = false;
@@ -380,6 +381,8 @@ public class ShieldEnemy : MonoBehaviour
         if (isFrozen)
         {
             gameObject.GetComponent<EnemyHealthSystem>().onFreeze = true;
+            Instantiate(ice);
+            ice.GetComponent<Animator>().enabled = true;
         }
     }
     void OnDead(object sender, EventArgs e)

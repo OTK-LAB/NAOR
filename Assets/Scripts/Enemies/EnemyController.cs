@@ -23,4 +23,13 @@ public class EnemyController : MonoBehaviour
         else if (enemy.GetComponent<Archer>() != null)
             enemy.GetComponent<Archer>().setFrozenState();
      }
+    public void breakFreeze(Collider2D enemy)
+    {
+        if (enemy.GetComponent<ShieldEnemy>() != null)
+            enemy.GetComponent<ShieldEnemy>().setFrozenState();
+        else if (enemy.GetComponent<SwordEnemy>() != null)
+            enemy.GetComponent<SwordEnemy>().setFrozenState();
+        else if (enemy.GetComponent<Archer>() != null)
+            enemy.GetComponent<Archer>().setFrozenState();
+     }
 }

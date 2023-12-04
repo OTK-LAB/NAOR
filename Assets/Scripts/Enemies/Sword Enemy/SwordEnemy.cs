@@ -65,6 +65,7 @@ public class SwordEnemy : MonoBehaviour
     [SerializeField] public float damageamount;
     bool attackable = true;
 
+    public GameObject ice;
     bool IsDead = false;
     bool isHit = false;
     bool isFrozen = false;
@@ -326,6 +327,7 @@ public class SwordEnemy : MonoBehaviour
         if (isFrozen)
         {
             gameObject.GetComponent<EnemyHealthSystem>().onFreeze = true;
+            Instantiate(ice);
         }
     }
     void OnDead(object sender, EventArgs e)

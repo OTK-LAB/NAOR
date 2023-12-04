@@ -146,9 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2c6cea1d2ff544eb1b45f024ed9055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 5902648875053040768, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
   item: {fileID: 11400000, guid: 3a64ec572e34cfd4cb7798783e719f90, type: 2}
   speed: 15
   iceDagger: 1
-  deathTime: 1
+  ice: {fileID: 5158700413561551027, guid: 9e4f1fd077f7f094b87c5a39bccf39b9, type: 3}
+  deathTime: 5
   daggerDamage: 70
+  isIceBreaked: 0

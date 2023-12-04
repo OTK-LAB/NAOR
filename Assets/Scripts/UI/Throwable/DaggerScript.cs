@@ -10,16 +10,18 @@ public class DaggerScript : MonoBehaviour
     public float speed;
     public bool iceDagger;
 
-    public float deathTime =1;
+    public GameObject ice;
+
+    public float deathTime;
     public float daggerDamage;
     private bool Destroyed = false;
 
+    public bool isIceBreaked;
 
     private void Awake()
     {
         daggerDamage = item.value;
-
-
+        
         Vector3 directionVector;
         if (GameObject.Find("Player").transform.localScale.x > 0)
         {
@@ -58,6 +60,14 @@ public class DaggerScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+    
+    }
+
+    public void breakFreeze()
+    {
+        Instantiate(ice);
+        Destroyed = true;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -67,14 +77,16 @@ public class DaggerScript : MonoBehaviour
             if (iceDagger)
             {
                 col.GetComponent<EnemyController>().frozenState(col);
-                Destroyed = true;
+                gameObject.GetComponent<Collider2D>().enabled =false;
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
             }
             else
             {
-                Debug.Log("enemyBoom");
                 col.gameObject.GetComponent<EnemyHealthSystem>().Damage(daggerDamage);
                 Destroyed = true;
             }
         }
     }
+
+
 }

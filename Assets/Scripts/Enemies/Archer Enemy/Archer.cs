@@ -46,6 +46,8 @@ public class Archer : MonoBehaviour
     public float LaunchForce;
     public GameObject attackPoint;
     float verticalTolerance = 1.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
+    public GameObject ice;
+
 
     //Move
     bool Moveright = true;
@@ -272,6 +274,7 @@ public class Archer : MonoBehaviour
         if (isFrozen)
         {
             gameObject.GetComponent<EnemyHealthSystem>().onFreeze = true;
+            Instantiate(ice);
         }
     }
     void OnDead(object sender, EventArgs e)
