@@ -50,6 +50,7 @@ namespace UltimateCC
             [SerializeField] private LayerMask headBumpLayerMask;
             [SerializeField] private LayerMask wallLayerMask;
             [SerializeField] private LayerMask hingeLayerMask;
+            [SerializeField] private LayerMask enemyLayerMask;
             [SerializeField, NonEditable] private Vector3 groundCheckPosition;
             [SerializeField, NonEditable] private Vector3 headCheckPosition;
             [SerializeField, NonEditable] private Vector2 walkSpeedDirection;
@@ -70,7 +71,8 @@ namespace UltimateCC
             [SerializeField] private LayerMask ledgeLayer;
             [SerializeField] private float ledgeDetectionDistance;
             [SerializeField, NonEditable] private Vector2 ledgeHangPosition;
-            [SerializeField, NonEditable] private bool canPlungeAttack;
+            [SerializeField, NonEditable] private bool canPlungeAttackByHeight;
+            [SerializeField, NonEditable] private bool canGlideByHeight;
             [SerializeField, NonEditable] private HingeJoint2D connectedHingeJoint;
             [HideInInspector]public RaycastHit2D Ledge;
             [SerializeField, NonEditable] private GameObject connectedGroundObject;
@@ -80,6 +82,7 @@ namespace UltimateCC
             public LayerMask HeadBumpLayerMask => headBumpLayerMask;
             public LayerMask WallLayerMask => wallLayerMask;
             public LayerMask HingeLayerMask => hingeLayerMask;
+            public LayerMask EnemyLayerMask => enemyLayerMask;
             public Vector2 GroundCheckPosition { get { return groundCheckPosition; } set { groundCheckPosition = value; } }
             public Vector2 HeadCheckPosition { get { return headCheckPosition; } set { headCheckPosition = value; } }
             public Vector2 WalkSpeedDirection { get { return walkSpeedDirection; } set { walkSpeedDirection = value; } }
@@ -108,7 +111,8 @@ namespace UltimateCC
             public LayerMask LedgeLayer => ledgeLayer;
             public float LedgeDetectionDistance { get { return ledgeDetectionDistance; } }
             public Vector2 LedgeHangPosition { get { return ledgeHangPosition; } set { ledgeHangPosition = value; } }
-            public bool CanPlungeAttack { get { return canPlungeAttack; } set { canPlungeAttack = value; } }
+            public bool CanPlungeAttack { get { return canPlungeAttackByHeight; } set { canPlungeAttackByHeight = value; } }
+            public bool CanGlideByHeight { get { return canGlideByHeight; } set { canGlideByHeight = value; } }
             public HingeJoint2D ConnectedHingeJoint {  get { return connectedHingeJoint; } set { connectedHingeJoint = value; } }
             public GameObject ConnectedGroundObject { get { return connectedGroundObject; } set { connectedGroundObject = value; } }
         }
@@ -269,6 +273,21 @@ namespace UltimateCC
             public Vector2 SwingInitialPosition { get { return swingInitialPosition; } set { swingInitialPosition = value; } }
             public float Drag => drag;
             public float Gravity => gravity;
+        }
+        [System.Serializable]
+        public class GlideVariables
+        {
+            [SerializeField] private float minHeight;
+            [SerializeField] private float manaDrainPerSecond;
+            [SerializeField] private float fallSpeedMultiplier;
+            [SerializeField] private float glideBufferTime;
+            [SerializeField] private float glideBufferMaxTime;
+
+            public float MinHeight => minHeight;
+            public float ManaDrainPerSecond => manaDrainPerSecond;
+            public float FallSpeedMultiplier => fallSpeedMultiplier;
+            public float GlideBufferTimer { get { return glideBufferTime; } set { glideBufferTime = value; } }
+            public float GlideBufferMaxTime => glideBufferMaxTime;
         }
         [System.Serializable]
         public class WallMovementVariables
@@ -448,17 +467,43 @@ namespace UltimateCC
                 public float MinYVelocity => minYVelocity;
                 public float LandDuration => landDuration;
             }
+            public enum AttackType { Basic1, Basic2, Basic3, Heavy, Plunge }
+            [System.Serializable]
+            public class AttackCollider
+            {
+                [SerializeField] private Collider2D collider;
+                [SerializeField] private AttackType type;
+                [SerializeField] private float damage;
 
+                public Collider2D Collider => collider;
+                public AttackType Type => type;
+                public float Damage => damage;
+            }
+
+            public List<AttackCollider> AttackColliders;
             public BasicAttack1Variables BasicAttack1;
             public BasicAttack2Variables BasicAttack2;
             public BasicAttack3Variables BasicAttack3;
             public ChargeAttackVariables ChargeAttack;
             public PlungeAttackVariables PlungeAttack;
         }
+    [System.Serializable]
+    public class ShopVariables
+    {
+        [SerializeField] private float attackMultiplier;
+        [SerializeField] private float horizontalSpeedMultiplier;
+        [SerializeField] private float abilityPowerMultiplier;
+
+        public float AttackMultiplier { get { return attackMultiplier; } set { attackMultiplier = value; } }
+        public float HorizontalSpeedMultiplier { get { return horizontalSpeedMultiplier; } set { horizontalSpeedMultiplier = value; } }
+        public float AbilityPowerMultiplier { get { return abilityPowerMultiplier; } set { abilityPowerMultiplier = value; } }
+    }
         #endregion
         #endregion
 
         [Space(7)]
+
+        public HealthSystem healthSystem;
         public PhysicsVariables Physics;
         public WalkVariables Walk;
         public CrouchVariables Crouch;
@@ -466,9 +511,9 @@ namespace UltimateCC
         public LandVariables Land;
         public DashVariables Dash;
         public SwingVariables Swing;
+        public GlideVariables Glide;
         public AttackStateVariables Attack;
-
-
+        public ShopVariables Shop;
         public WallMovementVariables Walls;
     }
 }

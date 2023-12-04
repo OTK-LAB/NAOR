@@ -126,10 +126,10 @@ MonoBehaviour:
   ArrowDamage: 100
   arrowSpeed: 3
   fire: {fileID: 9101809906066638894, guid: 708d65503e15cc74fa7d12e7969e6740, type: 3}
-  archer: {fileID: 6684767046887524778, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+  archer: {fileID: 5997636777266006083, guid: 7d095cae7ecf1d042b44d6ac6ae611ad, type: 3}
   gravity: 0.2
   damageRadius: 0.06
-  damagePosition: {fileID: 8306635169235917528}
+  damagePosition: {fileID: 5997636777266006136, guid: 7d095cae7ecf1d042b44d6ac6ae611ad, type: 3}
 --- !u!61 &2731060536954397888
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -235,7 +235,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.13, y: 0.19}
+  m_Size: {x: 0.75, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

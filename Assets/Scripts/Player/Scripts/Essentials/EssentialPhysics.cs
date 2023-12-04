@@ -301,6 +301,20 @@ namespace UltimateCC
             }
         }
 
+        public static bool GlideCheck(PlayerData playerData, PlayerMain player)
+        {
+            float _radius = player.CapsuleCollider2D.bounds.extents.x;
+            RaycastHit2D _hit = Physics2D.CircleCast(playerData.Physics.GroundCheckPosition, _radius, Vector2.down, playerData.Glide.MinHeight, playerData.Physics.GroundLayerMask);
+            if (_hit)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public static void CheckHingeJoint(PlayerData playerData, PlayerMain player)
         {
             float _radius = player.CapsuleCollider2D.bounds.extents.x + 0.1f;

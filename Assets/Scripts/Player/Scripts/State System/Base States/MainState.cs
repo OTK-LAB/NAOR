@@ -77,6 +77,7 @@ namespace UltimateCC
                                             && (!playerData.Physics.IsOnNotWalkableSlope || playerData.Physics.IsMultipleContactWithNonWalkableSlope || playerData.Physics.Slope.StayStill);
             playerData.Physics.CanWallJump = playerData.Walls.WallJump.CoyoteTimeTimer > 0 && playerData.Walls.WallJump.JumpBufferTimer > 0;
             playerData.Physics.CanPlungeAttack = EssentialPhysics.PlungeAttackCheck(playerData, player);
+            playerData.Physics.CanGlideByHeight = EssentialPhysics.GlideCheck(playerData, player);
             EssentialPhysics.GetPlatformVelocity(playerData.Physics.CollidedMovingRigidbody, playerData);
             playerData.Physics.LocalVelocity = rigidbody2D.velocity - playerData.Physics.Platform.DampedVelocity;
             if (player.CurrentState == PlayerMain.AnimName.Jump
