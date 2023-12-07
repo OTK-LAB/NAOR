@@ -19,7 +19,7 @@ public class DaggerScript : MonoBehaviour
 
 
         Vector3 directionVector;
-        if (GameObject.Find("NewPlayer").transform.localScale.x > 0)
+        if (GameObject.Find("Player").transform.localScale.x > 0)
         {
             directionVector = transform.right ;
             transform.Translate(2, 0, 0);
