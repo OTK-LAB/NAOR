@@ -102,5 +102,10 @@ namespace UltimateCC
         {
             _stateMachine.CurrentState.FixedUpdate(); // FixedUpdate method of current state at runtime
         }
+
+        public void PlayerDamageUITEST(float value)
+        {
+            PlayerData.healthSystem.Damage(value);
+        }
     }
 }
