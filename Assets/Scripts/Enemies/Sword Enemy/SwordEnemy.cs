@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Rendering;
+using UltimateCC;
 
 public class SwordEnemy : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class SwordEnemy : MonoBehaviour
     const string follow = "Run";
     const string startingmove = "StartingMove1";
 
+    public LayerMask playerLayer;
     public Material material;
 
     //Movement
@@ -68,7 +70,7 @@ public class SwordEnemy : MonoBehaviour
 
     bool IsDead = false;
     bool isHit = false;
-    float verticalTolerance = 0.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
+    float verticalTolerance = 0.5f; //enemy alttayken player ï¿½stteyse onu algï¿½lamasï¿½n diye eklendi
     float timer;
     //Hit
     Vector2 temp;
@@ -146,7 +148,7 @@ public class SwordEnemy : MonoBehaviour
     void startingMove()
     {
         if(!slow)
-            moveSpeed = firstmoveSpeed; // baþlangýç hareket hýzý
+            moveSpeed = firstmoveSpeed; // baï¿½langï¿½ï¿½ hareket hï¿½zï¿½
         moveDirectionX = moveDirection;
         step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
@@ -171,7 +173,7 @@ public class SwordEnemy : MonoBehaviour
 
     void checkPlayer()
     {
-        enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
+        enemyPosition = new Vector2(rb.position.x, rb.position.y); // Dï¿½ï¿½manï¿½n konumu
      //   Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
         distanceToPlayer = Vector2.Distance(enemyPosition, playerPos.position);
         isBetweenWalls = transform.position.x >= wall.transform.position.x && transform.position.x <= wall2.transform.position.x;
@@ -227,7 +229,7 @@ public class SwordEnemy : MonoBehaviour
         }
         rb.velocity = startDirection.normalized * moveSpeed ;
         checkPlayer();
-        // Baþlangýç konumuna ulaþtýðýnda, Walking state'ine geç
+        // Baï¿½langï¿½ï¿½ konumuna ulaï¿½tï¿½ï¿½ï¿½nda, Walking state'ine geï¿½
         if (Vector2.Distance(transform.position, startPoint) < 0.1f)
         {
             hasTurned = false;
@@ -240,12 +242,8 @@ public class SwordEnemy : MonoBehaviour
         {
             ChangeAnimationState(attack);
             attackable = false;
-            Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRange);
-            foreach (Collider2D enemy in hitPlayer)
-            {
-               // if (enemy.tag == "Player")
-                    //player.GetComponent<HealthSystem>().Damage(damageamount);
-            }
+            Collider2D hitPlayer = Physics2D.OverlapCircle(attackPoint.transform.position, attackRange, playerLayer);
+            PlayerMain.Instance.PlayerData.healthSystem.Damage(damageamount);
         }
 
     }
