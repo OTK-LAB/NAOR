@@ -25,6 +25,7 @@ public class Inventory : MonoBehaviour
     {
         
         inventory.RefreshItems();
+        inventory.arrangeItems();
         selectedItem = inventory.nullitem;
         inputActions = new PlayerInputActions();
         inputActions.UI.Enable();

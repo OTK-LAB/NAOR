@@ -27,6 +27,29 @@ public class InventoryScriptable : ScriptableObject
             }
         }
     }
+    public void arrangeItems()
+    {
+        for (int i = 0; i < maxItems; i++)
+        {
+            if (items[i].id != i)
+            {
+                changePlace(items[i]);
+                items[i] = nullitem;
+
+            }
+        }
+    }
+    public void changePlace(Item item)
+    {
+        Item temp = items[item.id];
+        if (item == temp) { return; }
+        items[item.id] = item;
+
+        if (temp != nullitem)
+        {
+            changePlace(temp);
+        }
+    }
     public bool CanBuy(Item itemToAdd)
     {
         for (int i = 0; i < items.Count; i++)

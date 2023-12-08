@@ -233,6 +233,7 @@ public class InventorySystem : MonoBehaviour
             if (Currency.SpendMoney(shopSelectedItem.price, 2))
             {
                 playerInventory.AddItem(shopSelectedItem);
+                playerInventory.arrangeItems();
                 shopSelectedItem.shopStack--;
                 if (shopSelectedItem.type == "permanent")
                 {
