@@ -31,6 +31,11 @@ public class UIScript : MonoBehaviour
         }
     }
 
+    public void EnableInteraction()
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<UltimateCC.PlayerInputManager>().playerControls.Enable();
+    }
+
     void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
