@@ -91,7 +91,8 @@ public class UIScript : MonoBehaviour
 
     IEnumerator Load()
     {
-        yield return new WaitForSeconds(0.5f); // Add a small delay before loading
+
+        yield return new WaitForSeconds(3);
         fadein = false;
         SceneManager.LoadScene(0);
     }
@@ -108,12 +109,12 @@ public class UIScript : MonoBehaviour
 
     public IEnumerator FadeIn()
     {
+
         var tempColor = image.color;
-        float duration = 2.0f; // Set the desired duration for the fade-in
-        for (float t = 0; t < 1.0f; t += Time.deltaTime / duration)
+        for (float f = 0; f <= 2; f += Time.deltaTime)
         {
             tempColor = image.color;
-            tempColor.a = Mathf.Lerp(0f, 1f, t);
+            tempColor.a = Mathf.Lerp(0f, 1f, f / 2);
             image.color = tempColor;
             yield return null;
         }

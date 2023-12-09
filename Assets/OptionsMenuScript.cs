@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class OptionsMenuScript : MonoBehaviour
 {
-    Resolution[] resolutions;
+   /* Resolution[] resolutions;
 
     public Dropdown resolutionDropdown;
 
@@ -34,7 +34,7 @@ public class OptionsMenuScript : MonoBehaviour
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
-
+   */
     public void SetQuality (int qualityIndex)
     {
         QualitySettings.SetQualityLevel (qualityIndex);

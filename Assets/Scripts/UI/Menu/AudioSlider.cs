@@ -6,10 +6,10 @@ public class AudioSlider : MonoBehaviour
 {
     [SerializeField]
     private AudioMixer Mixer;
-    [SerializeField]
+   /* [SerializeField]
     private AudioSource AudioSource;
     [SerializeField]
-    private TextMeshProUGUI ValueText;
+    private TextMeshProUGUI ValueText;*/
    
     private void Start()
     {
@@ -18,7 +18,7 @@ public class AudioSlider : MonoBehaviour
 
     public void OnChangeSlider(float Value)
     {
-        ValueText.SetText($"{Value.ToString("N4")}");
+        //ValueText.SetText($"{Value.ToString("N4")}");
 
         Mixer.SetFloat("Volume", Mathf.Log10(Value) * 20);
 
