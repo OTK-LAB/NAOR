@@ -419,6 +419,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CloseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""f304604d-d149-453e-afc2-66325bc29d9c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -430,6 +439,17 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""NpcInteraction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74bcc079-a7d9-4668-8fa9-bbcbb414c2a8"",
+                    ""path"": ""ESC"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -465,6 +485,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         // Interaction
         m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
         m_Interaction_NpcInteraction = m_Interaction.FindAction("NpcInteraction", throwIfNotFound: true);
+        m_Interaction_CloseMenu = m_Interaction.FindAction("CloseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -630,11 +651,13 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Interaction;
     private IInteractionActions m_InteractionActionsCallbackInterface;
     private readonly InputAction m_Interaction_NpcInteraction;
+    private readonly InputAction m_Interaction_CloseMenu;
     public struct InteractionActions
     {
         private @InputActions m_Wrapper;
         public InteractionActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @NpcInteraction => m_Wrapper.m_Interaction_NpcInteraction;
+        public InputAction @CloseMenu => m_Wrapper.m_Interaction_CloseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Interaction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -647,6 +670,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @NpcInteraction.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
                 @NpcInteraction.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
                 @NpcInteraction.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnNpcInteraction;
+                @CloseMenu.started -= m_Wrapper.m_InteractionActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.performed -= m_Wrapper.m_InteractionActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.canceled -= m_Wrapper.m_InteractionActionsCallbackInterface.OnCloseMenu;
             }
             m_Wrapper.m_InteractionActionsCallbackInterface = instance;
             if (instance != null)
@@ -654,6 +680,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @NpcInteraction.started += instance.OnNpcInteraction;
                 @NpcInteraction.performed += instance.OnNpcInteraction;
                 @NpcInteraction.canceled += instance.OnNpcInteraction;
+                @CloseMenu.started += instance.OnCloseMenu;
+                @CloseMenu.performed += instance.OnCloseMenu;
+                @CloseMenu.canceled += instance.OnCloseMenu;
             }
         }
     }
@@ -683,5 +712,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     public interface IInteractionActions
     {
         void OnNpcInteraction(InputAction.CallbackContext context);
+        void OnCloseMenu(InputAction.CallbackContext context);
     }
 }

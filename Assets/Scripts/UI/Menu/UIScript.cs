@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class UIScript : MonoBehaviour
 {
@@ -10,22 +11,38 @@ public class UIScript : MonoBehaviour
 
     public GameObject pauseMenu;
     public GameObject inGameUI;
+    public GameObject Player;
 
     public float time = 2f;
     bool fadein = false;
 
     public Image image;
 
+    public PlayerInputActions inputActions;
+
+    private void Awake()
+    {
+        if (Player != null)
+        {
+            inputActions = new PlayerInputActions();
+            inputActions.Interaction.Enable();
+
+            //inputActions.Interaction.NpcInteraction.started += OnDialougeTriggered;
+        }
+    }
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            if(GameIsPaused)
+            if (GameIsPaused)
             {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<UltimateCC.PlayerInputManager>().playerControls.Enable();
                 Resume();
-            }else
+            }
+            else
             {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<UltimateCC.PlayerInputManager>().playerControls.Disable();
                 Pause();
             }
         }
@@ -52,7 +69,7 @@ public class UIScript : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
-    
+
     public void LoadScene()
     {
         Time.timeScale = 1.0f;
@@ -64,7 +81,7 @@ public class UIScript : MonoBehaviour
     {
         fadein = true;
         StartCoroutine(LoadNext());
-        
+
     }
 
     public void ExitGame()
@@ -74,11 +91,11 @@ public class UIScript : MonoBehaviour
 
     IEnumerator Load()
     {
-        
-        yield return new WaitForSeconds(0);
+        yield return new WaitForSeconds(0.5f); // Add a small delay before loading
         fadein = false;
         SceneManager.LoadScene(0);
     }
+
 
     IEnumerator LoadNext()
     {
@@ -87,16 +104,16 @@ public class UIScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-   
+
 
     public IEnumerator FadeIn()
     {
-        
         var tempColor = image.color;
-        for (float f = 0; f <= 2; f += Time.deltaTime)
+        float duration = 2.0f; // Set the desired duration for the fade-in
+        for (float t = 0; t < 1.0f; t += Time.deltaTime / duration)
         {
             tempColor = image.color;
-            tempColor.a = Mathf.Lerp(0f, 1f, f / 2);
+            tempColor.a = Mathf.Lerp(0f, 1f, t);
             image.color = tempColor;
             yield return null;
         }
@@ -105,4 +122,5 @@ public class UIScript : MonoBehaviour
         tempColor.a = 1;
         image.color = tempColor;
     }
+
 }
