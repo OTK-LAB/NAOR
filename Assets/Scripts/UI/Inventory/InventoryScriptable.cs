@@ -27,6 +27,28 @@ public class InventoryScriptable : ScriptableObject
             }
         }
     }
+    public void ArrangeItems()
+    {
+        for (int i = 0; i < maxItems; i++)
+        {
+            if (items[i].id != i)
+            {
+                Arrange(items[i]);
+                items[i] = nullitem;
+            }
+        }
+
+    }
+    private void Arrange(Item item)
+    {
+        Item tempitem = items[item.id];
+        if(tempitem == item) { return; }
+        items[item.id] = item;
+        if (tempitem != null)
+        {
+            Arrange(tempitem);
+        }
+    }
     public bool CanBuy(Item itemToAdd)
     {
         for (int i = 0; i < items.Count; i++)
@@ -92,7 +114,6 @@ public class InventoryScriptable : ScriptableObject
                         Debug.Log("cons " + Count(itemToAdd.type.ToString()));
                         items[i] = itemToAdd;
                         items[i].stack = 1;
-                        Debug.Log("Add item null");
                         return true;
                     }
                 }
@@ -101,8 +122,8 @@ public class InventoryScriptable : ScriptableObject
                     if (Count(itemToAdd.type) < permanentMaxCount)
                     {
                         Debug.Log("perm " + Count(itemToAdd.type.ToString()));
-                        //itemToAdd.stack++;
-                        Debug.Log("Add item null");
+                        items[i] = itemToAdd;
+                        items[i].stack = 1;
                         return true;
                     }
                 }
@@ -113,7 +134,6 @@ public class InventoryScriptable : ScriptableObject
                         Debug.Log("throw " + Count(itemToAdd.type.ToString()));
                         items[i] = itemToAdd;
                         items[i].stack = 1;
-                        Debug.Log("Add item null");
                         return true;
                     }
                 }

@@ -26,7 +26,8 @@ public class InventorySystem : MonoBehaviour
     public GameObject slowBomb;
     public GameObject dagger;
     public GameObject iceDagger;
-    public Item equipedItem;
+    public Item consumableEquipedItem;
+    public Item throwableEquipedItem;
     public Item selectedItem;
     public Item shopSelectedItem;
 
@@ -82,23 +83,37 @@ public class InventorySystem : MonoBehaviour
     }
     private void Update()
     {
-        equipedItem = PlayerInventoryManager.GetEquipedItem();
+        consumableEquipedItem = PlayerInventoryManager.GetConsumableEquipedItem();
+        throwableEquipedItem = PlayerInventoryManager.GetThrowableEquipedItem();
         shopSelectedItem = ShopInventoryManager.GetSelectedItem();
         selectedItem = PlayerInventoryManager.GetSelectedItem();
-        if (equipedItem != playerInventory.nullitem && !equipedItem.inDelay)
+        if (consumableEquipedItem != playerInventory.nullitem && !consumableEquipedItem.inDelay)
         {
-            if (consumableInteracted) { RemovePlayerItem(Consume(equipedItem)); }
-            if (throwableInteracted) { RemovePlayerItem(Throw(equipedItem)); }
+            if (consumableInteracted) { RemovePlayerItem(Consume(consumableEquipedItem),0); }
+        }
+        if (throwableEquipedItem != playerInventory.nullitem && !throwableEquipedItem.inDelay)
+        {
+            if (throwableInteracted) { RemovePlayerItem(Throw(throwableEquipedItem),1); }
         }
         consumableInteracted = false;
         throwableInteracted = false;
     }
-    public void RemovePlayerItem(bool result)
+    public void RemovePlayerItem(bool result,int type)
     {
+        //0 consumable 1 throwable
         if (result)
         {
-            playerInventory.RemoveItem(equipedItem);
-            if (equipedItem.stack == 0) { PlayerInventoryManager.WhenRemoved(); }
+            if (type==0)
+            {
+                playerInventory.RemoveItem(consumableEquipedItem);
+                if (consumableEquipedItem.stack == 0) { PlayerInventoryManager.WhenRemoved(0); }
+            }
+            else
+            {
+                playerInventory.RemoveItem(throwableEquipedItem);
+                if (throwableEquipedItem.stack == 0) { PlayerInventoryManager.WhenRemoved(1); }
+            }
+           
         }
     }
     public bool Consume(Item _equipedItem)
@@ -109,7 +124,7 @@ public class InventorySystem : MonoBehaviour
             case 1:
                 return Apple(_equipedItem);
             case 2:
-                //return Broccoli(_equipedItem);
+                return Broccoli(_equipedItem);
             case 3:
                 return SpringWater(_equipedItem);
             case 4:
@@ -246,6 +261,7 @@ public class InventorySystem : MonoBehaviour
                 {
                     PermanentConsume(shopSelectedItem);
                 }
+                playerInventory.ArrangeItems();
             }
         }
     }
