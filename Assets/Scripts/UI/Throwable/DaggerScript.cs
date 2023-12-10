@@ -58,7 +58,7 @@ public class DaggerScript : MonoBehaviour
         if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             Debug.Log("enemyBoom");
-            col.gameObject.GetComponent<EnemyHealthSystem>().Damage(daggerDamage);
+            col.gameObject.GetComponent<EnemyHealthSystem>().Damage(daggerDamage, 0.5f) ;
             Destroyed=true;
         }
     }

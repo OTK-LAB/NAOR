@@ -248,7 +248,7 @@ public class Archer : MonoBehaviour
         }
     }
 
-    void OnHit(object sender, EventArgs e)
+    void OnHit(object sender, float knockdistance)
     {
         if (!IsDead)
         {

@@ -341,7 +341,7 @@ public class ShieldEnemy : MonoBehaviour
         }
     }
 
-    void OnHit(object sender, EventArgs e)
+    void OnHit(object sender, float knockdistance)
     {
         if (!IsDead)
         {

@@ -16,7 +16,7 @@ public class PlayerAttackCollider : MonoBehaviour
     {
         if (collider.TryGetComponent<EnemyHealthSystem>(out var enemy))
         {
-            enemy.Damage(player.PlayerData.Attack.AttackColliders.Find(x => x.Collider.Equals(GetComponent<Collider2D>())).Damage);
+            enemy.Damage(player.PlayerData.Attack.AttackColliders.Find(x => x.Collider.Equals(GetComponent<Collider2D>())).Damage,0.5f);
             if (enemy.currentHealth <= 0)
             {
                 OnEnemyKilled?.Invoke();

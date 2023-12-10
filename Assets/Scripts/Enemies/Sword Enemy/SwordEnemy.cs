@@ -75,7 +75,7 @@ public class SwordEnemy : MonoBehaviour
     float timer;
     //Hit
     Vector2 temp;
-    public float knockbackDistance; //geri sekmesi
+    float knockbackDistance; //geri sekmesi
     Rigidbody2D rb;
     LayerMask enemyLayers;
     EnemyHealthSystem _healthSystem;
@@ -348,10 +348,11 @@ public class SwordEnemy : MonoBehaviour
 
     }
 
-    void OnHit(object sender, EventArgs e)
+    void OnHit(object sender, float knockdistance)
     {
         if (!IsDead)
         {
+            knockbackDistance = knockdistance;
             state = State.STATE_HIT;
             isHit = true;
         }
@@ -362,6 +363,8 @@ public class SwordEnemy : MonoBehaviour
         {
             //     StartCoroutine(SpawnSoul(0.8f)); ?????????????????
             IsDead = true;
+            rb.gravityScale = 0f;
+            rb.velocity = Vector2.zero;
             ChangeAnimationState(death);
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;
