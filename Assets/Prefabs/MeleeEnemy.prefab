@@ -590,17 +590,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124ba8c33db3a6a48a5fa26f43e0323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
   material: {fileID: 0}
   moveDirection: 1
   wall: {fileID: 0}
   wall2: {fileID: 0}
-  distance: 5
+  distance: 7
   moveSpeed: 3
   slowRate: 60
   attackPoint: {fileID: 3632289971497403492}
   attackRange: 0.8
   damageamount: 50
-  knockbackDistance: 0
+  knockbackDistance: 0.5
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
   soul: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
 --- !u!114 &4622677265926225968
 MonoBehaviour:

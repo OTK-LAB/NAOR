@@ -7282,7 +7282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818885723}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.824152, y: -5.06557, z: -0.06450948}
+  m_LocalPosition: {x: 5.27, y: -4.94, z: -0.06450948}
   m_LocalScale: {x: 2.125, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20384,6 +20384,22 @@ PrefabInstance:
       propertyPath: wall2
       value: 
       objectReference: {fileID: 371552640}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: distance
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: knockbackDistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: obstacleLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 5952693173987285510, guid: b9e428a617a036049b5240a568340881, type: 3}
       propertyPath: m_Name
       value: MeleeEnemy
