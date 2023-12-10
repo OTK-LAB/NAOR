@@ -42,7 +42,7 @@ public class SwordEnemy : MonoBehaviour
     public GameObject wall;
     [Header("Right Wall")]
     public GameObject wall2;
-    Vector3 startPoint;
+    Vector2 startPoint;
     bool isBetweenWalls;
     float moveDirectionX;
     float step;
@@ -102,7 +102,7 @@ public class SwordEnemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
         player = GameObject.FindGameObjectWithTag("Player");
-        startPoint = transform.position;
+        startPoint = rb.position;
         firstmoveSpeed = moveSpeed;
         slowSpeed = (firstmoveSpeed / 100) * (100 - slowRate);
     }
@@ -145,11 +145,8 @@ public class SwordEnemy : MonoBehaviour
                 break;
             case State.STATE_FOLLOWING:
                 checkPlayer();
-                if (!obstacle)
-                {
-                    ChangeAnimationState(follow);
-                    following();
-                }
+                ChangeAnimationState(follow);
+                following();
                 break;
             case State.STATE_ATTACK:
                 rb.velocity = Vector2.zero;
@@ -208,7 +205,7 @@ public class SwordEnemy : MonoBehaviour
         distanceToPlayer = Vector2.Distance(enemyPosition, playerPos.position);
         isBetweenWalls = transform.position.x >= wall.transform.position.x && transform.position.x <= wall2.transform.position.x;
 
-        if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPos.position.y) < verticalTolerance)
+        if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPos.position.y) < verticalTolerance && !obstacle)
         {
             hasTurned = false;
             if (distanceToPlayer <= 1)
@@ -243,13 +240,12 @@ public class SwordEnemy : MonoBehaviour
         if (check)
             backtoWall();
     }
-
     void backtoWall()
     {
-
         ChangeAnimationState(startingmove);
         moveSpeed = firstmoveSpeed;
-        Vector2 startDirection = startPoint - transform.position;
+        Vector2 startDirection = startPoint - rb.position;
+        startDirection.y= rb.position.y;
         if (!hasTurned && Vector3.Dot(startDirection, transform.right) < 0f)
         {
             hasTurned = true;
@@ -261,7 +257,7 @@ public class SwordEnemy : MonoBehaviour
         rb.velocity = startDirection.normalized * moveSpeed;
         checkPlayer();
         // Ba�lang�� konumuna ula�t���nda, Walking state'ine ge�
-        if (Vector2.Distance(transform.position, startPoint) < 0.1f)
+        if (Vector2.Distance(rb.position, startPoint) < 0.1f)
         {
             hasTurned = false;
             state = State.STATE_STARTINGMOVE;
