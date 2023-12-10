@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Rendering;
 using UltimateCC;
+using DG.Tweening;
 
 public class SwordEnemy : MonoBehaviour
 {
@@ -187,7 +188,8 @@ public class SwordEnemy : MonoBehaviour
         {
             //knockbackDistance = -0.5f;
             Vector2 knockbackVector = Moveright ? Vector2.right : Vector2.left;
-            rb.MovePosition(rb.position + knockbackVector * knockbackDistance);
+            //rb.MovePosition(rb.position + knockbackVector * knockbackDistance);
+            rb.DOMove(rb.position + -knockbackVector * knockbackDistance, 0.1f).SetEase(Ease.OutQuad);
 
             ChangeAnimationState(hit);
             isHit = false;
@@ -208,7 +210,7 @@ public class SwordEnemy : MonoBehaviour
         if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPos.position.y) < verticalTolerance && !obstacle)
         {
             hasTurned = false;
-            if (distanceToPlayer <= 1)
+            if (distanceToPlayer <= 1.8f)
                 state = State.STATE_ATTACK;
             else
                 state = State.STATE_FOLLOWING;
