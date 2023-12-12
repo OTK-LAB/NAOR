@@ -600,10 +600,11 @@ MonoBehaviour:
   distance: 7
   moveSpeed: 3
   slowRate: 60
+  hitCoolDown: 0.7
+  attackCoolDown: 0.3
   attackPoint: {fileID: 3632289971497403492}
   attackRange: 0.8
   damageamount: 50
-  knockbackDistance: 0.5
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 64

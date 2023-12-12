@@ -18,7 +18,8 @@ public class SwordEnemy : MonoBehaviour
         STATE_NOTDAMAGE,
         STATE_HIT,
         STATE_FROZEN,
-        STATE_BACKTOWALL
+        STATE_BACKTOWALL,
+        STATE_WAIT
     };
 
     State state = State.STATE_STARTINGMOVE;
@@ -61,7 +62,8 @@ public class SwordEnemy : MonoBehaviour
     float slowSpeed;
     bool slow = false;
     float slowTime;
-
+    public float hitCoolDown;
+    public float attackCoolDown;
     //Attack
     Vector2 enemyPosition;
     [SerializeField] public GameObject attackPoint;
@@ -90,6 +92,8 @@ public class SwordEnemy : MonoBehaviour
     public GameObject soul;
     private bool hasTurned = false;
     bool check;
+    bool cooldownCheck = false;
+    bool hitcooldownCheck = false;
     void Awake()
     {
         _healthSystem = GetComponent<EnemyHealthSystem>();
@@ -171,6 +175,16 @@ public class SwordEnemy : MonoBehaviour
                 else
                     lookhim();
                 break;
+            case State.STATE_WAIT:
+                rb.velocity = Vector2.zero;
+                ChangeAnimationState(idle);
+                cooldownCheck = WaitForSeconds(attackCoolDown);
+                if (cooldownCheck)
+                {
+                    state = State.STATE_ATTACK;
+                    cooldownCheck = false;
+                }
+                break;
 
         }
     }
@@ -189,7 +203,7 @@ public class SwordEnemy : MonoBehaviour
             //knockbackDistance = -0.5f;
             Vector2 knockbackVector = Moveright ? Vector2.right : Vector2.left;
             //rb.MovePosition(rb.position + knockbackVector * knockbackDistance);
-            rb.DOMove(rb.position + -knockbackVector * knockbackDistance, 0.1f).SetEase(Ease.OutQuad);
+            rb.DOMove(rb.position + -knockbackVector * knockbackDistance, 0.07f).SetEase(Ease.OutQuad); //0.07olabilir
 
             ChangeAnimationState(hit);
             isHit = false;
@@ -198,9 +212,15 @@ public class SwordEnemy : MonoBehaviour
     }
     public void setState()
     {
+          
+    }
+    IEnumerator afterHitState()
+    {
+        ChangeAnimationState(idle);
+        yield return new WaitForSeconds(hitCoolDown);
+        hitcooldownCheck = true;
         state = State.STATE_STARTINGMOVE;
     }
-
     void checkPlayer()
     {
         enemyPosition = new Vector2(rb.position.x, rb.position.y); // D��man�n konumu                                                               
@@ -210,8 +230,8 @@ public class SwordEnemy : MonoBehaviour
         if (distanceToPlayer < distance && Mathf.Abs(enemyPosition.y - playerPos.position.y) < verticalTolerance && !obstacle)
         {
             hasTurned = false;
-            if (distanceToPlayer <= 1.8f)
-                state = State.STATE_ATTACK;
+            if (distanceToPlayer <= 1.8f) //+cooldown 0.5f
+                 state = State.STATE_WAIT;            
             else
                 state = State.STATE_FOLLOWING;
         }
@@ -312,14 +332,12 @@ public class SwordEnemy : MonoBehaviour
 
     void coolDown(float i)
     {
-
-        check = WaitForSeconds(i);
-        if (check)
+        if (WaitForSeconds(i))
             checkPlayer();
-        check = false;
     }
     private bool WaitForSeconds(float i)
     {
+        Debug.Log(timer);
         timer += Time.deltaTime;
         if (timer >= i)
         {
