@@ -10,7 +10,6 @@ public class TabManager : MonoBehaviour
 
     public GameObject ConsumableGrid;
     public GameObject ThrowableGrid;
-    public GameObject PermanentGrid;
 
     public GameObject DashGrid;
 
@@ -21,7 +20,6 @@ public class TabManager : MonoBehaviour
         InventoryTab.SetActive(true);
         ConsumableGrid.SetActive(true);
         ThrowableGrid.SetActive(false);
-        PermanentGrid.SetActive(false);
         
         AbilityTab.SetActive(false);
         DashGrid.SetActive(true);
@@ -40,7 +38,6 @@ public class TabManager : MonoBehaviour
         InventoryTab.SetActive(true);
         ConsumableGrid.SetActive(true);
         ThrowableGrid.SetActive(false);
-        PermanentGrid.SetActive(false);
     }
     public void abilityTab() 
     {
@@ -52,20 +49,13 @@ public class TabManager : MonoBehaviour
     {
         ConsumableGrid.SetActive(true);
         ThrowableGrid.SetActive(false);
-        PermanentGrid.SetActive(false);
     }
     public void throwableGrid() 
     {
         ConsumableGrid.SetActive(false);
         ThrowableGrid.SetActive(true);
-        PermanentGrid.SetActive(false);
     }
-    public void permanentGrid() 
-    {
-        ConsumableGrid.SetActive(false);
-        ThrowableGrid.SetActive(false);
-        PermanentGrid.SetActive(true);
-    }
+    
     public void dashGrid() 
     {
         DashGrid.SetActive(true);

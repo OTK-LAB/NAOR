@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using Microsoft.Unity.VisualStudio.Editor;
 
 public class Inventory : MonoBehaviour
 {
@@ -16,7 +17,6 @@ public class Inventory : MonoBehaviour
     public GameObject shopGrid;
     public GameObject consumableGrid;
     public GameObject throwableGrid;
-    public GameObject permanentGrid;
     public Item selectedItem;
     public GameObject consumableEquipedItemImage;
     public GameObject throwableEquipedItemImage;
@@ -28,7 +28,8 @@ public class Inventory : MonoBehaviour
 
     void Awake()
     {
-        
+        consumableEquipedItemImage.GetComponent<UnityEngine.UI.Image>().sprite= inventory.nullitem.icon;
+        throwableEquipedItemImage.GetComponent<UnityEngine.UI.Image>().sprite= inventory.nullitem.icon;
         inventory.RefreshItems();
         inventory.ArrangeItems();
         selectedItem = inventory.nullitem;
@@ -83,11 +84,6 @@ public class Inventory : MonoBehaviour
                         throwableGrid.transform.GetChild(0).GetChild(i-6) .gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
                         throwableGrid.transform.GetChild(0).GetChild(i-6).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inventory.items[i].stack.ToString();
                     }
-                    else if (13 <= inventory.items[i].id && inventory.items[i].id <= 15)
-                    {
-                        permanentGrid.transform.GetChild(0).GetChild(i - 13).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.items[i].icon;
-                        permanentGrid.transform.GetChild(0).GetChild(i - 13).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = inventory.items[i].stack.ToString();
-                    }
                 }
                 else
                 {
@@ -102,20 +98,13 @@ public class Inventory : MonoBehaviour
                 {
                     if (1 <= i && i <= 5)
                     {
-                        Debug.Log("conull");
                         consumableGrid.transform.GetChild(0).GetChild(i - 1).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
                         consumableGrid.transform.GetChild(0).GetChild(i - 1).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
                     }
                     else if (6 <= i && i <= 9)
                     {
-                        Debug.Log("pernull");
                         throwableGrid.transform.GetChild(0).GetChild(i - 6).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
                         throwableGrid.transform.GetChild(0).GetChild(i - 6).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
-                    }
-                    else if (13 <= i && i <= 15)
-                    {
-                        permanentGrid.transform.GetChild(0).GetChild(i - 13).gameObject.GetComponent<UnityEngine.UI.Image>().sprite = inventory.nullitem.icon;
-                        permanentGrid.transform.GetChild(0).GetChild(i - 13).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
                     }
                 }
                 else
