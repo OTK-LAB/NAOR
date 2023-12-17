@@ -1,6 +1,9 @@
+using Cinemachine;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UltimateCC;
 using UnityEngine;
 [Serializable]
 public class HealthSystem
@@ -46,10 +49,12 @@ public class HealthSystem
 
     public void Damage(float damageAmount)
     {
+        PlayerMain.Instance.Animator.SetTrigger("Hurt");
+        ShakeCamera(1f, 0.15f, 0.06f);
         if (!invincible)
         {
             currentHealth -= damageAmount * damageMultiplier;
-            if (currentHealth <= 0 )
+            if (currentHealth <= 0)
             {
                 currentHealth = 0;
                 OnDied?.Invoke();
@@ -69,5 +74,28 @@ public class HealthSystem
         }
         OnHealthChanged?.Invoke(currentHealth);
         //healthBar.SetValue(currentHealth);
+    }
+
+    public void ShakeCamera(float frequency, float duration1, float duration2)
+    {
+        var activeVirtualCamera = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera;
+
+        if (activeVirtualCamera is CinemachineVirtualCamera virtualCamera)
+        {
+            var noise = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+            DOTween.To(() => noise.m_FrequencyGain, x => noise.m_FrequencyGain = x, frequency, duration1)
+                .OnComplete(() =>
+                {
+                    DOTween.To(() => noise.m_FrequencyGain, x => noise.m_FrequencyGain = x, 0f, duration2).OnComplete(() =>
+                    {
+                        Camera.main.transform.rotation = Quaternion.identity;
+                    });
+                });
+        }
+        else
+        {
+            Debug.LogWarning("Active virtual camera is not a CinemachineVirtualCamera.");
+        }
     }
 }
