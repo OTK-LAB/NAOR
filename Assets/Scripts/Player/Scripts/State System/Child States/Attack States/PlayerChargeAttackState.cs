@@ -34,7 +34,6 @@ public class PlayerChargeAttackState : AttackState
 
     public override void PhysicsCheck()
     {
-        base.PhysicsCheck();
         if (localTime > playerData.Attack.ChargeAttack.ChargeTimeMaxTime)
         {
             playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Heavy).Collider.enabled = true;

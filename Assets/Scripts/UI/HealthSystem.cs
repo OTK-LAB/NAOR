@@ -50,7 +50,7 @@ public class HealthSystem
     public void Damage(float damageAmount)
     {
         PlayerMain.Instance.Animator.SetTrigger("Hurt");
-        ShakeCamera(1f, 0.15f, 0.06f);
+        ShakeCamera(2f, 2f, 0.08f, 0.04f);
         if (!invincible)
         {
             currentHealth -= damageAmount * damageMultiplier;
@@ -76,7 +76,7 @@ public class HealthSystem
         //healthBar.SetValue(currentHealth);
     }
 
-    public void ShakeCamera(float frequency, float duration1, float duration2)
+    public void ShakeCamera(float frequency, float amplitude, float duration1, float duration2)
     {
         var activeVirtualCamera = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera;
 
@@ -84,12 +84,13 @@ public class HealthSystem
         {
             var noise = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
+            noise.m_AmplitudeGain = amplitude;
             DOTween.To(() => noise.m_FrequencyGain, x => noise.m_FrequencyGain = x, frequency, duration1)
                 .OnComplete(() =>
                 {
                     DOTween.To(() => noise.m_FrequencyGain, x => noise.m_FrequencyGain = x, 0f, duration2).OnComplete(() =>
                     {
-                        Camera.main.transform.rotation = Quaternion.identity;
+                        noise.m_AmplitudeGain = 0;
                     });
                 });
         }
