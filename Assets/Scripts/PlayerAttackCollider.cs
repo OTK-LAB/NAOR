@@ -7,6 +7,7 @@ public class PlayerAttackCollider : MonoBehaviour
 {
     private PlayerMain player;
     public static event Action OnEnemyKilled;
+    [SerializeField] private float knockbackDistance;
 
     private void Start()
     {
@@ -18,7 +19,7 @@ public class PlayerAttackCollider : MonoBehaviour
         if (collider.TryGetComponent<EnemyHealthSystem>(out var enemy))
         {
             SlowDownTime(0.06f, 0.06f, 0.02f);
-            enemy.Damage(player.PlayerData.Attack.AttackColliders.Find(x => x.Collider.Equals(GetComponent<Collider2D>())).Damage,0.5f);
+            enemy.Damage(player.PlayerData.Attack.AttackColliders.Find(x => x.Collider.Equals(GetComponent<Collider2D>())).Damage, knockbackDistance);
 
             if (enemy.currentHealth <= 0)
             {
