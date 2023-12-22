@@ -517,8 +517,8 @@ Transform:
   m_GameObject: {fileID: 3632289972206299033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -102.14, y: -0.24331999, z: -0.62933934}
-  m_LocalScale: {x: 3.7879374, y: 3.9534562, z: 0.9742136}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4.96, y: 5.1767335, z: 1.2756546}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3632289971497403499}
   - {fileID: 6320656621472202609}
@@ -590,17 +590,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124ba8c33db3a6a48a5fa26f43e0323a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
   material: {fileID: 0}
   moveDirection: 1
   wall: {fileID: 0}
   wall2: {fileID: 0}
-  distance: 5
+  distance: 7
   moveSpeed: 3
   slowRate: 60
+  hitCoolDown: 0.7
+  attackCoolDown: 0.3
   attackPoint: {fileID: 3632289971497403492}
   attackRange: 0.8
   damageamount: 50
-  knockbackDistance: 0
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
   soul: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
 --- !u!114 &4622677265926225968
 MonoBehaviour:
@@ -647,7 +654,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -655,7 +662,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!61 &3632289972206299037
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -695,7 +702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 200
+  maxHealth: 1000
   onShield: 0
   shieldProtection: 0
 --- !u!114 &3322320761304665360

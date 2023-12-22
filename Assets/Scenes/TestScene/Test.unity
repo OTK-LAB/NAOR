@@ -1976,7 +1976,7 @@ PrefabInstance:
     - target: {fileID: 1391948044445387141, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 1327499562}
+      objectReference: {fileID: 0}
     - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: manaBar
       value: 
@@ -1984,7 +1984,7 @@ PrefabInstance:
     - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: soulBar
       value: 
-      objectReference: {fileID: 939756897}
+      objectReference: {fileID: 0}
     - target: {fileID: 2348788264557028454, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -7282,7 +7282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818885723}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.824152, y: -5.06557, z: -0.06450948}
+  m_LocalPosition: {x: 5.27, y: -4.94, z: -0.06450948}
   m_LocalScale: {x: 2.125, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8205,7 +8205,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 939756894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129149fd9fcb0a64ea50bc328e9cd485, type: 3}
+  m_Script: {fileID: 11500000, guid: c1d29326f2cc3f541a19b1b734b72408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 939756896}
@@ -11683,7 +11683,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1327499559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 129149fd9fcb0a64ea50bc328e9cd485, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e4458593ceef184283a5e9b19c5d739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1327499561}
@@ -18609,6 +18609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1984868700}
   - component: {fileID: 1984868702}
+  - component: {fileID: 1984868703}
   - component: {fileID: 1984868701}
   m_Layer: 5
   m_Name: ManaBar
@@ -18700,6 +18701,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 129149fd9fcb0a64ea50bc328e9cd485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 1984868701}
+  gradient:
+    serializedVersion: 2
+    key0: {r: 0, g: 0.21052623, b: 0.49056602, a: 1}
+    key1: {r: 0, g: 0.654902, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 64957
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  fill: {fileID: 2102647920}
+  easingDuration: 0.5
+--- !u!114 &1984868703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984868699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82816ad742903b49bfdf55b9d5c1f9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1984868701}
@@ -20319,6 +20364,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Passable
       objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299036, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: m_Mass
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299036, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3632289972206299038, guid: b9e428a617a036049b5240a568340881, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -20329,7 +20382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3632289972206299038, guid: b9e428a617a036049b5240a568340881, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.92
+      value: -6.81
       objectReference: {fileID: 0}
     - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
       propertyPath: wall
@@ -20339,6 +20392,30 @@ PrefabInstance:
       propertyPath: wall2
       value: 
       objectReference: {fileID: 371552640}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: distance
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: hitCoolDown
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: attackCoolDown
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: knockbackDistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3632289972206299043, guid: b9e428a617a036049b5240a568340881, type: 3}
+      propertyPath: obstacleLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 5952693173987285510, guid: b9e428a617a036049b5240a568340881, type: 3}
       propertyPath: m_Name
       value: MeleeEnemy
@@ -35141,7 +35218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d0e0a5dbe520944a7e46117f9842c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reduction_num: 2
+  reduction_time: 0
 --- !u!1001 &7404710901989574998
 PrefabInstance:
   m_ObjectHideFlags: 0

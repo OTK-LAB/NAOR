@@ -64,6 +64,7 @@ public class Archer : MonoBehaviour
     Rigidbody2D rb;
     LayerMask enemyLayers;
     EnemyHealthSystem _healthSystem;
+    public float knockbackDistance; //geri sekmesi
 
     public GameObject soul;
 
@@ -130,6 +131,11 @@ public class Archer : MonoBehaviour
         float step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
     }
+    public void setState()
+    {
+        state = State.STATE_STARTINGMOVE;
+    }
+
     public void slowTimer()
     {
         slowTime -= Time.deltaTime;
@@ -232,11 +238,9 @@ public class Archer : MonoBehaviour
     {
         if (isHit)
         {
-            temp = new Vector2((rb.position.x + 2), rb.position.y);
-            if (Moveright)
-                rb.MovePosition((Vector2)rb.position + (temp * moveSpeed * Time.deltaTime));
-            else
-                rb.MovePosition((Vector2)rb.position - (temp * moveSpeed * Time.deltaTime));
+            knockbackDistance = -0.5f;
+            Vector2 knockbackVector = Moveright ? Vector2.right : Vector2.left;
+            rb.MovePosition(rb.position + knockbackVector * knockbackDistance);
 
             ChangeAnimationState(hit);
             isHit = false;
@@ -244,7 +248,7 @@ public class Archer : MonoBehaviour
         }
     }
 
-    void OnHit(object sender, EventArgs e)
+    void OnHit(object sender, float knockdistance)
     {
         if (!IsDead)
         {
@@ -257,7 +261,7 @@ public class Archer : MonoBehaviour
         if (!IsDead)
         {
             IsDead = true;
-            StartCoroutine(SpawnSoul(0.8f));
+        //    StartCoroutine(SpawnSoul(0.8f));
             ChangeAnimationState(death);
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             GetComponent<Collider2D>().enabled = false;

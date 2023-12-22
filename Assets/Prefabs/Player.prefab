@@ -60,9 +60,9 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.10451245, y: 1.6793325}
       - {x: 0.14632672, y: -0.94513535}
-      - {x: 4.602554, y: -0.99191415}
-      - {x: 4.148713, y: 1.3243256}
-      - {x: 2.1636038, y: 2.642515}
+      - {x: 2.292636, y: -1.034428}
+      - {x: 2.8732982, y: 1.012557}
+      - {x: 1.3274987, y: 1.6505258}
 --- !u!114 &750587560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDistance: 0.1
 --- !u!1 &1626911941956402332
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,9 +172,9 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.10451245, y: 1.6793325}
       - {x: 0.14632672, y: -0.94513535}
-      - {x: 4.324311, y: -0.99191415}
-      - {x: 3.7231655, y: 1.046083}
-      - {x: 1.787158, y: 1.9550922}
+      - {x: 2.7654703, y: -1.0060848}
+      - {x: 2.6036346, y: 0.93271255}
+      - {x: 1.2486496, y: 1.7992079}
 --- !u!114 &1669818811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDistance: 0.1
 --- !u!1 &2776361869097782017
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,8 +248,8 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.10451245, y: 1.6793325}
       - {x: 0.14632672, y: -0.94513535}
-      - {x: 3.80056, y: -0.07534969}
-      - {x: 3.7395325, y: 0.6205349}
+      - {x: 2.8652558, y: -0.61385906}
+      - {x: 2.9034271, y: 0.77641916}
       - {x: 1.476181, y: 1.3495054}
 --- !u!114 &1220183770
 MonoBehaviour:
@@ -261,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDistance: 0.5
 --- !u!1 &4305966854962295623
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,12 +324,12 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 0.91388404, y: -0.35342097}
       - {x: -1.0451272, y: -0.3325367}
-      - {x: -2.910668, y: 0.43965793}
-      - {x: -3.1186764, y: -0.83665895}
+      - {x: -2.5138721, y: 0.29794526}
+      - {x: -2.5376542, y: -0.9358573}
       - {x: -1.8419375, y: -1.4622215}
       - {x: 1.8419373, y: -1.514477}
-      - {x: 3.0990984, y: -0.9087229}
-      - {x: 2.8322845, y: 0.3612737}
+      - {x: 2.617275, y: -0.9228945}
+      - {x: 2.4921737, y: 0.29041713}
 --- !u!114 &546172688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDistance: 0
 --- !u!1 &5902648875053040768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,13 +1135,13 @@ MonoBehaviour:
         type: 4
         damage: 75
       BasicAttack1:
-        attackDuration: 0.3
+        attackDuration: 0.5
         maxStateTime: 1
       BasicAttack2:
-        attackDuration: 0.3
-        maxStateTime: 1
+        attackDuration: 0.75
+        maxStateTime: 1.25
       BasicAttack3:
-        attackDuration: 0.3
+        attackDuration: 0.75
         maxStateTime: 1
       ChargeAttack:
         chargeTimeMaxTime: 1
@@ -1660,10 +1664,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.10451245, y: 1.6793325}
-      - {x: 0.14632672, y: -0.94513535}
-      - {x: 4.324311, y: -0.99191415}
-      - {x: 3.7231655, y: 1.046083}
+    - - {x: -1.3693004, y: 0.74402833}
+      - {x: -1.3699999, y: -1.0301621}
+      - {x: 2.2978184, y: -1.034429}
+      - {x: 2.9862592, y: 0.74848604}
       - {x: 1.787158, y: 1.9550922}
 --- !u!114 &921132910
 MonoBehaviour:
@@ -1677,3 +1681,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3a7cab531b0e94dafa327528490ab3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackDistance: 0.5

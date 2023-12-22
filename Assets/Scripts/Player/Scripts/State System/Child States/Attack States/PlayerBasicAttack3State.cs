@@ -28,7 +28,6 @@ public class PlayerBasicAttack3State : AttackState
 
     public override void PhysicsCheck()
     {
-        base.PhysicsCheck();
     }
 
     public override void SwitchStateLogic()
