@@ -1,4 +1,7 @@
+using System;
+using System.Linq;
 using UltimateCC;
+using UnityEngine;
 
 public class AttackState : MainState
 {
@@ -19,6 +22,11 @@ public class AttackState : MainState
         base.Exit();
     }
 
+    public override void Update()
+    {
+        base.Update();
+    }
+
     public override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -33,10 +41,4 @@ public class AttackState : MainState
     {
         base.SwitchStateLogic();
     }
-
-    public override void Update()
-    {
-        base.Update();
-    }
-
 }

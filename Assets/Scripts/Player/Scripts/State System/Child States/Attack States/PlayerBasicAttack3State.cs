@@ -12,11 +12,13 @@ public class PlayerBasicAttack3State : AttackState
         attackDuration = playerData.Attack.BasicAttack3.AttackDuration;
         maxStateTime = playerData.Attack.BasicAttack3.MaxStateTime;
         inputManager.Input_Attack = false;
+        playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Basic3).Collider.enabled = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+        playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Basic3).Collider.enabled = false;
     }
 
     public override void FixedUpdate()
@@ -26,7 +28,6 @@ public class PlayerBasicAttack3State : AttackState
 
     public override void PhysicsCheck()
     {
-        base.PhysicsCheck();
     }
 
     public override void SwitchStateLogic()
@@ -46,7 +47,7 @@ public class PlayerBasicAttack3State : AttackState
             {
                 stateMachine.ChangeState(player.JumpState);
             }
-            else if (inputManager.Input_Dash && playerData.Dash.CanDash)
+            else if (inputManager.Input_Dash)
             {
                 stateMachine.ChangeState(player.DashState);
             }

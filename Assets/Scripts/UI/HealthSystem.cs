@@ -1,66 +1,102 @@
+using Cinemachine;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UltimateCC;
 using UnityEngine;
-
-public class HealthSystem : MonoBehaviour
+[Serializable]
+public class HealthSystem
 {
     private bool invincible = false;
-    [SerializeField]
-    public float currentHealth;
-    [SerializeField]
-    public float maxHealth;
-    float smoothing = 5;
+    [SerializeField] private float currentHealth = 1000;
+    [SerializeField] private float maxHealth = 1000;
+    [SerializeField] private float damageMultiplier = 1;
+    //float smoothing = 5;
 
-    public delegate void DamageHandler(float amount);
-    public event DamageHandler OnHit;
-    public event EventHandler OnDead;
-
+    public delegate void HealthHandler(float amount);
+    public delegate void DeathHandler();
+    public event HealthHandler OnHealthChanged;
+    public event HealthHandler OnMaxHealthChanged;
+    public event DeathHandler OnDied;
     public bool Invincible { set { invincible = value; } }
-
-    public ProgressBar healthBar;
-    void Start()
+    public float CurrentHealth
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxValue(maxHealth);
+        get
+        {
+            return currentHealth;
+        }
+        set
+        {
+            currentHealth = value;
+            OnHealthChanged?.Invoke(value);
+        }
+    }
+    public float MaxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+        set
+        {
+            maxHealth = value;
+            OnMaxHealthChanged?.Invoke(value);
+        }
     }
 
-    private void Update()
-    {
-        /*if (currentHealth != healthBar.slider.value)
-            healthBar.SetValue(Mathf.Lerp(healthBar.slider.value, currentHealth, smoothing * Time.deltaTime));
-        */
-    }
-    public float GetHealth()
-    {
-        return currentHealth;
-    }
+    public float DamageMultiplier { get { return damageMultiplier; } set { damageMultiplier = value; } }
 
     public void Damage(float damageAmount)
     {
-        smoothing = 10;
+        PlayerMain.Instance.Animator.SetTrigger("Hurt");
+        ShakeCamera(2f, 2f, 0.08f, 0.04f);
         if (!invincible)
         {
-            currentHealth -= damageAmount;
-            if (currentHealth <= 0 )
+            currentHealth -= damageAmount * damageMultiplier;
+            if (currentHealth <= 0)
             {
                 currentHealth = 0;
+                OnDied?.Invoke();
             }
-            OnHit(currentHealth);
+            OnHealthChanged?.Invoke(currentHealth);
         }
         //healthBar.SetValue(currentHealth);
     }
 
     public void Heal(float healAmount)
     {
-        smoothing = 5;
         currentHealth += healAmount;
 
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
-        OnHit(currentHealth);
+        OnHealthChanged?.Invoke(currentHealth);
         //healthBar.SetValue(currentHealth);
+    }
+
+    public void ShakeCamera(float frequency, float amplitude, float duration1, float duration2)
+    {
+        var activeVirtualCamera = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera;
+
+        if (activeVirtualCamera is CinemachineVirtualCamera virtualCamera)
+        {
+            var noise = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+            noise.m_AmplitudeGain = amplitude;
+            DOTween.To(() => noise.m_FrequencyGain, x => noise.m_FrequencyGain = x, frequency, duration1)
+                .OnComplete(() =>
+                {
+                    DOTween.To(() => noise.m_FrequencyGain, x => noise.m_FrequencyGain = x, 0f, duration2).OnComplete(() =>
+                    {
+                        noise.m_AmplitudeGain = 0;
+                    });
+                });
+        }
+        else
+        {
+            Debug.LogWarning("Active virtual camera is not a CinemachineVirtualCamera.");
+        }
     }
 }

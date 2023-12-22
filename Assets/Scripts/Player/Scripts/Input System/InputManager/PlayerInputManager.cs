@@ -9,6 +9,7 @@ namespace UltimateCC
         // Declaration of necessary references
         private PlayerMain player;
         private PlayerData playerData;
+        public AbilityManager abilityManager;
         public InputActions playerControls;
 
         // Variables to store input
@@ -44,6 +45,7 @@ namespace UltimateCC
             playerControls = new InputActions(); // Initialize InputActions object to use input map of new input system
             player = GetComponent<PlayerMain>(); // Reference for Ultimate2DPlayer component where all of content come up together
             playerData = player.PlayerData; // Reference for Ultimate2DPlayer.PlayerData component where all variables stored
+            abilityManager = GetComponent<AbilityManager>();
         }
 
         private void OnEnable()
@@ -67,6 +69,8 @@ namespace UltimateCC
             playerControls.Player.PlungeAttack.started += OnPlungeAttack;
             playerControls.Player.PlungeAttack.performed += OnPlungeAttack;
             playerControls.Player.PlungeAttack.canceled += OnPlungeAttack;
+            playerControls.Player.NecromancersBlade.started += OnNecromancersBlade;
+            playerControls.Player.SoulWalk.started += OnSoulWalk;
         }
 
         private void FixedUpdate()
@@ -100,6 +104,7 @@ namespace UltimateCC
             playerData.Dash.DashCooldownTimer = playerData.Dash.DashCooldownTimer > 0f ? playerData.Dash.DashCooldownTimer - Time.deltaTime : 0f;
             playerData.Walls.WallJump.JumpBufferTimer = playerData.Walls.WallJump.JumpBufferTimer > 0f ? playerData.Walls.WallJump.JumpBufferTimer - Time.deltaTime : 0f;
             playerData.Walls.WallJump.CoyoteTimeTimer = playerData.Walls.WallJump.CoyoteTimeTimer > 0f ? playerData.Walls.WallJump.CoyoteTimeTimer - Time.deltaTime : 0f;
+            playerData.Glide.GlideBufferTimer = playerData.Glide.GlideBufferTimer > 0f ? playerData.Glide.GlideBufferTimer - Time.deltaTime : 0f;
         }
 
         // all input based events
@@ -108,11 +113,13 @@ namespace UltimateCC
         {
             input_Jump = context.ReadValueAsButton();
             playerData.Jump.JumpBufferTimer = playerData.Jump.JumpBufferMaxTime;
-            playerData.Walls.WallJump.JumpBufferTimer = playerData.Walls.WallJump.JumpBufferMaxTime;
             playerData.Jump.NewJump = player.CurrentState != AnimName.WallGrab
                                     && player.CurrentState != AnimName.WallSlide
                                     && player.CurrentState != AnimName.WallClimb
                                     && playerData.Walls.WallJump.CoyoteTimeTimer == 0;
+
+            playerData.Walls.WallJump.JumpBufferTimer = playerData.Walls.WallJump.JumpBufferMaxTime;
+            playerData.Glide.GlideBufferTimer = playerData.Glide.GlideBufferMaxTime;
         }
 
         private void OnJumpCanceled(InputAction.CallbackContext context)
@@ -153,6 +160,34 @@ namespace UltimateCC
         private void OnPlungeAttack(InputAction.CallbackContext context)
         {
             input_PlungeAttack = context.ReadValueAsButton();
+        }
+        private void OnNecromancersBlade(InputAction.CallbackContext context)
+        {
+            if (context.ReadValueAsButton())
+            {
+                if (abilityManager.NecromancersBlade.phase == AbilityManager.Phase.Off)
+                {
+                    abilityManager.NecromancersBlade.phase = AbilityManager.Phase.Start;
+                }
+                else if (abilityManager.NecromancersBlade.phase == AbilityManager.Phase.Active)
+                {
+                    abilityManager.NecromancersBlade.phase = AbilityManager.Phase.End;
+                }
+            }
+        }
+        private void OnSoulWalk(InputAction.CallbackContext context)
+        {
+            if (context.ReadValueAsButton())
+            {
+                if (abilityManager.SoulWalk.phase == AbilityManager.Phase.Off)
+                {
+                    abilityManager.SoulWalk.phase = AbilityManager.Phase.Start;
+                }
+                else if (abilityManager.SoulWalk.phase == AbilityManager.Phase.Active)
+                {
+                    abilityManager.SoulWalk.phase = AbilityManager.Phase.End;
+                }
+            }
         }
         #endregion
     }

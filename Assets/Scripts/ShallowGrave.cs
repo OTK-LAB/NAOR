@@ -8,7 +8,7 @@ public class ShallowGrave : MonoBehaviour
     public GameObject Player;
     public GameObject InteractionText;
     public PlayerInputActions inputActions;
-    public ManaStop[] ManaStops;
+    public GameObject ManaStop;
     public GameObject Currency;
 
     bool active = false;
@@ -45,19 +45,18 @@ public class ShallowGrave : MonoBehaviour
         if (inRange)
         {
             Player.GetComponent<ManaSoulSystem>().currentMana = Player.GetComponent<ManaSoulSystem>().maxMana;
-            Player.GetComponent<HealthSystem>().currentHealth = Player.GetComponent<HealthSystem>().maxHealth;
+            Player.GetComponent<HealthSystem>().CurrentHealth = Player.GetComponent<HealthSystem>().MaxHealth;
             //Player.GetComponent<PlayerController>().lastCheckpointPosition = transform.position;
             active = true;
             this.GetComponent<SpriteRenderer>().color = Color.green;
-            foreach (ManaStop manaStop in ManaStops)
-                manaStop.isActive = true;
+            ManaStop.GetComponent<ManaStop>().isActive = true;
         }
     }
 
     public void Respawn()
     {
         Player.GetComponent<ManaSoulSystem>().currentMana = Player.GetComponent<ManaSoulSystem>().maxMana;
-        Player.GetComponent<HealthSystem>().currentHealth = Player.GetComponent<HealthSystem>().maxHealth;
+        Player.GetComponent<HealthSystem>().CurrentHealth = Player.GetComponent<HealthSystem>().MaxHealth;
         Player.GetComponent<ManaSoulSystem>().currentSoul = 0;
         Currency.GetComponent<CurrencyScript>().currency1 = Currency.GetComponent<CurrencyScript>().currency1 * 3 / 4;
         Currency.GetComponent<CurrencyScript>().currency2 = Currency.GetComponent<CurrencyScript>().currency2 * 3 / 4;

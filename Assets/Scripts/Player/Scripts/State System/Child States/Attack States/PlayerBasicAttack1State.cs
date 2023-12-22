@@ -12,22 +12,22 @@ public class PlayerBasicAttack1State : AttackState
         attackDuration = playerData.Attack.BasicAttack1.AttackDuration;
         maxStateTime = playerData.Attack.BasicAttack1.MaxStateTime;
         inputManager.Input_Attack = false;
+        playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Basic1).Collider.enabled = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+        playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Basic1).Collider.enabled = false;
     }
 
     public override void FixedUpdate()
     {
-        rigidbody2D.velocity = new(0,0);
         base.FixedUpdate();
     }
 
     public override void PhysicsCheck()
     {
-        base.PhysicsCheck();
     }
 
     public override void SwitchStateLogic()
@@ -43,15 +43,15 @@ public class PlayerBasicAttack1State : AttackState
             {
                 stateMachine.ChangeState(player.IdleState);
             }
-            /*else if (inputManager.Input_Walk != 0)
+            else if (inputManager.Input_Walk != 0)
             {
                 stateMachine.ChangeState(player.WalkState);
-            }*/
+            }
             else if (inputManager.Input_Jump)
             {
                 stateMachine.ChangeState(player.JumpState);
             }
-            else if (inputManager.Input_Dash && playerData.Dash.CanDash)
+            else if (inputManager.Input_Dash)
             {
                 stateMachine.ChangeState(player.DashState);
             }

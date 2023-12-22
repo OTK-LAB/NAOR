@@ -13,7 +13,6 @@ namespace UltimateCC
             base.Enter();
             rigidbody2D.gravityScale = playerData.Dash.Physics2DGravityScale;
             playerData.Dash.DashCooldownTimer = playerData.Dash.DashCooldown;
-            Physics2D.IgnoreLayerCollision(3, 9, true);
         }
 
         public override void Update()
@@ -31,7 +30,6 @@ namespace UltimateCC
         public override void Exit()
         {
             base.Exit();
-            Physics2D.IgnoreLayerCollision(3, 9, false);
         }
 
         public override void PhysicsCheck()

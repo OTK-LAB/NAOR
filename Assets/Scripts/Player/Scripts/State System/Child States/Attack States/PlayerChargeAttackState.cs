@@ -1,4 +1,5 @@
 using UltimateCC;
+using UnityEngine;
 
 public class PlayerChargeAttackState : AttackState
 {
@@ -17,6 +18,12 @@ public class PlayerChargeAttackState : AttackState
     {
         base.Exit();
         inputManager.Input_Attack = false;
+        playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Heavy).Collider.enabled = false;
+    }
+
+    public override void Update()
+    {
+        base.Update();
     }
 
     public override void FixedUpdate()
@@ -27,13 +34,16 @@ public class PlayerChargeAttackState : AttackState
 
     public override void PhysicsCheck()
     {
-        base.PhysicsCheck();
+        if (localTime > playerData.Attack.ChargeAttack.ChargeTimeMaxTime)
+        {
+            playerData.Attack.AttackColliders.Find(x => x.Type == PlayerData.AttackStateVariables.AttackType.Heavy).Collider.enabled = true;
+        }
     }
 
     public override void SwitchStateLogic()
     {
         base.SwitchStateLogic();
-        if (localTime < playerData.Attack.ChargeAttack.AttackDuration && !inputManager.Input_Attack)
+        if (localTime < playerData.Attack.ChargeAttack.ChargeTimeMaxTime && !inputManager.Input_Attack)
         {
             stateMachine.ChangeState(player.BasicAttack1State);
         }
@@ -45,22 +55,17 @@ public class PlayerChargeAttackState : AttackState
         {
             stateMachine.ChangeState(player.JumpState);
         }
-        else if (inputManager.Input_Dash && playerData.Dash.CanDash)
+        else if (inputManager.Input_Dash)
         {
             stateMachine.ChangeState(player.DashState);
         }
         else if (inputManager.Input_Crouch)
         {
-           stateMachine.ChangeState(player.CrouchIdleState);
+            stateMachine.ChangeState(player.CrouchIdleState);
         }
         else if (localTime > maxStateTime)
         {
             stateMachine.ChangeState(player.IdleState);
         }
-    }
-
-    public override void Update()
-    {
-        base.Update();
     }
 }

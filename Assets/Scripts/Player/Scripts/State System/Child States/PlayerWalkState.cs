@@ -63,7 +63,7 @@ namespace UltimateCC
             {
                 stateMachine.ChangeState(player.LandState);
             }
-            else if (inputManager.Input_Dash && playerData.Dash.DashCooldownTimer <= 0f && playerData.Dash.CanDash)
+            else if (inputManager.Input_Dash && playerData.Dash.DashCooldownTimer <= 0f)
             {
                 stateMachine.ChangeState(player.DashState);
             }
@@ -77,7 +77,7 @@ namespace UltimateCC
             }
             else if (inputManager.Input_Attack)
             {
-                stateMachine.ChangeState(player.BasicAttack1State);
+                stateMachine.ChangeState(player.ChargeAttackState);
             }
         }
 
