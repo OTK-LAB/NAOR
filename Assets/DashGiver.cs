@@ -18,7 +18,7 @@ public class DashGiver : MonoBehaviour
 
     IEnumerator DashGive()
     {
-        player.PlayerData.Dash.CanDash = true;
+        //player.PlayerData.Dash.CanDash = true;
         dashUI.SetActive(true);
         Debug.Log("Before");
         Time.timeScale = 0.1f;
