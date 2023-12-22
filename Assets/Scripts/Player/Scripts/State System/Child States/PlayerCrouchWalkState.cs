@@ -22,6 +22,14 @@ namespace UltimateCC
             curveTime *= playerData.Crouch.SpeedUpTime;
             localXVelovity = 0;
             phase = Phase.SpeedUp;
+
+            Vector2 _size, _offset;
+            _size = player.CapsuleCollider2D.size;
+            _offset = player.CapsuleCollider2D.offset;
+            _size.y /= 2;
+            _offset.y -= _size.y / 2;
+            player.CapsuleCollider2D.size = _size;
+            player.CapsuleCollider2D.offset = _offset;
         }
 
         public override void Update()
@@ -41,6 +49,14 @@ namespace UltimateCC
         public override void Exit()
         {
             base.Exit();
+
+            Vector2 _size, _offset;
+            _size = player.CapsuleCollider2D.size;
+            _offset = player.CapsuleCollider2D.offset;
+            _offset.y += _size.y / 2;
+            _size.y *= 2;
+            player.CapsuleCollider2D.size = _size;
+            player.CapsuleCollider2D.offset = _offset;
         }
 
         public override void PhysicsCheck()
@@ -51,33 +67,36 @@ namespace UltimateCC
         public override void SwitchStateLogic()
         {
             base.SwitchStateLogic();
-            if (!inputManager.Input_Crouch)
+            if (CheckCanExit())
             {
-                if (phase == Phase.SlowDown && curveTime > playerData.Crouch.SlowDownTime)
+                if (!inputManager.Input_Crouch)
                 {
-                    stateMachine.ChangeState(player.IdleState);
-                }
-                else if (inputManager.Input_Walk != 0)
-                {
-                    stateMachine.ChangeState(player.WalkState);
-                }
+                    if (phase == Phase.SlowDown && curveTime > playerData.Crouch.SlowDownTime)
+                    {
+                        stateMachine.ChangeState(player.IdleState);
+                    }
+                    else if (inputManager.Input_Walk != 0)
+                    {
+                        stateMachine.ChangeState(player.WalkState);
+                    }
 
+                }
+                else if (!playerData.Physics.IsGrounded || (playerData.Physics.IsOnNotWalkableSlope && !playerData.Physics.Slope.StayStill && !playerData.Physics.IsMultipleContactWithNonWalkableSlope))
+                {
+                    stateMachine.ChangeState(player.LandState);
+                }
+                else if (inputManager.Input_Dash && playerData.Dash.DashCooldownTimer <= 0f)
+                {
+                    stateMachine.ChangeState(player.DashState);
+                }
+                else if (playerData.Physics.IsNextToWall && inputManager.Input_WallGrab && playerData.Walls.CurrentStamina > 0)
+                {
+                    stateMachine.ChangeState(player.WallGrabState);
+                }
             }
             if (phase == Phase.SlowDown && curveTime > playerData.Crouch.SlowDownTime || playerData.Physics.Slope.StayStill)
             {
                 stateMachine.ChangeState(player.CrouchIdleState);
-            }
-            else if (!playerData.Physics.IsGrounded || (playerData.Physics.IsOnNotWalkableSlope && !playerData.Physics.Slope.StayStill && !playerData.Physics.IsMultipleContactWithNonWalkableSlope))
-            {
-                stateMachine.ChangeState(player.LandState);
-            }
-            else if (inputManager.Input_Dash && playerData.Dash.DashCooldownTimer <= 0f)
-            {
-                stateMachine.ChangeState(player.DashState);
-            }
-            else if (playerData.Physics.IsNextToWall && inputManager.Input_WallGrab && playerData.Walls.CurrentStamina > 0)
-            {
-                stateMachine.ChangeState(player.WallGrabState);
             }
         }
 
@@ -171,6 +190,17 @@ namespace UltimateCC
             }
 
             return XVelocity;
+        }
+
+        private bool CheckCanExit()
+        {
+            Vector2 _size, _offset;
+            _size = player.CapsuleCollider2D.size;
+            _offset = player.CapsuleCollider2D.offset;
+            RaycastHit2D _hit = Physics2D.CircleCast(playerData.Physics.HeadCheckPosition, _size.x, Vector2.up, _size.y, playerData.Physics.HeadBumpLayerMask);
+            if (_hit) return false;
+
+            return true;
         }
     }
 }
