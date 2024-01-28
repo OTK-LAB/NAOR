@@ -30,7 +30,7 @@ public class EffectBombScript : MonoBehaviour
             if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 //slow down enemy movoment speed and attack speed
-                col.GetComponent<EnemyController>().speedReduction(col);
+                col.GetComponent<EnemyController>().speedReduction(col,4);
             }
     }
 }

@@ -28,13 +28,13 @@ public class iceEffect : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerStay2D(Collider2D col)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("Enemy") && !damaged)
+        if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            col.gameObject.GetComponent<EnemyHealthSystem>().Damage(explosionDamage);
-            damaged = true;
+            col.gameObject.GetComponent<EnemyController>().speedReduction(col,4f);
+            //Enemy'nin saldýrý hýzý azaltýlacak.
         }
-
+        
     }
 }

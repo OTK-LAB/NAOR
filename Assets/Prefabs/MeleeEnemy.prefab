@@ -600,6 +600,7 @@ MonoBehaviour:
   attackPoint: {fileID: 3632289971497403492}
   attackRange: 0.8
   damageamount: 50
+  ice: {fileID: 5158700413561551027, guid: 9e4f1fd077f7f094b87c5a39bccf39b9, type: 3}
   knockbackDistance: 0
   soul: {fileID: 2509572642430713040, guid: 28f0eb16455491847b1d11f867124edd, type: 3}
 --- !u!114 &4622677265926225968
@@ -614,7 +615,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d0e0a5dbe520944a7e46117f9842c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reduction_time: 4
 --- !u!95 &3632289972206299032
 Animator:
   serializedVersion: 4
@@ -696,7 +696,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 200
+  ice: {fileID: 0}
   onShield: 0
+  onFreeze: 0
   shieldProtection: 0
 --- !u!114 &3322320761304665360
 MonoBehaviour:

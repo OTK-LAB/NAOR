@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public float reduction_time;
-     public void speedReduction(Collider2D enemy)
+     public void speedReduction(Collider2D enemy,float reduction_time)
      {
         if (enemy.GetComponent<ShieldEnemy>() != null)
             enemy.GetComponent<ShieldEnemy>().speedReduction(reduction_time);
@@ -26,10 +25,10 @@ public class EnemyController : MonoBehaviour
     public void breakFreeze(Collider2D enemy)
     {
         if (enemy.GetComponent<ShieldEnemy>() != null)
-            enemy.GetComponent<ShieldEnemy>().setFrozenState();
+            enemy.GetComponent<ShieldEnemy>().breakFreeze();
         else if (enemy.GetComponent<SwordEnemy>() != null)
-            enemy.GetComponent<SwordEnemy>().setFrozenState();
+            enemy.GetComponent<SwordEnemy>().breakFreeze();
         else if (enemy.GetComponent<Archer>() != null)
-            enemy.GetComponent<Archer>().setFrozenState();
+            enemy.GetComponent<Archer>().breakFreeze();
      }
 }

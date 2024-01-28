@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor.Search;
 
 public class ShieldEnemy : MonoBehaviour
 {
@@ -235,6 +236,11 @@ public class ShieldEnemy : MonoBehaviour
         isFrozen = true;
         state = State.STATE_FROZEN;
     }
+    public void breakFreeze()
+    {
+        isFrozen = false;
+        checkPlayer();
+    }
     void hitState()
     {
         if (isHit)
@@ -381,8 +387,7 @@ public class ShieldEnemy : MonoBehaviour
         if (isFrozen)
         {
             gameObject.GetComponent<EnemyHealthSystem>().onFreeze = true;
-            Instantiate(ice);
-            ice.GetComponent<Animator>().enabled = true;
+            Instantiate(ice, new Vector3(gameObject.transform.position.x - 3, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
         }
     }
     void OnDead(object sender, EventArgs e)

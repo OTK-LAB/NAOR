@@ -10,14 +10,15 @@ public class EnemyHealthSystem : MonoBehaviour
     public float currentHealth;
     [SerializeField]
     public float maxHealth;
-
     public event EventHandler OnHit;
     public event EventHandler OnShield;
     public event EventHandler OnDead;
     public event EventHandler OnFreeze;
+
+
     float newDamageAmount;
     [HideInInspector] public bool onShield = false;
-    [HideInInspector] public bool onFreeze = false;
+    public bool onFreeze = false;
     public float shieldProtection;
 
     public bool Invincible { set { invincible = value; } }
@@ -48,7 +49,9 @@ public class EnemyHealthSystem : MonoBehaviour
             }
            
             OnFreeze?.Invoke(this, EventArgs.Empty);
-            if(onFreeze) { damageAmount += 15; }
+            if(onFreeze) {
+                damageAmount += 15;
+            }
            
             currentHealth -= damageAmount;
             
@@ -61,7 +64,7 @@ public class EnemyHealthSystem : MonoBehaviour
                 OnDead?.Invoke(this, EventArgs.Empty);
             }
             onShield = false;
-            onFreeze= false;
+            onFreeze = false;
         }
     }
 

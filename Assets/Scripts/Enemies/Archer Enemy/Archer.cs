@@ -159,6 +159,11 @@ public class Archer : MonoBehaviour
         isFrozen= true;
         state = State.STATE_FROZEN;
     }
+    public void breakFreeze()
+    {
+        isFrozen = false;
+        checkPlayer();
+    }
     void checkPlayer()
     {
         Vector2 enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
@@ -274,7 +279,7 @@ public class Archer : MonoBehaviour
         if (isFrozen)
         {
             gameObject.GetComponent<EnemyHealthSystem>().onFreeze = true;
-            Instantiate(ice);
+            Instantiate(ice, new Vector3(gameObject.transform.position.x - 3, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
         }
     }
     void OnDead(object sender, EventArgs e)

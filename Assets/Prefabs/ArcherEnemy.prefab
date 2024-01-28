@@ -369,6 +369,7 @@ MonoBehaviour:
   Arrow: {fileID: 440562133715720225, guid: 4cf06fc5f25081444bbf7d89b59811a4, type: 3}
   LaunchForce: 40
   attackPoint: {fileID: 5997636776245411477}
+  ice: {fileID: 5158700413561551027, guid: 9e4f1fd077f7f094b87c5a39bccf39b9, type: 3}
   moveDirection: 1
   moveSpeed: 3
   slowRate: 60
@@ -385,7 +386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88d0e0a5dbe520944a7e46117f9842c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reduction_time: 4
 --- !u!114 &5997636777266006082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,5 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 100
+  ice: {fileID: 0}
   onShield: 0
+  onFreeze: 0
   shieldProtection: 0
