@@ -244,14 +244,14 @@ public class Boss1Manager : MonoBehaviour
                             StartCoroutine(Charge());
                             chargeSkillTime = setchargeSkillTime;
                         }
-                        else
-                        {
-                            anim.Play("move");
-                            bossAttackBox.GetComponent<Animator>().Play("move");
+                    }
+                    else if (distance > meleerange && !InAnimation)
+                    {
+                        anim.Play("move");
+                        bossAttackBox.GetComponent<Animator>().Play("move");
 
-                            Vector2 direction = Player.transform.position - transform.position;
-                            rigid.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
-                        }
+                        Vector2 direction = Player.transform.position - transform.position;
+                        rigid.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
                     }
 
                 }
@@ -451,6 +451,8 @@ public class Boss1Manager : MonoBehaviour
 
         if(rageStatus >= 4)
             StartCoroutine(Charge());
+
+        chargeSkillTime += 5f;
     }
 
     public IEnumerator ChargeOk()
@@ -473,6 +475,8 @@ public class Boss1Manager : MonoBehaviour
         if (rageStatus < 4)
             inSkillUse = false;
         meleeWaitTime = setmeleeWaitTime;
+
+        chargeSkillTime += 5f;
     }
 
     public void AnimationTime(int answer)
