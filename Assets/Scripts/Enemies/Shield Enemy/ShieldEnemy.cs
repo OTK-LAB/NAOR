@@ -128,7 +128,7 @@ public class ShieldEnemy : MonoBehaviour
                 break;
             case State.STATE_COOLDOWN:
                 ChangeAnimationState(cooldown);
-                coolDown(2);
+                coolDown(0.5f);
                 break;
             case State.STATE_HIT:
                 hitState();

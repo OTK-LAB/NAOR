@@ -209,7 +209,6 @@ public class Archer : MonoBehaviour
             moveDirection *= -1;
             transform.Rotate(0f, 180f, 0f);
         }
-
     }
 
 
