@@ -6,12 +6,26 @@ using UltimateCC;
 public class ManaSoulSystem : MonoBehaviour
 {
     [SerializeField]
-    public float currentMana;
+    private float currentMana;
     [SerializeField]
     public float regenMana;
     [SerializeField]
-    public float maxMana;
+    private float maxMana;
+    public float CurrentMana { get { return currentMana; } set { currentMana = value; } }
+    public float RegenMana { get { return regenMana; } set { regenMana = value; } }
 
+    public float MaxMana
+    {
+        get
+        {
+            return maxMana;
+        }
+        set
+        {
+            maxMana = value;
+            OnMaxManaChanged?.Invoke(value);
+        }
+    }
     [SerializeField]
     public float currentSoul;
     [SerializeField]

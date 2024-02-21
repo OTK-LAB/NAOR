@@ -44,7 +44,7 @@ public class ShallowGrave : MonoBehaviour
     {
         if (inRange)
         {
-            Player.GetComponent<ManaSoulSystem>().currentMana = Player.GetComponent<ManaSoulSystem>().maxMana;
+            Player.GetComponent<ManaSoulSystem>().CurrentMana = Player.GetComponent<ManaSoulSystem>().MaxMana;
             Player.GetComponent<HealthSystem>().CurrentHealth = Player.GetComponent<HealthSystem>().MaxHealth;
             //Player.GetComponent<PlayerController>().lastCheckpointPosition = transform.position;
             active = true;
@@ -55,7 +55,7 @@ public class ShallowGrave : MonoBehaviour
 
     public void Respawn()
     {
-        Player.GetComponent<ManaSoulSystem>().currentMana = Player.GetComponent<ManaSoulSystem>().maxMana;
+        Player.GetComponent<ManaSoulSystem>().CurrentMana = Player.GetComponent<ManaSoulSystem>().MaxMana;
         Player.GetComponent<HealthSystem>().CurrentHealth = Player.GetComponent<HealthSystem>().MaxHealth;
         Player.GetComponent<ManaSoulSystem>().currentSoul = 0;
         Currency.GetComponent<CurrencyScript>().currency1 = Currency.GetComponent<CurrencyScript>().currency1 * 3 / 4;

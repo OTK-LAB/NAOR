@@ -185,7 +185,7 @@ public class InventorySystem : MonoBehaviour
     }
     public bool Broccoli(Item _equipedItem)
     {
-        //HealthSystem.broccoli=true;
+        PlayerMain.Instance.PlayerData.healthSystem.DamageMultiplier = _equipedItem.value;
         StartCoroutine(EffectCoroutine(_equipedItem));
         StartCoroutine(DelayCoroutine(_equipedItem));
         return true;
@@ -193,7 +193,7 @@ public class InventorySystem : MonoBehaviour
     }
     public bool SpringWater(Item _equipedItem)
     {
-        if (ManaSoulSystem.currentMana < ManaSoulSystem.maxMana)
+        if (ManaSoulSystem.CurrentMana < ManaSoulSystem.MaxMana)
         {
             ManaSoulSystem.AddMana(33);
             return true;
@@ -239,11 +239,13 @@ public class InventorySystem : MonoBehaviour
 
     public void HpBoost(Item _selectedItem)
     {
-        //PlayerMain.Instance.playerHealthSystem.MaxHealth+=_selectedItem.value;
+        float newMaxHealth = PlayerMain.Instance.PlayerData.healthSystem.MaxHealth + _selectedItem.value;
+        PlayerMain.Instance.PlayerData.healthSystem.MaxHealth = newMaxHealth;
     }
     public void ManaBoost(Item _selectedItem)
     {
-        ManaSoulSystem.maxMana+=_selectedItem.value;
+        float newMaxMana = ManaSoulSystem.MaxMana + _selectedItem.value;
+        ManaSoulSystem.MaxMana = newMaxMana;
     }
     public void AbilityPowerBoost(Item _selectedItem)
     {

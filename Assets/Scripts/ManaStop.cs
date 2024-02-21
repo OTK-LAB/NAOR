@@ -41,7 +41,7 @@ public class ManaStop : MonoBehaviour
 
     public void RecoverMana()
     {
-        Player.GetComponent<ManaSoulSystem>().AddMana(Player.GetComponent<ManaSoulSystem>().maxMana / 2);
+        Player.GetComponent<ManaSoulSystem>().AddMana(Player.GetComponent<ManaSoulSystem>().MaxMana / 2);
         inputActions.Interaction.Disable();
         isActive = false;
     }
