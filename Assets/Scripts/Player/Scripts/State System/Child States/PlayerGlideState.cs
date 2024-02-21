@@ -85,6 +85,7 @@ namespace UltimateCC
             {
                 _newVelocity.x = VelocityOnx();
             }
+            _newVelocity.y = Mathf.Lerp(rigidbody2D.velocity.y, _newVelocity.y, 0.1f);
             rigidbody2D.velocity = _newVelocity;
             localXVelovity = rigidbody2D.velocity.x;
         }
