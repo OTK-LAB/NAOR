@@ -92,12 +92,18 @@ namespace UltimateCC
             else if (!playerData.Physics.IsOnNotWalkableSlope)
             {
                 newVelocity = VelocityOnX();
-                rigidbody2D.velocity = -1 * newVelocity * playerData.Physics.WalkSpeedDirection.normalized;
+
+                var abilityManager = player.GetComponent<AbilityManager>();
+
+                rigidbody2D.velocity = -1 * newVelocity * playerData.Physics.WalkSpeedDirection.normalized * (abilityManager.SoulWalk.phase == AbilityManager.Phase.Active ? abilityManager.SoulWalk.walkMultiplier : 1);
             }
             else
             {
                 newVelocity = VelocityOnX();
-                rigidbody2D.velocity = new Vector2(newVelocity, rigidbody2D.velocity.y);
+
+                var abilityManager = player.GetComponent<AbilityManager>();
+
+                rigidbody2D.velocity = new Vector2(newVelocity * (abilityManager.SoulWalk.phase == AbilityManager.Phase.Active ? abilityManager.SoulWalk.walkMultiplier : 1), rigidbody2D.velocity.y);
             }
             localXVelovity = rigidbody2D.velocity.x;
         }

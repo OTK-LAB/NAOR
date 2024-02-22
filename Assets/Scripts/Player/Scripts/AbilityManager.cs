@@ -1,11 +1,10 @@
 using System.Collections;
 using UltimateCC;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AbilityManager : MonoBehaviour
 {
-    private PlayerData playerData;
+    private PlayerMain player;
 
     public enum Phase { Off, Start, End, Active }
     [System.Serializable]
@@ -41,7 +40,7 @@ public class AbilityManager : MonoBehaviour
 
     private void Awake()
     {
-        playerData = GetComponent<PlayerMain>().PlayerData;
+        player = GetComponent<PlayerMain>();
         SoulWalk.manaSoulSystem = GetComponent<ManaSoulSystem>();
     }
 
@@ -129,10 +128,34 @@ public class AbilityManager : MonoBehaviour
         if (SoulWalk.phase == Phase.Start)
         {
             SoulWalk.phase = Phase.Active;
+
+            if (player.CurrentState == PlayerMain.AnimName.CrouchIdle || player.CurrentState == PlayerMain.AnimName.CrouchWalk)
+            {
+                SoulWalk.IsInvisible = true;
+            }
+            player._stateMachine.OnStateEnter += CheckCrouchAndDash;
         }
         else if (SoulWalk.phase == Phase.End)
         {
             SoulWalk.phase = Phase.Off;
+
+            player._stateMachine.OnStateEnter -= CheckCrouchAndDash;
+        }
+    }
+
+    public void CheckCrouchAndDash(PlayerMain.AnimName state)
+    {
+        if (state == PlayerMain.AnimName.CrouchWalk || state == PlayerMain.AnimName.CrouchIdle)
+        {
+            SoulWalk.IsInvisible = true;
+        }
+        else
+        {
+            if (state == PlayerMain.AnimName.Dash && !SoulWalk.CanDash)
+            {
+                SoulWalk.phase = Phase.End;
+            }
+            SoulWalk.IsInvisible = false;
         }
     }
 }
