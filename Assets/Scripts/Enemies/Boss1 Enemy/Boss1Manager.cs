@@ -68,6 +68,7 @@ public class Boss1Manager : MonoBehaviour
 
     //rage
     public GameObject QTEIndicator;
+    private bool ouch;
 
     //disable attack hitbox if non damage move
 
@@ -102,7 +103,7 @@ public class Boss1Manager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (notDead)
+        if (notDead && canAttack)
         {
             if (!stunned && !charging && !gotoItem)
             {
@@ -118,13 +119,10 @@ public class Boss1Manager : MonoBehaviour
                 }
             }
 
-            //                                %70                                                         %50                                                         %32                                                          %5
-            if (((((healthSystem.currentHealth <= 42000f && rageStatus < 0) || (healthSystem.currentHealth <= 30000f && rageStatus < 1) || (healthSystem.currentHealth <= 18000f && rageStatus < 2) || (healthSystem.currentHealth <= 3000f)) && rageStatus <= 4) || TEST) && !inSkillUse && !InAnimation && !stunned)
+            //                                %70                                                         %50                                                         %32                                                          %10                                                                       %5
+            if (((((healthSystem.currentHealth <= (healthSystem.maxHealth*0.7f) && rageStatus <= 0) || (healthSystem.currentHealth <= (healthSystem.maxHealth /2f) && rageStatus <= 1) || (healthSystem.currentHealth <= (healthSystem.maxHealth /10f) && rageStatus <= 2) || (healthSystem.currentHealth <= (healthSystem.maxHealth/20f))) && rageStatus <= 4) || TEST) && !ouch)
             {
-                inSkillUse = true;
-                TEST = false;
-                rageStatus += 1;
-                WhatToThrow();
+                ouch = true;
             }
 
 
@@ -132,7 +130,7 @@ public class Boss1Manager : MonoBehaviour
 
             //timers
             
-            if (canAttack)
+            if (canAttack && !stunned)
             {
                 if (meleeWaitTime > 0)
                     meleeWaitTime -= Time.deltaTime;
@@ -157,6 +155,16 @@ public class Boss1Manager : MonoBehaviour
             if (canAttack)  //player in range
             {
                 //skill stuff
+
+                if (ouch && !inSkillUse && !InAnimation && !stunned)
+                {
+                    ouch = false;
+                    inSkillUse = true;
+                    TEST = false;
+                    rageStatus += 1;
+                    WhatToThrow();
+                }
+
 
                 if (backingUpTimer)
                 {
@@ -224,6 +232,8 @@ public class Boss1Manager : MonoBehaviour
                             anim.Play("attackup");
                             bossAttackBox.GetComponent<Animator>().Play("attackup");
                             meleeWaitTime = setmeleeWaitTime;
+
+                            chargeSkillTime+=1.3f;
                         }
                         else if (!InAnimation)
                         {
@@ -237,23 +247,22 @@ public class Boss1Manager : MonoBehaviour
                         StartCoroutine(Jump());
                         jumpSkillTime = setjumpSkillTime;
                     }
-                    else if (distance > (meleerange + 5f) && !InAnimation)
+                    else if ((distance > (meleerange)) && !InAnimation)
                     {
-                        if (!InAnimation && (chargeSkillTime <= 0))
+                        if ((chargeSkillTime <= 0))
                         {
                             StartCoroutine(Charge());
                             chargeSkillTime = setchargeSkillTime;
                         }
-                    }
-                    else if (distance > meleerange && !InAnimation)
-                    {
-                        anim.Play("move");
-                        bossAttackBox.GetComponent<Animator>().Play("move");
+                        else
+                        {
+                            anim.Play("move");
+                            bossAttackBox.GetComponent<Animator>().Play("move");
 
-                        Vector2 direction = Player.transform.position - transform.position;
-                        rigid.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
+                            Vector2 direction = Player.transform.position - transform.position;
+                            rigid.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
+                        }
                     }
-
                 }
 
             }
@@ -359,7 +368,7 @@ public class Boss1Manager : MonoBehaviour
         rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         rigid.constraints -= RigidbodyConstraints2D.FreezePositionX;
 
-        chargeSkillTime += 5f;
+        chargeSkillTime += setchargeSkillTime;
 
         yield return new WaitForSeconds(1.5f); //do it better 
 
@@ -452,7 +461,7 @@ public class Boss1Manager : MonoBehaviour
         if(rageStatus >= 4)
             StartCoroutine(Charge());
 
-        chargeSkillTime += 5f;
+        chargeSkillTime += setchargeSkillTime;
     }
 
     public IEnumerator ChargeOk()
@@ -476,7 +485,7 @@ public class Boss1Manager : MonoBehaviour
             inSkillUse = false;
         meleeWaitTime = setmeleeWaitTime;
 
-        chargeSkillTime += 5f;
+        chargeSkillTime += setchargeSkillTime;
     }
 
     public void AnimationTime(int answer)

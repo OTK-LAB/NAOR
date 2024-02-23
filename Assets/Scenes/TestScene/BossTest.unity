@@ -20849,6 +20849,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big
       objectReference: {fileID: 0}
+    - target: {fileID: 4057090679888635198, guid: 0001c9c7f991888428a1e5ddf2d5a6c4, type: 3}
+      propertyPath: damage
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0001c9c7f991888428a1e5ddf2d5a6c4, type: 3}
 --- !u!1001 &5495907440883402081
@@ -20905,6 +20909,10 @@ PrefabInstance:
     - target: {fileID: 5495907439953025863, guid: 59e49affbf1aa4141b4ea5a5b64e9104, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495907439953025865, guid: 59e49affbf1aa4141b4ea5a5b64e9104, type: 3}
+      propertyPath: damage
+      value: 300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59e49affbf1aa4141b4ea5a5b64e9104, type: 3}
@@ -20972,6 +20980,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6282609412925429928, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429930, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: m_Mass
       value: 20
@@ -21070,7 +21082,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429943, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: meleerange
-      value: 5
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429943, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: QTEIndicator
@@ -21102,7 +21114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429943, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: setchargeSkillTime
-      value: 7
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429943, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: chargeKnockbackForce
@@ -35712,6 +35724,14 @@ PrefabInstance:
     - target: {fileID: 7348319901874543225, guid: 5dff4b14fd7fddb4e89bd31abe6c633d, type: 3}
       propertyPath: m_Name
       value: Small
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348319901874543229, guid: 5dff4b14fd7fddb4e89bd31abe6c633d, type: 3}
+      propertyPath: damage
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348319901874543229, guid: 5dff4b14fd7fddb4e89bd31abe6c633d, type: 3}
+      propertyPath: throwSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7348319901874543230, guid: 5dff4b14fd7fddb4e89bd31abe6c633d, type: 3}
       propertyPath: m_RootOrder
