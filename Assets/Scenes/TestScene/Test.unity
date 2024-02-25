@@ -10124,7 +10124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6789813142486697875, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6789813142486697876, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: wall
@@ -10134,6 +10134,18 @@ PrefabInstance:
       propertyPath: wall2
       value: 
       objectReference: {fileID: 1935999063}
+    - target: {fileID: 6789813142486697877, guid: 15a931a353af7a3499d46505a033d657, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789813142486697877, guid: 15a931a353af7a3499d46505a033d657, type: 3}
+      propertyPath: currentHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6789813142486697877, guid: 15a931a353af7a3499d46505a033d657, type: 3}
+      propertyPath: shieldProtection
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 6789813143233222933, guid: 15a931a353af7a3499d46505a033d657, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -20604,7 +20616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5997636777266006083, guid: 7d095cae7ecf1d042b44d6ac6ae611ad, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5997636777266006085, guid: 7d095cae7ecf1d042b44d6ac6ae611ad, type: 3}
       propertyPath: wall
