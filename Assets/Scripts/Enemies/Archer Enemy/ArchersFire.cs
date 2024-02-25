@@ -29,7 +29,7 @@ public class ArchersFire : MonoBehaviour
         timer += Time.deltaTime;
         if (stay && timer > (fire_time/10))
         {
-            player.GetComponent<HealthSystem>().Damage(damage);
+            player.GetComponent<HealthSystem>()?.Damage(damage);
             timer = 0;
         }
     }

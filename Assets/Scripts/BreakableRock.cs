@@ -16,7 +16,10 @@ public class BreakableRock : MonoBehaviour
     }
     void OnHit()
     {
-        Instantiate(SpawnObject,new Vector3(transform.position.x, transform.position.y,0), Quaternion.identity);
+        if(SpawnObject != null)
+        {
+            Instantiate(SpawnObject,new Vector3(transform.position.x, transform.position.y,0), Quaternion.identity);
+        }
         Destroy(this.gameObject);
         
     }

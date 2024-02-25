@@ -2354,7 +2354,6 @@ GameObject:
   - component: {fileID: 420248616}
   - component: {fileID: 420248615}
   - component: {fileID: 420248614}
-  - component: {fileID: 420248617}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -2489,18 +2488,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 420248612}
   m_CullTransparentMesh: 1
---- !u!114 &420248617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 420248612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e33d9c15e2ac264f890e0badfc83b1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &427532606
 GameObject:
   m_ObjectHideFlags: 0
@@ -3739,7 +3726,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5309944, y: 5.1149697, z: -9.117128}
+  m_LocalPosition: {x: -1.530983, y: 5.1149697, z: -9.117128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10955,7 +10942,6 @@ GameObject:
   - component: {fileID: 1239587457}
   - component: {fileID: 1239587456}
   - component: {fileID: 1239587455}
-  - component: {fileID: 1239587458}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -11114,18 +11100,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1239587453}
   m_CullTransparentMesh: 1
---- !u!114 &1239587458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1239587453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e33d9c15e2ac264f890e0badfc83b1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1241353835
 GameObject:
   m_ObjectHideFlags: 0
@@ -12672,7 +12646,6 @@ GameObject:
   - component: {fileID: 1452148347}
   - component: {fileID: 1452148346}
   - component: {fileID: 1452148345}
-  - component: {fileID: 1452148348}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -12807,18 +12780,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1452148343}
   m_CullTransparentMesh: 1
---- !u!114 &1452148348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1452148343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e33d9c15e2ac264f890e0badfc83b1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1471721227
 GameObject:
   m_ObjectHideFlags: 0
@@ -17962,7 +17923,7 @@ PrefabInstance:
     - target: {fileID: 2074856879, guid: 695ddbf0b7891fa478659905db4e2c9d, type: 3}
       propertyPath: SpawnObject
       value: 
-      objectReference: {fileID: 6684767046887524778, guid: 0f1a1fd408784584492502c980bc866c, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2267912555896859874, guid: 695ddbf0b7891fa478659905db4e2c9d, type: 3}
       propertyPath: m_Name
       value: BreakableRock
@@ -19347,7 +19308,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 2.1461987, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

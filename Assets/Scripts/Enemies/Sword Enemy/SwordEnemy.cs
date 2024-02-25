@@ -337,7 +337,6 @@ public class SwordEnemy : MonoBehaviour
     }
     private bool WaitForSeconds(float i)
     {
-        Debug.Log(timer);
         timer += Time.deltaTime;
         if (timer >= i)
         {

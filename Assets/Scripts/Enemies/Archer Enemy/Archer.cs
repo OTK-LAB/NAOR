@@ -12,7 +12,8 @@ public class Archer : MonoBehaviour
         STATE_ATTACK,
         STATE_COOLDOWN,
         STATE_FROZEN,
-        STATE_HIT
+        STATE_HIT,
+        STATE_DEAD
     };
 
 
@@ -23,7 +24,7 @@ public class Archer : MonoBehaviour
     const string cooldown = "cooldown";
     const string hit = "hit";
     const string attack = "attack";
-    const string death = "death_";
+    const string death = "death";
     const string startingmove = "run";
 
     public Material material;
@@ -44,7 +45,7 @@ public class Archer : MonoBehaviour
     public GameObject Arrow;
     public float LaunchForce;
     public GameObject attackPoint;
-    float verticalTolerance = 1.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
+    float verticalTolerance = 1.5f; //enemy alttayken player ï¿½stteyse onu algï¿½lamasï¿½n diye eklendi
 
     //Move
     bool Moveright = true;
@@ -65,6 +66,7 @@ public class Archer : MonoBehaviour
     LayerMask enemyLayers;
     EnemyHealthSystem _healthSystem;
     public float knockbackDistance; //geri sekmesi
+    private float hitTimer = 0.0f;
 
     public GameObject soul;
 
@@ -113,15 +115,17 @@ public class Archer : MonoBehaviour
                 break;
             case State.STATE_COOLDOWN:
                 ChangeAnimationState(cooldown);
-                coolDown(2);
+                coolDown(1);
                 break;
             case State.STATE_FROZEN:
                 ChangeAnimationState(cooldown);
                 rb.velocity = Vector2.zero;
-                coolDown(5);
+                coolDown(1);
                 break;
             case State.STATE_HIT:
                 hitState();
+                break;
+            case State.STATE_DEAD:
                 break;
         }
     }
@@ -130,10 +134,6 @@ public class Archer : MonoBehaviour
         float moveDirectionX = moveDirection;
         float step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
-    }
-    public void setState()
-    {
-        state = State.STATE_STARTINGMOVE;
     }
 
     public void slowTimer()
@@ -162,7 +162,7 @@ public class Archer : MonoBehaviour
     }
     void checkPlayer()
     {
-        Vector2 enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
+        Vector2 enemyPosition = new Vector2(rb.position.x, rb.position.y); // Dï¿½ï¿½manï¿½n konumu
         Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
 
         float distanceToPlayer = Vector2.Distance(enemyPosition, playerPosition);
@@ -175,7 +175,6 @@ public class Archer : MonoBehaviour
         {
             state = State.STATE_STARTINGMOVE;
         }
-
     }
 
     public void ArrowMechanism()
@@ -244,29 +243,35 @@ public class Archer : MonoBehaviour
             ChangeAnimationState(hit);
             isHit = false;
             attackable = true;
+            hitTimer = 0.0f;
+        }
+
+        hitTimer += Time.deltaTime;
+        if (hitTimer >= animator.GetCurrentAnimatorStateInfo(0).length)
+        {
+            coolDown(1);
         }
     }
 
     void OnHit(object sender, float knockdistance)
     {
-        if (!IsDead)
-        {
-            state = State.STATE_HIT;
-            isHit = true;
-        }
+        if (IsDead) return;
+        
+        state = State.STATE_HIT;
+        isHit = true;
     }
     void OnDead(object sender, EventArgs e)
     {
-        if (!IsDead)
-        {
-            IsDead = true;
-        //    StartCoroutine(SpawnSoul(0.8f));
-            ChangeAnimationState(death);
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            GetComponent<Collider2D>().enabled = false;
-            this.enabled = false;
-            GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
-        }
+        if (IsDead) return;
+    
+        IsDead = true;
+        // StartCoroutine(SpawnSoul(0.8f));
+        ChangeAnimationState(death);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        GetComponent<Collider2D>().enabled = false;
+        // this.enabled = false;
+        state = State.STATE_DEAD;
+        GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
     }
     IEnumerator SpawnSoul(float wait)
     {
