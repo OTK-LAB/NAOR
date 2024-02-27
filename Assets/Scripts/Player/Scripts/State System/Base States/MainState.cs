@@ -8,7 +8,7 @@ namespace UltimateCC
         protected PlayerMain player;
         protected PlayerStateMachine stateMachine;
         protected Rigidbody2D rigidbody2D;
-        protected readonly PlayerMain.AnimName _animEnum;
+        public readonly PlayerMain.AnimName _animEnum;
         protected PlayerData playerData;
         protected PlayerInputManager inputManager;
 
