@@ -24,8 +24,6 @@ public class ArchersArrow : MonoBehaviour
     private float gravity;
     [SerializeField]
     private float damageRadius;
-    [SerializeField]
-    private Transform damagePosition;
 
     private HealthSystem playerHealthSystem;
 
@@ -70,7 +68,7 @@ public class ArchersArrow : MonoBehaviour
         }
         if (collision.gameObject.layer == 6)
         {
-            fire_loc = new Vector3(damagePosition.position.x, (transform.position.y + 1f), 0);
+            fire_loc = new Vector3(transform.position.x, (transform.position.y + 1f), 0);
             Instantiate(fire, fire_loc, Quaternion.LookRotation(Vector3.forward, fire_loc));
             hasItGround = true;
             rb.gravityScale = 0.0f;
@@ -84,9 +82,5 @@ public class ArchersArrow : MonoBehaviour
         arrowSpeed = speed;
         this.travelDistance = travelDistance;
         ArrowDamage = damage;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(damagePosition.position, damageRadius);
     }
 }

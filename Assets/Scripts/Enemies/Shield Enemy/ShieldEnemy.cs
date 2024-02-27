@@ -5,8 +5,6 @@ using System;
 
 public class ShieldEnemy : MonoBehaviour
 {
-
-
     enum State
     {
         STATE_STARTINGMOVE,
@@ -18,9 +16,7 @@ public class ShieldEnemy : MonoBehaviour
         STATE_FROZEN,
         STATE_BACKTOWALL
     };
-
-
-
+    
     //Animations
     private Animator animator;
     private string currentState;
@@ -35,7 +31,6 @@ public class ShieldEnemy : MonoBehaviour
     private GameObject player;
     private Transform playerPos;
     float distanceToPlayer;
-    private Vector2 currentPlayerPos;
     [SerializeField] public float distance;
     [SerializeField] public float moveSpeed;
 
@@ -128,13 +123,14 @@ public class ShieldEnemy : MonoBehaviour
                 break;
             case State.STATE_COOLDOWN:
                 ChangeAnimationState(cooldown);
-                coolDown(2);
+                coolDown(0.5f);
                 break;
             case State.STATE_HIT:
                 hitState();
                 break;
             case State.STATE_SHIELD:
                 ChangeAnimationState(shield);
+                StartCoroutine(ChangeToNewState(2.0f, cooldown, State.STATE_COOLDOWN));
                 break;
             case State.STATE_FROZEN:
                 ChangeAnimationState(cooldown);
@@ -151,7 +147,7 @@ public class ShieldEnemy : MonoBehaviour
     void startingMove()
     {
         if (!slow)
-            moveSpeed = firstmoveSpeed; // baþlangýç hareket hýzý
+            moveSpeed = firstmoveSpeed; // baï¿½langï¿½ï¿½ hareket hï¿½zï¿½
         moveDirectionX = moveDirection;
         step = moveSpeed * moveDirectionX;
         rb.velocity = new Vector3(step, rb.velocity.y);
@@ -159,7 +155,7 @@ public class ShieldEnemy : MonoBehaviour
 
     void checkPlayer()
     {
-        enemyPosition = new Vector2(rb.position.x, rb.position.y); // Düþmanýn konumu
+        enemyPosition = new Vector2(rb.position.x, rb.position.y); // Dï¿½ï¿½manï¿½n konumu
      //   Vector2 playerPosition = new Vector2(playerPos.position.x, playerPos.position.y); // Oyuncunun konumu
         distanceToPlayer = Vector2.Distance(enemyPosition, playerPos.position);
         isBetweenWalls = transform.position.x >= wall.transform.position.x && transform.position.x <= wall2.transform.position.x;
@@ -175,10 +171,6 @@ public class ShieldEnemy : MonoBehaviour
             state = State.STATE_STARTINGMOVE;
         else
             state = State.STATE_BACKTOWALL;
-    }
-    public void setState()
-    {
-        state = State.STATE_STARTINGMOVE;
     }
 
     void following()
@@ -203,7 +195,7 @@ public class ShieldEnemy : MonoBehaviour
         }
         rb.velocity = startDirection.normalized * moveSpeed;
         checkPlayer();
-        // Baþlangýç konumuna ulaþtýðýnda, Walking state'ine geç
+        // Baï¿½langï¿½ï¿½ konumuna ulaï¿½tï¿½ï¿½ï¿½nda, Walking state'ine geï¿½
         if (Vector2.Distance(transform.position, startPoint) < 0.1f)
         {
             hasTurned = false;
@@ -343,38 +335,34 @@ public class ShieldEnemy : MonoBehaviour
 
     void OnHit(object sender, float knockdistance)
     {
-        if (!IsDead)
-        {
-            state = State.STATE_HIT;
-            isHit = true;
-        }
+        if (IsDead) return;
+        
+        state = State.STATE_HIT;
+        isHit = true;
     }
     void OnShield(object sender, EventArgs e )
     {
-        if (!IsDead)
+        if (IsDead) return;
+        
+        checkBehind();
+        if (isBehind)
         {
-            checkBehind();
-            if (isBehind)
-            {
-                state = State.STATE_SHIELD;
-              //  isShield = true;
-                gameObject.GetComponent<EnemyHealthSystem>().onShield = true;
-            }
-
+            state = State.STATE_SHIELD;
+          //  isShield = true;
+            gameObject.GetComponent<EnemyHealthSystem>().onShield = true;
         }
-
     }
     void OnDead(object sender, EventArgs e)
     {
-        if (!IsDead)
-        {
-            IsDead = true;
-            ChangeAnimationState(death);
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            GetComponent<Collider2D>().enabled = false;
-            this.enabled = false;
-            GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
-        }
+        if (IsDead) return;
+        
+        IsDead = true;
+        ChangeAnimationState(death);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        GetComponent<Collider2D>().enabled = false;
+        rb.velocity = Vector2.zero;
+        this.enabled = false;
+        GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
     }
 
     private void OnDrawGizmosSelected()
@@ -387,5 +375,13 @@ public class ShieldEnemy : MonoBehaviour
         if (currentState == newState) return;
         animator.Play(newState);
         currentState = newState;
+    }
+
+    IEnumerator ChangeToNewState(float waitTime, string animationStateName, State state_)
+    {
+        yield return new WaitForSeconds(waitTime);
+        
+        ChangeAnimationState(animationStateName);
+        this.state = state_;
     }
 }
