@@ -28,16 +28,18 @@ public class BossAttackBox : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            if (!boss.inSkillUse)
-            {
-                PlayerMain.Instance.PlayerData.healthSystem.Damage(200);
-                Debug.Log("200 damage");
-            }
-            else if (boss.charging)
+            if (boss.charging)
             {
                 PlayerMain.Instance.PlayerData.healthSystem.Damage(300);
                 Debug.Log("300 damage");
             }
+            else
+            {
+                PlayerMain.Instance.PlayerData.healthSystem.Damage(200);
+                Debug.Log("200 damage");
+            }
+
+            GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 }

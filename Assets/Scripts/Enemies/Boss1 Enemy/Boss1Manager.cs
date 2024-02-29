@@ -154,6 +154,10 @@ public class Boss1Manager : MonoBehaviour
 
             if (canAttack)  //player in range
             {
+                if(!InAnimation)
+                    bossAttackBox.GetComponent<BoxCollider2D>().enabled = true;
+
+
                 //skill stuff
 
                 if (ouch && !inSkillUse && !InAnimation && !stunned)

@@ -5,6 +5,7 @@ using UltimateCC;
 
 public class BossThrowableObject : MonoBehaviour
 {
+    [HideInInspector] public PlayerMain playerMain;
     Rigidbody2D rigid;
 
 
@@ -59,15 +60,18 @@ public class BossThrowableObject : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "wall" || collision.tag == "ground")
+        if (readytogo)
         {
-            Hit();
-        }
-
-        if (collision.tag == "player")
-        {
-            PlayerMain.Instance.PlayerData.healthSystem.Damage(damage);
-            Hit();
+            if (collision.tag == "Player")
+            {
+                PlayerMain.Instance.PlayerData.healthSystem.Damage(damage);
+                Debug.Log(damage);
+                Hit();
+            }
+            else if (collision.tag == "wall" || collision.tag == "ground")
+            {
+                Hit();
+            }
         }
     }
 

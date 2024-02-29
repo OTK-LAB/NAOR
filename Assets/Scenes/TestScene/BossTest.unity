@@ -1990,6 +1990,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
+      propertyPath: PlayerData.Dash.maxSpeed
+      value: 33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902648875053040774, guid: d4cdc4b3873c84b43b9fbd475c443649, type: 3}
       propertyPath: playerHealthSystem.maxHealth
       value: 1000
       objectReference: {fileID: 0}
@@ -17574,6 +17578,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 567a2623-4cfe-4064-83a0-4900eb3e23ca
     m_ActionName: UI/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3fe8b46d-f398-418d-9506-41c3f1ccb827
+    m_ActionName: UI/Consumable[/Keyboard/h]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: abae5148-17d2-4cff-a434-9042c153834e
+    m_ActionName: UI/Throwable[/Keyboard/g]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -20849,6 +20861,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Big
       objectReference: {fileID: 0}
+    - target: {fileID: 4057090679888635186, guid: 0001c9c7f991888428a1e5ddf2d5a6c4, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4057090679888635198, guid: 0001c9c7f991888428a1e5ddf2d5a6c4, type: 3}
       propertyPath: damage
       value: 500
@@ -20865,6 +20881,10 @@ PrefabInstance:
     - target: {fileID: 5495907439953025861, guid: 59e49affbf1aa4141b4ea5a5b64e9104, type: 3}
       propertyPath: m_Name
       value: Middle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495907439953025861, guid: 59e49affbf1aa4141b4ea5a5b64e9104, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5495907439953025863, guid: 59e49affbf1aa4141b4ea5a5b64e9104, type: 3}
       propertyPath: m_RootOrder
@@ -21009,12 +21029,16 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429935, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282609412925429935, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 42.93
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429935, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.17
+      value: -6.75
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429935, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -21078,7 +21102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429943, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: jumpRange
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6282609412925429943, guid: 69abd87143d31664ab949644ebfa827c, type: 3}
       propertyPath: meleerange
@@ -35724,6 +35748,10 @@ PrefabInstance:
     - target: {fileID: 7348319901874543225, guid: 5dff4b14fd7fddb4e89bd31abe6c633d, type: 3}
       propertyPath: m_Name
       value: Small
+      objectReference: {fileID: 0}
+    - target: {fileID: 7348319901874543225, guid: 5dff4b14fd7fddb4e89bd31abe6c633d, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7348319901874543229, guid: 5dff4b14fd7fddb4e89bd31abe6c633d, type: 3}
       propertyPath: damage
