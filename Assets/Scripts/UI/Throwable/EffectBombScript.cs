@@ -12,10 +12,12 @@ public class EffectBombScript : MonoBehaviour
     private void Awake()
     {
     }
+    
     void Start()
     {
         timer = 6;
     }
+    
     void Update()
     {
         timer -= Time.deltaTime;
@@ -27,10 +29,10 @@ public class EffectBombScript : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
-            if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-            {
-                //slow down enemy movoment speed and attack speed
-                col.GetComponent<EnemyController>().speedReduction(col);
-            }
+        if (col.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            //slow down enemy movoment speed and attack speed
+            col.GetComponent<EnemyController>().speedReduction(col);
+        }
     }
 }

@@ -32,10 +32,9 @@ public class EnemyHealthSystem : MonoBehaviour
 
     public void Damage(float damageAmount, float knockbackDistance)
     {
-
         if (!invincible)
         {
-            if(gameObject.tag == "shield" )
+            if(gameObject.tag == "shield")
             {
                 OnShield?.Invoke(this, EventArgs.Empty);
                 if(onShield)

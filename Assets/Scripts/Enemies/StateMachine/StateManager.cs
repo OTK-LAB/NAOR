@@ -8,12 +8,12 @@ public abstract class StateManager<EState> : MonoBehaviour where EState : Enum
     protected Dictionary<EState, BaseState<EState>> _states;
     protected BaseState<EState> _currentState;
     
-    private void Start()
+    public void Start()
     {
         _currentState?.EnterState();
     }
 
-    private void Update()
+    public void Update()
     {
         if (_currentState == null) return;
         
@@ -26,24 +26,24 @@ public abstract class StateManager<EState> : MonoBehaviour where EState : Enum
         }
     }
 
-    private void TransitionToState(EState nextStateKey)
+    public void TransitionToState(EState nextStateKey)
     {
         _currentState?.ExitState();
         _currentState = _states[nextStateKey];
         _currentState?.EnterState();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         _currentState?.OnTriggerEnter2D(other);
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    public void OnTriggerStay2D(Collider2D other)
     {
         _currentState?.OnTriggerStay2D(other);
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public void OnTriggerExit2D(Collider2D other)
     {
         _currentState?.OnTriggerExit2D(other);
     }

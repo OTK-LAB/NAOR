@@ -7,7 +7,7 @@ public abstract class BaseState<EState> where EState : Enum
 {
     public EState stateKey { get; private set; }
 
-    BaseState(EState key)
+    public BaseState(EState key)
     {
         stateKey = key;
     }

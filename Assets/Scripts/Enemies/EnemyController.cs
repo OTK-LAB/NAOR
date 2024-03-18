@@ -11,8 +11,8 @@ public class EnemyController : MonoBehaviour
             enemy.GetComponent<ShieldEnemy>().speedReduction(reduction_time);
         else if (enemy.GetComponent<SwordEnemy>() != null)
             enemy.GetComponent<SwordEnemy>().speedReduction(reduction_time);
-        else if (enemy.GetComponent<Archer>() != null)
-            enemy.GetComponent<Archer>().speedReduction(reduction_time);
+        // else if (enemy.GetComponent<Archer>() != null)
+        //     enemy.GetComponent<Archer>().speedReduction(reduction_time);
      }
     public void frozenState(Collider2D enemy)
     {
@@ -20,7 +20,7 @@ public class EnemyController : MonoBehaviour
             enemy.GetComponent<ShieldEnemy>().setFrozenState();
         else if (enemy.GetComponent<SwordEnemy>() != null)
             enemy.GetComponent<SwordEnemy>().setFrozenState();
-        else if (enemy.GetComponent<Archer>() != null)
-            enemy.GetComponent<Archer>().setFrozenState();
+        // else if (enemy.GetComponent<Archer>() != null)
+        //     enemy.GetComponent<Archer>().setFrozenState();
      }
 }
