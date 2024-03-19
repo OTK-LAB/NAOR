@@ -16,11 +16,25 @@ public class Creature : MonoBehaviour
     [BoundedCurve] public AnimationCurve dashXVelocityCurve;
     [NonEditable] public float curveTime;
 
+    private enum State
+    {
+        Idle,
+        Walk,
+        Run,
+        Jump,
+        Attack1,
+        Attack2,
+        Die
+    }
+    [SerializeField] private State state;
+
     private void Awake()
     {
+        animator = GetComponentInChildren<Animator>();
+        state = State.Idle;
+        animator.SetBool(state.ToString(), true);
         rb = GetComponent<Rigidbody2D>();
         dashYVelocityCurve = dashHeightCurve.Derivative();
-        animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -50,12 +64,20 @@ public class Creature : MonoBehaviour
         }
         else if (curveTime / dashTime >= 1f)
         {
+            ChangeState(State.Idle);
             velocity = new(0, rb.velocity.y);
         }
         else
         {
             velocity.x = Mathf.Sign(enemy.position.x - transform.position.x) * dashXVelocityCurve.Evaluate(curveTime / dashTime) * (dashDistance - 1f) / dashTime;
             velocity.y = dashYVelocityCurve.Evaluate(curveTime / dashTime) * maxDashHeight / dashTime;
+        }
+
+        if (Mathf.Sign(velocity.x) != Mathf.Sign(transform.GetChild(0).localScale.x) && velocity.x != 0f)
+        {
+            var scale = transform.GetChild(0).localScale;
+            scale.x *= -1;
+            transform.GetChild(0).localScale = scale;
         }
         return velocity;
     }
@@ -68,7 +90,15 @@ public class Creature : MonoBehaviour
             if (!enemy || Vector2.Distance(transform.position, enemy.position) > Vector2.Distance(transform.position, collision.transform.position))
             {
                 enemy = collision.transform;
+                ChangeState(State.Run);
             }
         }
+    }
+
+    private void ChangeState(State newState)
+    {
+        animator.SetBool(state.ToString(), false);
+        state = newState;
+        animator.SetBool(newState.ToString(), true);
     }
 }

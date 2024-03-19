@@ -12,7 +12,7 @@ public class AbilityManager : MonoBehaviour
     public class NecromancersBladeVariables
     {
         public float ManaCost;
-        [Range(1, 3)] public float AttackMultiplier;
+        public float ExtraAttackDamageAmount;
         public float MaxSoul;
         public float MaxUpgradedAttacks;
         [NonEditable] public Phase phase;
@@ -51,7 +51,15 @@ public class AbilityManager : MonoBehaviour
         {
             if (NecromancersBlade.phase == Phase.Active)
             {
-                NecromancersBlade.StoredSoul++;
+                NecromancersBlade.StoredSoul = (int)Mathf.Min(NecromancersBlade.StoredSoul + 1, NecromancersBlade.MaxSoul);
+            }
+        };
+        PlayerAttackCollider.OnEnemyDamaged += (enemyHealthSystem) =>
+        {
+            if (NecromancersBlade.phase == Phase.Active)
+            {
+                enemyHealthSystem.Damage(NecromancersBlade.ExtraAttackDamageAmount);
+                NecromancersBlade.CurrentUpgradedAttack--;
             }
         };
     }
@@ -71,7 +79,7 @@ public class AbilityManager : MonoBehaviour
         }
         else if (NecromancersBlade.phase == Phase.Active)
         {
-            if (NecromancersBlade.CurrentUpgradedAttack == 0)
+            if (NecromancersBlade.CurrentUpgradedAttack <= 0)
             {
                 NecromancersBlade.phase = Phase.End;
             }
@@ -79,14 +87,12 @@ public class AbilityManager : MonoBehaviour
 
         if (NecromancersBlade.phase == Phase.Start)
         {
-            // increase attack multiplier (at playerData) by NecromancersBlade.AttackMultiplier
             NecromancersBlade.CurrentUpgradedAttack = NecromancersBlade.MaxUpgradedAttacks;
             NecromancersBlade.StoredSoul = 0;
             NecromancersBlade.phase = Phase.Active;
         }
         else if (NecromancersBlade.phase == Phase.End)
         {
-            // decrease attack multiplier (at playerData) by NecromancersBlade.AttackMultiplier
             if (NecromancersBlade.StoredSoul > 0)
             {
                 SpawnCreature(NecromancersBlade.StoredSoul);
