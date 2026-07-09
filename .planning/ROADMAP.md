@@ -19,6 +19,18 @@
 - [ ] Phase 1.1: Directory Structure (0 plans)
 - [ ] Phase 1.2: Codebase Audit (0 plans)
 
+### Phase 1.1: Directory Structure
+**Goal:** Clean up directory structure and assets
+**Success criteria:**
+1. All assets are categorized into Art, Scripts, and Prefabs.
+2. No loose scripts or prefabs remain in the root of the Assets folder.
+
+### Phase 1.2: Codebase Audit
+**Goal:** Remove dead code and optimize performance
+**Success criteria:**
+1. Unnecessary abstractions are removed from the codebase.
+2. Code executes faster and follows Ponytail Ultra principles.
+
 ## Progress
 
 | Phase | Milestone | Plans Complete | Status | Completed |
