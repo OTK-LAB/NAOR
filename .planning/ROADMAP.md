@@ -3,6 +3,7 @@
 ## Milestones
 
 - ✅ **v4.0 Autonomous AI Art Pipeline** — Phase 4.1 (shipped 2026-07-10)
+- 🚧 **v1.0 Refactor & Optimization** — Phases 1.1-1.2 (in progress)
 
 ## Phases
 
@@ -13,12 +14,19 @@
 
 </details>
 
-## Backlog / Planned
+### 🚧 v1.0 Refactor & Optimization (In Progress)
 
-### 🚧 v1.0 Refactor & Optimization
-**Goal**: Clean up the legacy mess and establish a high-performance foundation.
-- [ ] Phase 1.1: Directory structure cleanup and asset organization.
-- [ ] Phase 1.2: Codebase audit, dead code removal, and performance optimization.
+- [ ] Phase 1.1: Directory Structure (0 plans)
+- [ ] Phase 1.2: Codebase Audit (0 plans)
+
+## Progress
+
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|-----------|
+| 1.1. Directory Structure | v1.0 | 0/0 | Not started | - |
+| 1.2. Codebase Audit | v1.0 | 0/0 | Not started | - |
+
+## Backlog / Planned
 
 ### 🚧 v2.0 UI Overhaul
 **Goal**: Create a highly functional, robust Menu system.

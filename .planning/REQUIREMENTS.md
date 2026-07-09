@@ -18,3 +18,10 @@
 - New gameplay features (deferred to later milestones)
 
 ## Traceability
+
+| REQ-ID | Description | Phase | Status |
+|--------|-------------|-------|--------|
+| ARCH-01 | Clean up directory structure and organize assets | 1.1 | Pending |
+| ARCH-02 | Resolve loose scripts and prefabs in root | 1.1 | Pending |
+| PERF-01 | Remove unnecessary abstractions and dependencies | 1.2 | Pending |
+| PERF-02 | Optimize execution speed and clean legacy code | 1.2 | Pending |
