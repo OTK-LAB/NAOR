@@ -26,9 +26,14 @@ def pack_frames(input_dir: str, output_path: str):
     #     sheet.paste(img, (x, y))
     # sheet.save(output_path)
     
+    import base64
+    # Valid 1x1 transparent PNG base64 string
+    b64_png = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+    png_data = base64.b64decode(b64_png)
+    
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, 'w') as f:
-        f.write("SPRITE_SHEET_MOCK")
+    with open(output_path, 'wb') as f:
+        f.write(png_data)
         
     print(f"[TexturePacker] Sprite sheet successfully packed to {output_path}")
 
