@@ -3,6 +3,10 @@
 ## Overview
 This project is a revival of an old 2D animated game project. It had become disorganized over time, and this fresh start (`Efe-Basol` branch) aims to bring strict engineering standards, ultra-clean folder structures, and optimized mechanics. We are operating under Ponytail Ultra philosophy: No unrequested abstractions, no avoidable dependencies, minimum that works but incredibly clean and structured.
 
+## Current State
+- **Shipped:** v4.0 Autonomous AI Art Pipeline (Completed: 2026-07-10).
+- The pipeline orchestrator and C# ingestion scripts have been successfully implemented and verified with mock PNG generation. AI models are deferred to user download.
+
 ## Goals
 1. Establish a pristine, strictly categorized directory structure (especially for `Assets`).
 2. Perform a deep refactoring and optimization of the existing codebase.
@@ -12,6 +16,10 @@ This project is a revival of an old 2D animated game project. It had become diso
 ## Technology Stack
 - Unity (2D)
 - C#
+- Python (AI Art Pipeline: MoMask, ComfyUI, Blender on MPS)
 
 ## Team & Roles
 - Efe Basol: Lead Developer & Architect
+
+---
+*Last updated: 2026-07-10 after v4.0 milestone*

@@ -1,12 +1,13 @@
 # NAOR - Project State
 
 ## Current Phase
-- Project initialization and directory cleanup.
+- Phase 4.1 (Autonomous AI Art Pipeline Integration) execution and UAT complete.
+- Milestone 1.0 previously completed.
 
 ## Recent Decisions
-- Initiated `/gsd-new-project` flow.
-- Adopted Ponytail Ultra philosophy for codebase.
-- Established three milestones:
-  1. Refactor and optimize.
-  2. Main menu overhaul.
-  3. Mechanics, Story, and Scenes merge.
+- Adopted open-source, local AI stack (MoMask + ComfyUI + Blender) running on Apple Silicon (MPS).
+- Pipeline orchestrator and Unity C# ingestion scripts mock tested and successfully verified (UAT PASSED).
+
+## Pending Action
+- The structural code for the AI pipeline is ready.
+- To finalize this segment, complete the milestone or begin downloading the 25 GB AI models into the external drive to switch from mock to live generation.
