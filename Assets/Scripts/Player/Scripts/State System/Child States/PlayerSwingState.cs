@@ -11,7 +11,7 @@ public class PlayerSwingState : MainState, IMove1D
     {
         base.Enter();
         player.transform.position = playerData.Swing.SwingInitialPosition;
-        Debug.Log(rigidbody2D.velocity);
+        Debug.Log(rigidbody2D.linearVelocity);
         playerData.Physics.ConnectedHingeJoint.connectedBody = rigidbody2D;
     }
 
@@ -20,7 +20,7 @@ public class PlayerSwingState : MainState, IMove1D
         base.Exit();
         playerData.Physics.ConnectedHingeJoint.connectedBody = null;
         playerData.Physics.ConnectedHingeJoint = null;
-        rigidbody2D.drag = 0f;
+        rigidbody2D.linearDamping = 0f;
     }
 
     public override void FixedUpdate()
@@ -56,6 +56,6 @@ public class PlayerSwingState : MainState, IMove1D
     public void SwingMovement()
     {
         rigidbody2D.gravityScale = playerData.Swing.Gravity;
-        rigidbody2D.drag = playerData.Swing.Drag;
+        rigidbody2D.linearDamping = playerData.Swing.Drag;
     }
 }

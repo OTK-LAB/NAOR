@@ -15,7 +15,7 @@ public class Portal : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         enteredRigidbody = collision.gameObject.GetComponent<Rigidbody2D>();
-        enterVelocity = enteredRigidbody.velocity.x;
+        enterVelocity = enteredRigidbody.linearVelocity.x;
         
         if (portal1)
         {
@@ -31,7 +31,7 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        exitVelocity = enteredRigidbody.velocity.x;
+        exitVelocity = enteredRigidbody.linearVelocity.x;
 
         clone = PortalController.instance.instantiatedClone;
 

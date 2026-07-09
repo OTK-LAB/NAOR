@@ -39,7 +39,7 @@ public class TrapsArrow : MonoBehaviour
         {
             hasItGround = true;
             Destroy(gameObject, 3f);
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
     }
 }

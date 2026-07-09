@@ -17,7 +17,7 @@ namespace UltimateCC
             base.Enter();
             rigidbody2D.gravityScale = playerData.Walls.Physics2DGravityScale;
             localTime = 0f;
-            curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallClimb.SpeedUpCurve, rigidbody2D.velocity.x / playerData.Walls.WallClimb.MaxSpeed, 1, true);
+            curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallClimb.SpeedUpCurve, rigidbody2D.linearVelocity.x / playerData.Walls.WallClimb.MaxSpeed, 1, true);
             curveTime *= playerData.Walls.WallClimb.SpeedUpTime;
             phase = Phase.Null;
         }
@@ -33,9 +33,9 @@ namespace UltimateCC
             Move1D();
             if (playerData.Physics.Contacts.Count == 0)
             {
-                rigidbody2D.velocity += new Vector2(playerData.Physics.WallDirection, 0f);
+                rigidbody2D.linearVelocity += new Vector2(playerData.Physics.WallDirection, 0f);
             }
-            rigidbody2D.velocity += playerData.Physics.Platform.DampedVelocity;
+            rigidbody2D.linearVelocity += playerData.Physics.Platform.DampedVelocity;
             curveTime += Time.fixedDeltaTime;
             TimeBasedStaminaDrain();
         }
@@ -75,17 +75,17 @@ namespace UltimateCC
         {
             float newVelocity;
             newVelocity = VelocityOnY();
-            rigidbody2D.velocity = newVelocity * Vector2.up;
+            rigidbody2D.linearVelocity = newVelocity * Vector2.up;
         }
         private float VelocityOnY()
         {
             float YVelocity;
-            if (inputManager.Input_WallClimb != 0 && (rigidbody2D.velocity.y == 0 || Mathf.Sign(inputManager.Input_WallClimb) == Mathf.Sign(rigidbody2D.velocity.y))
+            if (inputManager.Input_WallClimb != 0 && (rigidbody2D.linearVelocity.y == 0 || Mathf.Sign(inputManager.Input_WallClimb) == Mathf.Sign(rigidbody2D.linearVelocity.y))
                 && (phase != Phase.TurnBack || curveTime > playerData.Walls.WallClimb.TurnBackTime))
             {
                 if (phase != Phase.SpeedUp)
                 {
-                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallClimb.SpeedUpCurve, Mathf.Abs(rigidbody2D.velocity.y) / playerData.Walls.WallClimb.MaxSpeed, 1f, true);
+                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallClimb.SpeedUpCurve, Mathf.Abs(rigidbody2D.linearVelocity.y) / playerData.Walls.WallClimb.MaxSpeed, 1f, true);
                     curveTime *= playerData.Walls.WallClimb.SpeedUpTime;
                     phase = Phase.SpeedUp;
                 }
@@ -99,14 +99,14 @@ namespace UltimateCC
                 }
                 YVelocity *= inputManager.Input_WallClimb * playerData.Walls.WallClimb.MaxSpeed;
             }
-            else if (inputManager.Input_WallClimb != 0 && ((rigidbody2D.velocity.y != 0 && Mathf.Sign(inputManager.Input_WallClimb) != Mathf.Sign(rigidbody2D.velocity.y)) || phase == Phase.TurnBack))
+            else if (inputManager.Input_WallClimb != 0 && ((rigidbody2D.linearVelocity.y != 0 && Mathf.Sign(inputManager.Input_WallClimb) != Mathf.Sign(rigidbody2D.linearVelocity.y)) || phase == Phase.TurnBack))
             {
                 if (phase != Phase.TurnBack)
                 {
-                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallClimb.TurnBackCurve, Mathf.Abs(rigidbody2D.velocity.y) / playerData.Walls.WallClimb.MaxSpeed, 2f, false);
+                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallClimb.TurnBackCurve, Mathf.Abs(rigidbody2D.linearVelocity.y) / playerData.Walls.WallClimb.MaxSpeed, 2f, false);
                     curveTime *= playerData.Walls.WallClimb.TurnBackTime;
                     phase = Phase.TurnBack;
-                    turnBackStartDirection = (int)Mathf.Sign(rigidbody2D.velocity.y);
+                    turnBackStartDirection = (int)Mathf.Sign(rigidbody2D.linearVelocity.y);
                 }
                 if (curveTime < playerData.Walls.WallClimb.TurnBackTime)
                 {
@@ -122,7 +122,7 @@ namespace UltimateCC
             {
                 if (phase != Phase.SlowDown)
                 {
-                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallClimb.SlowDownCurve, Mathf.Abs(rigidbody2D.velocity.y) / playerData.Walls.WallClimb.MaxSpeed, 1f, false);
+                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallClimb.SlowDownCurve, Mathf.Abs(rigidbody2D.linearVelocity.y) / playerData.Walls.WallClimb.MaxSpeed, 1f, false);
                     curveTime *= playerData.Walls.WallClimb.SlowDownTime;
                     phase = Phase.SlowDown;
                 }
@@ -134,7 +134,7 @@ namespace UltimateCC
                 {
                     YVelocity = playerData.Walls.WallClimb.SlowDownCurve.Evaluate(1f);
                 }
-                YVelocity *= playerData.Walls.WallClimb.MaxSpeed * Mathf.Sign(rigidbody2D.velocity.y);
+                YVelocity *= playerData.Walls.WallClimb.MaxSpeed * Mathf.Sign(rigidbody2D.linearVelocity.y);
             }
             ClimbAmountStaminaDrain(YVelocity);
             return YVelocity;

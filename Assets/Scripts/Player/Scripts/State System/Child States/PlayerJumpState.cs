@@ -37,13 +37,13 @@ namespace UltimateCC
             playerData.Jump.NextJumpInt++;
             player.Animator.SetBool(_animEnum.ToString(), false);
             player.Animator.SetBool(jumpInfo.Animation.ToString(), true);
-            player.Rigidbody2D.velocity = new Vector2(player.Rigidbody2D.velocity.x, jumpInfo.MaxHeight);
+            player.Rigidbody2D.linearVelocity = new Vector2(player.Rigidbody2D.linearVelocity.x, jumpInfo.MaxHeight);
             playerData.Jump.JumpBufferTimer = 0;
             cutJumpTime = 0f;
             playerData.Physics.CutJump = false;
             playerData.Jump.NewJump = false;
             rigidbody2D.gravityScale = playerData.Jump.Physics2DGravityScale;
-            if (rigidbody2D.velocity.x != 0)
+            if (rigidbody2D.linearVelocity.x != 0)
             {
                 phase = inputManager.Input_Walk != 0 ? Phase.SpeedUp : Phase.SlowDown;
             }
@@ -68,7 +68,7 @@ namespace UltimateCC
                 localTime = cutJumpTime * (cutJumpTime + (jumpInfo.JumpTime - cutJumpTime) * jumpInfo.TimeScaleOnCut) / jumpInfo.JumpTime;
             }
             Move2D();
-            rigidbody2D.velocity += playerData.Physics.Platform.DampedVelocity;
+            rigidbody2D.linearVelocity += playerData.Physics.Platform.DampedVelocity;
             xCurveTime += Time.fixedDeltaTime;
         }
 
@@ -155,8 +155,8 @@ namespace UltimateCC
             {
                 _newVelocity.x = VelocityOnx() * playerData.Physics.Slope.CurrentSlopeAngle / 100;
             }
-            rigidbody2D.velocity = _newVelocity;
-            localXVelovity = rigidbody2D.velocity.x;
+            rigidbody2D.linearVelocity = _newVelocity;
+            localXVelovity = rigidbody2D.linearVelocity.x;
         }
 
         private float VelocityOnx()
@@ -167,7 +167,7 @@ namespace UltimateCC
             {
                 if (phase != Phase.SpeedUp && (phase != Phase.TurnBack || xCurveTime > playerData.Walk.TurnBackTime))
                 {
-                    xCurveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Jump.XSpeedUpCurve, Mathf.Abs(rigidbody2D.velocity.x) / playerData.Jump.MaxXSpeed, 1, true);
+                    xCurveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Jump.XSpeedUpCurve, Mathf.Abs(rigidbody2D.linearVelocity.x) / playerData.Jump.MaxXSpeed, 1, true);
                     xCurveTime *= playerData.Jump.XSpeedUpTime;
                     phase = Phase.SpeedUp;
                 }
@@ -204,7 +204,7 @@ namespace UltimateCC
             {
                 if (phase != Phase.SlowDown)
                 {
-                    xCurveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Jump.XSlowDownCurve, Mathf.Abs(rigidbody2D.velocity.x) / playerData.Jump.MaxXSpeed, 1, false);
+                    xCurveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Jump.XSlowDownCurve, Mathf.Abs(rigidbody2D.linearVelocity.x) / playerData.Jump.MaxXSpeed, 1, false);
                     xCurveTime *= playerData.Jump.XSlowDownTime;
                     phase = Phase.SlowDown;
                 }

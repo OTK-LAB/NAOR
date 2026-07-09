@@ -25,21 +25,21 @@ namespace UltimateCC
 
             if (playerData.Physics.Contacts.Count == 0 || (playerData.Physics.IsNextToWall && !playerData.Physics.Slope.StayStill))
             {
-                rigidbody2D.velocity = new(0f, -1f);
+                rigidbody2D.linearVelocity = new(0f, -1f);
             }
             else if (playerData.Physics.IsMultipleContactWithNonWalkableSlope)
             {
-                rigidbody2D.velocity = (playerData.Physics.ContactPosition.RotateAround(playerData.Physics.GroundCheckPosition, playerData.Physics.FacingDirection * 5) - playerData.Physics.GroundCheckPosition) * 1;
+                rigidbody2D.linearVelocity = (playerData.Physics.ContactPosition.RotateAround(playerData.Physics.GroundCheckPosition, playerData.Physics.FacingDirection * 5) - playerData.Physics.GroundCheckPosition) * 1;
             }
             else if (playerData.Physics.CanSlideCorner)
             {
-                rigidbody2D.velocity = new(0f, -playerData.Physics.SlideSpeedOnCorner);
+                rigidbody2D.linearVelocity = new(0f, -playerData.Physics.SlideSpeedOnCorner);
             }
             else
             {
-                rigidbody2D.velocity = Vector2.zero;
+                rigidbody2D.linearVelocity = Vector2.zero;
             }
-            rigidbody2D.velocity += playerData.Physics.Platform.DampedVelocity;
+            rigidbody2D.linearVelocity += playerData.Physics.Platform.DampedVelocity;
             playerData.Walls.CurrentStamina = Mathf.Clamp(playerData.Walls.CurrentStamina + (Time.fixedDeltaTime * playerData.Walls.StaminaRegenPerSec), 0, playerData.Walls.MaxStamina);
         }
 

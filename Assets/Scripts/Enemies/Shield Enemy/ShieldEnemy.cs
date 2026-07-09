@@ -118,7 +118,7 @@ public class ShieldEnemy : MonoBehaviour
                 following();
                 break;
             case State.STATE_ATTACK:
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
                 attacktoPlayer();
                 break;
             case State.STATE_COOLDOWN:
@@ -134,7 +134,7 @@ public class ShieldEnemy : MonoBehaviour
                 break;
             case State.STATE_FROZEN:
                 ChangeAnimationState(cooldown);
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
                 coolDown(5);
                 break;
             case State.STATE_BACKTOWALL:
@@ -150,7 +150,7 @@ public class ShieldEnemy : MonoBehaviour
             moveSpeed = firstmoveSpeed; // ba�lang�� hareket h�z�
         moveDirectionX = moveDirection;
         step = moveSpeed * moveDirectionX;
-        rb.velocity = new Vector3(step, rb.velocity.y);
+        rb.linearVelocity = new Vector3(step, rb.linearVelocity.y);
     }
 
     void checkPlayer()
@@ -179,7 +179,7 @@ public class ShieldEnemy : MonoBehaviour
         if (!slow)
             moveSpeed = firstmoveSpeed + 2;
         Vector2 currentPlayerPos = new Vector2(playerPos.position.x, rb.position.y);
-        rb.velocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
+        rb.linearVelocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
     }
     void backtoWall()
     {
@@ -193,7 +193,7 @@ public class ShieldEnemy : MonoBehaviour
             moveDirection *= -1;
             transform.Rotate(0f, 180f, 0f);
         }
-        rb.velocity = startDirection.normalized * moveSpeed;
+        rb.linearVelocity = startDirection.normalized * moveSpeed;
         checkPlayer();
         // Ba�lang�� konumuna ula�t���nda, Walking state'ine ge�
         if (Vector2.Distance(transform.position, startPoint) < 0.1f)
@@ -227,6 +227,10 @@ public class ShieldEnemy : MonoBehaviour
     public void setFrozenState()
     {
         state = State.STATE_FROZEN;
+    }
+    public void breakFreeze()
+    {
+        checkPlayer();
     }
     void hitState()
     {
@@ -360,7 +364,7 @@ public class ShieldEnemy : MonoBehaviour
         ChangeAnimationState(death);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         GetComponent<Collider2D>().enabled = false;
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         this.enabled = false;
         GetComponent<SpriteRenderer>().sortingLayerName = "Foreground";
     }

@@ -21,7 +21,7 @@ public class SoulMovement : MonoBehaviour
     private void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, player.position + new Vector3(0, -1, 0), speed * Time.deltaTime);
-        rb.velocity = startVelocity;
+        rb.linearVelocity = startVelocity;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

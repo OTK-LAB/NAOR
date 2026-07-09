@@ -17,7 +17,7 @@ namespace UltimateCC
             base.Enter();
             rigidbody2D.gravityScale = playerData.Walls.Physics2DGravityScale;
             localTime = 0f;
-            curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallSlide.SpeedUpCurve, rigidbody2D.velocity.x / playerData.Walls.WallSlide.MaxSpeed, 1, true);
+            curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallSlide.SpeedUpCurve, rigidbody2D.linearVelocity.x / playerData.Walls.WallSlide.MaxSpeed, 1, true);
             curveTime *= playerData.Walls.WallSlide.SpeedUpTime;
             phase = Phase.Null;
         }
@@ -33,9 +33,9 @@ namespace UltimateCC
             Move1D();
             if (playerData.Physics.Contacts.Count == 0)
             {
-                rigidbody2D.velocity += new Vector2(playerData.Physics.WallDirection, 0f);
+                rigidbody2D.linearVelocity += new Vector2(playerData.Physics.WallDirection, 0f);
             }
-            rigidbody2D.velocity += playerData.Physics.Platform.DampedVelocity;
+            rigidbody2D.linearVelocity += playerData.Physics.Platform.DampedVelocity;
             curveTime += Time.fixedDeltaTime;
         }
 
@@ -77,16 +77,16 @@ namespace UltimateCC
         public void Move1D()
         {
             float newVelocity = VelocityOnY();
-            rigidbody2D.velocity = newVelocity * Vector2.up;
+            rigidbody2D.linearVelocity = newVelocity * Vector2.up;
         }
         private float VelocityOnY()
         {
             float YVelocity = 0;
-            if (rigidbody2D.velocity.y > 0 || (phase == Phase.TurnBack && curveTime <= playerData.Walls.WallSlide.TurnBackTime))
+            if (rigidbody2D.linearVelocity.y > 0 || (phase == Phase.TurnBack && curveTime <= playerData.Walls.WallSlide.TurnBackTime))
             {
                 if (phase != Phase.TurnBack)
                 {
-                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallSlide.TurnBackCurve, Mathf.Abs(rigidbody2D.velocity.y) / playerData.Walls.WallSlide.MaxSpeed, 2f, false);
+                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallSlide.TurnBackCurve, Mathf.Abs(rigidbody2D.linearVelocity.y) / playerData.Walls.WallSlide.MaxSpeed, 2f, false);
                     curveTime *= playerData.Walls.WallSlide.TurnBackTime;
                     phase = Phase.TurnBack;
                     turnBackStartDirection = -1;
@@ -105,7 +105,7 @@ namespace UltimateCC
             {
                 if (phase != Phase.SpeedUp)
                 {
-                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallSlide.SpeedUpCurve, Mathf.Abs(rigidbody2D.velocity.y) / playerData.Walls.WallSlide.MaxSpeed, 1f, true);
+                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallSlide.SpeedUpCurve, Mathf.Abs(rigidbody2D.linearVelocity.y) / playerData.Walls.WallSlide.MaxSpeed, 1f, true);
                     curveTime *= playerData.Walls.WallSlide.SpeedUpTime;
                     phase = Phase.SpeedUp;
                 }
@@ -123,7 +123,7 @@ namespace UltimateCC
             {
                 if (phase != Phase.SlowDown)
                 {
-                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallSlide.SlowDownCurve, Mathf.Abs(rigidbody2D.velocity.y) / playerData.Walls.WallSlide.MaxSpeed, 1f, false);
+                    curveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Walls.WallSlide.SlowDownCurve, Mathf.Abs(rigidbody2D.linearVelocity.y) / playerData.Walls.WallSlide.MaxSpeed, 1f, false);
                     curveTime *= playerData.Walls.WallSlide.SlowDownTime;
                     phase = Phase.SlowDown;
                 }

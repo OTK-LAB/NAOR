@@ -46,7 +46,7 @@ namespace UltimateCC
                 {
                     stateMachine.ChangeState(player.WalkState);
                 }
-                else if (rigidbody2D.velocity.y == 0 && inputManager.Input_Walk == 0 && playerData.Physics.IsGrounded && (!playerData.Physics.IsOnNotWalkableSlope))
+                else if (rigidbody2D.linearVelocity.y == 0 && inputManager.Input_Walk == 0 && playerData.Physics.IsGrounded && (!playerData.Physics.IsOnNotWalkableSlope))
                 {
                     stateMachine.ChangeState(player.IdleState);
                 }
@@ -77,7 +77,7 @@ namespace UltimateCC
             XVelocity.y = playerData.Dash.DashYVelocityCurve.Evaluate(localTime / playerData.Dash.DashTime);
             XVelocity.y *= playerData.Dash.MaxHeight;
 
-            rigidbody2D.velocity = XVelocity;
+            rigidbody2D.linearVelocity = XVelocity;
         }
     }
 }

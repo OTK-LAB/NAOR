@@ -12,7 +12,7 @@ namespace UltimateCC{
     public override void Enter()
         {
             base.Enter();
-            rigidbody2D.velocity = Vector2.zero;
+            rigidbody2D.linearVelocity = Vector2.zero;
             player.transform.position = playerData.Physics.LedgeHangPosition;
             playerData.Physics.LedgeHangPosition = Vector2.zero;
         }

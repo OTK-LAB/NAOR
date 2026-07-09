@@ -16,7 +16,7 @@ namespace UltimateCC
         {
             base.Enter();
             rigidbody2D.gravityScale = playerData.Land.Physics2DGravityScale;
-            if (rigidbody2D.velocity.x != 0)
+            if (rigidbody2D.linearVelocity.x != 0)
             {
                 phase = inputManager.Input_Walk != 0 ? Phase.SpeedUp : Phase.SlowDown;
             }
@@ -37,10 +37,10 @@ namespace UltimateCC
             base.FixedUpdate();
 
             Move2D();
-            rigidbody2D.velocity += playerData.Physics.Platform.DampedVelocity;
+            rigidbody2D.linearVelocity += playerData.Physics.Platform.DampedVelocity;
             if (playerData.Physics.IsMultipleContactWithNonWalkableSlope)
             {
-                rigidbody2D.velocity = new(0f, -1f);
+                rigidbody2D.linearVelocity = new(0f, -1f);
             }
             xCurveTime += Time.fixedDeltaTime;
         }
@@ -120,8 +120,8 @@ namespace UltimateCC
             {
                 _newVelocity.x = VelocityOnx();
             }
-            rigidbody2D.velocity = _newVelocity;
-            localXVelovity = rigidbody2D.velocity.x;
+            rigidbody2D.linearVelocity = _newVelocity;
+            localXVelovity = rigidbody2D.linearVelocity.x;
         }
 
         private float VelocityOnx()
@@ -132,7 +132,7 @@ namespace UltimateCC
             {
                 if (phase != Phase.SpeedUp && (phase != Phase.TurnBack || xCurveTime > playerData.Walk.TurnBackTime))
                 {
-                    xCurveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Land.XSpeedUpCurve, Mathf.Abs(rigidbody2D.velocity.x) / playerData.Land.MaxXSpeed, 1, true);
+                    xCurveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Land.XSpeedUpCurve, Mathf.Abs(rigidbody2D.linearVelocity.x) / playerData.Land.MaxXSpeed, 1, true);
                     xCurveTime *= playerData.Land.XSpeedUpTime;
                     phase = Phase.SpeedUp;
                 }
@@ -169,7 +169,7 @@ namespace UltimateCC
             {
                 if (phase != Phase.SlowDown)
                 {
-                    xCurveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Land.XSlowDownCurve, Mathf.Abs(rigidbody2D.velocity.x) / playerData.Land.MaxXSpeed, 1, false);
+                    xCurveTime = EssentialPhysics.SetCurveTimeByValue(playerData.Land.XSlowDownCurve, Mathf.Abs(rigidbody2D.linearVelocity.x) / playerData.Land.MaxXSpeed, 1, false);
                     xCurveTime *= playerData.Land.XSlowDownTime;
                     phase = Phase.SlowDown;
                 }

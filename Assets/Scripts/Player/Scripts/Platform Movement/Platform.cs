@@ -32,32 +32,32 @@ namespace UltimateCC
             {
                 if (transform.position.x < startPoint.x)
                 {
-                    rb.velocity = new Vector2(direction * speed, 0);
+                    rb.linearVelocity = new Vector2(direction * speed, 0);
                 }
                 else if (transform.position.x < startPoint.x + rightBorderOffset.x)
                 {
-                    rb.velocity = new Vector2(direction * speed, 0);
+                    rb.linearVelocity = new Vector2(direction * speed, 0);
                 }
                 else if (transform.position.x >= startPoint.x + rightBorderOffset.x)
                 {
                     direction = -1;
-                    rb.velocity = new Vector2(direction * speed, 0);
+                    rb.linearVelocity = new Vector2(direction * speed, 0);
                 }
             }
             else if (direction == -1)
             {
                 if (transform.position.x > startPoint.x + startPoint.x)
                 {
-                    rb.velocity = new Vector2(direction * speed, 0);
+                    rb.linearVelocity = new Vector2(direction * speed, 0);
                 }
                 else if (transform.position.x > startPoint.x + leftBorderOffset.x)
                 {
-                    rb.velocity = new Vector2(direction * speed, 0);
+                    rb.linearVelocity = new Vector2(direction * speed, 0);
                 }
                 else if (transform.position.x <= startPoint.x + leftBorderOffset.x)
                 {
                     direction = 1;
-                    rb.velocity = new Vector2(direction * speed, 0);
+                    rb.linearVelocity = new Vector2(direction * speed, 0);
                 }
             }
         }

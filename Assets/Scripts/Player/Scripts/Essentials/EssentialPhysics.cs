@@ -20,7 +20,7 @@ namespace UltimateCC
             }
             else if (player.CurrentState == AnimName.WallJump)
             {
-                playerData.Physics.FacingDirection = playerData.Physics.IsNextToWall ? -playerData.Physics.WallDirection : (int)Mathf.Sign(player.Rigidbody2D.velocity.x);
+                playerData.Physics.FacingDirection = playerData.Physics.IsNextToWall ? -playerData.Physics.WallDirection : (int)Mathf.Sign(player.Rigidbody2D.linearVelocity.x);
             }
             else if (inputManager.Input_Walk != 0 && Mathf.Sign(inputManager.Input_Walk) != Mathf.Sign(playerData.Physics.FacingDirection)
                     && player.CurrentState != AnimName.Swing && player.CurrentState != AnimName.Hang)
@@ -273,7 +273,7 @@ namespace UltimateCC
                 Vector2 _platformCenterToContact = playerData.Physics.ContactPosition - (Vector2)platformRigidbody.position;
                 float _angularVelocity = platformRigidbody.angularVelocity * Mathf.Deg2Rad;
                 Vector2 _rotationalLinearVelocity = new(-_platformCenterToContact.y * _angularVelocity, _platformCenterToContact.x * _angularVelocity);
-                Vector2 _movingLinearVelocity = platformRigidbody.velocity;
+                Vector2 _movingLinearVelocity = platformRigidbody.linearVelocity;
                 Vector2 _linearVelocity = _rotationalLinearVelocity + _movingLinearVelocity;
 
                 playerData.Physics.Platform.MaxPlatformVelocity = _linearVelocity;

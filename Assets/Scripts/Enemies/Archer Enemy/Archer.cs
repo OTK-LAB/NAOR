@@ -109,7 +109,7 @@ public class Archer : MonoBehaviour
             case State.STATE_ATTACK:
                 if (attackable)
                 {
-                    rb.velocity = Vector2.zero;
+                    rb.linearVelocity = Vector2.zero;
                     ChangeAnimationState(attack);
                 }
                 break;
@@ -119,7 +119,7 @@ public class Archer : MonoBehaviour
                 break;
             case State.STATE_FROZEN:
                 ChangeAnimationState(cooldown);
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
                 coolDown(1);
                 break;
             case State.STATE_HIT:
@@ -133,7 +133,7 @@ public class Archer : MonoBehaviour
     {
         float moveDirectionX = moveDirection;
         float step = moveSpeed * moveDirectionX;
-        rb.velocity = new Vector3(step, rb.velocity.y);
+        rb.linearVelocity = new Vector3(step, rb.linearVelocity.y);
     }
 
     public void slowTimer()
@@ -159,6 +159,10 @@ public class Archer : MonoBehaviour
     public void setFrozenState()
     {
         state = State.STATE_FROZEN;
+    }
+    public void breakFreeze()
+    {
+        checkPlayer();
     }
     void checkPlayer()
     {

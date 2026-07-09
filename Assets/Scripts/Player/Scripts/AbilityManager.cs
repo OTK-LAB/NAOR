@@ -119,7 +119,7 @@ public class AbilityManager : MonoBehaviour
         else if (SoulWalk.phase == Phase.Active)
         {
             SoulWalk.manaSoulSystem.UseMana(SoulWalk.ManaDrainPerSecond * Time.deltaTime);
-            if (SoulWalk.manaSoulSystem.currentMana <= 0)
+            if (SoulWalk.manaSoulSystem.CurrentMana <= 0)
             {
                 SoulWalk.phase = Phase.End;
             }

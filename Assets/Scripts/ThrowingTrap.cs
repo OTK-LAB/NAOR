@@ -18,7 +18,7 @@ public class ThrowingTrap : MonoBehaviour
     {
         GameObject arrow = Instantiate(arrowPrefab, transform.position, transform.rotation);
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
-        rb.velocity = transform.forward * arrowSpeed;
+        rb.linearVelocity = transform.forward * arrowSpeed;
     }
 
 }

@@ -28,7 +28,7 @@ public class PlayerChargeAttackState : AttackState
 
     public override void FixedUpdate()
     {
-        rigidbody2D.velocity = new(0,0);
+        rigidbody2D.linearVelocity = new(0,0);
         base.FixedUpdate();
     }
 

@@ -82,7 +82,7 @@ public class DaggerScript : MonoBehaviour
             }
             else
             {
-                col.gameObject.GetComponent<EnemyHealthSystem>().Damage(daggerDamage);
+                col.gameObject.GetComponent<EnemyHealthSystem>().Damage(daggerDamage, 0f);
                 Destroyed = true;
             }
         }

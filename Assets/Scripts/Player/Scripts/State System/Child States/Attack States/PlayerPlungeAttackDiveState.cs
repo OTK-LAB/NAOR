@@ -67,6 +67,6 @@ public class PlayerPlungeAttackDiveState : AttackState, IMove1D
             }
         }
         _velocity *= playerData.Attack.PlungeAttack.MinYVelocity;
-        rigidbody2D.velocity = new Vector2(0, _velocity);
+        rigidbody2D.linearVelocity = new Vector2(0, _velocity);
     }
 }

@@ -35,7 +35,7 @@ public class ArchersArrow : MonoBehaviour
         target = new Vector2(PlayerPosition.position.x - transform.position.x, PlayerPosition.position.y - transform.position.y);
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(target * archer.GetComponent<Archer>().LaunchForce);
-        rb.velocity = Vector3.Normalize(target) * arrowSpeed;
+        rb.linearVelocity = Vector3.Normalize(target) * arrowSpeed;
         rb.rotation = 0;
         xStartPos = transform.position.x;
         Destroy(gameObject, 10f);
@@ -47,7 +47,7 @@ public class ArchersArrow : MonoBehaviour
             rb.position = transform.position;
             if (isGravityOn)
             {
-                float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+                float angle = Mathf.Atan2(rb.linearVelocity.y, rb.linearVelocity.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
             }
             if (Mathf.Abs(xStartPos - transform.position.x) >= travelDistance && !isGravityOn)
@@ -74,7 +74,7 @@ public class ArchersArrow : MonoBehaviour
             rb.gravityScale = 0.0f;
             rb.simulated = false;
             Destroy(gameObject, 3f);
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
     }
     public void Fire(float speed, float travelDistance, float damage)

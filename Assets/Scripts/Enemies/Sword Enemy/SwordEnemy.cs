@@ -75,7 +75,7 @@ public class SwordEnemy : MonoBehaviour
     bool IsDead = false;
     bool isHit = false;
     bool isFrozen = false;
-    float verticalTolerance = 0.5f; //enemy alttayken player üstteyse onu algýlamasýn diye eklendi
+    float verticalTolerance = 0.5f; //enemy alttayken player ï¿½stteyse onu algï¿½lamasï¿½n diye eklendi
     float timer;
     //Hit
     Vector2 temp;
@@ -157,7 +157,7 @@ public class SwordEnemy : MonoBehaviour
                 following();
                 break;
             case State.STATE_ATTACK:
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
                 attacktoPlayer();
                 break;
             case State.STATE_COOLDOWN:
@@ -169,7 +169,7 @@ public class SwordEnemy : MonoBehaviour
                 break;
             case State.STATE_FROZEN:
                 ChangeAnimationState(idle);
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
                 FreezeCoolDown(5);
                 break;
             case State.STATE_BACKTOWALL:
@@ -179,7 +179,7 @@ public class SwordEnemy : MonoBehaviour
                     lookhim();
                 break;
             case State.STATE_WAIT:
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
                 ChangeAnimationState(idle);
                 cooldownCheck = WaitForSeconds(attackCoolDown);
                 if (cooldownCheck)
@@ -197,7 +197,7 @@ public class SwordEnemy : MonoBehaviour
             moveSpeed = firstmoveSpeed; // baï¿½langï¿½ï¿½ hareket hï¿½zï¿½
         moveDirectionX = moveDirection;
         step = moveSpeed * moveDirectionX;
-        rb.velocity = new Vector3(step, rb.velocity.y);
+        rb.linearVelocity = new Vector3(step, rb.linearVelocity.y);
     }
     void hitState()
     {
@@ -255,13 +255,13 @@ public class SwordEnemy : MonoBehaviour
         if (!slow)
             moveSpeed = firstmoveSpeed + 2;
         Vector2 currentPlayerPos = new Vector2(playerPos.position.x, rb.position.y);
-        rb.velocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
+        rb.linearVelocity = (currentPlayerPos - rb.position).normalized * moveSpeed;
     }
 
     void lookhim()
     {
         ChangeAnimationState(idle);
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         check = WaitForSeconds(0.6f);
         if (check)
             backtoWall();
@@ -280,7 +280,7 @@ public class SwordEnemy : MonoBehaviour
             moveDirection *= -1;
             transform.Rotate(0f, 180f, 0f);
         }
-        rb.velocity = startDirection.normalized * moveSpeed;
+        rb.linearVelocity = startDirection.normalized * moveSpeed;
         checkPlayer();
         // Baï¿½langï¿½ï¿½ konumuna ulaï¿½tï¿½ï¿½ï¿½nda, Walking state'ine geï¿½
         if (Vector2.Distance(rb.position, startPoint) < 0.1f)
@@ -410,7 +410,7 @@ public class SwordEnemy : MonoBehaviour
             //     StartCoroutine(SpawnSoul(0.8f)); ?????????????????
             IsDead = true;
             rb.gravityScale = 0f;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             ChangeAnimationState(death);
             GetComponent<Collider2D>().enabled = false;
             this.enabled = false;

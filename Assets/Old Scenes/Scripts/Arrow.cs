@@ -59,7 +59,7 @@ public class Arrow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = direction*daggerSpeed;
+        rb.linearVelocity = direction*daggerSpeed;
 
     }
     public void Initialize(Vector2 direction)

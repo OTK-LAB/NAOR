@@ -27,11 +27,11 @@ public class Creature : MonoBehaviour
     {
         if (enemy)
         {
-            rb.velocity = ApplyMovement();
+            rb.linearVelocity = ApplyMovement();
         }
         else
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
         if (enemy && Vector2.Distance(transform.position, enemy.position) > stopChaseDistance)
         {
@@ -45,12 +45,12 @@ public class Creature : MonoBehaviour
         Vector2 velocity = Vector2.zero;
         if (Vector2.Distance(transform.position, enemy.position) > dashDistance)
         {
-            velocity = new(Mathf.Sign(enemy.position.x - transform.position.x) * speed, rb.velocity.y);
+            velocity = new(Mathf.Sign(enemy.position.x - transform.position.x) * speed, rb.linearVelocity.y);
             curveTime = 0f;
         }
         else if (curveTime / dashTime >= 1f)
         {
-            velocity = new(0, rb.velocity.y);
+            velocity = new(0, rb.linearVelocity.y);
         }
         else
         {
