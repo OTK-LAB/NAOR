@@ -15,3 +15,7 @@
 - Phase 3.1: Merge the two main scenes.
 - Phase 3.2: Mechanics review and new mechanics integration.
 - Phase 3.3: Story writing and development integration.
+
+## Milestone 4: Autonomous AI Art Pipeline
+**Goal**: Implement an end-to-end, zero-cost (open-source) AI pipeline to generate 2D game sprites from text.
+- Phase 4.1: End-to-End ComfyUI & MoMask Pipeline Integration.
