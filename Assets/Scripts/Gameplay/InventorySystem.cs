@@ -57,9 +57,9 @@ public class InventorySystem : MonoBehaviour
     }
     IEnumerator EffectCoroutine(Item _selectedItem)
     {
-        Debug.Log("Effect Coroutine started");
+        //Debug.Log("Effect Coroutine started");
         yield return new WaitForSeconds(_selectedItem.effectTime);
-        Debug.Log("Effect Coroutine resumed after" + _selectedItem.effectTime +" seconds");
+        //Debug.Log("Effect Coroutine resumed after" + _selectedItem.effectTime +" seconds");
         if (_selectedItem.id == 2)
         {
             //HealthSystem.broccoli = false;
@@ -76,9 +76,9 @@ public class InventorySystem : MonoBehaviour
     IEnumerator DelayCoroutine(Item _selectedItem)
     {
         _selectedItem.inDelay= true;
-        Debug.Log("Delay Coroutine started");
+        //Debug.Log("Delay Coroutine started");
         yield return new WaitForSeconds(_selectedItem.delayTime);
-        Debug.Log("Delay Coroutine resumed after" + _selectedItem.delayTime + "seconds");
+        //Debug.Log("Delay Coroutine resumed after" + _selectedItem.delayTime + "seconds");
         _selectedItem.inDelay = false;
     }
     private void Update()

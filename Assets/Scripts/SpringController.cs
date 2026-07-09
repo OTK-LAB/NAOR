@@ -12,7 +12,7 @@ public class SpringController : MonoBehaviour
        // rb = collision.gameObject.GetComponent<Rigidbody2D>();
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Bounce!");
+            // Debug.Log("Bounce!");
             //collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             //collision.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * bounce, ForceMode2D.Impulse);
             //rb.velocity = new Vector2(rb.velocity.x, bounce);

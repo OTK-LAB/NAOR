@@ -12,7 +12,7 @@ public static class PlayerSaver
     public static void SavePlayerData()
     {
         string savePath = path;
-        Debug.Log("saving data at: " + savePath);
+        // Debug.Log("saving data at: " + savePath);
         string json = JsonUtility.ToJson(PlayerMain.Instance.PlayerData);
 
         using StreamWriter writer = new StreamWriter(savePath);
