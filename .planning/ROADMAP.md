@@ -58,3 +58,10 @@
 - [ ] Phase 3.1: Merge the two main scenes.
 - [ ] Phase 3.2: Mechanics review and new mechanics integration.
 - [ ] Phase 3.3: Story writing and development integration.
+
+## Milestone 5: AI Model Installation
+**Goal**: Download and configure the heavy AI models (ComfyUI, SDXL, MoMask) on the external SSD so the autonomous pipeline becomes fully functional.
+- Phase 5.1: Install Blender (headless) and ComfyUI Base
+- Phase 5.2: Download and Configure ControlNet/SDXL Models
+- Phase 5.3: Setup PyTorch for MoMask and Download Tensors
+- Phase 5.4: Download BiRefNet Models (Gap Closure)

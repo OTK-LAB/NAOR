@@ -1,48 +1,28 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: Refactor & Optimization
-current_phase: 1.2
-current_phase_name: Codebase Audit
-status: executing
-stopped_at: Phase 1.1 context gathered
-last_updated: "2026-07-09T23:14:03.947Z"
-last_activity: 2026-07-09
-last_activity_desc: Phase 01.1 complete, transitioned to Phase 1.2
+milestone: v5.0
+milestone_name: AI Model Installation
+current_phase: 5.1
+current_phase_name: Install Blender (headless) and ComfyUI Base
+status: not_started
+last_activity: 2026-07-10
+last_activity_desc: Milestone 5 initiated
 progress:
-  total_phases: 2
-  completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
-  percent: 50
+  total_phases: 4
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # NAOR - Project State
 
 ## Current Phase
-
-- Phase 4.1 (Autonomous AI Art Pipeline Integration) execution and UAT complete.
-- Milestone 1.0 previously completed.
+- Phase 5.1 (Install Blender and ComfyUI Base) - Not Started
 
 ## Recent Decisions
-
-- Adopted open-source, local AI stack (MoMask + ComfyUI + Blender) running on Apple Silicon (MPS).
-- Pipeline orchestrator and Unity C# ingestion scripts mock tested and successfully verified (UAT PASSED).
+- Executing model installation completely via CLI onto external SSD (`/Volumes/aebasol_1tb`).
+- Headless architecture verified; GUI access is not required for generation.
 
 ## Pending Action
-
-- The structural code for the AI pipeline is ready.
-- To finalize this segment, complete the milestone or begin downloading the 25 GB AI models into the external drive to switch from mock to live generation.
-
-## Current Position
-
-Phase: 1.2 — Codebase Audit
-Plan: Not started
-Status: Executing Phase 01.1
-Last activity: 2026-07-09 — Phase 01.1 complete, transitioned to Phase 1.2
-
-## Session
-
-**Last session:** 2026-07-09T22:58:22.735Z
-**Stopped at:** Phase 1.1 context gathered
-**Resume file:** .planning/phases/01.1-directory-structure/01.1-CONTEXT.md
+- Plan and execute Phase 5.1 to get the base applications running.
