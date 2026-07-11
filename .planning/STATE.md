@@ -2,29 +2,33 @@
 gsd_state_version: 1.0
 milestone: v6.0
 milestone_name: Pipeline Reality
-current_phase: 6.1
-current_phase_name: Real MoMask text-to-BVH generation
-status: in_progress
-last_activity: 2026-07-11
-last_activity_desc: Milestone 6 started — replacing mocked pipeline modules with real implementations (Fable orchestrating, Sonnet subagents coding)
+current_phase: 6.4
+current_phase_name: Real sprite packing + E2E run
+status: phases_complete_uat_pending
+last_activity: 2026-07-12
+last_activity_desc: All 4 phases (+6.2b) complete and committed; first full E2E run produced a real sprite sheet in 37.4 min. Pending user UAT in Unity editor (AutoSpriteImporter slice check).
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 4
   total_plans: 0
   completed_plans: 0
-  percent: 0
+  percent: 100
 ---
 
 # NAOR - Project State
 
 ## Current Phase
-- Phase 6.1 (Real MoMask text→BVH) — in progress, parallel with 6.2 (Blender render)
+- Milestone 6 implementation complete. Pending: user UAT (open Unity, confirm AutoSpriteImporter slices heavy_sword_swing_Sheet.png into 16 sprites + AnimationClip path), then milestone audit/close.
 
 ## Recent Decisions
-- 2026-07-11 audit found v4.0 pipeline was 100% mock (all 5 modules stubs, empty workflows/). Milestone 6 replaces mocks with real code.
-- Milestone 5 (model downloads) confirmed genuinely complete: SDXL 6.5G, ControlNet Depth 2.3G, T2I OpenPose 151M, BiRefNet 424M, MoMask checkpoints all on external SSD.
-- Orchestration model: Claude Fable 5 manages/verifies; Sonnet subagents implement per-phase.
-- Temporal consistency (AnimateDiff) deferred: start with per-frame img2img, fixed seed + ControlNet Depth; revisit after first real output.
+- Sword handled as Blender hand-bone prop (`--prop sword`, auto-heuristic on weapon keywords) instead of prompt-only — fixes cutout amputation and pins weapon placement for ControlNet.
+- Background removal via beauty-frame alpha cutout (4px dilation), not BiRefNet — zero extra models/nodes.
+- Pipeline stage costs (measured): MoMask 7s, Blender 5s, SDXL stylize ~137s/frame (99% of cost), pack+GIF <1s.
+
+## Known issues carried to next milestone
+- Frame-to-frame character identity flicker (independent SDXL generations) → IPAdapter / img2img chaining / LoRA candidate fixes.
+- Occasional back-view frames (MoMask rotates character) → facing constraint needed.
+- AutoSpriteImporter uses deprecated TextureImporter.spritesheet API.
 
 ## Pending Action
-- Phase 6.1 + 6.2 executing in parallel; 6.3 (ComfyUI) after, to avoid MPS memory contention; 6.4 E2E last.
+- User UAT in Unity editor, then /gsd-audit-milestone + /gsd-complete-milestone for v6.0.

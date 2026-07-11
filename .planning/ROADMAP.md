@@ -71,9 +71,9 @@
 
 **Audit note (2026-07-11):** v4.0 "end-to-end verification" only validated file plumbing. `text_to_motion.py`, `blender_render.py`, `comfy_client.py`, `pack_sprites.py` all contained `time.sleep` mocks writing text placeholders; `workflows/` was empty. Milestone 6 closes this gap.
 
-- [ ] Phase 6.1: Real MoMask text→BVH generation (MPS/CPU, venv compatibility fix if needed)
-- [ ] Phase 6.2: Real Blender headless render — BVH retarget to simple humanoid, beauty + depth frames
-- [ ] Phase 6.3: Real ComfyUI workflow (SDXL + ControlNet Depth) + API client + background removal
-- [ ] Phase 6.4: Real sprite packing, end-to-end run, Unity ingestion check
+- [x] Phase 6.1: Real MoMask text→BVH generation — completed 2026-07-11 (~5s/clip on MPS)
+- [x] Phase 6.2: Real Blender headless render — completed 2026-07-12 (+6.2b hand-bone sword prop)
+- [x] Phase 6.3: Real ComfyUI workflow (SDXL + ControlNet Depth) + API client — completed 2026-07-12 (~140s/frame)
+- [x] Phase 6.4: Real sprite packing, E2E run — completed 2026-07-12 (full run 37.4 min; Unity editor UAT pending)
 
 **Known risks:** MoMask deps on Python 3.14; no rigged mesh existed before 6.2; AnimateDiff absent (temporal consistency deferred — per-frame fixed-seed first); t2i-adapter openpose is not a ControlNet; style/character consistency needs LoRA/IPAdapter later.
