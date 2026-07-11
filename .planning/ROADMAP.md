@@ -59,9 +59,21 @@
 - [ ] Phase 3.2: Mechanics review and new mechanics integration.
 - [ ] Phase 3.3: Story writing and development integration.
 
-## Milestone 5: AI Model Installation
+## Milestone 5: AI Model Installation — ✅ COMPLETED 2026-07-10
 **Goal**: Download and configure the heavy AI models (ComfyUI, SDXL, MoMask) on the external SSD so the autonomous pipeline becomes fully functional.
-- Phase 5.1: Install Blender (headless) and ComfyUI Base
-- Phase 5.2: Download and Configure ControlNet/SDXL Models
-- Phase 5.3: Setup PyTorch for MoMask and Download Tensors
-- Phase 5.4: Download BiRefNet Models (Gap Closure)
+- [x] Phase 5.1: Install Blender (headless) and ComfyUI Base
+- [x] Phase 5.2: Download and Configure ControlNet/SDXL Models
+- [x] Phase 5.3: Setup PyTorch for MoMask and Download Tensors
+- [x] Phase 5.4: Download BiRefNet Models (Gap Closure)
+
+## Milestone 6: Pipeline Reality — 🚧 IN PROGRESS (started 2026-07-11)
+**Goal**: Replace every mocked module of the AI art pipeline (v4.0 shipped orchestration skeleton only — all 5 stages were stubs) with real, verified implementations producing actual sprite animations.
+
+**Audit note (2026-07-11):** v4.0 "end-to-end verification" only validated file plumbing. `text_to_motion.py`, `blender_render.py`, `comfy_client.py`, `pack_sprites.py` all contained `time.sleep` mocks writing text placeholders; `workflows/` was empty. Milestone 6 closes this gap.
+
+- [ ] Phase 6.1: Real MoMask text→BVH generation (MPS/CPU, venv compatibility fix if needed)
+- [ ] Phase 6.2: Real Blender headless render — BVH retarget to simple humanoid, beauty + depth frames
+- [ ] Phase 6.3: Real ComfyUI workflow (SDXL + ControlNet Depth) + API client + background removal
+- [ ] Phase 6.4: Real sprite packing, end-to-end run, Unity ingestion check
+
+**Known risks:** MoMask deps on Python 3.14; no rigged mesh existed before 6.2; AnimateDiff absent (temporal consistency deferred — per-frame fixed-seed first); t2i-adapter openpose is not a ControlNet; style/character consistency needs LoRA/IPAdapter later.

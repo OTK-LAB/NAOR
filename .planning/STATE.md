@@ -1,12 +1,12 @@
 ---
 gsd_state_version: 1.0
-milestone: v5.0
-milestone_name: AI Model Installation
-current_phase: 5.1
-current_phase_name: Install Blender (headless) and ComfyUI Base
-status: not_started
-last_activity: 2026-07-10
-last_activity_desc: Milestone 5 initiated
+milestone: v6.0
+milestone_name: Pipeline Reality
+current_phase: 6.1
+current_phase_name: Real MoMask text-to-BVH generation
+status: in_progress
+last_activity: 2026-07-11
+last_activity_desc: Milestone 6 started — replacing mocked pipeline modules with real implementations (Fable orchestrating, Sonnet subagents coding)
 progress:
   total_phases: 4
   completed_phases: 0
@@ -18,11 +18,13 @@ progress:
 # NAOR - Project State
 
 ## Current Phase
-- Phase 5.1 (Install Blender and ComfyUI Base) - Not Started
+- Phase 6.1 (Real MoMask text→BVH) — in progress, parallel with 6.2 (Blender render)
 
 ## Recent Decisions
-- Executing model installation completely via CLI onto external SSD (`/Volumes/aebasol_1tb`).
-- Headless architecture verified; GUI access is not required for generation.
+- 2026-07-11 audit found v4.0 pipeline was 100% mock (all 5 modules stubs, empty workflows/). Milestone 6 replaces mocks with real code.
+- Milestone 5 (model downloads) confirmed genuinely complete: SDXL 6.5G, ControlNet Depth 2.3G, T2I OpenPose 151M, BiRefNet 424M, MoMask checkpoints all on external SSD.
+- Orchestration model: Claude Fable 5 manages/verifies; Sonnet subagents implement per-phase.
+- Temporal consistency (AnimateDiff) deferred: start with per-frame img2img, fixed seed + ControlNet Depth; revisit after first real output.
 
 ## Pending Action
-- Plan and execute Phase 5.1 to get the base applications running.
+- Phase 6.1 + 6.2 executing in parallel; 6.3 (ComfyUI) after, to avoid MPS memory contention; 6.4 E2E last.
