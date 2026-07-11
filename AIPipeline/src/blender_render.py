@@ -28,14 +28,22 @@ Invocation (must be run *inside* Blender, not as a plain python3 script):
 
     /Applications/Blender.app/Contents/MacOS/Blender -b \\
         -P AIPipeline/src/blender_render.py -- \\
-        <bvh_path> <output_dir> [--frames N] [--res R]
+        <bvh_path> <output_dir> [--frames N] [--res R] [--prop sword]
 
     N defaults to 16 (frames uniformly sampled across the BVH's animation
-    range). R defaults to 1024 (SDXL-native square resolution).
+    range). R defaults to 1024 (SDXL-native square resolution). --prop sword
+    (default: no prop) attaches a simple greatsword mesh to the right-hand
+    bone (case-insensitive substring match, with fallbacks -- see
+    find_prop_bone) so downstream ControlNet-Depth stylization draws a sword
+    that is pinned to the character's grip every frame instead of a free
+    floating blade the prompt has to guess the position of. The prop shares
+    the body's beauty material and is automatically included in the depth
+    material_override and the per-frame camera auto-framing bounds.
 """
 import argparse
 import math
 import os
+import re
 import sys
 import time
 
@@ -242,6 +250,220 @@ def build_body_mesh(armature_obj):
     return obj
 
 
+
+# ---------------------------------------------------------------------------
+# Optional weapon prop (Phase 6.2b)
+# ---------------------------------------------------------------------------
+# The BVH rigs seen in this pipeline are 22-joint HumanML3D/SMPL-named
+# (Hips, Spine, ..., RightArm, RightForeArm, RightHand, ...), but the
+# matching below is deliberately name-heuristic rather than hardcoded to
+# that exact joint set, so it degrades gracefully on other rigs too.
+
+def _bone_side_score(name, side):
+    """True if `name` unambiguously reads as the given side ("right" or
+    "left"), tolerating both full words (RightHand, Right_Hand) and short
+    suffix/prefix conventions (hand.R, hand_R, R_Hand). Never raises;
+    ambiguous or unmarked names return False for both sides."""
+    ln = name.lower()
+    other = "left" if side == "right" else "right"
+    if other in ln:
+        return False
+    if side in ln:
+        return True
+    suffix = "r" if side == "right" else "l"
+    if re.search(r"[._]" + suffix + r"\d*$", ln) or re.search(r"^" + suffix + r"[._]", ln):
+        return True
+    return False
+
+
+def _bone_depth(bone):
+    depth = 0
+    p = bone.parent
+    while p is not None:
+        depth += 1
+        p = p.parent
+    return depth
+
+
+def find_prop_bone(armature_obj):
+    """Finds the bone to attach a hand-held prop to. Preference order:
+    1. a right-hand/wrist-named bone (case-insensitive substring, side-
+       aware -- see _bone_side_score);
+    2. failing that, the deepest (most distal) bone of the right arm chain
+       (RightForeArm et al) so the prop still lands roughly at the wrist;
+    3. failing that, the same two steps on the left side.
+    Returns (bone, side_label) or (None, None) if the rig has nothing that
+    looks like an arm at all -- callers must treat that as "skip the prop,
+    don't crash", never raise from here."""
+    try:
+        bones = list(armature_obj.data.bones)
+    except Exception:
+        return None, None
+    if not bones:
+        return None, None
+
+    hand_keywords = ("hand", "wrist")
+    arm_keywords = ("hand", "wrist", "forearm", "arm", "elbow", "shoulder", "clavicle", "collar")
+
+    for side in ("right", "left"):
+        hand_matches = [b for b in bones
+                         if any(k in b.name.lower() for k in hand_keywords)
+                         and _bone_side_score(b.name, side)]
+        if hand_matches:
+            hand_only = [b for b in hand_matches if "hand" in b.name.lower()]
+            pool = hand_only if hand_only else hand_matches
+            return max(pool, key=_bone_depth), side
+
+    for side in ("right", "left"):
+        arm_matches = [b for b in bones
+                        if any(k in b.name.lower() for k in arm_keywords)
+                        and _bone_side_score(b.name, side)]
+        if arm_matches:
+            return max(arm_matches, key=_bone_depth), side
+
+    return None, None
+
+
+def compute_arm_length(bone):
+    """Approximate limb reach by summing bone lengths from the matched bone
+    up through its forearm/upper-arm/shoulder ancestors, stopping at the
+    torso/neck/hip root. Falls back to a multiple of the bone's own length
+    if the chain is degenerate (e.g. a single-bone arm or a rig where the
+    parent chain doesn't resolve as expected) -- this must never raise or
+    return zero, since it directly sizes the sword mesh."""
+    stop_words = ("spine", "chest", "torso", "abdomen", "ribcage", "neck",
+                  "head", "hip", "pelvis")
+    total = 0.0
+    b = bone
+    steps = 0
+    try:
+        while b is not None and steps < 6:
+            total += b.length
+            parent = b.parent
+            if parent is None:
+                break
+            if any(k in parent.name.lower() for k in stop_words):
+                break
+            b = parent
+            steps += 1
+    except Exception:
+        pass
+    if total < 1e-4:
+        total = max(bone.length * 3.0, 0.1)
+    return total
+
+
+def build_sword_mesh(arm_length, name="Sword"):
+    """Builds a greatsword-proportioned mesh authored directly in the
+    target bone's local frame: origin at the bone's tail (see
+    attach_prop_to_bone), blade extending along local +Y -- a bone's local
+    Y axis runs head->tail by Blender convention, i.e. away from the
+    forearm for a hand/wrist bone, so no extra reorientation is needed.
+    Proportions are all derived from `arm_length` (the reach computed by
+    compute_arm_length) so the sword scales sensibly with any rig."""
+    bm = bmesh.new()
+    z_axis = Vector((0.0, 0.0, 1.0))
+
+    def add_segment(p0, p1, r0, r1, segments=8):
+        direction_vec = p1 - p0
+        length = direction_vec.length
+        if length < 1e-6:
+            return
+        direction = direction_vec.normalized()
+        mid = (p0 + p1) / 2.0
+        rot = z_axis.rotation_difference(direction)
+        matrix = Matrix.Translation(mid) @ rot.to_matrix().to_4x4()
+        bmesh.ops.create_cone(
+            bm, cap_ends=True, cap_tris=False, segments=segments,
+            radius1=r0, radius2=r1, depth=length, matrix=matrix,
+        )
+
+    L = arm_length
+    pommel_len = L * 0.035
+    grip_len = L * 0.14
+    guard_thick = L * 0.02
+    blade_len = L * 1.35  # within the requested 1.2-1.5x arm-length range
+
+    grip_r = L * 0.028
+    pommel_r = L * 0.045
+    guard_bar_r = L * 0.014
+    guard_half_width = L * 0.16
+    blade_base_r = L * 0.05
+
+    y0 = -(pommel_len + grip_len)
+    y1 = -grip_len          # grip start (pommel side)
+    y2 = 0.0                # grip end == bone tail == attach origin
+    y3 = guard_thick        # blade root, just past the crossguard
+
+    # Pommel cap tapering into the grip.
+    add_segment(Vector((0, y0, 0)), Vector((0, y1, 0)), pommel_r, grip_r)
+    # Grip (round cylinder).
+    add_segment(Vector((0, y1, 0)), Vector((0, y2, 0)), grip_r, grip_r)
+    # Crossguard: thin horizontal bar centered on the grip/blade junction.
+    add_segment(Vector((-guard_half_width, guard_thick / 2.0, 0)),
+                Vector((guard_half_width, guard_thick / 2.0, 0)),
+                guard_bar_r, guard_bar_r, segments=6)
+    # Blade: tapered to a point, flattened (4-sided) cross-section.
+    add_segment(Vector((0, y3, 0)), Vector((0, y3 + blade_len, 0)),
+                blade_base_r, 0.0, segments=4)
+
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    bm.free()
+    me.update()
+
+    obj = bpy.data.objects.new(name, me)
+    return obj
+
+
+def attach_prop_to_bone(prop_obj, armature_obj, bone):
+    """Rigidly follows `bone`'s pose every frame via a Child Of constraint
+    (constraint-based, not parent_type='BONE', so the object's own matrix
+    stays simple and fully explicit). Child Of composes the bone's posed
+    matrix (head-based, local Y = head->tail) with the object's own
+    matrix_basis, so offsetting the object's location by the bone's own
+    length along local Y places the mesh's authored origin (y=0, see
+    build_sword_mesh) at the bone's TAIL rather than its head -- i.e. at
+    the wrist-to-fingertip end of a hand bone (or at the wrist itself, if
+    we fell back to attaching to the forearm), which is where a gripped
+    weapon's hilt naturally sits."""
+    prop_obj.location = Vector((0.0, bone.length, 0.0))
+    prop_obj.rotation_euler = (0.0, 0.0, 0.0)
+    prop_obj.scale = (1.0, 1.0, 1.0)
+    con = prop_obj.constraints.new(type="CHILD_OF")
+    con.target = armature_obj
+    con.subtarget = bone.name
+    con.inverse_matrix = Matrix.Identity(4)
+
+
+def build_and_attach_prop(armature_obj, prop_name, beauty_mat):
+    """Top-level entry point for --prop. Returns the prop object, or None if
+    no prop was requested or no suitable bone could be found -- this never
+    raises for a "no bone found" rig; it prints a warning and returns None
+    so main() renders without the prop rather than crashing."""
+    if not prop_name:
+        return None
+    if prop_name != "sword":
+        print(f"[Blender] WARNING: unknown --prop '{prop_name}'; ignoring.")
+        return None
+
+    bone, side = find_prop_bone(armature_obj)
+    if bone is None:
+        print("[Blender] WARNING: no hand/wrist/arm bone found on this rig; "
+              "rendering without the sword prop.")
+        return None
+
+    arm_length = compute_arm_length(bone)
+    prop_obj = build_sword_mesh(arm_length)
+    prop_obj.data.materials.append(beauty_mat)
+    bpy.context.collection.objects.link(prop_obj)
+    attach_prop_to_bone(prop_obj, armature_obj, bone)
+
+    print(f"[Blender] Prop 'sword' bound to bone '{bone.name}' ({side} side), "
+          f"arm_length={arm_length:.4f}, blade_length={arm_length * 1.35:.4f}")
+    return prop_obj
+
+
 def make_materials():
     """Returns (beauty_material, depth_material, depth_maprange_node).
 
@@ -334,37 +556,49 @@ def sample_frames(start, end, n):
     return [int(round(start + i * (end - start) / (n - 1))) for i in range(n)]
 
 
-def compute_bounds(scene, mesh_obj, frames):
-    """Per-frame world-space bounding box of the (deformed) body mesh. Uses
-    the evaluated mesh's actual vertices rather than object.bound_box,
+def compute_bounds(scene, mesh_objs, frames):
+    """Per-frame world-space bounding box of the (deformed) mesh objects.
+    Uses each evaluated mesh's actual vertices rather than object.bound_box,
     since bound_box has been observed to NOT reflect Armature-modifier
-    deformation in this Blender version.
+    deformation in this Blender version. `mesh_objs` may be a single object
+    or a list -- when it's the body mesh plus an attached prop, the union
+    of both is returned so the prop (e.g. a sword) factors into camera
+    auto-framing and never exits frame.
 
     Returns {frame: (fmin, fmax)} -- deliberately kept per-frame (not just
     a single global union) so the camera can recenter on the character
     each frame and ignore accumulated root-motion translation when sizing
     the ortho frustum (see setup_camera)."""
+    if hasattr(mesh_objs, "evaluated_get"):
+        mesh_objs = [mesh_objs]
     bounds_by_frame = {}
 
     for f in frames:
         scene.frame_set(f)
         bpy.context.view_layer.update()
         dg = bpy.context.evaluated_depsgraph_get()
-        obj_eval = mesh_obj.evaluated_get(dg)
-        me_eval = obj_eval.to_mesh()
-        n = len(me_eval.vertices)
-        if n == 0:
+        worlds = []
+        for mesh_obj in mesh_objs:
+            obj_eval = mesh_obj.evaluated_get(dg)
+            me_eval = obj_eval.to_mesh()
+            n = len(me_eval.vertices)
+            if n == 0:
+                obj_eval.to_mesh_clear()
+                continue
+            co = np.empty(n * 3, dtype=np.float32)
+            me_eval.vertices.foreach_get("co", co)
+            co = co.reshape(-1, 3)
+            mw = np.array(obj_eval.matrix_world)
+            world = (mw[:3, :3] @ co.T).T + mw[:3, 3]
             obj_eval.to_mesh_clear()
+            worlds.append(world)
+
+        if not worlds:
             bounds_by_frame[f] = (Vector((0, 0, 0)), Vector((0, 0, 0)))
             continue
-        co = np.empty(n * 3, dtype=np.float32)
-        me_eval.vertices.foreach_get("co", co)
-        co = co.reshape(-1, 3)
-        mw = np.array(obj_eval.matrix_world)
-        world = (mw[:3, :3] @ co.T).T + mw[:3, 3]
-        obj_eval.to_mesh_clear()
 
-        fmin, fmax = world.min(axis=0), world.max(axis=0)
+        combined = np.concatenate(worlds, axis=0)
+        fmin, fmax = combined.min(axis=0), combined.max(axis=0)
         bounds_by_frame[f] = (Vector((float(fmin[0]), float(fmin[1]), float(fmin[2]))),
                                Vector((float(fmax[0]), float(fmax[1]), float(fmax[2]))))
 
@@ -563,6 +797,9 @@ def parse_args():
     p.add_argument("output_dir")
     p.add_argument("--frames", type=int, default=16)
     p.add_argument("--res", type=int, default=1024)
+    p.add_argument("--prop", choices=["sword"], default=None,
+                    help="Attach a weapon prop to the right-hand bone "
+                         "(default: none).")
     return p.parse_args(argv)
 
 
@@ -615,6 +852,15 @@ def main():
     beauty_mat, depth_mat, depth_maprange = make_materials()
     body_obj.data.materials.append(beauty_mat)
 
+    prop_obj = None
+    if args.prop:
+        try:
+            prop_obj = build_and_attach_prop(armature_obj, args.prop, beauty_mat)
+        except Exception as exc:
+            print(f"[Blender] WARNING: prop attachment raised {exc!r}; "
+                  f"continuing without prop.")
+            prop_obj = None
+
     setup_lighting()
 
     start_f, end_f = get_action_frame_range(armature_obj, scene)
@@ -622,7 +868,8 @@ def main():
     print(f"[Blender] Animation range {start_f}-{end_f}, "
           f"sampling {len(frames)} frames: {frames}")
 
-    bounds_by_frame = compute_bounds(scene, body_obj, frames)
+    mesh_objs = [body_obj] + ([prop_obj] if prop_obj is not None else [])
+    bounds_by_frame = compute_bounds(scene, mesh_objs, frames)
     (cam, near, far, screen_i, depth_i,
      get_camera_loc_for_frame, get_depth_range_for_frame) = setup_camera(scene, bounds_by_frame)
     axis_names = "XYZ"
