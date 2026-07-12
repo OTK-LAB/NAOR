@@ -77,3 +77,10 @@
 - [x] Phase 6.4: Real sprite packing, E2E run — completed 2026-07-12 (full run 37.4 min; Unity editor UAT pending)
 
 **Known risks:** MoMask deps on Python 3.14; no rigged mesh existed before 6.2; AnimateDiff absent (temporal consistency deferred — per-frame fixed-seed first); t2i-adapter openpose is not a ControlNet; style/character consistency needs LoRA/IPAdapter later.
+
+## Milestone 7: Consistency — 🚧 IN PROGRESS (started 2026-07-12)
+**Goal**: Eliminate frame-to-frame character identity flicker and facing flips so generated clips read as ONE character animating, not sixteen cousins.
+
+- [ ] Phase 7.1: IPAdapter reference conditioning — install ComfyUI_IPAdapter_plus + SDXL IPAdapter models, hero-frame two-pass workflow (generate frame once, condition all frames on it)
+- [ ] Phase 7.2: Facing lock in Blender render — cancel root yaw per frame so the character keeps a stable side profile
+- [ ] Phase 7.3: E2E consistency validation — full re-run of "heavy sword swing", before/after flicker metric + visual comparison
