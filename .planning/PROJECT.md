@@ -3,13 +3,14 @@
 ## Overview
 This project is a revival of an old 2D animated game project. It had become disorganized over time, and this fresh start (`Efe-Basol` branch) aims to bring strict engineering standards, ultra-clean folder structures, and optimized mechanics. We are operating under Ponytail Ultra philosophy: No unrequested abstractions, no avoidable dependencies, minimum that works but incredibly clean and structured.
 
-## Current Milestone: v1.0 Refactor & Optimization
+## Current Milestone: v8.0 Playable Scenes & Prototype Integration
 
-**Goal:** Clean up the legacy mess and establish a high-performance foundation.
+**Goal:** Consolidate playable scenes into a functional flow, implement a scene-selection dummy menu, and port over previous work from the OGEM NAOR_prototype.
 
 **Target features:**
-- Directory structure cleanup and asset organization.
-- Codebase audit, dead code removal, and performance optimization.
+- Fix and stabilize all playable scenes in the repository.
+- Create a dummy scene-selection menu to transition properly into the playable areas via a "Start" action.
+- Pull and integrate the relevant work from the `OTK-LAB/NAOR_prototype` repository.
 
 ## Current State
 - **Shipped:** v4.0 Autonomous AI Art Pipeline (Completed: 2026-07-10).
@@ -47,4 +48,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-10 after v4.0 milestone*
+*Last updated: 2026-07-12 entering v8.0 milestone*
