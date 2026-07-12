@@ -1,27 +1,23 @@
-# NAOR - Requirements
+# Milestone v8.0 Requirements
 
-## Current Milestone: v1.0 Refactor & Optimization
-
-### Architecture & Structure
-- [ ] **ARCH-01**: Clean up the directory structure and organize assets properly into Art, Scripts, and Prefabs.
-- [ ] **ARCH-02**: Resolve loose scripts and prefabs at the root of the Assets folder.
-
-### Performance & Cleanup
-- [ ] **PERF-01**: Identify and remove unnecessary abstractions and dependencies in the existing codebase.
-- [ ] **PERF-02**: Optimize execution speed and clean up legacy code to follow Ponytail Ultra principles.
+## Core Flow & Consolidation
+- [ ] **CORE-01**: User can open a dummy main menu as the entry point to the application.
+- [ ] **CORE-02**: User can select a playable scene from the menu and transition to it.
+- [ ] **CORE-03**: User can play consolidated, functional scenes ported from the prototype.
+- [ ] **CORE-04**: System loads scenes via native `UnityEngine.SceneManagement` without monolithic wrappers (Ponytail Ultra architecture).
+- [ ] **CORE-05**: System initializes scenes modularly so they can be played individually in the editor without the main menu.
+- [ ] **CORE-06**: System integrates mechanics ported from the NAOR_prototype repository cleanly.
 
 ## Future Requirements
-- UI Overhaul (Main Menu)
-- Scenes & Mechanics unification
+- Multiple Scene Selection UI scaling.
+- Loading Screen UI.
+- Save/Load System.
 
 ## Out of Scope
-- New gameplay features (deferred to later milestones)
+- **AI Art Pipeline integration:** Explicitly deferred to the next milestone by the user.
+- **Complex Transition Animations:** Violates "minimum that works" MVP.
+- **Global Singletons for Everything:** Creates rigid coupling; avoided by design.
+- **Full Settings/Pause Menu:** Distraction from MVP playable scene goals.
 
 ## Traceability
-
-| REQ-ID | Description | Phase | Status |
-|--------|-------------|-------|--------|
-| ARCH-01 | Clean up directory structure and organize assets | 1.1 | Pending |
-| ARCH-02 | Resolve loose scripts and prefabs in root | 1.1 | Pending |
-| PERF-01 | Remove unnecessary abstractions and dependencies | 1.2 | Pending |
-| PERF-02 | Optimize execution speed and clean legacy code | 1.2 | Pending |
+*(To be filled by the roadmap)*
