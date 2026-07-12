@@ -27,6 +27,21 @@ If the server is not running, this script will try to start it itself
 (subprocess against ComfyUI's own venv) unless --no-auto-start is
 passed, in which case it fails with a clear message telling you how to
 start it manually.
+
+Phase 7.1 -- "Consistency": default mode is now a two-pass, IPAdapter-
+conditioned generation so all frames of a clip depict the same
+character (same armor/palette), instead of each frame being an
+independent SDXL sample that only shares its pose (via ControlNet-
+Depth). Pass 1 renders one "hero" frame (mid-action frame by default)
+with the plain single-pass workflow (workflows/dark_fantasy_sprite.json,
+no IPAdapter). Pass 2 regenerates every requested frame -- hero frame
+included -- with workflows/dark_fantasy_sprite_ipadapter.json, which
+adds an IPAdapter (SDXL vit-h) branch conditioned on the pass-1 hero
+image on top of the existing per-frame ControlNet-Depth conditioning.
+Pass `--no-ipadapter` to fall back to the old single-pass behavior, or
+`--reference <img>` to skip pass 1 and condition on an explicit
+reference image instead (this is also the hook for a future fixed
+character-design image).
 """
 import argparse
 import copy
@@ -74,6 +89,9 @@ except ImportError:  # pragma: no cover
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_WORKFLOW_PATH = os.path.join(_HERE, "..", "workflows", "dark_fantasy_sprite.json")
+DEFAULT_IPADAPTER_WORKFLOW_PATH = os.path.join(
+    _HERE, "..", "workflows", "dark_fantasy_sprite_ipadapter.json"
+)
 DEFAULT_COMFYUI_URL = "http://127.0.0.1:8188"
 DEFAULT_COMFYUI_DIR = os.environ.get(
     "COMFYUI_DIR", "/Volumes/aebasol_1tb/Ob/AI_Tools/ComfyUI"
@@ -88,6 +106,15 @@ NODE_CONTROL_IMAGE = "11"
 NODE_CONTROL_APPLY = "12"
 NODE_KSAMPLER = "3"
 NODE_SAVE = "9"
+
+# Extra node ids present only in dark_fantasy_sprite_ipadapter.json (API
+# format) -- the IPAdapter reference-image branch. Absent from the plain
+# single-pass workflow, which is why build_workflow() checks for their
+# presence before patching them.
+NODE_IPA_REF_IMAGE = "22"
+NODE_IPA_APPLY = "23"
+
+DEFAULT_IPADAPTER_WEIGHT = 0.8
 
 POSITIVE_TEMPLATE = (
     "dark fantasy game character, {subject}, 2d game art, high detail, "
@@ -294,6 +321,8 @@ def build_workflow(
     width,
     height,
     filename_prefix,
+    reference_image_name=None,
+    ipadapter_weight=None,
 ):
     wf = copy.deepcopy(template)
 
@@ -318,6 +347,23 @@ def build_workflow(
     ks["sampler_name"] = sampler_name
     ks["scheduler"] = scheduler
     node(NODE_SAVE)["inputs"]["filename_prefix"] = filename_prefix
+
+    # IPAdapter branch -- only present in dark_fantasy_sprite_ipadapter.json.
+    if NODE_IPA_REF_IMAGE in wf:
+        if reference_image_name is None:
+            raise ComfyUIError(
+                f"Workflow has IPAdapter node '{NODE_IPA_REF_IMAGE}' but no "
+                f"reference_image_name was supplied to build_workflow()."
+            )
+        node(NODE_IPA_REF_IMAGE)["inputs"]["image"] = reference_image_name
+        if ipadapter_weight is not None:
+            node(NODE_IPA_APPLY)["inputs"]["weight"] = ipadapter_weight
+    elif reference_image_name is not None:
+        raise ComfyUIError(
+            "reference_image_name was supplied but this workflow template "
+            "has no IPAdapter node -- pass the IPAdapter workflow path or "
+            "drop the reference image."
+        )
     return wf
 
 
@@ -401,6 +447,60 @@ def discover_frames(input_dir, frame_indices=None):
 # Main entry point
 # ---------------------------------------------------------------------------
 
+def _generate_frame(
+    comfyui_url,
+    client_id,
+    workflow_template,
+    control_image_name,
+    positive_prompt,
+    negative_prompt,
+    seed,
+    steps,
+    cfg,
+    sampler_name,
+    scheduler,
+    controlnet_strength,
+    width,
+    height,
+    filename_prefix,
+    poll_interval,
+    poll_timeout,
+    label,
+    reference_image_name=None,
+    ipadapter_weight=None,
+):
+    """Builds + queues one workflow and returns the raw PIL image (RGB, not
+    yet cutout). Shared by the hero pass and the per-frame pass(es)."""
+    workflow = build_workflow(
+        workflow_template,
+        control_image_name=control_image_name,
+        positive_text=positive_prompt,
+        negative_text=negative_prompt,
+        seed=seed,
+        steps=steps,
+        cfg=cfg,
+        sampler_name=sampler_name,
+        scheduler=scheduler,
+        controlnet_strength=controlnet_strength,
+        width=width,
+        height=height,
+        filename_prefix=filename_prefix,
+        reference_image_name=reference_image_name,
+        ipadapter_weight=ipadapter_weight,
+    )
+
+    prompt_id = queue_prompt(comfyui_url, workflow, client_id)
+    print(f"[ComfyUI] {label}: queued as prompt_id={prompt_id}, waiting...")
+    entry = wait_for_completion(comfyui_url, prompt_id, poll_interval=poll_interval, timeout=poll_timeout)
+    img_bytes = fetch_output_image_bytes(comfyui_url, entry, NODE_SAVE)
+
+    from io import BytesIO
+    raw_img = Image.open(BytesIO(img_bytes))
+    raw_img.load()
+    assert_image_not_degenerate(raw_img, label=label)
+    return raw_img, img_bytes
+
+
 def stylize_frames(
     input_dir,
     output_dir,
@@ -424,10 +524,33 @@ def stylize_frames(
     poll_interval=2.0,
     workflow_path=DEFAULT_WORKFLOW_PATH,
     mask_dilate_px=4,
+    use_ipadapter=True,
+    ipadapter_workflow_path=DEFAULT_IPADAPTER_WORKFLOW_PATH,
+    ipadapter_weight=DEFAULT_IPADAPTER_WEIGHT,
+    reference_image_path=None,
+    hero_frame_index=None,
 ):
     """Stylizes depth_%04d.png frames from input_dir into transparent-bg
     dark-fantasy sprite frames in output_dir/frame_%04d.png, keeping the
     pre-cutout raw SDXL output in output_dir/raw/frame_%04d.png.
+
+    Two modes:
+
+    - use_ipadapter=False: original Milestone-6 single-pass behavior --
+      every requested frame is generated independently from
+      `workflow_path` (SDXL + ControlNet-Depth only). Poses match (via
+      ControlNet) but armor/palette can flicker frame to frame.
+
+    - use_ipadapter=True (default, Phase 7.1): two-pass "consistent"
+      mode. Pass 1 renders one hero frame with `workflow_path` (no
+      IPAdapter) -- either the frame at `reference_image_path` (if an
+      explicit external reference image is given, pass 1 is skipped
+      entirely) or the frame at `hero_frame_index` (default: the middle
+      frame of the requested set). Pass 2 regenerates every requested
+      frame (hero included) with `ipadapter_workflow_path`, which adds
+      an IPAdapter branch conditioned on the pass-1 hero image on top
+      of the same per-frame ControlNet-Depth conditioning, so all
+      frames share the hero's design/palette.
 
     Raises ComfyUIError (or lets requests/IOError propagate) on any
     failure -- there is no silent-mock fallback.
@@ -447,7 +570,8 @@ def stylize_frames(
     print(f"[ComfyUI] Positive prompt: {positive_prompt}")
     print(f"[ComfyUI] Negative prompt: {negative_prompt}")
     print(f"[ComfyUI] seed={seed} steps={steps} cfg={cfg} sampler={sampler_name}/{scheduler} "
-          f"controlnet_strength={controlnet_strength} size={width}x{height}")
+          f"controlnet_strength={controlnet_strength} size={width}x{height} "
+          f"use_ipadapter={use_ipadapter}")
 
     log_path = os.path.join(output_dir, "comfyui_server.log")
     proc, log_f = ensure_server(comfyui_url, auto_start, comfyui_dir, comfyui_python, start_timeout, log_path)
@@ -455,42 +579,112 @@ def stylize_frames(
 
     total_start = time.time()
     per_frame_seconds = []
+    hero_seconds = None
     try:
+        reference_server_name = None
+        ipadapter_workflow_template = None
+
+        if use_ipadapter:
+            ipadapter_workflow_template = load_workflow(ipadapter_workflow_path)
+
+            if reference_image_path:
+                print(f"[ComfyUI] --- reference image (explicit, pass 1 skipped) ---")
+                print(f"[ComfyUI] Using external reference: {reference_image_path}")
+                ref_name, ref_subfolder = upload_image(comfyui_url, reference_image_path)
+                reference_server_name = ref_name if not ref_subfolder else f"{ref_subfolder}/{ref_name}"
+            else:
+                if hero_frame_index is not None:
+                    hero_tuple = next((f for f in frames if f[0] == hero_frame_index), None)
+                    if hero_tuple is None:
+                        raise ComfyUIError(
+                            f"--hero-frame {hero_frame_index} is not among the requested "
+                            f"frames {[f[0] for f in frames]}"
+                        )
+                else:
+                    hero_tuple = frames[len(frames) // 2]
+                hero_idx, hero_depth_path, hero_beauty_path = hero_tuple
+                print(f"[ComfyUI] --- pass 1: hero frame {hero_idx:04d} (no IPAdapter) ---")
+
+                hero_start = time.time()
+                hero_server_name, hero_subfolder = upload_image(comfyui_url, hero_depth_path)
+                hero_control_name = (
+                    hero_server_name if not hero_subfolder else f"{hero_subfolder}/{hero_server_name}"
+                )
+                hero_img, hero_bytes = _generate_frame(
+                    comfyui_url, client_id, workflow_template,
+                    control_image_name=hero_control_name,
+                    positive_prompt=positive_prompt,
+                    negative_prompt=negative_prompt,
+                    seed=seed, steps=steps, cfg=cfg,
+                    sampler_name=sampler_name, scheduler=scheduler,
+                    controlnet_strength=controlnet_strength,
+                    width=width, height=height,
+                    filename_prefix=f"dark_fantasy_sprite_hero_{hero_idx:04d}",
+                    poll_interval=poll_interval, poll_timeout=poll_timeout,
+                    label=f"hero frame {hero_idx:04d}",
+                )
+                hero_dir = os.path.join(output_dir, "hero")
+                os.makedirs(hero_dir, exist_ok=True)
+                hero_raw_path = os.path.join(hero_dir, f"raw_hero_{hero_idx:04d}.png")
+                with open(hero_raw_path, "wb") as f:
+                    f.write(hero_bytes)
+                hero_cutout = apply_alpha_cutout(hero_img, hero_beauty_path, dilate_px=mask_dilate_px)
+                hero_cutout_path = os.path.join(hero_dir, f"hero_{hero_idx:04d}.png")
+                hero_cutout.save(hero_cutout_path)
+                hero_seconds = time.time() - hero_start
+                print(f"[ComfyUI] hero frame {hero_idx:04d} done in {hero_seconds:.1f}s "
+                      f"-> {hero_raw_path} (reference for pass 2)")
+
+                # Re-upload the raw (pre-cutout) hero image as the IPAdapter
+                # reference for pass 2 -- IPAdapter conditions on the visual
+                # content/style of the reference image, and the prompt
+                # already asks for a solid dark background so the raw
+                # (non-transparent) output works fine as-is.
+                ref_name, ref_subfolder = upload_image(comfyui_url, hero_raw_path)
+                reference_server_name = ref_name if not ref_subfolder else f"{ref_subfolder}/{ref_name}"
+
         for idx, depth_path, beauty_path in frames:
             frame_start = time.time()
-            print(f"[ComfyUI] --- frame {idx:04d} ---")
+            pass_label = "pass 2 (IPAdapter)" if use_ipadapter else "single-pass"
+            print(f"[ComfyUI] --- frame {idx:04d} ({pass_label}) ---")
 
             server_name, server_subfolder = upload_image(comfyui_url, depth_path)
+            control_image_name = server_name if not server_subfolder else f"{server_subfolder}/{server_name}"
 
-            workflow = build_workflow(
-                workflow_template,
-                control_image_name=server_name if not server_subfolder else f"{server_subfolder}/{server_name}",
-                positive_text=positive_prompt,
-                negative_text=negative_prompt,
-                seed=seed,
-                steps=steps,
-                cfg=cfg,
-                sampler_name=sampler_name,
-                scheduler=scheduler,
-                controlnet_strength=controlnet_strength,
-                width=width,
-                height=height,
-                filename_prefix=f"dark_fantasy_sprite_{idx:04d}",
-            )
-
-            prompt_id = queue_prompt(comfyui_url, workflow, client_id)
-            print(f"[ComfyUI] frame {idx:04d}: queued as prompt_id={prompt_id}, waiting...")
-            entry = wait_for_completion(comfyui_url, prompt_id, poll_interval=poll_interval, timeout=poll_timeout)
-            img_bytes = fetch_output_image_bytes(comfyui_url, entry, NODE_SAVE)
+            if use_ipadapter:
+                raw_img, img_bytes = _generate_frame(
+                    comfyui_url, client_id, ipadapter_workflow_template,
+                    control_image_name=control_image_name,
+                    positive_prompt=positive_prompt,
+                    negative_prompt=negative_prompt,
+                    seed=seed, steps=steps, cfg=cfg,
+                    sampler_name=sampler_name, scheduler=scheduler,
+                    controlnet_strength=controlnet_strength,
+                    width=width, height=height,
+                    filename_prefix=f"dark_fantasy_sprite_ipa_{idx:04d}",
+                    poll_interval=poll_interval, poll_timeout=poll_timeout,
+                    label=f"frame {idx:04d}",
+                    reference_image_name=reference_server_name,
+                    ipadapter_weight=ipadapter_weight,
+                )
+            else:
+                raw_img, img_bytes = _generate_frame(
+                    comfyui_url, client_id, workflow_template,
+                    control_image_name=control_image_name,
+                    positive_prompt=positive_prompt,
+                    negative_prompt=negative_prompt,
+                    seed=seed, steps=steps, cfg=cfg,
+                    sampler_name=sampler_name, scheduler=scheduler,
+                    controlnet_strength=controlnet_strength,
+                    width=width, height=height,
+                    filename_prefix=f"dark_fantasy_sprite_{idx:04d}",
+                    poll_interval=poll_interval, poll_timeout=poll_timeout,
+                    label=f"frame {idx:04d}",
+                )
 
             raw_out_path = os.path.join(raw_dir, f"frame_{idx:04d}.png")
             with open(raw_out_path, "wb") as f:
                 f.write(img_bytes)
-
-            from io import BytesIO
-            raw_img = Image.open(BytesIO(img_bytes))
-            raw_img.load()
-            assert_image_not_degenerate(raw_img, label=f"frame_{idx:04d}")
 
             final_img = apply_alpha_cutout(raw_img, beauty_path, dilate_px=mask_dilate_px)
             final_out_path = os.path.join(output_dir, f"frame_{idx:04d}.png")
@@ -505,9 +699,10 @@ def stylize_frames(
     total_elapsed = time.time() - total_start
     if per_frame_seconds:
         avg = sum(per_frame_seconds) / len(per_frame_seconds)
+        hero_note = f" (+ {hero_seconds:.1f}s hero pass)" if hero_seconds is not None else ""
         print(
             f"[ComfyUI] Stylization complete: {len(per_frame_seconds)} frame(s), "
-            f"{total_elapsed:.1f}s total, {avg:.1f}s/frame average."
+            f"{total_elapsed:.1f}s total{hero_note}, {avg:.1f}s/frame average."
         )
     return per_frame_seconds
 
@@ -547,8 +742,24 @@ def main():
     parser.add_argument("--start-timeout", type=float, default=120.0)
     parser.add_argument("--poll-timeout", type=float, default=600.0)
     parser.add_argument("--poll-interval", type=float, default=2.0)
-    parser.add_argument("--workflow", default=DEFAULT_WORKFLOW_PATH)
+    parser.add_argument("--workflow", default=DEFAULT_WORKFLOW_PATH,
+                         help="Single-pass / hero-pass workflow (no IPAdapter)")
     parser.add_argument("--mask-dilate", type=int, default=4)
+    parser.add_argument("--no-ipadapter", dest="use_ipadapter", action="store_false",
+                         help="Restore Milestone-6 single-pass behavior (every frame "
+                              "independent, no IPAdapter reference conditioning)")
+    parser.add_argument("--ipadapter-workflow", default=DEFAULT_IPADAPTER_WORKFLOW_PATH,
+                         help="Two-pass workflow used for pass 2 (ControlNet-Depth + IPAdapter)")
+    parser.add_argument("--ipadapter-weight", type=float, default=DEFAULT_IPADAPTER_WEIGHT,
+                         help="IPAdapter conditioning strength (0-1ish); higher = more "
+                              "faithful to the reference image, lower = more prompt/pose freedom")
+    parser.add_argument("--reference", default=None,
+                         help="Explicit reference image path for IPAdapter conditioning; "
+                              "skips pass 1 (hero-frame generation) entirely. Also the hook "
+                              "for a future fixed character-design image.")
+    parser.add_argument("--hero-frame", type=int, default=None,
+                         help="Frame index to use as the pass-1 hero frame (default: the "
+                              "middle frame of the requested set). Ignored if --reference is set.")
     args = parser.parse_args()
 
     stylize_frames(
@@ -574,6 +785,11 @@ def main():
         poll_interval=args.poll_interval,
         workflow_path=args.workflow,
         mask_dilate_px=args.mask_dilate,
+        use_ipadapter=args.use_ipadapter,
+        ipadapter_workflow_path=args.ipadapter_workflow,
+        ipadapter_weight=args.ipadapter_weight,
+        reference_image_path=args.reference,
+        hero_frame_index=args.hero_frame,
     )
 
 
