@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Water Reflection Material
+  m_Shader: {fileID: -6465566751694194690, guid: 39e27b41975f360498f1dd7f433476e0, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_44c4b1a1bf0249adb57a35a1d195efba:
+        m_Texture: {fileID: 2800000, guid: 6fef850dc2b4c8b44bb7aaf9867dbffb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_959331ed2b174b418de53f4d5516f420:
+        m_Texture: {fileID: 2800000, guid: 9b9dd61f42c58c9409cc87c62aa07ad0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_c08c791c35b44319a7d245edaa471914:
+        m_Texture: {fileID: 8400000, guid: 7ce2ac3fdae56b84aa1453f5d3c504b5, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_085f8c8abec5427d8973751d8da3098f: 1
+    - Vector1_2c7cab59187c4372b223f18859612001: 0.1
+    - Vector1_9d00dc2fceee4eee92cc47dd0676cba1: 3
+    - Vector1_a66661579e2f43d7ac05af8f97fc1cba: 1
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - Color_21f20c78b2414292a296081d9de2de2f: {r: 0.45232826, g: 0.6320754, b: 0.43827873, a: 1}
+    - Vector3_2da699f3f4274dddb69cf4a5786b2a2b: {r: 0, g: 0.005, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
