@@ -117,6 +117,8 @@ def run_pipeline(args):
     print(f"Run name: {run_name}")
     print(f"Prop: {prop or '(none)'}")
     print(f"Frames: {args.frames}  Res: {args.res}  Seed: {args.seed}  Cell: {args.cell}")
+    print(f"Lock facing: {args.lock_facing}  IPAdapter: {not args.no_ipadapter}"
+          f"{' (ref=' + args.reference + ')' if args.reference else ''}")
     print(f"Temp dir: {run_root}")
     print(f"Resuming from stage: {args.skip_to}" if skip_idx > 0 else "Running all stages")
 
@@ -155,6 +157,8 @@ def run_pipeline(args):
         ]
         if prop:
             blender_cmd += ["--prop", prop]
+        if args.lock_facing:
+            blender_cmd += ["--lock-facing"]
         timings["render"] = run_stage("STAGE 2: Blender render (beauty + depth)", blender_cmd)
     else:
         if not (has_files_matching(render_dir, "frame_") and has_files_matching(render_dir, "depth_")):
@@ -165,10 +169,21 @@ def run_pipeline(args):
 
     # --- Stage 3: ComfyUI stylization -----------------------------------
     if skip_idx <= STAGES.index("stylize"):
+        comfy_cmd = [
+            VENV_PYTHON, os.path.join(SRC_DIR, "comfy_client.py"),
+            "--input", render_dir, "--output", style_dir, "--seed", str(args.seed),
+        ]
+        if args.no_ipadapter:
+            comfy_cmd += ["--no-ipadapter"]
+        if args.reference:
+            comfy_cmd += ["--reference", args.reference]
+        if args.ipadapter_weight is not None:
+            comfy_cmd += ["--ipadapter-weight", str(args.ipadapter_weight)]
+        if args.hero_frame is not None:
+            comfy_cmd += ["--hero-frame", str(args.hero_frame)]
         timings["stylize"] = run_stage(
             "STAGE 3: ComfyUI stylization (SDXL + ControlNet-Depth)",
-            [VENV_PYTHON, os.path.join(SRC_DIR, "comfy_client.py"),
-             "--input", render_dir, "--output", style_dir, "--seed", str(args.seed)],
+            comfy_cmd,
         )
     else:
         if not has_files_matching(style_dir, "frame_"):
@@ -225,6 +240,32 @@ def main():
     parser.add_argument("--prop", choices=["sword", "none"], default=None,
                          help="Force a Blender prop on/off. Default: auto-detect from the prompt "
                               "(sword/axe/weapon keyword -> 'sword').")
+    parser.add_argument("--lock-facing", dest="lock_facing", action="store_true", default=True,
+                         help="Cancel root-bone yaw drift in the Blender render so the "
+                              "character's side-profile facing stays constant across all "
+                              "frames (default: ON -- side-scroller sprites want a stable "
+                              "profile). Pass --no-lock-facing for actions where the "
+                              "character should visibly turn, e.g. a turning attack.")
+    parser.add_argument("--no-lock-facing", dest="lock_facing", action="store_false",
+                         help="Disable facing-lock (restores free root yaw). Use for "
+                              "actions that should show the character turning, e.g. a "
+                              "turning attack.")
+    parser.add_argument("--no-ipadapter", dest="no_ipadapter", action="store_true", default=False,
+                         help="Restore Milestone-6 single-pass stylization (every frame "
+                              "independent, no IPAdapter reference conditioning). Default: "
+                              "off -- comfy_client's two-pass IPAdapter-consistent mode is "
+                              "used by default.")
+    parser.add_argument("--reference", default=None,
+                         help="Explicit reference image path for IPAdapter conditioning "
+                              "(passed through to comfy_client.py); skips hero-frame "
+                              "generation entirely.")
+    parser.add_argument("--ipadapter-weight", type=float, default=None,
+                         help="IPAdapter conditioning strength (passed through to "
+                              "comfy_client.py; its own default is 0.8 if unset here).")
+    parser.add_argument("--hero-frame", type=int, default=None,
+                         help="Frame index to use as the pass-1 hero frame (passed through "
+                              "to comfy_client.py; default there is the middle frame). "
+                              "Ignored if --reference is set.")
     parser.add_argument("--skip-to", choices=STAGES, default="motion",
                          help="Resume from a stage, reusing existing temp/<run_name>/ outputs "
                               "for earlier stages (default: run everything from 'motion').")
