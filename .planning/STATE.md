@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-07-12T17:25:34.769Z"
 last_activity: 2026-07-12
 progress:
-  total_phases: 0
+  total_phases: 3
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -26,11 +26,11 @@ progress:
 
 ## Pending Action
 
-- Next milestone TBD with user. Candidates: return to game milestones (v1.0 refactor backlog, v2.0 UI, v3.0 scenes/story — pipeline can now feed them), or further art quality (curated character reference set, proxy-body anatomy, AnimateDiff-class smoothing).
+- Review roadmap and proceed to planning for Phase 8.1.
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 8.1 (Prototype Scene Consolidation)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-12 — Milestone v8.0 started
+Status: Ready for Phase 8.1 Planning
+Last activity: 2026-07-12 — Roadmap created for milestone v8.0

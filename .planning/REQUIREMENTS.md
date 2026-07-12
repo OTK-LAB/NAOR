@@ -20,4 +20,12 @@
 - **Full Settings/Pause Menu:** Distraction from MVP playable scene goals.
 
 ## Traceability
-*(To be filled by the roadmap)*
+
+| Requirement | Phase |
+|-------------|-------|
+| CORE-01     | Phase 8.2 |
+| CORE-02     | Phase 8.3 |
+| CORE-03     | Phase 8.1 |
+| CORE-04     | Phase 8.3 |
+| CORE-05     | Phase 8.1 |
+| CORE-06     | Phase 8.1 |
