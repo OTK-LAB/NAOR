@@ -78,9 +78,9 @@
 
 **Known risks:** MoMask deps on Python 3.14; no rigged mesh existed before 6.2; AnimateDiff absent (temporal consistency deferred — per-frame fixed-seed first); t2i-adapter openpose is not a ControlNet; style/character consistency needs LoRA/IPAdapter later.
 
-## Milestone 7: Consistency — 🚧 IN PROGRESS (started 2026-07-12)
+## Milestone 7: Consistency — ✅ COMPLETED 2026-07-12 (audit PASSED; identity flicker -65%)
 **Goal**: Eliminate frame-to-frame character identity flicker and facing flips so generated clips read as ONE character animating, not sixteen cousins.
 
-- [ ] Phase 7.1: IPAdapter reference conditioning — install ComfyUI_IPAdapter_plus + SDXL IPAdapter models, hero-frame two-pass workflow (generate frame once, condition all frames on it)
-- [ ] Phase 7.2: Facing lock in Blender render — cancel root yaw per frame so the character keeps a stable side profile
-- [ ] Phase 7.3: E2E consistency validation — full re-run of "heavy sword swing", before/after flicker metric + visual comparison
+- [x] Phase 7.1: IPAdapter reference conditioning — hero-frame two-pass workflow (-45% on 4-frame test)
+- [x] Phase 7.2: Facing lock in Blender render — root yaw drift 21°→0°
+- [x] Phase 7.3: E2E consistency validation — full re-run: -65% flicker, back-views gone (+7.3b: reproducible toolchain provisioning after manual wipe)
