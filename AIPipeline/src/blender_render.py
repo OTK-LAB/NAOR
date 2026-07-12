@@ -28,7 +28,8 @@ Invocation (must be run *inside* Blender, not as a plain python3 script):
 
     /Applications/Blender.app/Contents/MacOS/Blender -b \\
         -P AIPipeline/src/blender_render.py -- \\
-        <bvh_path> <output_dir> [--frames N] [--res R] [--prop sword]
+        <bvh_path> <output_dir> [--frames N] [--res R] [--prop sword] \\
+        [--lock-facing]
 
     N defaults to 16 (frames uniformly sampled across the BVH's animation
     range). R defaults to 1024 (SDXL-native square resolution). --prop sword
@@ -39,6 +40,10 @@ Invocation (must be run *inside* Blender, not as a plain python3 script):
     floating blade the prompt has to guess the position of. The prop shares
     the body's beauty material and is automatically included in the depth
     material_override and the per-frame camera auto-framing bounds.
+    --lock-facing (default: off, Phase 7.2) cancels root-bone yaw drift so
+    the character's side-profile facing stays constant (locked to the
+    first sampled frame's facing) across the whole sampled sequence -- see
+    the "Facing lock" section below for how and why.
 """
 import argparse
 import math
@@ -556,7 +561,151 @@ def sample_frames(start, end, n):
     return [int(round(start + i * (end - start) / (n - 1))) for i in range(n)]
 
 
-def compute_bounds(scene, mesh_objs, frames):
+# ---------------------------------------------------------------------------
+# Facing lock (Phase 7.2)
+# ---------------------------------------------------------------------------
+# MoMask-generated motions often carry root yaw (the whole body slowly
+# turning over the clip, sometimes a lot on turning/spinning attacks). Left
+# alone, this reads as the character's side profile flipping toward front-
+# or back-on for some sampled frames, which then confuses the downstream
+# SDXL stylization pass into drawing an inconsistent facing across the
+# sprite sheet. --lock-facing cancels this: for every SAMPLED frame, the
+# root ("Hips") bone's current heading is measured and the whole armature
+# OBJECT (not the individual pose bones) is counter-rotated around the
+# world vertical axis, through the bone's own world-space position that
+# frame, so the heading stays pinned to whatever it was on the first
+# sampled frame.
+#
+# Rotating the OBJECT rather than the pose bones is deliberate: it composes
+# for free with everything else already in the scene graph --
+#   - the body mesh is parented to the armature object and skinned via an
+#     Armature modifier that deforms in the armature's own local/object
+#     space, so a change to the armature object's matrix_world propagates
+#     through ordinary Blender parenting math without being double-applied;
+#   - the sword prop is attached via a Child Of constraint targeting a bone
+#     of this same armature, so it inherits the correction transparently
+#     and stays rigidly gripped;
+#   - it runs in main() BEFORE compute_bounds/setup_camera, so per-frame
+#     camera auto-framing sees the corrected pose, not the original one.
+#
+# Only yaw (rotation about the global Z/vertical axis) is cancelled --
+# pitch/roll (leaning, crouching) are left untouched since those aren't
+# what breaks the side-profile read.
+
+
+def find_root_bone(armature_obj):
+    """Finds the skeleton's root motion bone (HumanML3D/SMPL: "Hips") to
+    measure facing from. Preference order: (1) an actual armature root (no
+    parent) whose name reads as hip/pelvis/root; (2) any actual armature
+    root if there's exactly one; (3) any bone anywhere in the rig with a
+    matching name; (4) give up. Returns a PoseBone or None -- callers must
+    treat None as "skip the lock, don't crash", never raise from here."""
+    try:
+        pose_bones = list(armature_obj.pose.bones)
+    except Exception:
+        return None
+    if not pose_bones:
+        return None
+
+    roots = [b for b in pose_bones if b.parent is None]
+    keywords = ("hip", "pelvis", "root")
+
+    named_roots = [b for b in roots if any(k in b.name.lower() for k in keywords)]
+    if named_roots:
+        return named_roots[0]
+    if len(roots) == 1:
+        return roots[0]
+
+    named_any = [b for b in pose_bones if any(k in b.name.lower() for k in keywords)]
+    if named_any:
+        return named_any[0]
+    if roots:
+        return roots[0]
+    return None
+
+
+def _ground_yaw(world_matrix, local_axis=Vector((1.0, 0.0, 0.0))):
+    """Yaw (radians, world XY plane) of `local_axis` as carried by
+    world_matrix's rotation. Any fixed bone-local axis works here -- this
+    angle is only ever compared to itself at other frames (relative
+    drift), never treated as an absolute "this is anatomically forward"
+    direction, so there's no dependency on the BVH exporter's bone-axis
+    convention. Returns None if the axis has rotated to point (near)
+    straight up/down, where a ground-plane heading is ambiguous."""
+    direction = world_matrix.to_3x3() @ local_axis
+    horiz = Vector((direction.x, direction.y))
+    if horiz.length < 1e-6:
+        return None
+    return math.atan2(horiz.y, horiz.x)
+
+
+def compute_facing_lock(armature_obj, root_bone_name, frames, scene):
+    """Computes, for each sampled frame, the world-space delta rotation
+    that cancels that frame's root-bone yaw drift relative to the FIRST
+    sampled frame (frames[0]'s facing becomes the locked reference).
+    Returns {frame: Matrix} -- a delta still needing to be premultiplied
+    against the armature's ORIGINAL matrix_world by the caller, see
+    make_facing_lock_applier -- or {} on any failure (bone not found,
+    degenerate rig, etc.). Callers must treat {} as "render without the
+    lock"; this never raises."""
+    if not root_bone_name or not frames:
+        return {}
+
+    base_matrix_world = armature_obj.matrix_world.copy()
+    corrections = {}
+    ref_yaw = None
+
+    try:
+        for f in frames:
+            scene.frame_set(f)
+            bpy.context.view_layer.update()
+
+            pose_bone = armature_obj.pose.bones.get(root_bone_name)
+            if pose_bone is None:
+                return {}
+
+            world_matrix = base_matrix_world @ pose_bone.matrix
+            yaw = _ground_yaw(world_matrix)
+            if yaw is None:
+                corrections[f] = Matrix.Identity(4)
+                continue
+
+            if ref_yaw is None:
+                ref_yaw = yaw
+
+            delta = ref_yaw - yaw
+            pivot = world_matrix.translation.copy()
+            corrections[f] = (Matrix.Translation(pivot)
+                               @ Matrix.Rotation(delta, 4, "Z")
+                               @ Matrix.Translation(-pivot))
+    except Exception as exc:
+        print(f"[Blender] WARNING: facing-lock computation raised {exc!r}; "
+              f"rendering without facing lock.")
+        return {}
+
+    return corrections
+
+
+def make_facing_lock_applier(armature_obj, corrections):
+    """Returns a callable(f) that resets the armature object's matrix_world
+    to its ORIGINAL transform corrected by frame f's facing-lock delta (or
+    just the original transform if f has no entry). Always rebuilding from
+    the captured original matrix_world means repeated/out-of-order calls
+    never accumulate. Returns None if `corrections` is empty (nothing to
+    apply, e.g. lock disabled or computation failed)."""
+    if not corrections:
+        return None
+    base_matrix_world = armature_obj.matrix_world.copy()
+
+    def apply(f):
+        correction = corrections.get(f)
+        armature_obj.matrix_world = (correction @ base_matrix_world
+                                      if correction is not None else base_matrix_world)
+
+    return apply
+
+
+def compute_bounds(scene, mesh_objs, frames, facing_lock_apply=None):
     """Per-frame world-space bounding box of the (deformed) mesh objects.
     Uses each evaluated mesh's actual vertices rather than object.bound_box,
     since bound_box has been observed to NOT reflect Armature-modifier
@@ -568,7 +717,12 @@ def compute_bounds(scene, mesh_objs, frames):
     Returns {frame: (fmin, fmax)} -- deliberately kept per-frame (not just
     a single global union) so the camera can recenter on the character
     each frame and ignore accumulated root-motion translation when sizing
-    the ortho frustum (see setup_camera)."""
+    the ortho frustum (see setup_camera).
+
+    `facing_lock_apply`, if given (see make_facing_lock_applier), is called
+    for each frame right after posing it, BEFORE bounds are read, so the
+    bounds -- and therefore the camera framing derived from them -- reflect
+    the facing-locked pose rather than the original one."""
     if hasattr(mesh_objs, "evaluated_get"):
         mesh_objs = [mesh_objs]
     bounds_by_frame = {}
@@ -576,6 +730,9 @@ def compute_bounds(scene, mesh_objs, frames):
     for f in frames:
         scene.frame_set(f)
         bpy.context.view_layer.update()
+        if facing_lock_apply is not None:
+            facing_lock_apply(f)
+            bpy.context.view_layer.update()
         dg = bpy.context.evaluated_depsgraph_get()
         worlds = []
         for mesh_obj in mesh_objs:
@@ -750,11 +907,15 @@ def blacken_depth_background(path):
 
 
 def render_all(scene, cam, body_obj, depth_mat, depth_maprange, frames, out_dir,
-               get_camera_loc_for_frame, get_depth_range_for_frame):
+               get_camera_loc_for_frame, get_depth_range_for_frame,
+               facing_lock_apply=None):
     view_layer = bpy.context.view_layer
     for idx, f in enumerate(frames):
         scene.frame_set(f)
         bpy.context.view_layer.update()
+        if facing_lock_apply is not None:
+            facing_lock_apply(f)
+            bpy.context.view_layer.update()
         # Recenter the (fixed-size, fixed-rotation) camera on this frame's
         # character position -- see setup_camera for why.
         cam.location = get_camera_loc_for_frame(f)
@@ -800,6 +961,13 @@ def parse_args():
     p.add_argument("--prop", choices=["sword"], default=None,
                     help="Attach a weapon prop to the right-hand bone "
                          "(default: none).")
+    p.add_argument("--lock-facing", dest="lock_facing", action="store_true",
+                    default=False,
+                    help="Cancel root-bone yaw drift so the character's "
+                         "side-profile facing stays constant (locked to "
+                         "the first sampled frame's facing) across all "
+                         "sampled frames (default: off, current free-yaw "
+                         "behavior).")
     return p.parse_args(argv)
 
 
@@ -868,8 +1036,31 @@ def main():
     print(f"[Blender] Animation range {start_f}-{end_f}, "
           f"sampling {len(frames)} frames: {frames}")
 
+    facing_lock_apply = None
+    if args.lock_facing:
+        try:
+            root_bone = find_root_bone(armature_obj)
+        except Exception as exc:
+            print(f"[Blender] WARNING: root-bone lookup raised {exc!r}; "
+                  f"rendering without facing lock.")
+            root_bone = None
+        if root_bone is None:
+            print("[Blender] WARNING: --lock-facing requested but no "
+                  "root/hips bone could be identified on this rig; "
+                  "rendering without facing lock.")
+        else:
+            corrections = compute_facing_lock(armature_obj, root_bone.name, frames, scene)
+            facing_lock_apply = make_facing_lock_applier(armature_obj, corrections)
+            if facing_lock_apply is None:
+                print("[Blender] WARNING: facing-lock correction computation "
+                      "produced no usable data; rendering without facing lock.")
+            else:
+                print(f"[Blender] Facing lock enabled: root bone "
+                      f"'{root_bone.name}', reference facing = frame "
+                      f"{frames[0]} (first sampled frame).")
+
     mesh_objs = [body_obj] + ([prop_obj] if prop_obj is not None else [])
-    bounds_by_frame = compute_bounds(scene, mesh_objs, frames)
+    bounds_by_frame = compute_bounds(scene, mesh_objs, frames, facing_lock_apply)
     (cam, near, far, screen_i, depth_i,
      get_camera_loc_for_frame, get_depth_range_for_frame) = setup_camera(scene, bounds_by_frame)
     axis_names = "XYZ"
@@ -878,7 +1069,8 @@ def main():
           f"screen_axis={axis_names[screen_i]} depth_axis={axis_names[depth_i]}")
 
     render_all(scene, cam, body_obj, depth_mat, depth_maprange, frames, out_dir,
-               get_camera_loc_for_frame, get_depth_range_for_frame)
+               get_camera_loc_for_frame, get_depth_range_for_frame,
+               facing_lock_apply)
 
     elapsed = time.time() - t0
     print(f"[Blender] Render complete: {len(frames)} beauty + {len(frames)} depth "
