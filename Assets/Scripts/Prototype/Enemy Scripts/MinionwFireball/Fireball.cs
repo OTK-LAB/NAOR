@@ -15,7 +15,7 @@ public class Fireball : MonoBehaviour
         PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform;
         target = new Vector2(PlayerPosition.position.x - transform.position.x, PlayerPosition.position.y - transform.position.y);
         Destroy(gameObject, 4f);
-        GetComponent<Rigidbody2D>().velocity = Vector3.Normalize(target) * fireballSpeed;
+        GetComponent<Rigidbody2D>().linearVelocity = Vector3.Normalize(target) * fireballSpeed;
     }
 
     // Update is called once per frame

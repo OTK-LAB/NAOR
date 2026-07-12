@@ -1,0 +1,46 @@
+# Phase 8.2 Plan: Dummy Scene Selection Menu
+
+## Context
+**Objective:** Create a dummy main menu scene to act as the entry point to the application, fulfilling requirement CORE-01.
+**Success Criteria:**
+- User can open the application and arrive at a newly created dummy main menu scene.
+- User can view a clear UI listing available prototype scenes to select.
+
+## Execution Steps
+
+### 1. Create SceneSelectionUI Script
+- **File:** `Assets/Scripts/UI/SceneSelectionUI.cs`
+- **Action:** Create a new C# script.
+- **Details:** 
+  - Add `using UnityEngine.SceneManagement;`
+  - Create a public method `public void LoadPrototypeScene(string sceneName)` that calls `SceneManager.LoadScene(sceneName)`.
+
+### 2. Create the Dummy Main Menu Scene
+- **File:** `Assets/Scenes/DummyMainMenu.unity`
+- **Action:** Instruct the execution phase to create this scene in Unity.
+- **Details:**
+  - Create a Canvas.
+  - Add a UI Text or TextMeshPro title "Prototype Scene Selection".
+  - Add a Vertical Layout Group with Buttons for each major prototype scene:
+    - `RiverScene`
+    - `MainScene`
+    - `Collesium`
+    - `MiniBoss`
+    - `Demo Final`
+    - `AfterRiver`
+    - `BeforeRiver`
+    - `Bridge`
+  - Attach the `SceneSelectionUI` script to a Manager GameObject or the Canvas.
+  - Link each Button's `OnClick()` event to `SceneSelectionUI.LoadPrototypeScene` passing the respective scene's name.
+
+### 3. Update Editor Build Settings
+- **File:** `EditorBuildSettings.asset` / Project Settings
+- **Action:** Ensure the scenes are added to the build.
+- **Details:**
+  - Create an Editor script `Assets/Editor/BuildSettingsSetup.cs` with a menu item (e.g., `Tools > Setup Build Scenes for Phase 8.2`) that automatically adds `DummyMainMenu.unity` at index 0, followed by the prototype scenes mentioned above. This guarantees the requirement that the user can open the application and arrive at the menu.
+  - Execute the menu item to apply the build settings.
+
+## Verification
+- Run the `DummyMainMenu` scene in the editor.
+- Verify that clicking any of the scene buttons successfully transitions to that scene (Note: scenes must be in Build Settings).
+- Check that no monolithic wrappers are introduced (relying purely on `SceneManager.LoadScene`).

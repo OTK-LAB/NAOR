@@ -26,7 +26,7 @@ public class Dagger : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = direction * daggerSpeed;
+        rb.linearVelocity = direction * daggerSpeed;
     }
     public void Initialize(Vector2 direction)
     {

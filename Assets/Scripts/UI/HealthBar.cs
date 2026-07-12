@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UltimateCC;
 
-public class HealthBar : ProgressBar
+namespace NAOR.UI
 {
-	private void Start() 
-	{
-		SetMaxValue(PlayerMain.Instance.PlayerData.healthSystem.MaxHealth);
-		SetValue(PlayerMain.Instance.PlayerData.healthSystem.CurrentHealth);
-		PlayerMain.Instance.PlayerData.healthSystem.OnMaxHealthChanged += SetMaxValue;
-		PlayerMain.Instance.PlayerData.healthSystem.OnHealthChanged += SetValue;
-	}
+    public class HealthBar : ProgressBar
+    {
+        private void Start() 
+        {
+            SetMaxValue(PlayerMain.Instance.PlayerData.healthSystem.MaxHealth);
+            SetValue(PlayerMain.Instance.PlayerData.healthSystem.CurrentHealth);
+            PlayerMain.Instance.PlayerData.healthSystem.OnMaxHealthChanged += SetMaxValue;
+            PlayerMain.Instance.PlayerData.healthSystem.OnHealthChanged += SetValue;
+        }
+    }
 }

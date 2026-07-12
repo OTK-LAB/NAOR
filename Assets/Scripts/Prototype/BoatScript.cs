@@ -21,7 +21,7 @@ public class BoatScript : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E) && inBoat && rb.velocity.x == 0)
+        if(Input.GetKeyDown(KeyCode.E) && inBoat && rb.linearVelocity.x == 0)
         {
             ePressed = true;
             if(docksReached)
@@ -47,10 +47,10 @@ public class BoatScript : MonoBehaviour
             }
             else if(boatSpeed < 0)
                 boatSpeed = 0;
-            rb.velocity = new Vector2(boatSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(boatSpeed, rb.linearVelocity.y);
         }
         else
-            rb.velocity = new Vector2(0,0);
+            rb.linearVelocity = new Vector2(0,0);
         transform.position =  new Vector3(transform.position.x, transform.position.y + Mathf.Lerp(-0.5f, 0.5f, Mathf.PingPong(Time.time, 1)) * Time.deltaTime);   
         //Mathf.Lerp(-1f, 1f, Mathf.PingPong(Time.time * 2, 1));    
     }
@@ -67,7 +67,7 @@ public class BoatScript : MonoBehaviour
                     usingBoat = true;
                     player.enabled = false;
                     coll.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-                    coll.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+                    coll.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0,0);
                     coll.transform.parent = this.gameObject.transform;
                     player.ChangeAnimationState("PlayerIdle");
                     if(!player.facingRight)

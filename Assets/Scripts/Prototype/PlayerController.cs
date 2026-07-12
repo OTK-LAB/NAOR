@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
         if(isRolling && !isGrounded)
         {
             StopCoroutine(Roll());
-            rb.velocity = new Vector2(xAxis * runSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(xAxis * runSpeed, rb.linearVelocity.y);
         }
 
     }
@@ -264,7 +264,7 @@ public class PlayerController : MonoBehaviour
                 if (isRolling)
                 {
                     StopCoroutine(Roll());
-                    rb.velocity = new Vector2(xAxis * runSpeed, rb.velocity.y);
+                    rb.linearVelocity = new Vector2(xAxis * runSpeed, rb.linearVelocity.y);
                 }
                 isJumping = true;
                 jumpTimeCounter = jumpTimer;
@@ -291,7 +291,7 @@ public class PlayerController : MonoBehaviour
             if (isGrounded && inCheckpointRange && !isPraying && !isAttacking && !isFallAttacking && !isGuarding && !isRolling && !playerManager.hitAnimRunning && !playerManager.isHealing && !isStunned)
             {
                 isPraying = true;
-                rb.velocity = new Vector2(0, 0);
+                rb.linearVelocity = new Vector2(0, 0);
             }
         //Roll
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -358,7 +358,7 @@ public class PlayerController : MonoBehaviour
             canMove = false;
             canFlip = false;
 
-            rb.velocity = new Vector2(0,0);
+            rb.linearVelocity = new Vector2(0,0);
             transform.position = new Vector2(ledgePos1.x + (facingRight ? .2f : -.2f), ledgePos1.y + (facingRight ? .5f : .5f));
             rb.gravityScale = 0;
            
@@ -405,30 +405,30 @@ public class PlayerController : MonoBehaviour
                     if (!isGuarding)
                     {
                         if(!walkToggle)
-                            rb.velocity = new Vector2(xAxis * runSpeed, rb.velocity.y);
+                            rb.linearVelocity = new Vector2(xAxis * runSpeed, rb.linearVelocity.y);
                         else
-                            rb.velocity = new Vector2(xAxis * walkSpeed, rb.velocity.y);
+                            rb.linearVelocity = new Vector2(xAxis * walkSpeed, rb.linearVelocity.y);
                     }
                     else
                     {
-                        rb.velocity = new Vector2(xAxis * runSpeed / 2, rb.velocity.y);
+                        rb.linearVelocity = new Vector2(xAxis * runSpeed / 2, rb.linearVelocity.y);
                     }
                 }
             }
             else
             {
-                rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(xAxis * runSpeed, rb.velocity.y)), wallJumpLerp * Time.deltaTime);
+                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, (new Vector2(xAxis * runSpeed, rb.linearVelocity.y)), wallJumpLerp * Time.deltaTime);
             }
         }
         else
         {
-            rb.velocity = new Vector2(0,0);
+            rb.linearVelocity = new Vector2(0,0);
             return;
         }
     }
     void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         isGuarding = false;
         /*if (isJumping && jumpTimer < 1) //isGuarding eklenebilir
         {
@@ -446,7 +446,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
             }
 
-            rb.velocity = new Vector2(xWallForce * wallDirection, 10);
+            rb.linearVelocity = new Vector2(xWallForce * wallDirection, 10);
             wallJumpPressed = false;
 
             StartCoroutine(WallJumpWaiter());
@@ -477,7 +477,7 @@ public class PlayerController : MonoBehaviour
         }
         if (isWallSliding)
         {
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlideSpeed, float.MaxValue));
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -wallSlideSpeed, float.MaxValue));
         }
     }
     
@@ -491,9 +491,9 @@ public class PlayerController : MonoBehaviour
         Debug.Log((rollStaminaCost) + "stamina kullanildi");
 
         if (facingRight)
-            rb.velocity = new Vector2(rollSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(rollSpeed, rb.linearVelocity.y);
         else
-            rb.velocity = new Vector2(-rollSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(-rollSpeed, rb.linearVelocity.y);
 
         yield return new WaitForSeconds(rollSeconds);
         isRolling = false;
@@ -580,9 +580,9 @@ public class PlayerController : MonoBehaviour
         {
             if(!isAttacking && !isFallAttacking && !isWallSliding)
             {
-                if(rb.velocity.y > 0)
+                if(rb.linearVelocity.y > 0)
                     ChangeAnimationState(jump);
-                if(rb.velocity.y < 0)
+                if(rb.linearVelocity.y < 0)
                     ChangeAnimationState(fall);    
             }
             else
@@ -632,11 +632,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else if (!isGrounded && Input.GetButtonDown("Fire1") && Input.GetKey(KeyCode.S) && stamina >= 50 && rb.velocity.y <= 6 && !isFallAttacking && !isWallSliding)
+        else if (!isGrounded && Input.GetButtonDown("Fire1") && Input.GetKey(KeyCode.S) && stamina >= 50 && rb.linearVelocity.y <= 6 && !isFallAttacking && !isWallSliding)
         {
             StaminaBar.instance.useStamina(50);
             isFallAttacking = true;
-            rb.velocity = new Vector2(0, rb.velocity.y - 1f);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y - 1f);
             //rb.constraints = RigidbodyConstraints2D.FreezePositionX;
             FallAttack();
         }
@@ -647,7 +647,7 @@ public class PlayerController : MonoBehaviour
         if(isGrounded)
         {
             StaminaBar.instance.useStamina(15);
-            rb.velocity = new Vector2(0,0);
+            rb.linearVelocity = new Vector2(0,0);
             attackDamage += 2;
         }
         else

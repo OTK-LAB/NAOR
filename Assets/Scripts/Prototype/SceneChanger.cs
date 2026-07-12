@@ -61,10 +61,13 @@ public class SceneChanger : MonoBehaviour
     }
     void CheckInputs()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            buttonEpressed = true;
-        else if (Input.GetKeyUp(KeyCode.E))
-            buttonEpressed = false;
+        if (UnityEngine.InputSystem.Keyboard.current != null)
+        {
+            if (UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame)
+                buttonEpressed = true;
+            else if (UnityEngine.InputSystem.Keyboard.current.eKey.wasReleasedThisFrame)
+                buttonEpressed = false;
+        }
     }
 
     /*public IEnumerator WelcomeToScene()

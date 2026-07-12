@@ -118,7 +118,7 @@ public class PlayerManager : MonoBehaviour
             CurrentHealth += health;
         player.ChangeAnimationState(heal);
         isHealing = true;
-        rb.velocity = new Vector2(0,0);
+        rb.linearVelocity = new Vector2(0,0);
         Invoke("CancelHealState", 0.8f);
         if (CurrentHealth > 100)
         {
@@ -221,7 +221,7 @@ public class PlayerManager : MonoBehaviour
                 dead = true;
                 //rb.simulated = false; character stays in air when he dies if these lines are active
                 player.enabled = false;
-                rb.velocity = new Vector2(0,0);                
+                rb.linearVelocity = new Vector2(0,0);                
                 player.ChangeAnimationState(death);
                 StartCoroutine(DeathDefiance());
                 CurrentHealth = 1;
@@ -286,7 +286,7 @@ public class PlayerManager : MonoBehaviour
         revived = false;
         damageable = true;
         transform.position = new Vector3(currentCheckPoint.transform.position.x + 1, currentCheckPoint.transform.position.y, 0);
-        rb.velocity = new Vector2(0,0);
+        rb.linearVelocity = new Vector2(0,0);
         dead = false;
         //rb.simulated = true; character stays in air when he dies if these lines are active
         player.enabled = true;

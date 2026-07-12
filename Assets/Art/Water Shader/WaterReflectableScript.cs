@@ -65,11 +65,11 @@ public class WaterReflectableScript : MonoBehaviour
       }
       if(!GameObject.Find("Boat").GetComponent<BoatScript>().inBoat)
       {
-        rb.velocity = new Vector2(0, -playerRB.velocity.y);
+        rb.linearVelocity = new Vector2(0, -playerRB.linearVelocity.y);
       }
       else
       {
-        rb.velocity = new Vector2(0,0);
+        rb.linearVelocity = new Vector2(0,0);
         if(!reflectionPosChanged)
         {
           playerReflection.transform.position = new Vector2(playerReflection.transform.position.x, playerReflection.transform.position.y + 0.4f);

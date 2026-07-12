@@ -43,7 +43,7 @@ public class CheckPointController : MonoBehaviour
 
         if (checkpointReached)
         {
-            if (Input.GetKeyDown(KeyCode.C) && !playerController.isGuarding)
+            if (UnityEngine.InputSystem.Keyboard.current != null && UnityEngine.InputSystem.Keyboard.current.cKey.wasPressedThisFrame && !playerController.isGuarding)
             {
                 ChangeAnimationState(activated);
                 healthBar.RevertHealthBar();
@@ -64,7 +64,7 @@ public class CheckPointController : MonoBehaviour
     {
         if (checkpointReached)
         {
-            if (Input.GetKeyDown(KeyCode.C) && !playerController.isGuarding)
+            if (UnityEngine.InputSystem.Keyboard.current != null && UnityEngine.InputSystem.Keyboard.current.cKey.wasPressedThisFrame && !playerController.isGuarding)
             {
                 playerManager.currentCheckPoint = gameObject;
                 playerManager.lives=4;

@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 public class LightController : MonoBehaviour
 {
-    private Light2D torch;
+    private UnityEngine.Rendering.Universal.Light2D torch;
 
     [SerializeField]
     private float intensityMin, intensityMax, flickerSpeed;
@@ -13,7 +13,7 @@ public class LightController : MonoBehaviour
     float timer = 0;
     void Awake()
     {
-        torch = GetComponent<Light2D>();
+        torch = GetComponent<UnityEngine.Rendering.Universal.Light2D>();
     }
 
     // Update is called once per frame
