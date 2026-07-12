@@ -3,10 +3,13 @@ import subprocess
 import sys
 import time
 
-# MoMask (text-to-motion) is a separate research repo/venv living on the
-# external SSD, outside this git repository. See:
-#   https://github.com/EricGuo5513/momask-codes
-MOMASK_DIR = "/Volumes/aebasol_1tb/Ob/AI_Tools/MoMask"
+# MoMask (text-to-motion) is a separate research repo/venv living outside
+# version control (it's ~1.6GB with checkpoints -- see AIPipeline/setup_ai_tools.sh
+# for how it's provisioned). See: https://github.com/EricGuo5513/momask-codes
+NAOR_AI_TOOLS_DIR = os.environ.get(
+    "NAOR_AI_TOOLS_DIR", "/Volumes/aebasol_1tb/Ob/Projects/game_NAOR/AI_Tools"
+)
+MOMASK_DIR = os.path.join(NAOR_AI_TOOLS_DIR, "MoMask")
 MOMASK_PYTHON = os.path.join(MOMASK_DIR, "venv", "bin", "python3")
 # naor_generate_bvh.py is a small script added to the MoMask checkout by the
 # NAOR project (not part of upstream momask-codes) -- see

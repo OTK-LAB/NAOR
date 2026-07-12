@@ -93,8 +93,15 @@ DEFAULT_IPADAPTER_WORKFLOW_PATH = os.path.join(
     _HERE, "..", "workflows", "dark_fantasy_sprite_ipadapter.json"
 )
 DEFAULT_COMFYUI_URL = "http://127.0.0.1:8188"
+# NAOR_AI_TOOLS_DIR is the single env var that gates where the whole external
+# AI toolchain (ComfyUI + MoMask, ~12GB, not in version control) lives -- see
+# AIPipeline/setup_ai_tools.sh. COMFYUI_DIR is kept as a legacy override for
+# anyone who still has it set, but NAOR_AI_TOOLS_DIR takes precedence.
+NAOR_AI_TOOLS_DIR = os.environ.get(
+    "NAOR_AI_TOOLS_DIR", "/Volumes/aebasol_1tb/Ob/Projects/game_NAOR/AI_Tools"
+)
 DEFAULT_COMFYUI_DIR = os.environ.get(
-    "COMFYUI_DIR", "/Volumes/aebasol_1tb/Ob/AI_Tools/ComfyUI"
+    "COMFYUI_DIR", os.path.join(NAOR_AI_TOOLS_DIR, "ComfyUI")
 )
 
 # Node ids inside dark_fantasy_sprite.json (API format). Keep in sync with
