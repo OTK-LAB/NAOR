@@ -4,9 +4,9 @@ milestone: v6.0
 milestone_name: Pipeline Reality
 current_phase: 6.4
 current_phase_name: Real sprite packing + E2E run
-status: phases_complete_uat_pending
+status: completed
 last_activity: 2026-07-12
-last_activity_desc: All 4 phases (+6.2b) complete and committed; first full E2E run produced a real sprite sheet in 37.4 min. Pending user UAT in Unity editor (AutoSpriteImporter slice check).
+last_activity_desc: Milestone v6.0 closed — audit PASSED, user UAT confirmed 16 auto-sliced sprites in Unity. Tagged v6.0.
 progress:
   total_phases: 4
   completed_phases: 4
@@ -31,4 +31,4 @@ progress:
 - AutoSpriteImporter uses deprecated TextureImporter.spritesheet API.
 
 ## Pending Action
-- User UAT in Unity editor, then /gsd-audit-milestone + /gsd-complete-milestone for v6.0.
+- Milestone v6.0 closed. Next milestone TBD with user — candidates: v7.0 Consistency (IPAdapter/img2img-chain/LoRA + facing constraint) or return to game milestones (v1.0 refactor backlog, v2.0 UI, v3.0 scenes/story).

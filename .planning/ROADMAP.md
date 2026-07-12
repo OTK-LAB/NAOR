@@ -66,7 +66,7 @@
 - [x] Phase 5.3: Setup PyTorch for MoMask and Download Tensors
 - [x] Phase 5.4: Download BiRefNet Models (Gap Closure)
 
-## Milestone 6: Pipeline Reality — 🚧 IN PROGRESS (started 2026-07-11)
+## Milestone 6: Pipeline Reality — ✅ COMPLETED 2026-07-12 (audit PASSED, UAT PASSED)
 **Goal**: Replace every mocked module of the AI art pipeline (v4.0 shipped orchestration skeleton only — all 5 stages were stubs) with real, verified implementations producing actual sprite animations.
 
 **Audit note (2026-07-11):** v4.0 "end-to-end verification" only validated file plumbing. `text_to_motion.py`, `blender_render.py`, `comfy_client.py`, `pack_sprites.py` all contained `time.sleep` mocks writing text placeholders; `workflows/` was empty. Milestone 6 closes this gap.
