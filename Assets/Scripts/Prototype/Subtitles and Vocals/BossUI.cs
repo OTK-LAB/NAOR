@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class BossUI : MonoBehaviour
 {
+    private static BossUI _instance;
+    public static BossUI instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<BossUI>();
+            return _instance;
+        }
+    }
+
     [SerializeField] TextMeshProUGUI subtitleText = default;
     // Start is called before the first frame update
     private void Awake()

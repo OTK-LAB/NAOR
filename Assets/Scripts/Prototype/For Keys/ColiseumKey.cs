@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class ColiseumKey : MonoBehaviour
 {
+    private static ColiseumKey _instance;
+    public static ColiseumKey instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<ColiseumKey>();
+            return _instance;
+        }
+    }
+
     public GameObject key;
 
     public float deadEnemyCount;

@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Dagger : MonoBehaviour
 {
+    private static Dagger _instance;
+    public static Dagger instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<Dagger>();
+            return _instance;
+        }
+    }
+
     [SerializeField] private float daggerSpeed;
     private Rigidbody2D rb;
     private Vector2 direction;

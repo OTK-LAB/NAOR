@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class AfterFall : MonoBehaviour
 {
+    private static AfterFall _instance;
+    public static AfterFall instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<AfterFall>();
+            return _instance;
+        }
+    }
+
     [SerializeField] TextMeshProUGUI subtitleText = default;
     // Start is called before the first frame update
     private void Awake()

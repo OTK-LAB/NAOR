@@ -4,6 +4,14 @@ using UnityEngine.UI;
 
 public class StaminaBar : MonoBehaviour
 {
+    private static StaminaBar _instance;
+    public static StaminaBar instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<StaminaBar>();
+            return _instance;
+        }
+    }
+
     public Slider staminaBar;
 
     private float maxStamina = 100;

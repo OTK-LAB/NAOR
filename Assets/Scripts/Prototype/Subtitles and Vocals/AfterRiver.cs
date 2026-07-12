@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class AfterRiver : MonoBehaviour
 {
+    private static AfterRiver _instance;
+    public static AfterRiver instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<AfterRiver>();
+            return _instance;
+        }
+    }
+
     [SerializeField] TextMeshProUGUI subtitleText = default;
     // Start is called before the first frame update
     private void Awake()

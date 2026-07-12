@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Vocals8 : MonoBehaviour
 {
+    private static Vocals8 _instance;
+    public static Vocals8 instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<Vocals8>();
+            return _instance;
+        }
+    }
+
     private AudioSource source;
     // Start is called before the first frame update
     private void Awake()

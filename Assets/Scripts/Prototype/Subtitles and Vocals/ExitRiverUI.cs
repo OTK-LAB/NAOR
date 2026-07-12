@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class ExitRiverUI : MonoBehaviour
 {
+    private static ExitRiverUI _instance;
+    public static ExitRiverUI instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<ExitRiverUI>();
+            return _instance;
+        }
+    }
+
     [SerializeField] TextMeshProUGUI subtitleText = default;
     // Start is called before the first frame update
     private void Awake()

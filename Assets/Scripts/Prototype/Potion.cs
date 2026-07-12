@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Potion : MonoBehaviour
 {
+    private static Potion _instance;
+    public static Potion instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<Potion>();
+            return _instance;
+        }
+    }
+
     public GameObject[] potions;
     public int potionCount;
     public int maxpotionCount = 3;

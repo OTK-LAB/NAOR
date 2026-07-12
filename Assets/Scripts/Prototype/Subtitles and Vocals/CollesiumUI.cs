@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class CollesiumUI : MonoBehaviour      
 {
+    private static CollesiumUI _instance;
+    public static CollesiumUI instance {
+        get {
+            if (_instance == null) _instance = FindObjectOfType<CollesiumUI>();
+            return _instance;
+        }
+    }
+
     [SerializeField] TextMeshProUGUI subtitleText = default;
     // Start is called before the first frame update
     private void Awake()
