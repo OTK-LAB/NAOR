@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v8.0
 milestone_name: Playable Scenes & Prototype Integration
 status: planning
-last_updated: "2026-07-12T17:25:34.769Z"
-last_activity: 2026-07-12
+last_updated: "2026-07-12T17:36:34.754Z"
+last_activity: 2026-07-12 — Roadmap created for milestone v8.0
 progress:
   total_phases: 3
   completed_phases: 0
