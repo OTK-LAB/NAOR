@@ -7,10 +7,8 @@ public class PlatformUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI subtitleText = default;
     // Start is called before the first frame update
-    public static PlatformUI instance;
     private void Awake()
     {
-        instance = this;
         clear();
     }
     public void SetSubtitle(string subtitle, float delay)

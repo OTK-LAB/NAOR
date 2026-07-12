@@ -8,12 +8,8 @@ public class ColiseumKey : MonoBehaviour
 
     public float deadEnemyCount;
     public float requiredDeadEnemy;
-
-    public static ColiseumKey instance;
-    
     private void Awake() 
     {
-        instance = this;
     }
 
     private void Start() 

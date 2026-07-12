@@ -7,10 +7,8 @@ public class AfterFall : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI subtitleText = default;
     // Start is called before the first frame update
-    public static AfterFall instance;
     private void Awake()
     {
-        instance = this;
         clear();
     }
     public void SetSubtitle(string subtitle, float delay)

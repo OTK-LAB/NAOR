@@ -9,11 +9,8 @@ public class Potion : MonoBehaviour
     public int maxpotionCount = 3;
     public bool control;
     private PlayerManager playerManager;
-    public static Potion instance;
-
     private void Awake()
     {
-        instance = this;
     }
 
 

@@ -14,9 +14,6 @@ public class PlayerManager : MonoBehaviour
     private bool flickering;
     public GameObject crown;
     [SerializeField] private SceneChanger scene;
-
-    public static PlayerManager instance;
-
     public int lives = 4;
     public float MaxHealth = 100;
     public float CurrentHealth = 100f;
@@ -114,7 +111,6 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
     }
     public void HealthPotion(float health)
     {

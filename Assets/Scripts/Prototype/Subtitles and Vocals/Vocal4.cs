@@ -5,11 +5,9 @@ using UnityEngine;
 public class Vocal4 : MonoBehaviour
 {
     private AudioSource source;
-    public static Vocal4 instance;
     // Start is called before the first frame update
     private void Awake()
     {
-        instance = this;
     }
     private void Start()
     {

@@ -8,11 +8,8 @@ public class Dagger : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 direction;
     public static float daggerDamage = 5f;
-    public static Dagger instance;
- 
     private void Awake()
     {
-        instance = this;
     }
     void Start()
     {

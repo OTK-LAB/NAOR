@@ -8,7 +8,6 @@ public class CheckPointController : MonoBehaviour
     public PlayerManager playerManager;
     public PlayerController playerController;
     private HealthBar healthBar;
-    public static CheckPointController instance;
     private CheckPointMenuScript checkPointMenuScript;
     public GameObject currentVCam;
 
@@ -20,7 +19,6 @@ public class CheckPointController : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
     }
 
     // Start is called before the first frame update

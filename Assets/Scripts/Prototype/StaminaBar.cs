@@ -14,12 +14,8 @@ public class StaminaBar : MonoBehaviour
 
     public float smoothing = 5;
     public float staminaIncreasingSpeed = 1;
-
-    public static StaminaBar instance;
-
     private void Awake()
     {
-        instance = this;
     }
     void Start()
     {

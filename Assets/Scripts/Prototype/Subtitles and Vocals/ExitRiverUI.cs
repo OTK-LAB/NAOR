@@ -7,10 +7,8 @@ public class ExitRiverUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI subtitleText = default;
     // Start is called before the first frame update
-    public static ExitRiverUI instance;
     private void Awake()
     {
-        instance = this;
         clear();
     }
     public void SetSubtitle(string subtitle, float delay)

@@ -11,12 +11,11 @@ public class BossHealthBar : MonoBehaviour
     public BossHealthBar healthBar;
     public Slider slider;
     
-    public static BossHealthBar instance;
+    public Boss_Manager bossManager;
 
 
     private void Awake()
     {
-        instance = this;
     }
 
     void Start()
@@ -26,9 +25,9 @@ public class BossHealthBar : MonoBehaviour
 
     private void Update()
     {
-        if (Boss_Manager.instance.health != slider.value)
+        if (bossManager != null && bossManager.health != slider.value)
         {
-            slider.value = Mathf.Lerp(slider.value, Boss_Manager.instance.health, smoothing * Time.deltaTime);
+            slider.value = Mathf.Lerp(slider.value, bossManager.health, smoothing * Time.deltaTime);
         }       
     }
     public void SetMaxHealth(int health)
