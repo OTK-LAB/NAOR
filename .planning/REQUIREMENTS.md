@@ -29,3 +29,18 @@
 | CORE-04     | Phase 8.3 |
 | CORE-05     | Phase 8.1 |
 | CORE-06     | Phase 8.1 |
+
+## AI Pipeline v2.0 Upgrades (Phase 09)
+- [x] **REQ-09-01**: Pipeline uses curated character references to fix palette drift across runs.
+- [x] **REQ-09-02**: Blender proxy mesh uses proper anatomical tapering to prevent elongated limbs.
+- [x] **REQ-09-03**: Pipeline applies post-hoc LAB color matching to fix shading/temporal flicker.
+- [x] **REQ-09-04**: Unity AutoSpriteImporter uses the modernized ISpriteEditorDataProvider API.
+
+## Traceability (Phase 09)
+
+| Requirement | Phase |
+|-------------|-------|
+| REQ-09-01   | Phase 09.1 |
+| REQ-09-02   | Phase 09.1 |
+| REQ-09-03   | Phase 09.1 |
+| REQ-09-04   | Phase 09.1 |
