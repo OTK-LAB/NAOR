@@ -68,6 +68,17 @@ def resolve_character_reference(prompt: str, explicit_ref: str | None) -> str | 
     """Returns a --reference path for comfy_client.py, or None (falls back
     to hero-frame auto-pick). Explicit --reference always wins."""
     if explicit_ref:
+        if os.path.isfile(explicit_ref):
+            return explicit_ref
+        
+        name = explicit_ref
+        if not name.lower().endswith(".png"):
+            name += ".png"
+        
+        resolved_path = os.path.join(CHARACTER_REFS_DIR, name)
+        if os.path.isfile(resolved_path):
+            return resolved_path
+            
         return explicit_ref
     if not os.path.isdir(CHARACTER_REFS_DIR):
         return None
