@@ -1,0 +1,44 @@
+---
+wave: 09
+depends_on: []
+files_modified: ["AIPipeline/generate_sprite.py"]
+autonomous: true
+---
+
+# Plan: Fix Character Reference Resolution
+
+## Background
+During UAT, a blocker issue was reported where running the AI pipeline with a specific `--character <name>` resulted in a `FileNotFoundError`. The `resolve_character_reference` function in `AIPipeline/generate_sprite.py` was returning the raw `name` (e.g., `"knight"`) directly without resolving it to a valid absolute file path in `AIPipeline/character_refs/`.
+
+## Tasks
+
+```xml
+<task>
+  <description>Update `resolve_character_reference` to correctly resolve raw character names to absolute paths in `generate_sprite.py`.</description>
+  <read_first>
+    <file>AIPipeline/generate_sprite.py</file>
+  </read_first>
+  <instructions>
+    1. Locate the `resolve_character_reference` function in `AIPipeline/generate_sprite.py`.
+    2. Modify the logic for handling `explicit_ref`. If `explicit_ref` is provided:
+       - First, check if `explicit_ref` is already a valid file using `os.path.isfile(explicit_ref)`. If so, return it.
+       - If not, check if appending `.png` (if not already present) and joining with `CHARACTER_REFS_DIR` yields a valid file path using `os.path.isfile`. If it does, return that absolute path.
+       - If neither resolves, fall back to returning `explicit_ref` (maintaining the original fallback behavior, though it might fail downstream).
+  </instructions>
+  <acceptance_criteria>
+    - When passed `--character knight`, it resolves to `{CHARACTER_REFS_DIR}/knight.png`.
+    - When passed an absolute path to an image, it returns that absolute path.
+    - No existing functionality or fallback for auto-resolution is broken.
+  </acceptance_criteria>
+</task>
+```
+
+## Verification
+- **Verification criteria**:
+  - Run the `generate_sprite.py` pipeline (perhaps as a dry run or checking just the args parsed) to verify that `args.reference` correctly points to the absolute path in `character_refs` when using `--character knight`.
+  - The script no longer throws a `FileNotFoundError` for valid names located in `AIPipeline/character_refs/`.
+- **must_haves**:
+  - `AIPipeline/generate_sprite.py` must have updated logic in `resolve_character_reference`.
+
+## Artifacts this phase produces
+- No new artifacts. (Only source code modification)
