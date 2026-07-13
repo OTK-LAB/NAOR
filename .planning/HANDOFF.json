@@ -1,34 +1,39 @@
 {
   "version": "1.0",
-  "timestamp": "2026-07-12T21:05:00+03:00",
-  "phase": "7.3",
-  "phase_name": "E2E consistency validation",
-  "phase_dir": ".planning/phases/7.3",
+  "timestamp": "2026-07-13T08:25:30.135Z",
+  "phase": "9",
+  "phase_name": "AI Pipeline v2.0 Upgrades",
+  "phase_dir": ".planning/phases/09-ai-pipeline-v2-0-upgrades",
   "plan": null,
   "task": null,
   "total_tasks": null,
-  "status": "paused_at_milestone_boundary",
+  "status": "paused",
+  "paused_during": "plan-phase (planner agent stopped mid-write by user request)",
   "completed_tasks": [
-    {"id": 1, "name": "Milestone 6 Pipeline Reality — all 5 mock modules replaced with real implementations", "status": "done", "commit": "6579e43..039fdbe, tag v6.0"},
-    {"id": 2, "name": "Milestone 7 Consistency — IPAdapter hero-frame conditioning + facing lock, flicker -65%", "status": "done", "commit": "5ba3ac2..aea1b72, tag v7.0"},
-    {"id": 3, "name": "Toolchain disaster recovery — reproducible setup_ai_tools.sh, tools moved to game_NAOR/AI_Tools", "status": "done", "commit": "afc2b82"}
+    {"id": 1, "name": "Rewrite 09-CONTEXT.md — scope corrected from stale 'replace mocks' premise to quality/consistency backlog (user decision)", "status": "done", "commit": "in pause WIP commit"},
+    {"id": 2, "name": "ROADMAP.md Phase 9 goal filled (quality + consistency)", "status": "done", "commit": "in pause WIP commit"},
+    {"id": 3, "name": "gsd-phase-researcher run — 09-RESEARCH.md", "status": "done", "commit": "f9b38457"},
+    {"id": 4, "name": "09-VALIDATION.md created from Nyquist template", "status": "done", "commit": "16e0e787"},
+    {"id": 5, "name": "gsd-pattern-mapper run — 09-PATTERNS.md", "status": "done", "commit": "in pause WIP commit"},
+    {"id": 6, "name": "gsd-planner (opus) — intended 6 plans, wrote only 09-01-PLAN.md before being stopped", "status": "in_progress", "progress": "Plan 01 (metric promotion + character_refs scaffold, Wave 1) written and structurally complete; plans 02-06 never written; plan-checker never ran"}
   ],
   "remaining_tasks": [
-    {"id": 4, "name": "Decide next milestone with user: (a) return to game milestones v1.0/v2.0/v3.0 (refactor backlog, UI, scenes/story) or (b) art-quality round (curated --reference character design, proxy-body anatomy, AnimateDiff-class smoothing)", "status": "not_started"}
+    {"id": 7, "name": "Re-run planner for plans 02-06 (or replan from scratch)", "status": "not_started"},
+    {"id": 8, "name": "gsd-plan-checker verification loop", "status": "not_started"},
+    {"id": 9, "name": "Coverage gates, state.planned-phase, roadmap annotation, plan commit", "status": "not_started"}
   ],
   "blockers": [],
   "async_jobs": [],
-  "human_actions_pending": [
-    {"action": "Look at the updated heavy_sword_swing_Sheet.png in Unity — aesthetic judgement of the consistent animation", "context": "Sheet replaced in place; importer already UAT'd in v6.0, format unchanged", "blocking": false},
-    {"action": "Optionally push Efe-Basol branch + tags to remote (currently local-only, unpushed)", "context": "OTK-LAB GitHub repo; user has not asked for a push", "blocking": false}
-  ],
+  "human_actions_pending": [],
   "decisions": [
-    {"decision": "Orchestration model: Claude Fable manages/verifies, Sonnet subagents implement; every subagent claim independently re-verified before commit", "rationale": "v4.0 (Gemini-era) shipped mocks marked as verified; independent verification is the structural fix", "phase": "6.x-7.x"},
-    {"decision": "AI toolchain lives at game_NAOR/AI_Tools (gitignored), env NAOR_AI_TOOLS_DIR, provisioned by AIPipeline/setup_ai_tools.sh", "rationale": "User deleted the old Ob/AI_Tools install; user chose in-project placement; everything outside git must be script-recreatable", "phase": "7.3b"},
-    {"decision": "Consistent mode (IPAdapter two-pass + --lock-facing) is pipeline default; --no-ipadapter/--no-lock-facing/--reference are escape hatches", "rationale": "-65% identity flicker measured; turning attacks need --no-lock-facing", "phase": "7.3"},
-    {"decision": "Sword handled as Blender hand-bone prop, background removal via beauty-alpha cutout", "rationale": "Prompt-drawn sword got amputated by body-silhouette mask; prop puts blade in both depth and alpha", "phase": "6.2b/6.3"}
+    {"decision": "Phase 9 = art-quality/consistency backlog ONLY; Unity Editor trigger window explicitly deferred", "rationale": "User: 'kalite ve consistency'. Earlier Gemini/Antigravity draft mis-scoped the phase on a stale mock-pipeline premise", "phase": "9"},
+    {"decision": "AnimateDiff/HotshotXL ruled out this phase; shading smoothness via post-hoc LAB color-match pass (color-matcher pkg, [SUS] -> checkpoint:human-verify; Pillow-quantize fallback)", "rationale": "RESEARCH.md: architecturally incompatible with per-frame comfy_client loop + VRAM risk on 24GB", "phase": "9"},
+    {"decision": "Anatomy: fix build_body_mesh() BONE_RULES tapering in blender_render.py first, with a pre-SDXL beauty-render diagnostic task, before touching controlnet_strength", "rationale": "RESEARCH.md: depth map dictates SDXL's perceived shape", "phase": "9"},
+    {"decision": "Curated references in git-tracked AIPipeline/character_refs/ with resolve_prop()-style name auto-selection; hue_sat_metric.py promoted from gitignored temp/ to AIPipeline/src/metrics/", "rationale": "D-04: nothing outside git unless recreatable; baseline 0.0780 reproduced by planner as 0.077992", "phase": "9"}
   ],
-  "uncommitted_files": [],
-  "next_action": "Run /gsd-resume-work, then /gsd-new-milestone after the user picks direction (game features vs art quality). Pipeline is fully operational: python3 AIPipeline/generate_sprite.py \"<motion prompt>\" (~40 min/clip).",
-  "context_notes": "Clean stop: working tree clean, v7.0 tagged, no processes running (ComfyUI stopped). Stage costs: MoMask 7s, Blender 5s, SDXL+IPAdapter ~150s/frame (99% of cost), pack <1s. Claude auto-memory file naor-ai-pipeline-status.md mirrors this state."
+  "uncommitted_files": [
+    "Assets/Scripts/Prototype/* deletions (pre-existing from Phase 8 work, NOT part of Phase 9 planning — left untouched)"
+  ],
+  "next_action": "Run /gsd-plan-phase 9 again. Step 6 will detect 09-01-PLAN.md and offer options; 'Replan from scratch' is recommended (planner was only 1/6 plans in — a fresh coherent run beats grafting 5 plans onto one orphan), then let the plan-checker loop finish.",
+  "context_notes": "Planner's final verified facts before being stopped: baseline metric reproduces as 0.077992 on the existing heavy_sword_swing sheet; cached frames exist in AIPipeline/temp/; color-matcher is NOT installed in the venv. Plan 01 uses requirement IDs AIQ-01/AIQ-05 — verify these exist in REQUIREMENTS.md or were invented (ROADMAP says Requirements: TBD) before trusting the coverage gate. Previous handoff (Phase 7.3 milestone boundary, 2026-07-12) was superseded by this file; its content lives in git history and in Claude auto-memory naor-ai-pipeline-status.md."
 }
