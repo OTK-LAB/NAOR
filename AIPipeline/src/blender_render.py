@@ -81,32 +81,34 @@ except ImportError:
 # heuristic never raises and never depends on a specific rig.
 BONE_RULES = [
     (("finger", "thumb", "pinky", "index1", "index2", "index3",
-      "middle1", "middle2", "middle3", "ring1", "ring2", "ring3"), 0.0, True),
-    (("toe",), 0.0, True),
-    (("head",), 1.9, False),
-    (("neck",), 1.0, False),
-    (("hip", "pelvis"), 2.1, False),
-    (("spine", "chest", "torso", "abdomen", "ribcage"), 1.9, False),
-    (("shoulder", "clavicle", "collar"), 0.9, False),
-    (("forearm", "lower_arm", "lowerarm", "elbow"), 0.7, False),
-    (("arm",), 0.85, False),                       # generic/upper arm fallback
-    (("hand", "wrist"), 0.6, False),
-    (("thigh", "upleg", "up_leg", "upperleg"), 1.4, False),
-    (("shin", "calf", "lowleg", "downleg", "knee"), 1.05, False),
-    (("leg",), 1.15, False),                       # generic leg fallback
-    (("foot", "ankle"), 0.8, False),
+      "middle1", "middle2", "middle3", "ring1", "ring2", "ring3"), (0.0, 0.0), True),
+    (("toe",), (0.0, 0.0), True),
+    (("head",), (1.9, 1.9), False),
+    (("neck",), (1.0, 1.0), False),
+    (("hip", "pelvis"), (2.1, 2.1), False),
+    (("spine", "chest", "torso", "abdomen", "ribcage"), (2.2, 1.9), False),
+    (("shoulder", "clavicle", "collar"), (0.9, 0.7), False),
+    (("forearm", "lower_arm", "lowerarm", "elbow"), (0.8, 0.5), False),
+    (("arm",), (1.0, 0.8), False),                       # generic/upper arm fallback
+    (("hand", "wrist"), (0.6, 0.5), False),
+    (("thigh", "upleg", "up_leg", "upperleg"), (1.5, 1.1), False),
+    (("shin", "calf", "lowleg", "downleg", "knee"), (1.1, 0.8), False),
+    (("leg",), (1.3, 0.9), False),                       # generic leg fallback
+    (("foot", "ankle"), (0.8, 0.6), False),
 ]
-DEFAULT_RADIUS_FACTOR = 1.0
+DEFAULT_RADIUS_FACTOR = (1.0, 1.0)
 
 
 def classify_bone(name):
-    """Returns (radius_factor, skip) for a bone name. Never raises; unknown
+    """Returns (radius_factor_tuple, skip) for a bone name. Never raises; unknown
     names fall back to a uniform capsule thickness (factor 1.0, not skipped)."""
     try:
         lname = name.lower()
-        for keywords, factor, skip in BONE_RULES:
+        for keywords, factors, skip in BONE_RULES:
             if any(k in lname for k in keywords):
-                return factor, skip
+                if isinstance(factors, (int, float)):
+                    factors = (factors, factors)
+                return factors, skip
     except Exception:
         pass
     return DEFAULT_RADIUS_FACTOR, False
@@ -169,10 +171,12 @@ def build_body_mesh(armature_obj):
     z_axis = Vector((0.0, 0.0, 1.0))
 
     def bone_radius(b):
-        factor, skip = classify_bone(b.name)
+        factors, skip = classify_bone(b.name)
         if skip:
             return None
-        return max(base_radius * factor, base_radius * 0.15)
+        r1 = max(base_radius * factors[0], base_radius * 0.15)
+        r2 = max(base_radius * factors[1], base_radius * 0.15)
+        return r1, r2
 
     def add_sphere(center, radius, weight_name):
         start_idx = len(bm.verts)
@@ -183,11 +187,16 @@ def build_body_mesh(armature_obj):
         bm.verts.ensure_lookup_table()
         weights.setdefault(weight_name, []).extend(range(start_idx, len(bm.verts)))
 
-    def add_capsule(p0, p1, radius, weight_name, extend=0.15):
+    def add_capsule(p0, p1, radius_tuple, weight_name, extend=0.15):
+        if isinstance(radius_tuple, (int, float)):
+            r1 = r2 = radius_tuple
+        else:
+            r1, r2 = radius_tuple
+
         direction_vec = p1 - p0
         length = direction_vec.length
         if length < 1e-5:
-            add_sphere(p0, radius, weight_name)
+            add_sphere(p0, r1, weight_name)
             return
         direction = direction_vec.normalized()
         mid = (p0 + p1) / 2.0
@@ -197,29 +206,31 @@ def build_body_mesh(armature_obj):
         start_idx = len(bm.verts)
         bmesh.ops.create_cone(
             bm, cap_ends=True, cap_tris=False, segments=8,
-            radius1=radius, radius2=radius, depth=depth, matrix=matrix,
+            radius1=r1, radius2=r2, depth=depth, matrix=matrix,
         )
         bm.verts.ensure_lookup_table()
         weights.setdefault(weight_name, []).extend(range(start_idx, len(bm.verts)))
         # Rounded caps / joint balls at both ends.
-        add_sphere(p0, radius, weight_name)
-        add_sphere(p1, radius, weight_name)
+        add_sphere(p0, r1, weight_name)
+        add_sphere(p1, r2, weight_name)
 
     for b in bones:
-        radius = bone_radius(b)
-        if radius is None:
+        radius_tuple = bone_radius(b)
+        if radius_tuple is None:
             continue
-        add_capsule(b.head_local, b.tail_local, radius, b.name)
+        add_capsule(b.head_local, b.tail_local, radius_tuple, b.name)
 
     # Bridge gaps between disconnected parent/child bones.
     for b in bones:
         parent = b.parent
         if parent is None:
             continue
-        child_r = bone_radius(b)
-        parent_r = bone_radius(parent)
-        if child_r is None or parent_r is None:
+        child_rt = bone_radius(b)
+        parent_rt = bone_radius(parent)
+        if child_rt is None or parent_rt is None:
             continue  # don't bridge into skipped bones (fingers/toes)
+        child_r = child_rt[0]
+        parent_r = parent_rt[1]
         gap_vec = b.head_local - parent.tail_local
         bridge_r = min(child_r, parent_r) * 0.9
         if gap_vec.length > bridge_r * 0.25:
