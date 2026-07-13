@@ -597,6 +597,14 @@ def stylize_frames(
             if reference_image_path:
                 print(f"[ComfyUI] --- reference image (explicit, pass 1 skipped) ---")
                 print(f"[ComfyUI] Using external reference: {reference_image_path}")
+                try:
+                    _ref_img = Image.open(reference_image_path)
+                    _ref_img.load()
+                    assert_image_not_degenerate(_ref_img, label="reference image")
+                except ComfyUIError:
+                    raise
+                except Exception as e:
+                    raise ComfyUIError(f"Failed to load or validate reference image: {e}")
                 ref_name, ref_subfolder = upload_image(comfyui_url, reference_image_path)
                 reference_server_name = ref_name if not ref_subfolder else f"{ref_subfolder}/{ref_name}"
             else:

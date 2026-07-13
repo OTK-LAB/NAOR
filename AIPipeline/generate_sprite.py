@@ -39,6 +39,8 @@ BLENDER_BIN = "/Applications/Blender.app/Contents/MacOS/Blender"
 
 STAGES = ["motion", "render", "stylize", "pack", "preview"]
 
+CHARACTER_REFS_DIR = os.path.join(PIPELINE_DIR, "character_refs")
+
 # Simple keyword heuristic: if the prompt reads as weapon-themed, default
 # to attaching the sword prop in the Blender render stage (--prop can
 # still override this either way).
@@ -60,6 +62,21 @@ def resolve_prop(prompt: str, prop_arg: str):
     if prop_arg == "none":
         return None
     return prop_arg
+
+
+def resolve_character_reference(prompt: str, explicit_ref: str | None) -> str | None:
+    """Returns a --reference path for comfy_client.py, or None (falls back
+    to hero-frame auto-pick). Explicit --reference always wins."""
+    if explicit_ref:
+        return explicit_ref
+    if not os.path.isdir(CHARACTER_REFS_DIR):
+        return None
+    slug = slugify(prompt)
+    for fname in os.listdir(CHARACTER_REFS_DIR):
+        name, ext = os.path.splitext(fname)
+        if ext.lower() == ".png" and name in slug:
+            return os.path.join(CHARACTER_REFS_DIR, fname)
+    return None
 
 
 def run_stage(label: str, cmd: list, cwd: str = None):
@@ -100,6 +117,7 @@ def run_pipeline(args):
     prompt = args.prompt
     run_name = slugify(prompt)
     prop = resolve_prop(prompt, args.prop)
+    args.reference = resolve_character_reference(prompt, args.character or args.reference)
 
     run_root = os.path.join(PIPELINE_DIR, "temp", run_name)
     bvh_path = os.path.join(run_root, "motion.bvh")
@@ -255,6 +273,8 @@ def main():
                               "independent, no IPAdapter reference conditioning). Default: "
                               "off -- comfy_client's two-pass IPAdapter-consistent mode is "
                               "used by default.")
+    parser.add_argument("--character", default=None,
+                         help="Explicit character reference name/slug to override auto-detection.")
     parser.add_argument("--reference", default=None,
                          help="Explicit reference image path for IPAdapter conditioning "
                               "(passed through to comfy_client.py); skips hero-frame "
