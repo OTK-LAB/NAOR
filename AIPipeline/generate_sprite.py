@@ -37,7 +37,7 @@ SRC_DIR = os.path.join(PIPELINE_DIR, "src")
 VENV_PYTHON = os.path.join(PIPELINE_DIR, ".venv", "bin", "python")
 BLENDER_BIN = "/Applications/Blender.app/Contents/MacOS/Blender"
 
-STAGES = ["motion", "render", "stylize", "pack", "preview"]
+STAGES = ["motion", "render", "stylize", "colormatch", "pack", "preview"]
 
 CHARACTER_REFS_DIR = os.path.join(PIPELINE_DIR, "character_refs")
 
@@ -123,6 +123,7 @@ def run_pipeline(args):
     bvh_path = os.path.join(run_root, "motion.bvh")
     render_dir = os.path.join(run_root, "renders")
     style_dir = os.path.join(run_root, "stylized")
+    color_dir = os.path.join(run_root, "colormatch")
 
     unity_sprites_dir = os.path.join(PROJECT_ROOT, "Assets", "Art", "Sprites", "Generated")
     sheet_path = os.path.join(unity_sprites_dir, f"{run_name}_Sheet.png")
@@ -210,12 +211,54 @@ def run_pipeline(args):
             )
         print(f"\n>>> STAGE 3: skipped (reusing {style_dir})")
 
+    # --- Stage 3.5: Color match -----------------------------------------
+    if skip_idx <= STAGES.index("colormatch"):
+        if not args.no_color_match:
+            os.makedirs(color_dir, exist_ok=True)
+            # Find the hero frame (or external reference) to match against.
+            # If explicit reference is provided, use it. Otherwise, use hero pass output from style_dir.
+            # We look for hero_*.png in stylized/hero/ or use args.reference
+            if args.reference:
+                match_ref = args.reference
+            else:
+                hero_dir = os.path.join(style_dir, "hero")
+                match_ref = next((os.path.join(hero_dir, f) for f in os.listdir(hero_dir) if f.startswith("hero_") and f.endswith(".png")), None) if os.path.isdir(hero_dir) else None
+                if not match_ref:
+                    # Fallback to middle frame if no hero explicitly generated (e.g., no_ipadapter)
+                    frames = sorted([f for f in os.listdir(style_dir) if f.startswith("frame_") and f.endswith(".png")])
+                    if frames:
+                        match_ref = os.path.join(style_dir, frames[len(frames) // 2])
+
+            if match_ref:
+                timings["colormatch"] = run_stage(
+                    "STAGE 3.5: Post-hoc Color Match",
+                    [VENV_PYTHON, os.path.join(SRC_DIR, "color_consistency.py"),
+                     "--input", style_dir, "--output", color_dir,
+                     "--reference", match_ref],
+                )
+            else:
+                print("\n>>> STAGE 3.5: skipped (no reference frame found to match against)")
+                color_dir = style_dir # Fallback
+        else:
+            print("\n>>> STAGE 3.5: skipped (--no-color-match)")
+            color_dir = style_dir # Bypass
+    else:
+        if not has_files_matching(color_dir, "frame_"):
+            # It might have been skipped previously, fallback to style_dir
+            if has_files_matching(style_dir, "frame_"):
+                color_dir = style_dir
+            else:
+                raise RuntimeError(
+                    f"--skip-to {args.skip_to} requires existing stylized frame_*.png in {color_dir} or {style_dir}"
+                )
+        print(f"\n>>> STAGE 3.5: skipped (reusing {color_dir})")
+
     # --- Stage 4: Pack sprite sheet --------------------------------------
     if skip_idx <= STAGES.index("pack"):
         timings["pack"] = run_stage(
             "STAGE 4: Packing sprite sheet",
             [VENV_PYTHON, os.path.join(SRC_DIR, "pack_sprites.py"),
-             "--input", style_dir, "--output", sheet_path,
+             "--input", color_dir, "--output", sheet_path,
              "--cell", str(args.cell), "--cols", args.cols],
         )
     else:
@@ -227,7 +270,7 @@ def run_pipeline(args):
     timings["preview"] = run_stage(
         "STAGE 5: Generating preview GIF",
         [VENV_PYTHON, os.path.join(SRC_DIR, "make_preview_gif.py"),
-         "--input", style_dir, "--output", gif_path],
+         "--input", color_dir, "--output", gif_path],
     )
 
     total_elapsed = time.time() - total_t0
@@ -273,6 +316,8 @@ def main():
                               "independent, no IPAdapter reference conditioning). Default: "
                               "off -- comfy_client's two-pass IPAdapter-consistent mode is "
                               "used by default.")
+    parser.add_argument("--no-color-match", dest="no_color_match", action="store_true", default=False,
+                         help="Disable post-hoc LAB color matching pass (Stage 3.5).")
     parser.add_argument("--character", default=None,
                          help="Explicit character reference name/slug to override auto-detection.")
     parser.add_argument("--reference", default=None,
