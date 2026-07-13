@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.U2D.Sprites;
 
 namespace NAOR.Editor
 {
@@ -73,8 +74,12 @@ namespace NAOR.Editor
                 return;
             }
 
-#pragma warning disable CS0618 // TextureImporter.spritesheet is the simplest API that still works for headless/import-time grid slicing.
-            var spriteMetas = new List<SpriteMetaData>();
+            var factory = new SpriteDataProviderFactories();
+            factory.Init();
+            ISpriteEditorDataProvider dataProvider = factory.GetSpriteEditorDataProviderFromObject(assetImporter);
+            dataProvider.InitSpriteEditorDataProvider();
+
+            var spriteRects = new List<SpriteRect>();
             int index = 0;
             for (int row = 0; row < meta.rows && index < meta.frame_count; row++)
             {
@@ -84,24 +89,35 @@ namespace NAOR.Editor
                 int unityRow = meta.rows - 1 - row;
                 for (int col = 0; col < meta.cols && index < meta.frame_count; col++)
                 {
-                    spriteMetas.Add(new SpriteMetaData
+                    spriteRects.Add(new SpriteRect
                     {
                         name = $"frame_{index:D4}",
+                        spriteID = GUID.Generate(),
                         rect = new Rect(
                             col * (meta.cell_size + meta.padding),
                             unityRow * (meta.cell_size + meta.padding),
                             meta.cell_size,
                             meta.cell_size),
-                        alignment = (int)SpriteAlignment.Center,
+                        alignment = SpriteAlignment.Center,
                         pivot = new Vector2(0.5f, 0.5f),
                     });
                     index++;
                 }
             }
-            importer.spritesheet = spriteMetas.ToArray();
-#pragma warning restore CS0618
 
-            Debug.Log($"[AutoSpriteImporter] Sliced {assetPath} into {spriteMetas.Count} sprite(s) "
+            dataProvider.SetSpriteRects(spriteRects.ToArray());
+
+            var nameFileIdProvider = dataProvider.GetDataProvider<ISpriteNameFileIdDataProvider>();
+            var pairs = new List<SpriteNameFileIdPair>();
+            foreach (var r in spriteRects)
+            {
+                pairs.Add(new SpriteNameFileIdPair(r.name, r.spriteID));
+            }
+            nameFileIdProvider.SetNameFileIdPairs(pairs);
+
+            dataProvider.Apply();
+
+            Debug.Log($"[AutoSpriteImporter] Sliced {assetPath} into {spriteRects.Count} sprite(s) "
                       + $"({meta.cols}x{meta.rows} grid, cell={meta.cell_size}px, fps={meta.fps}) from sidecar metadata.");
         }
 
