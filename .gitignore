@@ -82,3 +82,8 @@ AIPipeline/temp/
 # commit this -- see Phase 7.3b disaster-recovery notes.
 /AI_Tools/
 AIPipeline/src/__pycache__/
+
+# Local agent/tool caches and generated Python bytecode
+.planning/research/.cache/
+.unity/
+**/__pycache__/
