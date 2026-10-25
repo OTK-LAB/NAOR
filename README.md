@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Assets/9AspectOfRealms.png" alt="The Nine Aspect of Realms" width="420" />
+  <img src="docs/naor-capsule.png" alt="The Nine Aspect of Realms" width="460" />
 </p>
 
 # NAOR: The Nine Aspect of Realms
